@@ -294,3 +294,7 @@ a{
 .carousel img{
     height: 80vh;
 }
+
+.text-small{
+    font-size: 12px;
+}
