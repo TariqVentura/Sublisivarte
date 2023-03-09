@@ -10,11 +10,11 @@
 :root{
     /* ===== Colors ===== */
     --body-color: #475F7F;
-    --sidebar-color: #fff8eb;
+    --sidebar-color: #ecebff;
     --primary-color: #695CFE;
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDD;
-    --text-color: #9f7777;
+    --text-color: #E9E1CC;
 
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
