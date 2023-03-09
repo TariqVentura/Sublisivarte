@@ -14,14 +14,114 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <header></header>
+            <div class="navbar bg-dark py-1 px-0" id="nav-info">
+                <div class="container-fluid bg-dark d-flex justify-content-center ">
+                    <!-- desaparece en pantallas pequeñas -->
+                    <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
+                        <li class="list-inline-item opacity-75 mr-2">
+                            <a class="text-light text-small py-1 pl-0 pr-2" href="">+503 2345 4657 &nbsp; | &nbsp;</a>
+                        </li>
+                        <li class="list-inline-item opacity-75 mr-2">
+                            <a class="text-light font-size-sm py-1 pl-0 pr-2" href=""><img
+                                    src="https://img.icons8.com/ios/24/FFFFFF/mail.png" />&nbsp;
+                                OnlineStore@aparrecchio.com &nbsp; | &nbsp; </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-around">
+                        <div class="d-flex">
+                            <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
+                                <li class="list-inline-item opacity-75 mr-2">
+                                    <a class="text-light text-small py-1 pl-0 pr-2" href="">Nosotros &nbsp; |
+                                        &nbsp;</a>
+                                </li>
+                                <li class="list-inline-item opacity-75 mr-2">
+                                    <a class="text-light text-small py-1 pl-0 pr-2" href="">Centro de ayuda &nbsp; |
+                                        &nbsp;</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="d-flex flex-nowrap">
+                            <a href=""><img
+                                    src="https://img.icons8.com/material-rounded/29/FFFFFF/facebook.png" />&nbsp;</a>
+                            <a href=""><img
+                                    src="https://img.icons8.com/windows/32/FFFFFF/instagram-new.png" />&nbsp;</a>
+                            <a href=""><img src="https://img.icons8.com/ios/23/FFFFFF/whatsapp--v1.png" />&nbsp;</a>
+                            <a href=""><img src="https://img.icons8.com/ios-filled/23/FFFFFF/twitter.png" />&nbsp;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <header class="py-2">
+                <!-- <a href="" class="logo"><img src="../../resources/images/logo.png" alt="" class="logo-img"></a>
+                <nav class="navegation">
+                    <a href="#">Inicio</a>
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Contactos</a>
+                    <button class="btnLogin-popup" id="btn-login">Login</button>
+                </nav>
+                <div class="overlay">
+                    <div class="popup">
+                        <div class="wrapper">
+                            <span class="icon-close" id="btn-close-login">
+                                <ion-icon name="close"></ion-icon>
+                            </span>
+                            <div class="form-box login">
+                                <h2>Login</h2>
+                                <form action="">
+                                    <div class="imput-box">
+                                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                                        <input type="email" required>
+                                        <label for="">Email</label>
+                                    </div>
+                                    <div class="imput-box">
+                                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                                        <input type="password" required>
+                                        <label for="">Contraseña</label>
+                                    </div>
+                                    <div class="remember-forgot">
+                                        <label for=""><input type="checkbox"> Recordarme</label>
+                                        <a href="#">Olvidé mi contraseña</a>
+                                    </div>
+                                    <button type="submit" class="btn">Login</button>
+                                    <div class="login-register">
+                                        <p>¿No tienes una cuenta? <a href="#" class="register-link">Registrarme</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </header>
         </div>
         <div class="row">
             <main>
-                <div class="container principal my-3">
+                <div class="container-fluid" id="carousel-principal">
                     <div class="row">
                         <div class="col">
-                            <img src="../../resources/images/bg-image.webp" alt="" class="img-fluid">
+                            <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="../../resources/images/tazas.jpg" class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../../resources/images/accesorios.jpg" class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../../resources/images/tazas.jpg" class="d-block w-100" alt="...">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

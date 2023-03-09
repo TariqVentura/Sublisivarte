@@ -1,5 +1,5 @@
 :root{
-    --dark: #2b2d2d;
+    --dark: #000000;
     --text: #ffffff;
     --dark-blue: #061e46;
     --bg-dark: #be4a7f;
@@ -27,18 +27,28 @@ body{
 
 header{
     width: 100%;
-    padding: 20px 100px;
     background: var(--dark);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
 header.active{
     position: fixed;
+    top: 4.41%;
+    left: 0%;
+    z-index: 100;
+}
+
+.navbar.active{
+    position: fixed;
     top: 0%;
     left: 0%;
-    background: var(--bg-dark);
+    z-index: 100;
+}
+
+a{
+    text-decoration: none;
 }
 
 .logo{
@@ -48,12 +58,7 @@ header.active{
 }
 
 .logo-img{
-    height: 5vh !important;
-    visibility: hidden;
-}
-
-.logo-img.active{
-    visibility: visible;
+    height: 6vh !important;
 }
 
 .navegation a {
@@ -125,7 +130,7 @@ header.active{
 {
     visibility: visible;
     opacity: 1;
-    z-index: 1;
+    z-index: 100;
 }
 
 .wrapper{
@@ -279,4 +284,13 @@ header.active{
 
 .login-register p a:hover{
     text-decoration: underline;
+}
+
+.container-fluid{
+    padding-right: calc(var(--bs-gutter-x) * .0);
+    padding-left: calc(var(--bs-gutter-x) * .0);
+}
+
+.carousel img{
+    height: 80vh;
 }
