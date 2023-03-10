@@ -313,3 +313,12 @@ body.dark .home .text{
     height: 40vh;
     width: 80vh;
 }
+
+.chart-container2{
+    height: 30vh;
+    width: 60vh;
+}
+
+ol, ul {
+    padding-left: 0 !important;
+}
