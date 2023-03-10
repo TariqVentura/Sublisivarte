@@ -31,42 +31,43 @@
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="#">
-                            <i><img src="https://img.icons8.com/sf-black-filled/48/null/home.png"/></i>
+                            <i><img src="https://img.icons8.com/sf-black-filled/48/null/home.png" /></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i><img src="https://img.icons8.com/ios-glyphs/40/null/shopping-cart--v1.png"/></i>
+                            <i><img src="https://img.icons8.com/ios-glyphs/40/null/shopping-cart--v1.png" /></i>
                             <span class="text nav-text">Pedidos</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i><img src="https://img.icons8.com/sf-black-filled/48/null/conference-call.png"/></i>
+                            <i><img src="https://img.icons8.com/sf-black-filled/48/null/conference-call.png" /></i>
                             <span class="text nav-text">Clientes</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i><img src="https://img.icons8.com/material-sharp/42/null/package.png"/></i>
+                            <i><img src="https://img.icons8.com/material-sharp/42/null/package.png" /></i>
                             <span class="text nav-text">Productos</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i><img src="https://img.icons8.com/fluency-systems-filled/48/null/user.png"/></i>
+                            <i><img src="https://img.icons8.com/fluency-systems-filled/48/null/user.png" /></i>
                             <span class="text nav-text">Usuarios</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i><img src="https://img.icons8.com/external-others-inmotus-design/40/null/external-Check-List-check-others-inmotus-design.png"/></i>
+                            <i><img
+                                    src="https://img.icons8.com/external-others-inmotus-design/40/null/external-Check-List-check-others-inmotus-design.png" /></i>
                             <span class="text nav-text">Categorias</span>
                         </a>
                     </li>
@@ -77,7 +78,8 @@
             <div class="bottom-content">
                 <li class="">
                     <a href="#">
-                        <i><img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/null/external-exit-essentials-tanah-basah-glyph-tanah-basah.png"/></i>
+                        <i><img
+                                src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/null/external-exit-essentials-tanah-basah-glyph-tanah-basah.png" /></i>
                         <span class="text nav-text">Logout</span>
                     </a>
                 </li>
@@ -100,8 +102,41 @@
     </nav>
 
     <section class="home">
-        <div class="text">SubliSivarte</div>
+        <div class="row">
+            <div class="text">SubliSivarte
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
+
+            </div>
+        </div>
+
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'polarArea',            
+            data: {
+                labels: ['Tazas', 'Ropa', 'Accesorios'],
+                datasets: [{
+                    label: 'Numero de Ventas',
+
+                    data: [12, 19, 15],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
     <script>
         const body = document.querySelector('body'),
