@@ -8,13 +8,14 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="../../resources/css/public.css">
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="navbar bg-dark py-1 px-0" id="nav-info">
+            <div class="navbar bg-dark mt-0 pt-2     px-0" id="nav-info">
                 <div class="container-fluid bg-dark d-flex justify-content-center ">
                     <!-- desaparece en pantallas pequeñas -->
                     <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
@@ -51,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <header class="py-2">
+            <header>
                 <!-- <a href="" class="logo"><img src="../../resources/images/logo.png" alt="" class="logo-img"></a>
                 <nav class="navegation">
                     <a href="#">Inicio</a>
@@ -96,49 +97,18 @@
         </div>
         <div class="row">
             <main>
-                <div class="container-fluid" id="carousel-principal">
-                    <div class="row">
-                        <div class="col">
-                            <div id="carouselExampleFade" class="carousel slide carousel-fade">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="../../resources/images/tazas.jpg" class="d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="../../resources/images/accesorios.jpg" class="d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="../../resources/images/tazas.jpg" class="d-block w-100" alt="...">
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button"
-                                    data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button"
-                                    data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
+                <div class="carousel-principal">
+                    <div class="wrapper-carousel">
+                        <i id="left" class="fa-solid fa-angle-left"></i>
+                        <div class="carousel">
+                            <img src="../../resources/images/tazas.jpg" alt="" draggable="false">
+                            <img src="../../resources/images/mousepad.jpg" alt="" draggable="false">
+                            <img src="../../resources/images/accesorios.jpg" alt="" draggable="false">
+                            <img src="../../resources/images/camisas.jpg" alt="" draggable="false">
+                            <img src="../../resources/images/ropa.jpg" alt="" draggable="false">
+                            <img src="../../resources/images/frame.jpg" alt="" draggable="false">
                         </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="row py-3">
-                        <div class="col">
-                            <img src="../../resources/images/tazas.jpg" alt="" class="img-fluid producto">
-                            <p class="fs-1 text-light text-center">Tazas</p>
-                        </div>
-                        <div class="col">
-                            <img src="../../resources/images/tazas.jpg" alt="" class="img-fluid">
-                            <p class="fs-5 text-light text-center">Tazas</p>
-                        </div>
-                        <div class="col">
-                            <img src="../../resources/images/tazas.jpg" alt="" class="img-fluid">
-                            <p class="fs-5 text-light text-center">Tazas</p>
-                        </div>
+                        <i id="rigth" class="fa-solid fa-angle-right"></i>
                     </div>
                 </div>
             </main>
@@ -152,7 +122,10 @@
         crossorigin="anonymous"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script src="../../controllers/public/nav-login.js"></script>
+    <script src="../../controllers/public/index.js"></script>
 </body>
 
 </html>
