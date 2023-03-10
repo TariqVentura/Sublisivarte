@@ -26,41 +26,48 @@
         </header>
 
         <div class="menu-bar">
-            <div class="menu">                
+            <div class="menu">
 
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-home-alt icon'></i>
+                            <i><img src="https://img.icons8.com/sf-black-filled/48/null/home.png"/></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-bar-chart-alt-2 icon'></i>
+                            <i><img src="https://img.icons8.com/ios-glyphs/40/null/shopping-cart--v1.png"/></i>
                             <span class="text nav-text">Pedidos</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Categorias</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-pie-chart-alt icon'></i>
-                            <span class="text nav-text">Marcas</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-heart icon'></i>
+                            <i><img src="https://img.icons8.com/sf-black-filled/48/null/conference-call.png"/></i>
                             <span class="text nav-text">Clientes</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i><img src="https://img.icons8.com/material-sharp/42/null/package.png"/></i>
+                            <span class="text nav-text">Productos</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i><img src="https://img.icons8.com/fluency-systems-filled/48/null/user.png"/></i>
+                            <span class="text nav-text">Usuarios</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i><img src="https://img.icons8.com/external-others-inmotus-design/40/null/external-Check-List-check-others-inmotus-design.png"/></i>
+                            <span class="text nav-text">Categorias</span>
                         </a>
                     </li>
 
@@ -70,7 +77,7 @@
             <div class="bottom-content">
                 <li class="">
                     <a href="#">
-                        <i class='bx bx-log-out icon'></i>
+                        <i><img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/null/external-exit-essentials-tanah-basah-glyph-tanah-basah.png"/></i>
                         <span class="text nav-text">Logout</span>
                     </a>
                 </li>
@@ -100,17 +107,12 @@
         const body = document.querySelector('body'),
             sidebar = body.querySelector('nav'),
             toggle = body.querySelector(".toggle"),
-            searchBtn = body.querySelector(".search-box"),
             modeSwitch = body.querySelector(".toggle-switch"),
             modeText = body.querySelector(".mode-text");
 
 
         toggle.addEventListener("click", () => {
             sidebar.classList.toggle("close");
-        })
-
-        searchBtn.addEventListener("click", () => {
-            sidebar.classList.remove("close");
         })
 
         modeSwitch.addEventListener("click", () => {
