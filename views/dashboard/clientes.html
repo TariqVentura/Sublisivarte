@@ -88,8 +88,23 @@
         </div>
     </nav>
     <section class="home">
-        <div>
-            
+        <div class="row">
+            <div class="col-4 d-flex flex-nowrap">
+                <form method="post" id="search-form">
+                    <div class="input-field  flex-nowrap col-12">
+                        <img src="https://img.icons8.com/ios-filled/32/null/search--v1.png" />
+                        <input id="search" type="text" name="Buscar " required>
+                        <button type="submit" class="btn waves-effect green tooltipped" data-tooltip="Buscar">
+                            <img src="https://img.icons8.com/glyph-neue/40/null/ok--v1.png" />
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4">
+                <div class="input-field center-align col-2">
+                    <button class="border-0 bg-light" onclick="openCreate()"><img src="https://img.icons8.com/ios-glyphs/40/null/add--v1.png" /></button>
+                </div>
+            </div>
         </div>
     </section>
     <script>
