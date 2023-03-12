@@ -2,18 +2,17 @@ function openCreate() {
     const { value: formValues } = Swal.fire({
 
         title: 'Crear Cliente',
-        width: "40%",
+        width: "30%",
         showCancelButton: true,
         allowOutsideClick: false,
         confirmButtonColor: "#9e7676",
         html:
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Nombres" class="swal2-input"></div> <div class="col"><input id="swal-input2" placeholder="Apellidos" class="swal2-input"></div></div>' +
 
-            '<div class="row"><div class="col"><input id="iemail" type="email" placeholder="Correo" class="swal2-input" ></div><div class="col"><input id="swal-input4" placeholder="Cantidad" class="swal2-input"> </div></div>' +                            
+            '<div class="row"><div class="col"><input id="iemail" type="email" placeholder="Correo" class="swal2-input"></div><div class="col"><input id="swal-input4" placeholder="DUI" class="swal2-input"> </div> <div class="col"><input id="swal-input4" placeholder="Usuario" class="swal2-input"> </div> </div>' +
+            '<div class="row"><div class="col"><input id="swal-input1" placeholder="Contraseña" type="password" class="swal2-input"></div></div>'+                            
 
-            '<div class="row"><div class="col"><br><br><select class="form-select" aria-label="Categorias"><option selected>Categorias</option><option value="1">Refrigeradores</option><option value="2">Cocinas</option><option value="3">Lavadoras</option></select></div><div class="col"><br><br><select class="form-select" aria-label="Marcas"><option selected>Marcas</option><option value="1">Sony</option><option value="2">Samsung</option><option value="3">Edragas</option></select> </div></div>' +
-
-            '<br><select class="form-select" aria-label="Estado"><option selected>Estado</option><option value="1">Existente</option><option value="2">Inexistente</option>',               
+            '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option><option value="3">Baneado</option></select></div></div>',
         showconfirmButton: true,
         preConfirm: () => {
             return [
