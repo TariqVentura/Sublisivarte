@@ -322,3 +322,9 @@ body.dark .home .text{
 ol, ul {
     padding-left: 0 !important;
 }
+
+#tabla{
+    border: solid 1px;
+    border-radius: 5px;
+    background-color: #788199;
+}
