@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../resources/css/public.css">
+</head>
+
+<body class="bg-dark">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="navbar bg-primary mt-0 pt-2 px-0" id="nav-info">
+                <div class="container-fluid bg-primary d-flex justify-content-center ">
+                    <!-- desaparece en pantallas pequeñas -->
+                    <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
+                        <li class="list-inline-item opacity-75 mr-2">
+                            <a class="text-light text-small pl-0 pr-2" href="">+503 2345 4657 &nbsp; | &nbsp;</a>
+                        </li>
+                        <li class="list-inline-item opacity-75 mr-2">
+                            <a class="text-light font-size-sm pl-0 pr-2" href=""><img
+                                    src="https://img.icons8.com/ios/24/FFFFFF/mail.png" />&nbsp;
+                                OnlineStore@aparrecchio.com &nbsp; | &nbsp; </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-around">
+                        <div class="d-flex">
+                            <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
+                                <li class="list-inline-item opacity-75 mr-2">
+                                    <a class="text-light text-small pl-0 pr-2" href="">Nosotros &nbsp; |
+                                        &nbsp;</a>
+                                </li>
+                                <li class="list-inline-item opacity-75 mr-2">
+                                    <a class="text-light text-small pl-0 pr-2" href="">Centro de ayuda &nbsp; |
+                                        &nbsp;</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="d-flex flex-nowrap align-self-center">
+                            <a href=""><img
+                                    src="https://img.icons8.com/material-rounded/18/FFFFFF/facebook.png" />&nbsp;</a>
+                            <a href=""><img
+                                    src="https://img.icons8.com/windows/20/FFFFFF/instagram-new.png" />&nbsp;</a>
+                            <a href=""><img src="https://img.icons8.com/ios/16/FFFFFF/whatsapp--v1.png" />&nbsp;</a>
+                            <a href=""><img src="https://img.icons8.com/ios-filled/16/FFFFFF/twitter.png" />&nbsp;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <header></header>
+        </div>
+    </div>
+    <!-- formulario nueva cuenta -->
+    <div class="container my-3">
+        <form class="row g-3 needs-validation" novalidate>
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label text-light">Nombres</label>
+                <input type="text" class="form-control" id="validationCustom01" value="" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom02" class="form-label text-light">Apellidos</label>
+                <input type="text" class="form-control" id="validationCustom02" value="" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustomUsername" class="form-label text-light">Usuario</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input type="text" class="form-control" id="validationCustomUsername"
+                        aria-describedby="inputGroupPrepend" required>
+                    <div class="invalid-feedback">
+                        Please choose a username.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom03" class="form-label text-light">Correo</label>
+                <input type="text" class="form-control" id="validationCustom03" required>
+                <div class="invalid-feedback">
+                    Please provide a valid email.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom03" class="form-label text-light">Dui</label>
+                <input type="text" class="form-control" id="validationCustom03" required>
+                <div class="invalid-feedback">
+                    Please provide a valid email.
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                    <label class="form-check-label text-light" for="invalidCheck text-light">
+                        Acepta los terminos y condiciones
+                    </label>
+                    <div class="invalid-feedback">
+                        You must agree before submitting.
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" type="submit">Aceptar</button>
+            </div>
+        </form>
+    </div>
+    <div class="row bg-primary pt-3 fixed-bottom">
+        <footer></footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="../../controllers/public/nav-login.js"></script>
+</body>
+
+</html>

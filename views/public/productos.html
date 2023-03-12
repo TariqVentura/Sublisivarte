@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../resources/css/public.css">
+</head>
+
+<body class="bg-dark">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="navbar bg-primary mt-0 pt-2 px-0" id="nav-info">
+                <div class="container-fluid bg-primary d-flex justify-content-center ">
+                    <!-- desaparece en pantallas pequeñas -->
+                    <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
+                        <li class="list-inline-item opacity-75 mr-2">
+                            <a class="text-light text-small pl-0 pr-2" href="">+503 2345 4657 &nbsp; | &nbsp;</a>
+                        </li>
+                        <li class="list-inline-item opacity-75 mr-2">
+                            <a class="text-light font-size-sm pl-0 pr-2" href=""><img
+                                    src="https://img.icons8.com/ios/24/FFFFFF/mail.png" />&nbsp;
+                                OnlineStore@aparrecchio.com &nbsp; | &nbsp; </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-around">
+                        <div class="d-flex">
+                            <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
+                                <li class="list-inline-item opacity-75 mr-2">
+                                    <a class="text-light text-small pl-0 pr-2" href="">Nosotros &nbsp; |
+                                        &nbsp;</a>
+                                </li>
+                                <li class="list-inline-item opacity-75 mr-2">
+                                    <a class="text-light text-small pl-0 pr-2" href="">Centro de ayuda &nbsp; |
+                                        &nbsp;</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="d-flex flex-nowrap align-self-center">
+                            <a href=""><img
+                                    src="https://img.icons8.com/material-rounded/18/FFFFFF/facebook.png" />&nbsp;</a>
+                            <a href=""><img
+                                    src="https://img.icons8.com/windows/20/FFFFFF/instagram-new.png" />&nbsp;</a>
+                            <a href=""><img src="https://img.icons8.com/ios/16/FFFFFF/whatsapp--v1.png" />&nbsp;</a>
+                            <a href=""><img src="https://img.icons8.com/ios-filled/16/FFFFFF/twitter.png" />&nbsp;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <header></header>
+        </div>
+        <div class="row">
+            <main>
+                <!-- espacio para productos -->
+                <div class="container">
+                    <div class="row">
+                        <!-- espacio para filtros -->
+                        <div class="col-3 my-5 border-end d-sm-none d-md-block">
+                            <p class="fs-5 fw-bold text-light pb-3">Filtros</p>
+                            <!-- filtro por tipos list group -->
+                            <div class="row mb-3">
+                                <p class="fs-6 pe-1 text-light">Tipo</p>
+                                <div class="col">
+                                    <ul class="list-group mx-2 pb-2">
+                                        <li class="list-group-item bg-primary text-light">
+                                            <input class="form-check-input me-1" type="checkbox" value=""
+                                                aria-label="...">
+                                            Camisas
+                                        </li>
+                                        <li class="list-group-item bg-primary text-light">
+                                            <input class="form-check-input me-1" type="checkbox" value=""
+                                                aria-label="...">
+                                            Hoodies
+                                        </li>
+                                        <li class="list-group-item bg-primary text-light">
+                                            <input class="form-check-input me-1" type="checkbox" value=""
+                                                aria-label="...">
+                                            Camisetas
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- filtro por precio range -->
+                            <div class="row my-3">
+                                <p class="fs-6 pt-3 text-light">Precio</p>
+                                <div class="col">
+                                    <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3">
+                                </div>
+                            </div>
+                            <div class="row d-grid gap-2 mx-auto py-3 mt-3">
+                                <button type="submit" class="btn btn-outline-dark">Aplicar Filtros</button>
+                            </div>
+                        </div>
+                        <!-- espacio para productos -->
+                        <div class="col-9 mt-5">
+                            <div class="row mb-3">
+                                <div class="row d-flex justify-content-around" id="Nuevos-productos">
+                                    <div class="col-2 -align-self-start">
+                                        <div class="card border border-0 bg-dark text-light text-center">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="../public/producto.html" class="btn btn-primary rounded">Ver
+                                                    mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 d-md-none">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="row d-flex justify-content-around" id="Nuevos-productos">
+                                    <div class="col-2 -align-self-start ">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 d-md-none">
+                                        <div class="card border border-0 bg-dark text-light text-center"
+                                            style="width: 13rem;">
+                                            <img src="../../resources/images/not found.jpg" class="card-img-top rounded"
+                                                alt="...">
+                                            <div class="card-body d-grid gap-2">
+                                                <h5 class="card-title">Card title</h5>
+                                                <p class="card-text"></p>
+                                                <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div class="row">
+            <!-- footer -->
+            <footer class="bg-primary d-flex justify-content-around flex-column"></footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+    <script src="../../controllers/public/nav-login.js"></script>
+
+</body>
+
+</html>
