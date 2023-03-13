@@ -1,14 +1,18 @@
 @import 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap';
 
 :root{
-    --dark: #1b1b1b;
+    --bg-dark: #1b1b1b;
     --text: #ffffff;
     --dark-blue: #061e46;
-    --bg-dark: #be4a7f;
+    --bg-primary: #be4a7f;
 }
 
 .bg-dark{
     background-color: var(--bg-dark) !important;
+}
+
+.bg-primary{
+    background-color: var(--bg-primary) !important;
 }
 
 *{
@@ -19,14 +23,14 @@
 
 body{
     min-height: 100vh;
-    background: var(--dark);
+    background: var(--bg-dark);
     background-size: cover;
     background-position: center;
 }
 
 header{
     width: 100%;
-    background: var(--dark);
+    background: var(--bg-dark);
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -57,12 +61,13 @@ a{
 }
 
 .logo-img{
-    height: 5vh !important;
+    height: 7vh !important;
+    padding: 5%;
 }
 
 .navegation a {
     position: relative;
-    font-size: 12px;
+    font-size: 20px;
     color: var(--text);
     text-decoration: none;
     font-weight: 500;
@@ -106,7 +111,7 @@ a{
 
 .navegation .btnLogin-popup:hover{
     background: #fff;
-    color: var(--dark);
+    color: var(--bg-dark);
 
 }
 
@@ -348,7 +353,7 @@ a{
     font-size: 1.2rem;
     text-align: center;
     line-height: 46px;
-    background-color: var(--bg-dark);
+    background-color: var(--bg-primary);
     border-radius: 50%;
     transform: translateY(-50%);  
 }
@@ -390,6 +395,12 @@ a{
 .carousel img:first-child{
     margin-left: 0px;
 }
+
+.mx-auto {
+    margin-right: 0% !important; 
+    margin-left: 0% !important; 
+}
+
 
 @media screen and (max-width:900px) {
     .carousel img{

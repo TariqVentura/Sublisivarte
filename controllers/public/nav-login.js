@@ -2,15 +2,14 @@
 
 
 const header = document.querySelector('header')
+const footer = document.querySelector('footer')
 const logo_img = document.querySelector('.logo-img')
 
 header.innerHTML = `
         <a href="" class="logo"><img src="../../resources/images/logo.png" alt="" class="logo-img"></a>
         <nav class="navegation">
-            <a href="#">Inicio</a>
-            <a href="#">Sobre nosotros</a>
-            <a href="#">Servicios</a>
-            <a href="#">Contactos</a>
+            <a href="../public/index.html">Inicio</a>
+            <a href="../public/productos.html">Productos</a>
             <button class="btnLogin-popup" id="btn-login">Login</button>
         </nav>
         <div class="overlay">
@@ -38,7 +37,7 @@ header.innerHTML = `
                             </div>
                             <button type="submit" class="btn">Login</button>
                             <div class="login-register">
-                                <p>¿No tienes una cuenta? <a href="#" class="register-link">Registrarme</a></p>
+                                <p>¿No tienes una cuenta? <a href="../public/cuenta.html" class="register-link text-light">Registrarme</a></p>
                             </div>
                         </form>
                     </div>
@@ -79,6 +78,36 @@ header.innerHTML = `
             </div>
         </div>
     `;
+
+footer.innerHTML = `
+<div class="d-flex flex-row justify-content-around">
+    <div class="py-3">
+        <p class="fs-3 fw-bold">Sublisivarte</p>
+        <p class="fs-4 text-light">Tendencias</p>
+        <p class="fs-4 text-light">Productos</p>
+        <p class="fs-4 text-light">¿Quienes Somos?</p>
+    </div>
+    <div class="py-3">
+        <p class="fs-3 fw-bold">Tienda</p>
+        <p class="fs-4 text-light">Terminos y condiciones</p>
+        <p class="fs-4 text-light">Politica de Privacidad</p>
+    </div>
+    <div class="py-3">
+        <p class="fs-3 fw-bold">Ayuda</p>
+        <p class="fs-4 text-light">Preguntas frecuentes</p>
+        <p class="fs-4 text-light">Diseñador de camisetas</p>
+    </div>
+    <div class="py-3">
+        <p class="fs-3 fw-bold">Contactanos</p>
+        <p class="fs-4 text-light">Facebook</p>
+        <p class="fs-4 text-light">Instagram</p>
+        <p class="fs-4 text-light">Correo</p>
+    </div>
+</div>
+<div>
+    <p class="fs-3 fw-bold text-light text-center pt-3">© Copyright 2023-2023 Sublisivarte. Todos los Derechos Reservados - Instituto Tecnico Ricaldone</p>
+</div>
+`;
 
 var overlay = document.querySelector('.overlay')
 window.document.getElementById('btn-login').addEventListener('click', function () {
