@@ -21,7 +21,7 @@ header.innerHTML = `
                     </span>
                     <div class="form-box login">
                         <h2>Login</h2>
-                        <form action="">
+                        <form action="#">
                             <div class="imput-box">
                                 <span class="icon"><ion-icon name="mail"></ion-icon></span>
                                 <input type="email" required>
@@ -42,6 +42,39 @@ header.innerHTML = `
                             </div>
                         </form>
                     </div>
+
+            <div class="form-box registrate">
+                <h2>Registarte</h2>
+                <form action="#">
+                    <div class="imput-box">
+                        <span class="icon"><ion-icon name="person"></ion-icon></span>
+                        <input type="name" required>
+                        <label for="">Nombre</label>
+                    </div>
+                    <div class="imput-box">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <input type="email" required>
+                        <label for="">Email</label>
+                    </div>
+                    <div class="imput-box">
+                        <span class="icon"><ion-icon name="card-outline"></ion-icon></span>
+                        <input type="text" required>
+                        <label for="">DUI</label>
+                    </div>
+                    <div class="imput-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" required>
+                        <label for="">Contraseña</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label for=""><input type="checkbox"> Accepto los terminos y condiciones</label>
+                    </div>
+                    <button type="submit" class="btn">Registrarme</button>
+                    <div class="login-register">
+                        <p>¿Ya tienes una cuenta? <a href="#" class="login-link">Login</a></p>
+                    </div>
+                </form>
+            </div>
                 </div>
             </div>
         </div>
