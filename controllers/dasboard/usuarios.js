@@ -1,6 +1,6 @@
 function openCreate() {
     const { value: formValues } = Swal.fire({
-
+        // Se configuran los atributos de la ventana de alerta. 
         title: 'Crear Usuario',
         width: "35%",
         showCancelButton: true,
