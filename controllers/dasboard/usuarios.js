@@ -29,3 +29,27 @@ function openCreate() {
         Swal.fire(JSON.stringify(formValues))
     }
 }
+
+function openCreate3() {
+    Swal.fire({
+        title: '¿Desea eliminar este usuario?',
+        width: "30%",
+        /* Pregunta de seguridad para la eliminacion de un producto----*/
+        html:
+          '<div><label for="input-name">El producto seleccionado sera eliminado permanentemente</label></div>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: "red",
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const product = result.value;
+          // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
+          Swal.fire({
+            title: 'Usuario eliminado',
+            icon: 'success'
+          });
+        }
+      });
+}
