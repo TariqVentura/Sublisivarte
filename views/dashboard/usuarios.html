@@ -98,6 +98,7 @@
                 <h2>Usuarios</h2>
             </div>
             <div class="row justify-content-md-center">
+                <!--Buscador-->
                 <div class="col-md-5">
                     <form method="post" id="search-form">
                         <div class="input-field  flex-nowrap col-12">
@@ -109,18 +110,22 @@
                         </div>
                     </form>
                 </div>
+                <!--Botón de añadir que abre un modal para crear usuario-->
                 <div class="col-md-3">
                     <button class="border-0 " onclick="openCreate()"><img
                         src="https://img.icons8.com/ios-glyphs/40/null/add--v1.png"/></button>
                 </div>
+                <!--Botón que crea reportes-->
                 <div class="col-md-4">
                     Reportes
                     <button class="border-0"><img
                             src="https://img.icons8.com/fluency-systems-filled/40/null/report-card.png" /></button>
                 </div>
             </div><br>
+            <!--tabla de contenido-->
             <div class="row"id="tabla">                
                     <table>
+                        <!--Encabezado de la tabla-->
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -132,6 +137,7 @@
                                 <th></th>                            
                             </tr>
                         </thead>
+                        <!--Contenido de la tabla-->
                         <tbody>
                             <tr>
                                 <td>01</td>
@@ -140,6 +146,7 @@
                                 <td>alejandro@gmail.com</td>
                                 <td>Alejo321</td>
                                 <td>Activo</td>
+                                <!--Botones para actualizar y desactivar un usuario-->
                                 <td><img src="https://img.icons8.com/ios-filled/40/null/minus.png" onclick="openCreate3()"/><img src="../../resources/images/iconos/editar.png" onclick="editarusuario()"></td>
                             </tr>
                         </tbody>
