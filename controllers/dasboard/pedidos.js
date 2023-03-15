@@ -86,3 +86,18 @@ function eliminarpedido() {
         }
       });
 }
+
+function generarPDF() {
+    // Crea un objeto jsPDF
+    const doc = new jsPDF();
+  
+    // Selecciona la tabla y la convierte en un string de HTML
+    const table = document.querySelector('table');
+    const tableHtml = table.outerHTML;
+  
+    // Genera el informe PDF a partir del string de HTML
+    doc.fromHTML(tableHtml, 15, 15);
+  
+    // Guarda el informe PDF
+    doc.save('informe.pdf');
+  }
