@@ -328,3 +328,8 @@ ol, ul {
     border-radius: 5px;
     background-color: #788199;
 }
+
+img:hover {
+    cursor: pointer;
+    pointer-events: auto;
+}
