@@ -32,48 +32,47 @@ header.innerHTML = `
                                 <label for="">Contraseña</label>
                             </div>
                             <div class="remember-forgot">
-                                <label for=""><input type="checkbox"> Recordarme</label>
-                                <a href="#">Olvidé mi contraseña</a>
+                                <label for="" class="text-light"><input type="checkbox"> Recordarme</label>
+                                <a href="#" class="text-light">Olvidé mi contraseña</a>
                             </div>
                             <button type="submit" class="btn">Login</button>
                             <div class="login-register">
-                                <p>¿No tienes una cuenta? <a href="../public/cuenta.html" class="register-link text-light">Registrarme</a></p>
+                                <p class="text-light">¿No tienes una cuenta? <a href="../public/cuenta.html" class="register-link text-light">Registrarme</a></p>
                             </div>
                         </form>
                     </div>
-
-            <div class="form-box registrate">
-                <h2>Registarte</h2>
-                <form action="#">
-                    <div class="imput-box">
-                        <span class="icon"><ion-icon name="person"></ion-icon></span>
-                        <input type="name" required>
-                        <label for="">Nombre</label>
+                    <div class="form-box registrate">
+                        <h2>Registarte</h2>
+                        <form action="#">
+                            <div class="imput-box">
+                                <span class="icon"><ion-icon name="person"></ion-icon></span>
+                                <input type="name" required>
+                                <label for="">Nombre</label>
+                            </div>
+                            <div class="imput-box">
+                                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                                <input type="email" required>
+                                <label for="">Email</label>
+                            </div>
+                            <div class="imput-box">
+                                <span class="icon"><ion-icon name="card-outline"></ion-icon></span>
+                                <input type="text" required>
+                                <label for="">DUI</label>
+                            </div>
+                            <div class="imput-box">
+                                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                                <input type="password" required>
+                                <label for="">Contraseña</label>
+                            </div>
+                            <div class="remember-forgot">
+                                <label for="" class="text-light"><input type="checkbox"> Accepto los terminos y condiciones</label>
+                            </div>
+                            <button type="submit" class="btn">Registrarme</button>
+                            <div class="login-register">
+                                <p class="text-light">¿Ya tienes una cuenta? <a href="#" class="login-link text-light">Login</a></p>
+                            </div>
+                        </form>
                     </div>
-                    <div class="imput-box">
-                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                        <input type="email" required>
-                        <label for="">Email</label>
-                    </div>
-                    <div class="imput-box">
-                        <span class="icon"><ion-icon name="card-outline"></ion-icon></span>
-                        <input type="text" required>
-                        <label for="">DUI</label>
-                    </div>
-                    <div class="imput-box">
-                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input type="password" required>
-                        <label for="">Contraseña</label>
-                    </div>
-                    <div class="remember-forgot">
-                        <label for=""><input type="checkbox"> Accepto los terminos y condiciones</label>
-                    </div>
-                    <button type="submit" class="btn">Registrarme</button>
-                    <div class="login-register">
-                        <p>¿Ya tienes una cuenta? <a href="#" class="login-link">Login</a></p>
-                    </div>
-                </form>
-            </div>
                 </div>
             </div>
         </div>
