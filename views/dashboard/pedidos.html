@@ -23,7 +23,7 @@
             </div>
             <i class='bx bx-chevron-right toggle'></i>
         </header>
-
+        <!--Enlaces dashboard-->
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
@@ -33,30 +33,35 @@
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
+                    <!--Enlace a la página de pedidos-->
                     <li class="nav-link">
                         <a href="../dashboard/pedidos.html">
                             <i><img src="https://img.icons8.com/ios-glyphs/40/null/shopping-cart--v1.png" /></i>
                             <span class="text nav-text">Pedidos</span>
                         </a>
                     </li>
+                    <!--Enlace a la página de clientes-->
                     <li class="nav-link">
                         <a href="../dashboard/clientes.html">
                             <i><img src="https://img.icons8.com/sf-black-filled/48/null/conference-call.png" /></i>
                             <span class="text nav-text">Clientes</span>
                         </a>
                     </li>
+                    <!--Enlace a la página de productos-->
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="../dashboard/productos.html">
                             <i><img src="https://img.icons8.com/material-sharp/42/null/package.png" /></i>
                             <span class="text nav-text">Productos</span>
                         </a>
                     </li>
+                    <!--Enlace a la página de usuarios-->
                     <li class="nav-link">
                         <a href="../dashboard/usuarios.html">
                             <i><img src="https://img.icons8.com/fluency-systems-filled/48/null/user.png" /></i>
                             <span class="text nav-text">Usuarios</span>
                         </a>
                     </li>
+                    <!--Enlace a la página de categorias-->
                     <li class="nav-link">
                         <a href="#">
                             <i><img
@@ -67,6 +72,7 @@
                 </ul>
             </div>
             <div class="bottom-content">
+                <!--Logout/cierre de sesión-->
                 <li class="">
                     <a href="#">
                         <i><img
@@ -74,6 +80,7 @@
                         <span class="text nav-text">Logout</span>
                     </a>
                 </li>
+                <!--Boton de modo oscuro-->
                 <li class="mode">
                     <div class="sun-moon">
                         <i class='bx bx-moon icon moon'></i>
@@ -93,6 +100,7 @@
                 <h2>Pedidos</h2>
             </div>
             <div class="row justify-content-md-center">
+                <!--Buscador-->
                 <div class="col-md-5">
                     <form method="post" id="search-form">
                         <div class="input-field  flex-nowrap col-12">
@@ -104,20 +112,22 @@
                         </div>
                     </form>
                 </div>
+                <!--Botón de añadir que abre un modal para crear pedido-->
                 <div class="col-md-3">
-
                     <button class="border-0 " onclick="openCreate()"><img
-                            src="https://img.icons8.com/ios-glyphs/40/null/add--v1.png" /></button>
-
+                        src="https://img.icons8.com/ios-glyphs/40/null/add--v1.png" /></button>
                 </div>
+                <!--Botón para crear reportes-->
                 <div class="col-md-4">
                     Reportes
                     <button class="border-0"><img
-                            src="https://img.icons8.com/fluency-systems-filled/40/null/report-card.png" /></button>
+                        src="https://img.icons8.com/fluency-systems-filled/40/null/report-card.png" /></button>
                 </div>
             </div><br>
+            <!--tabla de contenido-->
             <div class="row"id="tabla">                
                     <table>
+                        <!--Encabezado de la tabla-->
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -126,13 +136,15 @@
                                 <th>Estado del pedido</th>                           
                             </tr>
                         </thead>
+                        <!--Contenido de la tabla-->
                         <tbody>
                             <tr>
                                 <td>01</td>
                                 <td>12/01/21</td>
                                 <td>Mario Guzmán</td>
                                 <td>Entregado</td>
-                                <td><img src="https://img.icons8.com/ios-filled/40/null/minus.png"/><img src="../../resources/images/iconos/editar.png"></td>
+                                <!--Botones para actualizar y desactivar un pedido-->
+                                <td><img src="https://img.icons8.com/ios-filled/40/null/minus.png" onclick="eliminarpedido()"/><img src="../../resources/images/iconos/editar.png" onclick="editarpedido()"></td>
                             </tr>
                         </tbody>
                     </table>                                
