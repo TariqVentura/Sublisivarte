@@ -19,18 +19,23 @@ function openCreate() {
         confirmButtonText: "Agregar",
         cancelButtonText: "Cancelar",
         preConfirm: () => {
-            return [
+            /* return [
                 document.getElementById('swal-input1').value,
                 document.getElementById('swal-input2').value,
                 document.getElementById('swal-input3').value,
                 document.getElementById('swal-input4').value
-            ]
+            ] */
         }
-    })
-
-    if (formValues) {
-        Swal.fire(JSON.stringify(formValues))
-    }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const product = result.value;
+            // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
+            Swal.fire({
+                title: 'Cliente agregado',
+                icon: 'success'
+            });
+        }
+    });
 }
 
 //Alerta para Actualizar los Clientes
@@ -54,18 +59,23 @@ function openUpdate() {
         confirmButtonText: "Actualizar",
         cancelButtonText: "Cancelar",
         preConfirm: () => {
-            return [
+            /* return [
                 document.getElementById('swal-input1').value,
                 document.getElementById('swal-input2').value,
                 document.getElementById('swal-input3').value,
                 document.getElementById('swal-input4').value
-            ]
+            ] */
         }
-    })
-
-    if (formValues) {
-        Swal.fire(JSON.stringify(formValues))
-    }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const product = result.value;
+            // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
+            Swal.fire({
+                title: 'Cliente actualizado',
+                icon: 'success'
+            });
+        }
+    });
 }
 
 //Alerta para eliminar clientes
