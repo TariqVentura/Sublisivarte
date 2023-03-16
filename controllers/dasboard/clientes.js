@@ -6,7 +6,7 @@ function openCreate() {
         width: "30%",
         showCancelButton: true,
         allowOutsideClick: false,
-        confirmButtonColor: "#9e7676",
+        confirmButtonColor: "green" ,
         html:
         // son los inputs de la alerta para crear clientes
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Nombres" class="swal2-input"></div> <div class="col"><input id="swal-input2" placeholder="Apellidos" class="swal2-input"></div></div>' +
@@ -16,6 +16,7 @@ function openCreate() {
 
             '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option><option value="3">Baneado</option></select></div></div>',
         showconfirmButton: true,
+        confirmButtonText: "Agregar",
         preConfirm: () => {
             return [
                 document.getElementById('swal-input1').value,
@@ -39,7 +40,7 @@ function openUpdate() {
         width: "30%",
         showCancelButton: true,
         allowOutsideClick: false,
-        confirmButtonColor: "#9e7676",
+        confirmButtonColor: "green",
         html:
         //inputs para actualizar los clientes
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Nombres" class="swal2-input"></div> <div class="col"><input id="swal-input2" placeholder="Apellidos" class="swal2-input"></div></div>' +
@@ -49,6 +50,7 @@ function openUpdate() {
 
             '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option><option value="3">Baneado</option></select></div></div>',
         showconfirmButton: true,
+        confirmButtonText: "Actualizar",
         preConfirm: () => {
             return [
                 document.getElementById('swal-input1').value,
