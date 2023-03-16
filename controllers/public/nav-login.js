@@ -6,7 +6,7 @@ const footer = document.querySelector('footer')
 const logo_img = document.querySelector('.logo-img')
 
 header.innerHTML = `
-        <a href="" class="logo"><img src="../../resources/images/logo.png" alt="" class="logo-img"></a>
+        <a href="" class="logo mb-0 d-none d-lg-inline-block"><img src="../../resources/images/logo.png" alt="" class="logo-img"></a>
         <nav class="navegation">
             <a href="../public/index.html">Inicio</a>
             <a href="../public/productos.html">Productos</a>
@@ -79,32 +79,32 @@ header.innerHTML = `
     `;
 
 footer.innerHTML = `
-<div class="d-flex flex-row justify-content-around">
+<div class="d-flex flex-row justify-content-around" id="footer-content">
     <div class="py-3">
-        <p class="fs-3 fw-bold">Sublisivarte</p>
-        <p class="fs-4 text-light">Tendencias</p>
-        <p class="fs-4 text-light">Productos</p>
-        <p class="fs-4 text-light">¿Quienes Somos?</p>
+        <p class="fs-4 fw-bold">Sublisivarte</p>
+        <p class="fs-6 text-light">Tendencias</p>
+        <p class="fs-6 text-light">Productos</p>
+        <p class="fs-6 text-light">¿Quienes Somos?</p>
     </div>
     <div class="py-3">
-        <p class="fs-3 fw-bold">Tienda</p>
-        <p class="fs-4 text-light">Terminos y condiciones</p>
-        <p class="fs-4 text-light">Politica de Privacidad</p>
+        <p class="fs-4 fw-bold">Tienda</p>
+        <p class="fs-6 text-light">Terminos y condiciones</p>
+        <p class="fs-6 text-light">Politica de Privacidad</p>
     </div>
     <div class="py-3">
-        <p class="fs-3 fw-bold">Ayuda</p>
-        <p class="fs-4 text-light">Preguntas frecuentes</p>
-        <p class="fs-4 text-light">Diseñador de camisetas</p>
+        <p class="fs-4 fw-bold">Ayuda</p>
+        <p class="fs-6 text-light">Preguntas frecuentes</p>
+        <p class="fs-6 text-light">Diseñador de camisetas</p>
     </div>
     <div class="py-3">
-        <p class="fs-3 fw-bold">Contactanos</p>
-        <p class="fs-4 text-light">Facebook</p>
-        <p class="fs-4 text-light">Instagram</p>
-        <p class="fs-4 text-light">Correo</p>
+        <p class="fs-4 fw-bold">Contactanos</p>
+        <p class="fs-6 text-light">Facebook</p>
+        <p class="fs-6 text-light">Instagram</p>
+        <p class="fs-6 text-light">Correo</p>
     </div>
 </div>
 <div>
-    <p class="fs-3 fw-bold text-light text-center pt-3">© Copyright 2023-2023 Sublisivarte. Todos los Derechos Reservados - Instituto Tecnico Ricaldone</p>
+    <p class="fs-5 fw-bold text-light text-center pt-3">© Copyright 2023-2023 Sublisivarte. Todos los Derechos Reservados - Instituto Tecnico Ricaldone</p>
 </div>
 `;
 
