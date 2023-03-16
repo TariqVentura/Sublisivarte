@@ -14,18 +14,23 @@ function openCreate() {
         confirmButtonText: "Agregar",
         cancelButtonText: "Cancelar",
         preConfirm: () => {
-            return [
+            /* return [
                 document.getElementById('swal-input1').value,
                 document.getElementById('swal-input2').value,
                 document.getElementById('swal-input3').value,
                 document.getElementById('swal-input4').value
-            ]
+            ] */
         }
-    })
-
-    if (formValues) {
-        Swal.fire(JSON.stringify(formValues))
+    }).then((result) => {
+    if (result.isConfirmed) {
+        const product = result.value;
+        // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
+        Swal.fire({
+            title: 'Categoría agregada',
+            icon: 'success'
+        });
     }
+});
 }
 
 function editarcategoria() {
@@ -42,12 +47,12 @@ function editarcategoria() {
         confirmButtonText: "Actualizar",
         cancelButtonText: "Cancelar",
         preConfirm: () => {
-            return {
+            /* return {
                 name: document.getElementById('swal-input1').value,
                 date: document.getElementById('swal-input2').value,
                 client: document.getElementById('swal-input3').value,
                 stock: document.getElementById('input-stock').value,
-            };
+            }; */
         }
     }).then((result) => {
         if (result.isConfirmed) {
