@@ -9,7 +9,7 @@ function openCreate() {
         html:
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Categoria" class="swal2-input"></div> <div class="col"><br><input id="swal-input2" placeholder="Tipo de categoria" class="swal2-input"></div></div>' +
 
-            '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option><option value="3">Baneado</option></select></div></div><br>',
+            '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option></select></div></div><br>',
         showconfirmButton: true,
         preConfirm: () => {
             return [
@@ -34,7 +34,7 @@ function editarcategoria() {
         html:
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Categoria" class="swal2-input"></div> <div class="col"><br><input id="swal-input2" placeholder="Tipo de categoria" class="swal2-input"></div></div>' +
 
-            '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option><option value="3">Baneado</option></select></div></div><br>',
+            '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option></select></div></div><br>',
         showCancelButton: true,
         confirmButtonColor: "green",
         confirmButtonText: "Actualizar",
@@ -76,7 +76,7 @@ function eliminarcategoria() {
           const product = result.value;
           // Hacer algo con los valores del pedido (por ejemplo, enviarlos al servidor)
           Swal.fire({
-            title: 'Categpría eliminada',
+            title: 'Categoría eliminada',
             icon: 'success'
           });
         }
