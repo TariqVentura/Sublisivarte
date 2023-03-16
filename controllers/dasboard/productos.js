@@ -48,7 +48,7 @@ function openCreate2() {
             '<div><label for="input-image">Imagen:</label><input id="input-image" type="file" class="swal2-file"></div>',
         showCancelButton: true,
         confirmButtonColor: "green",
-        confirmButtonText: "Editar",
+        confirmButtonText: "Actualizar",
         cancelButtonText: "Cancelar",
         preConfirm: () => {
             return {
