@@ -10,7 +10,9 @@ function openCreate() {
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Categoria" class="swal2-input"></div> <div class="col"><br><input id="swal-input2" placeholder="Tipo de categoria" class="swal2-input"></div></div>' +
 
             '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option></select></div></div><br>',
-        showconfirmButton: true,
+       
+        confirmButtonText: "Agregar",
+        cancelButtonText: "Cancelar",
         preConfirm: () => {
             return [
                 document.getElementById('swal-input1').value,
