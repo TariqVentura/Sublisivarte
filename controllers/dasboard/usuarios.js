@@ -53,13 +53,13 @@ function editarusuario() {
         confirmButtonText: "Actualizar",
         cancelButtonText: "Cancelar",
         preConfirm: () => {
-           /*  return {
-                name: document.getElementById('input-name').value,
-                description: document.getElementById('input-description').value,
-                price: document.getElementById('input-price').value,
-                stock: document.getElementById('input-stock').value,
-                image: document.getElementById('input-image').files[0]
-            }; */
+            /*  return {
+                 name: document.getElementById('input-name').value,
+                 description: document.getElementById('input-description').value,
+                 price: document.getElementById('input-price').value,
+                 stock: document.getElementById('input-stock').value,
+                 image: document.getElementById('input-image').files[0]
+             }; */
         }
     }).then((result) => {
         if (result.isConfirmed) {
