@@ -80,7 +80,7 @@ function eliminarpedido() {
           const product = result.value;
           // Hacer algo con los valores del pedido (por ejemplo, enviarlos al servidor)
           Swal.fire({
-            title: 'Usuario eliminado',
+            title: 'Producto eliminado',
             icon: 'success'
           });
         }
