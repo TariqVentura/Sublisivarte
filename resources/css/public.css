@@ -417,7 +417,7 @@ a {
     .carousel img {
         width: calc(100% / 2);
     }
-    
+
     .row {
         display: flex;
         flex-direction: column !important;
