@@ -21,6 +21,27 @@ body {
     border: 0;
     color: #fff;
     font-size: 200%;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: .5s;
+}
+
+.form-signin .btn-lg:hover{
+    color: #2b2b2b;
+    background: #fff;
+
+}
+
+.form-signin a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.form-signin a:hover{
+    color: #2b2b2b;
 }
 
 .form-signin .text-muted {
@@ -46,10 +67,20 @@ body {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+    background-color: transparent;
+    color: #fff;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 .form-signin input[type="password"] {
     margin-bottom: 0px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: transparent;
+    color: #fff;
 }
