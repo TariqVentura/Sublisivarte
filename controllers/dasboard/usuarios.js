@@ -5,7 +5,7 @@ function openCreate() {
         width: "35%",
         showCancelButton: true,
         allowOutsideClick: false,
-        confirmButtonColor: "#6384AA",
+        confirmButtonColor: "green",
         html:
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Nombres" class="swal2-input"></div> <div class="col"><input id="swal-input2" placeholder="Apellidos" class="swal2-input"></div></div>' +
 
@@ -35,7 +35,7 @@ function editarusuario() {
     Swal.fire({
         title: 'Editar usuario',
         width: "30%",
-        confirmButtonColor: "#6384AA",
+        confirmButtonColor: "green",
         /* Campos del modal editar que seran enviados*/
         html:
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Nombres" class="swal2-input"></div> <div class="col"><input id="swal-input2" placeholder="Apellidos" class="swal2-input"></div></div>' +
