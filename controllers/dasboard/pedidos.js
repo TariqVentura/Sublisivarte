@@ -5,7 +5,7 @@ function openCreate() {
         width: "35%",
         showCancelButton: true,
         allowOutsideClick: false,
-        confirmButtonColor: "#6384AA",
+        confirmButtonColor: "green",
         html:
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="N° Factura" class="swal2-input" readonly></div> <div class="col"><br><h6>Fecha del pedido<h6><input id="swal-input2" type="date" placeholder="Fecha del pedido" class="swal2-input"></div></div>' +
 
