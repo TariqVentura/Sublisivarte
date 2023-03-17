@@ -333,3 +333,13 @@ img:hover {
     cursor: pointer;
     pointer-events: auto;
 }
+
+#charts{
+    margin-left:15px; 
+}
+@media (max-width: 1300px) {
+    #charts{
+        display: flex;
+        flex-direction: column !important;
+    }
+}
