@@ -17,6 +17,7 @@ function openCreate() {
             '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option><option value="3">Baneado</option></select></div></div>',
         showconfirmButton: true,
         confirmButtonText: "Agregar",
+        cancelButtonText: "Cancelar",
         preConfirm: () => {
             return [
                 document.getElementById('swal-input1').value,
@@ -51,6 +52,7 @@ function openUpdate() {
             '<div class="row"><div class="col"><br><select class="form-select" aria-label="Categorias"><option selected>Estado</option><option value="1">Activo</option><option value="2">Inactivo</option><option value="3">Baneado</option></select></div></div>',
         showconfirmButton: true,
         confirmButtonText: "Actualizar",
+        cancelButtonText: "Cancelar",
         preConfirm: () => {
             return [
                 document.getElementById('swal-input1').value,
