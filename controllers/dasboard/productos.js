@@ -13,6 +13,7 @@ function openCreate() {
         confirmButtonColor: "green",
         confirmButtonText: "Agregar",
         cancelButtonText: "Cancelar",
+        
         preConfirm: () => {
             return {
                 name: document.getElementById('input-name').value,
