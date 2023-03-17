@@ -1,25 +1,25 @@
-function createAccount(){
+function createAccount() {
     Swal.fire({
         title: 'Cuenta creada exitosamente',
         icon: 'success',
         showClass: {
-          popup: 'animate__animated animate__fadeInDown'
+            popup: 'animate__animated animate__fadeInDown'
         },
         hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
+            popup: 'animate__animated animate__fadeOutUp'
         }
-      })
+    })
 }
 
-function Pedido(){
+function Pedido() {
     Swal.fire({
         title: 'Pedido realizado exitosamente',
         icon: 'success',
         showClass: {
-          popup: 'animate__animated animate__fadeInDown'
+            popup: 'animate__animated animate__fadeInDown'
         },
         hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
+            popup: 'animate__animated animate__fadeOutUp'
         }
-      })
+    })
 }

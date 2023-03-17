@@ -13,7 +13,7 @@ function openCreate() {
         confirmButtonColor: "green",
         confirmButtonText: "Agregar",
         cancelButtonText: "Cancelar",
-        
+
         preConfirm: () => {
             return {
                 name: document.getElementById('input-name').value,
@@ -77,20 +77,20 @@ function openCreate3() {
         width: "30%",
         /* Pregunta de seguridad para la eliminacion de un producto----*/
         html:
-          '<div><label for="input-name">El producto seleccionado sera eliminado permanentemente</label></div>',
+            '<div><label for="input-name">El producto seleccionado sera eliminado permanentemente</label></div>',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: "red",
         confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
-          const product = result.value;
-          // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
-          Swal.fire({
-            title: 'Producto eliminado',
-            icon: 'success'
-          });
+            const product = result.value;
+            // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
+            Swal.fire({
+                title: 'Producto eliminado',
+                icon: 'success'
+            });
         }
-      });
+    });
 }

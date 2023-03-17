@@ -1,7 +1,7 @@
 const carousel = document.querySelector('.carousel')
 firstImage = carousel.querySelectorAll('img')[0]
 arrowIcon = document.querySelectorAll('.wrapper-carousel i')
- 
+
 let isDragStart = false, isDragging = false, prevPageX, prevScroleft, positionDiff
 let firstImageWidth = firstImage.clientWidth + 14
 let scrollWidth = carousel.scrollWidth - carousel.clientWidth
@@ -25,19 +25,19 @@ const registerLink = document.querySelector('.register-link');
 const btnPopup = document.querySelector('.btnLogin-popup');
 const iconClose = document.querySelector('.icon-close');
 
-registerLink.addEventListener('click', ()=> {
+registerLink.addEventListener('click', () => {
     wrapper.classList.add('active');
 })
 
-loginLink.addEventListener('click', ()=> {
+loginLink.addEventListener('click', () => {
     wrapper.classList.remove('active');
 })
 
-btnPopup.addEventListener('click', ()=> {
+btnPopup.addEventListener('click', () => {
     wrapper.classList.add('active-popup');
 })
 
-iconClose.addEventListener('click', ()=> {
+iconClose.addEventListener('click', () => {
     wrapper.classList.remove('active-popup');
 })
 
@@ -47,9 +47,9 @@ const autoSlide = () => {
     positionDiff = Math.abs(positionDiff)
     let valDifference = firstImageWidth - positionDiff
     if (carousel.scrollLeft > prevScroleft) {
-        return carousel.scrollLeft += positionDiff > firstImageWidth / 3 ? valDifference: positionDiff
+        return carousel.scrollLeft += positionDiff > firstImageWidth / 3 ? valDifference : positionDiff
     }
-    carousel.scrollLeft -= positionDiff > firstImageWidth / 3 ? valDifference: positionDiff
+    carousel.scrollLeft -= positionDiff > firstImageWidth / 3 ? valDifference : positionDiff
 }
 
 const dragStart = (e) => {
@@ -59,7 +59,7 @@ const dragStart = (e) => {
 }
 
 const draggin = (e) => {
-    if(!isDragStart) return;
+    if (!isDragStart) return;
     e.preventDefault()
     isDragging = true
     carousel.classList.add('dragging')
@@ -72,7 +72,7 @@ const dragStop = () => {
     isDragStart = false
     carousel.classList.remove('dragging')
 
-    if (!isDragging)return 
+    if (!isDragging) return
     isDragging = false
     autoSlide()
 }
