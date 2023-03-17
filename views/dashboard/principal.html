@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <!-- codigo de el dashbard -->
     <nav class="sidebar close">
         <header>
             <div class="image-text">
@@ -102,12 +103,13 @@
         </div>
 
     </nav>
-
+<!-- es esta parte sale todo el contenido el dashboard(Pagina de inicio) -->
     <div class="home">
         <div class="text">
             <br>
             <h2>Menú Principal</h2>
         </div>
+        <!-- en este apartado esta la forma de como mandar a llamar las graficas -->
         <div class="row d-flex justify-content-center">
             <div class="col-sm-12 col-md-4">
                 <div class="chart-container">
@@ -122,7 +124,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <!-- es el codigo de como crer las graficas -->
     <script>
         const ctx = document.getElementById('myChart');
 
@@ -170,6 +172,7 @@
         });
     </script>
 
+    <!-- script de el menu o sidebar (buscar la forma de pasarlo a la parte de controllers) -->
     <script>
         const body = document.querySelector('body'),
             sidebar = body.querySelector('nav'),
