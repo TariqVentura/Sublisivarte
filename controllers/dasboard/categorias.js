@@ -2,7 +2,7 @@ function openCreate() {
     const { value: formValues } = Swal.fire({
 
         title: 'Crear categoria',
-        width: "35%",
+        width: "400px",
         showCancelButton: true,
         allowOutsideClick: false,
         confirmButtonColor: "green",
@@ -36,7 +36,7 @@ function openCreate() {
 function editarcategoria() {
     Swal.fire({
         title: 'Editar categoria',
-        width: "30%",
+        width: "400px",
         /* Campos del modal editar que seran enviados*/
         html:
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Categoria" class="swal2-input"></div> <div class="col"><br><input id="swal-input2" placeholder="Tipo de categoria" class="swal2-input"></div></div>' +
@@ -69,7 +69,7 @@ function editarcategoria() {
 function eliminarcategoria() {
     Swal.fire({
         title: '¿Desea eliminar esta categoría?',
-        width: "30%",
+        width: "400px",
         /* Pregunta de seguridad para la eliminacion de un pedido----*/
         html:
             '<div><label for="input-name">La categoría seleccionada sera eliminada permanentemente</label></div>',
