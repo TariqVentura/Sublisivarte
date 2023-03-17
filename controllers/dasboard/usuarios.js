@@ -17,18 +17,23 @@ function openCreate() {
         confirmButtonText: "Agregar",
         cancelButtonText: "Cancelar",
         preConfirm: () => {
-            return [
+            /* return [
                 document.getElementById('swal-input1').value,
                 document.getElementById('swal-input2').value,
                 document.getElementById('swal-input3').value,
                 document.getElementById('swal-input4').value
-            ]
+            ] */
         }
-    })
-
-    if (formValues) {
-        Swal.fire(JSON.stringify(formValues))
-    }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const product = result.value;
+            // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
+            Swal.fire({
+                title: 'Usuario agregado',
+                icon: 'success'
+            });
+        }
+    });
 }
 
 function editarusuario() {
@@ -48,13 +53,13 @@ function editarusuario() {
         confirmButtonText: "Actualizar",
         cancelButtonText: "Cancelar",
         preConfirm: () => {
-            return {
+           /*  return {
                 name: document.getElementById('input-name').value,
                 description: document.getElementById('input-description').value,
                 price: document.getElementById('input-price').value,
                 stock: document.getElementById('input-stock').value,
                 image: document.getElementById('input-image').files[0]
-            };
+            }; */
         }
     }).then((result) => {
         if (result.isConfirmed) {
