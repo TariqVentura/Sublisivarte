@@ -1,3 +1,4 @@
+//Alerta para Crear clientes
 function openCreate() {
     const { value: formValues } = Swal.fire({
 
@@ -7,6 +8,7 @@ function openCreate() {
         allowOutsideClick: false,
         confirmButtonColor: "#9e7676",
         html:
+        // son los inputs de la alerta para crear clientes
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Nombres" class="swal2-input"></div> <div class="col"><input id="swal-input2" placeholder="Apellidos" class="swal2-input"></div></div>' +
 
             '<div class="row"><div class="col"><input id="iemail" type="email" placeholder="Correo" class="swal2-input"></div><div class="col"><input id="swal-input4" placeholder="DUI" type="number" class="swal2-input"> </div> <div class="col"><input id="swal-input4" placeholder="Usuario" class="swal2-input"> </div> </div>' +
@@ -29,6 +31,7 @@ function openCreate() {
     }
 }
 
+//Alerta para Actualizar los Clientes
 function openUpdate() {
     const { value: formValues } = Swal.fire({
 
@@ -38,6 +41,7 @@ function openUpdate() {
         allowOutsideClick: false,
         confirmButtonColor: "#9e7676",
         html:
+        //inputs para actualizar los clientes
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="Nombres" class="swal2-input"></div> <div class="col"><input id="swal-input2" placeholder="Apellidos" class="swal2-input"></div></div>' +
 
             '<div class="row"><div class="col"><input id="iemail" type="email" placeholder="Correo" class="swal2-input"></div><div class="col"><input id="swal-input4" placeholder="DUI" type="number" class="swal2-input"> </div> <div class="col"><input id="swal-input4" placeholder="Usuario" class="swal2-input"> </div> </div>' +
@@ -60,6 +64,7 @@ function openUpdate() {
     }
 }
 
+//Alerta para eliminar clientes
 function openDelete() {
     Swal.fire({
         title: '¿Desea eliminar este Cliente?',

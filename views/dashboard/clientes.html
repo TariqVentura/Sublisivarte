@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <!-- codigo de el dashbard -->
     <nav class="sidebar close">
         <header>
             <div class="image-text">
@@ -87,6 +88,7 @@
             </div>
         </div>
     </nav>
+    <!-- es esta parte sale todo el contenido de los clientes (osea sus datos) -->
     <section class="home">
         <div class="container">
             <div class="text">
@@ -105,7 +107,7 @@
                     </form>
                 </div>
                 <div class="col-md-3">
-
+                    <!-- el evento openCreate es para que la alerta salga y de la opcion de crear Cliente -->
                     <button class="border-0 " onclick="openCreate()"><img
                             src="https://img.icons8.com/ios-glyphs/40/null/add--v1.png" /></button>
 
@@ -116,6 +118,7 @@
                             src="https://img.icons8.com/fluency-systems-filled/40/null/report-card.png" /></button>
                 </div>
             </div><br>
+            <!-- tabla donde se mostraran los datos -->
             <div class="row"id="tabla">                
                     <table>
                         <thead>
@@ -139,7 +142,8 @@
                                 <td>Ariel123</td>
                                 <td>123</td>
                                 <td>Activo</td>
-                                <td><img src="https://img.icons8.com/ios-filled/40/null/minus.png" / onclick="openDelete()"><img src="../../resources/images/iconos/editar.png" onclick="openUpdate()"></td>
+                                <!-- en las funciones onclick estan openUpdate y Delete que sirven para que las alertas de eliminar y actualizar salgan -->
+                                <td><img src="https://img.icons8.com/ios-filled/40/null/minus.png" onclick="openDelete()"><img src="../../resources/images/iconos/editar.png" onclick="openUpdate()"></td>
                             </tr>
                         </tbody>
                     </table>                                
