@@ -2,7 +2,7 @@ function openCreate() {
     const { value: formValues } = Swal.fire({
         // Se configuran los atributos de la ventana de alerta. 
         title: 'Crear Usuario',
-        width: "35%",
+        width: "400px",
         showCancelButton: true,
         allowOutsideClick: false,
         confirmButtonColor: "green",
@@ -39,7 +39,7 @@ function openCreate() {
 function editarusuario() {
     Swal.fire({
         title: 'Editar usuario',
-        width: "30%",
+        width: "400px",
         confirmButtonColor: "green",
         /* Campos del modal editar que seran enviados*/
         html:
@@ -76,7 +76,7 @@ function editarusuario() {
 function openCreate3() {
     Swal.fire({
         title: '¿Desea eliminar este usuario?',
-        width: "30%",
+        width: "400px",
         /* Pregunta de seguridad para la eliminacion de un usuario----*/
         html:
             '<div><label for="input-name">El producto seleccionado sera eliminado permanentemente</label></div>',

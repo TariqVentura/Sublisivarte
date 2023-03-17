@@ -2,7 +2,7 @@ function openCreate() {
     const { value: formValues } = Swal.fire({
 
         title: 'Crear Pedido',
-        width: "35%",
+        width: "400px",
         showCancelButton: true,
         allowOutsideClick: false,
         confirmButtonColor: "green",
@@ -38,7 +38,7 @@ function openCreate() {
 function editarpedido() {
     Swal.fire({
         title: 'Editar pedido',
-        width: "30%",
+        width: "400px",
         /* Campos del modal editar que seran enviados*/
         html:
             '<div class="row"> <div class="col"><input id="swal-input1" placeholder="N° Factura" class="swal2-input" readonly></div> <div class="col"><br><h6>Fecha del pedido<h6><input id="swal-input2" type="date" placeholder="Fecha del pedido" class="swal2-input"></div></div>' +
@@ -73,7 +73,7 @@ function editarpedido() {
 function eliminarpedido() {
     Swal.fire({
         title: '¿Desea eliminar este pedido?',
-        width: "30%",
+        width: "400px",
         /* Pregunta de seguridad para la eliminacion de un pedido----*/
         html:
             '<div><label for="input-name">El pedido seleccionado sera eliminado permanentemente</label></div>',
