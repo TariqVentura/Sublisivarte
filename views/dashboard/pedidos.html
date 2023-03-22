@@ -125,28 +125,22 @@
                 </div>
             </div><br>
             <!--tabla de contenido-->
-            <div class="row" id="tabla">
-                <table>
-                    <!--Encabezado de la tabla-->
+            <div>
+                <table class="table table-stripped table-bordered">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Fecha del pedido</th>
-                            <th>Cliente</th>
-                            <th>Estado del pedido</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Fecha del pedido</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Estado del pedido</th>
                         </tr>
                     </thead>
-                    <!--Contenido de la tabla-->
                     <tbody>
                         <tr>
-                            <td>01</td>
-                            <td>12/01/21</td>
-                            <td>Mario Guzmán</td>
-                            <td>Entregado</td>
-                            <!--Botones para actualizar y desactivar un pedido-->
-                            <td><img src="https://img.icons8.com/ios-filled/40/null/minus.png"
-                                    onclick="eliminarpedido()" /><img src="../../resources/images/iconos/editar.png"
-                                    onclick="editarpedido()"></td>
+                            <th scope="row">1</th>
+                            <td>10/01/2023</td>
+                            <td>JaredDiaz</td>
+                            <td>Pendiente</td>
                         </tr>
                     </tbody>
                 </table>
