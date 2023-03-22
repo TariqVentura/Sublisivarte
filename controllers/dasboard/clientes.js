@@ -6,7 +6,7 @@ function openCreate() {
         width: "400px",
         showCancelButton: true,
         allowOutsideClick: false,
-        confirmButtonColor: "green" ,
+        confirmButtonColor: "green",
         html:
             // son los inputs de la alerta para crear clientes
             '<div > <div ><input id="swal-input1" placeholder="Nombres" class="swal2-input"></div> <div ><input id="swal-input2" placeholder="Apellidos" class="swal2-input"></div></div>' +

@@ -22,15 +22,15 @@ function openCreate() {
             ] */
         }
     }).then((result) => {
-    if (result.isConfirmed) {
-        const product = result.value;
-        // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
-        Swal.fire({
-            title: 'Categoría agregada',
-            icon: 'success'
-        });
-    }
-});
+        if (result.isConfirmed) {
+            const product = result.value;
+            // Hacer algo con los valores del producto (por ejemplo, enviarlos al servidor)
+            Swal.fire({
+                title: 'Categoría agregada',
+                icon: 'success'
+            });
+        }
+    });
 }
 
 function editarCategoria() {

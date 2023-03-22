@@ -110,7 +110,7 @@ footer.innerHTML = `
 </div>
 `;
 
- 
+
 var overlay = document.querySelector('.overlay')
 
 /* se manda a llamar un boton el cual al escucha el evento click se da al overlay la clase active */
