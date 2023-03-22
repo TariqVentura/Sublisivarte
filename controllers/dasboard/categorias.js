@@ -33,7 +33,7 @@ function openCreate() {
 });
 }
 
-function editarcategoria() {
+function editarCategoria() {
     Swal.fire({
         title: 'Editar categoria',
         width: "400px",
@@ -66,7 +66,7 @@ function editarcategoria() {
     });
 }
 
-function eliminarcategoria() {
+function eliminarCategoria() {
     Swal.fire({
         title: '¿Desea eliminar esta categoría?',
         width: "400px",
