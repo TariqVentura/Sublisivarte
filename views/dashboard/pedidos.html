@@ -133,6 +133,7 @@
                             <th scope="col">Fecha del pedido</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Estado del pedido</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,6 +142,10 @@
                             <td>10/01/2023</td>
                             <td>JaredDiaz</td>
                             <td>Pendiente</td>
+                            <td><img src="https://img.icons8.com/ios-filled/40/null/minus.png"
+                                    onclick="eliminarPedido()" />
+                                <img src="../../resources/images/iconos/editar.png" onclick="editarPedido()">
+                            </td>
                         </tr>
                     </tbody>
                 </table>

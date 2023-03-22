@@ -35,7 +35,7 @@ function openCreate() {
     });
 }
 
-function editarpedido() {
+function editarPedido() {
     Swal.fire({
         title: 'Editar pedido',
         width: "400px",
@@ -70,7 +70,7 @@ function editarpedido() {
     });
 }
 
-function eliminarpedido() {
+function eliminarPedido() {
     Swal.fire({
         title: '¿Desea eliminar este pedido?',
         width: "400px",
