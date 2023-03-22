@@ -119,33 +119,28 @@
                 </div>
             </div><br>
             <!-- tabla donde se mostraran los datos -->
-            <div class="row" id="tabla">
-                <table>
+            <div>
+                <table class="table table-stripped table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Correo</th>
-                            <th>Usuario</th>
-                            <th>Contraseña</th>
-                            <th>Estado</th>
-                            <th></th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Contraseña</th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>01</td>
-                            <td>Ariel Alessando</td>
-                            <td>Sandoval Moreno</td>
-                            <td>arielsandoval@gmail.com</td>
-                            <td>Ariel123</td>
-                            <td>123</td>
+                            <th scope="row">1</th>
+                            <td>Jared</td>
+                            <td>Diaz</td>
+                            <td>ejemplo@gmail.com</td>
+                            <td>JaredDiaz</td>
+                            <td>******</td>
                             <td>Activo</td>
-                            <!-- en las funciones onclick estan openUpdate y Delete que sirven para que las alertas de eliminar y actualizar salgan -->
-                            <td><img src="https://img.icons8.com/ios-filled/40/null/minus.png"
-                                    onclick="openDelete()"><img src="../../resources/images/iconos/editar.png"
-                                    onclick="openUpdate()"></td>
                         </tr>
                     </tbody>
                 </table>
