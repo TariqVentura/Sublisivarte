@@ -43,7 +43,7 @@ function openUpdate() {
     const { value: formValues } = Swal.fire({
 
         title: 'Desea Actualizar el Cliente?',
-        width: "30%",
+        width: "400px",
         showCancelButton: true,
         allowOutsideClick: false,
         confirmButtonColor: "green",
@@ -82,7 +82,7 @@ function openUpdate() {
 function openDelete() {
     Swal.fire({
         title: '¿Desea eliminar este Cliente?',
-        width: "30%",
+        width: "400px",
         /* Pregunta de seguridad para la eliminacion de un pedido----*/
         html:
             '<div><label for="input-name">El cliente seleccionado sera eliminado permanentemente</label></div>',
