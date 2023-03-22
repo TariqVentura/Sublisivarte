@@ -10,6 +10,7 @@ header.innerHTML = `
         <nav class="navegation">
             <a href="../public/index.html">Inicio</a>
             <a href="../public/productos.html">Productos</a>
+            <a href="../public/carrito.html">Carrito</a>
             <button class="btnLogin-popup" id="btn-login">Login</button>
         </nav>
         <div class="overlay">
