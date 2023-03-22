@@ -36,7 +36,7 @@ function openCreate() {
     });
 }
 
-function editarusuario() {
+function editarUsuario() {
     Swal.fire({
         title: 'Editar usuario',
         width: "400px",

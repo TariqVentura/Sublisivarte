@@ -1,7 +1,7 @@
 function openCreate() {
     Swal.fire({
         title: 'Agregar producto',
-        width: "30%",
+        width: "400px",
         /* Campos del modal agregar que seran enviados*/
         html:
             '<div><label for="input-name">Nombre:</label><input id="input-name" type="text" class="swal2-input"></div>' +
@@ -38,7 +38,7 @@ function openCreate() {
 function openCreate2() {
     Swal.fire({
         title: 'Editar producto',
-        width: "30%",
+        width: "400px",
         /* Campos del modal editar que seran enviados*/
         html:
             '<div><label for="input-name">Nombre:</label><input id="input-name" type="text" class="swal2-input"></div>' +
@@ -74,7 +74,7 @@ function openCreate2() {
 function openCreate3() {
     Swal.fire({
         title: '¿Desea eliminar este producto?',
-        width: "30%",
+        width: "400px",
         /* Pregunta de seguridad para la eliminacion de un producto----*/
         html:
             '<div><label for="input-name">El producto seleccionado sera eliminado permanentemente</label></div>',
