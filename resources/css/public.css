@@ -295,26 +295,6 @@ a {
     text-decoration: underline;
 }
 
-.btn {
-    width: 100%;
-    height: 45px;
-    background: #be4a7f;
-    border: none;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    color: #fff;
-    font-weight: 500;
-    transition: .5s;
-}
-
-.btn:hover {
-    color: #be4a7f;
-    background: #fff;
-
-}
-
 .login-register {
     font-size: .9em;
     color: #1b1b1b;

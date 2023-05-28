@@ -30,7 +30,7 @@ const SERVER = HTTP.createServer(APP)
  * La APP obtiene la direccion de la carpeta 'views' donde buscara los archivos con extencion .ejs
  */
 APP.set('view engine', 'ejs')
-APP.set('views', __dirname + 'views')
+APP.set('views', __dirname + '/views')
 
 /**
  * Se le provee un puerto a la APP
