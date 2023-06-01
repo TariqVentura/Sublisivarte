@@ -14,6 +14,7 @@ const IMAGES = require('./api/images')
  * la informacion
  */
 ROUTER.get('/', RENDER.index)
+ROUTER.get('/account', RENDER.newAccount)
 
 //API images
 

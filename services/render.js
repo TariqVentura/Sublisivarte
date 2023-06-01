@@ -12,3 +12,7 @@ exports.index = (req, res) => {
         res.render('index', { user: session, resources : images.data })
     })
 }
+
+exports.newAccount = (req, res) => {
+    res.render('account', { user: false })
+}
