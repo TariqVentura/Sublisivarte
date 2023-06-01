@@ -17,11 +17,10 @@ exports.CreateProduct = (req, res)=> {
             price: req.body.price,
             description: req.body.description,
             categorie: req.body.categorie,
-            product: req.body.product,
             user: req.body.user,
-            stock: req.body.stock,
-            review: req.body.review,
             image: req.body.image,
+            review: req.body.review,
+            stock: req.body.stock,
             status: 'active'
 
         })
