@@ -61,7 +61,9 @@ exports.logIn = (req, res) => {
                         } else {
                             req.session.authenticated = true,
                             req.session.user = USER,
+                            req.session.role = data.role
                             req.session.visitas = req.session.visitas ? ++ req.session.visitas : 1
+                            console.log(req.session)
                             res.redirect('/')
                         }
                     } else {
@@ -76,3 +78,4 @@ exports.logOut = (req, res) => {
     req.session.destroy()
     return res.redirect('/')
 }
+
