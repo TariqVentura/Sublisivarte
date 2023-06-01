@@ -25,7 +25,7 @@ header.innerHTML = `
                             <div class="imput-box">
                                 <span class="icon"><ion-icon name="mail"></ion-icon></span>
                                 <input type="email" required>
-                                <label for="">Email</label>
+                                <label for="">Correo</label>
                             </div>
                             <div class="imput-box">
                                 <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
