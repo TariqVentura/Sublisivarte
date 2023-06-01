@@ -16,8 +16,11 @@ ROUTER.get('/', RENDER.index)
 
 //API images
 
+
 //API users
 ROUTER.post('/api/users', USERS.createUser)
+ROUTER.post('/logIn/users', USERS.logIn)
+ROUTER.get('/logOut/users', USERS.logOut)
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor

@@ -46,3 +46,33 @@ exports.createUser = (req, res) => {
         })
     }
 }
+
+exports.logIn = (req, res) => {
+    const USER = req.body.user
+    USERS.findOne({ user: USER })
+        .then(data => {
+            if (!data) {
+                res.send('usuario inexistente')
+            } else {
+                BCRYPT.compare(req.body.password, data.password, function (err, result) {
+                    if (result) {
+                        if (req.session.authenticated) {
+                            res.json(req.session)
+                        } else {
+                            req.session.authenticated = true,
+                            req.session.user = USER,
+                            req.session.visitas = req.session.visitas ? ++ req.session.visitas : 1
+                            res.redirect('/')
+                        }
+                    } else {
+                        res.send('contraseña incorrecta')
+                    }
+                })
+            }
+        })
+}
+
+exports.logOut = (req, res) => {
+    req.session.destroy()
+    return res.redirect('/')
+}
