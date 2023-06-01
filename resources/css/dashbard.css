@@ -356,6 +356,10 @@ img:hover {
     margin-left: 15px;
 }
 
+.agregar-btn{
+    background-color: transparent;
+}
+
 @media (max-width: 1300px) {
     #charts {
         display: flex;
