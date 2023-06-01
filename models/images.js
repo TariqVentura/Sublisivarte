@@ -13,10 +13,6 @@ let imageSchema = new MONGOOSE.Schema(
         image: {
             type: String,
             require: true
-        },
-        status: {
-            type: Boolean,
-            require: true
         }
     },
     {
