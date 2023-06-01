@@ -5,6 +5,7 @@
 const EXPRESS = require('express') 
 const ROUTER = EXPRESS.Router()
 const RENDER = require('./services/render')
+const USERS = require('./api/users')
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
@@ -13,8 +14,10 @@ const RENDER = require('./services/render')
  */
 ROUTER.get('/', RENDER.index)
 
-//API imagenes
+//API images
 
+//API users
+ROUTER.post('/api/users', USERS.createUser)
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor
