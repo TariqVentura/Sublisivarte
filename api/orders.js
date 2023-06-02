@@ -7,7 +7,7 @@ exports.createOrder = (req, res) => {
         res.status(404).send('no se permiten campos vacios')
     } else {
         //convertimos la fecha a formato ISO
-        let newDate = FECHA.toISOString
+        let newDate = FECHA.toISOString()
 
         const ORDER = new ORDERS({
             name: req.body.name,

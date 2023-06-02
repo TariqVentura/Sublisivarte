@@ -1,4 +1,4 @@
-const MONGOOSE = require('mogoose')
+const MONGOOSE = require('mongoose')
 
 let orderSchema = new MONGOOSE.Schema(
     {
