@@ -8,7 +8,7 @@ const AXIOS = require('axios')
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
  * Haciendo uso ddel metodo SAVE de mongoose se guardan los datos en el servidor de Atlas
  */
-exports.CreateProduct = (req, res)=> {
+exports.CreateProduct = (req, res) => {
     if (!req.body.product || !req.body.price || !req.body.description) {
         res.status(404).send('No se permiten campos vacios')
     } else {
@@ -33,6 +33,31 @@ exports.CreateProduct = (req, res)=> {
             })
             .catch(err => {
                 res.send(err)
+            })
+    }
+}
+
+exports.findProduct = (req, res) => {
+    if (req.body.id) {
+        const id = req.query.id
+        PRODUCTS.findById(id)
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "No se pudo encontrar este producto" })
+                } else {
+                    res.send(data)
+                }
+            })
+            .catch(err => {
+                res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
+            })
+    } else {
+        PRODUCTS.find()
+            .then(product => {
+                res.send(product)
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
             })
     }
 }

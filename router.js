@@ -11,6 +11,7 @@ const CATEGORIES = require('./api/categories')
 const ORDERS = require('./api/orders')
 const DETAILS = require('./api/details')
 const PRODUCTS = require('./api/products')
+const { findById } = require('./models/users')
 
 
 /**
@@ -44,6 +45,11 @@ ROUTER.get('/delete/details/:key/:stock/:id', DETAILS.cancelDetail)
 
 //API products
 ROUTER.post('/api/products', PRODUCTS.CreateProduct )
+<<<<<<< Updated upstream
+=======
+ROUTER.get('/api/products', PRODUCTS.findProduct )
+
+>>>>>>> Stashed changes
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)
 
 

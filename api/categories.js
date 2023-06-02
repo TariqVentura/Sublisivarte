@@ -23,3 +23,11 @@ exports.createCategorie = (req, res) => {
             })
     }
 }
+
+// exports.findCategorie = (req, res) => {
+//     if (req) {
+        
+//     } else {
+        
+//     }
+// }

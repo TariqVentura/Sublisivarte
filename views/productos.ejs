@@ -58,10 +58,11 @@
                                                 <div class="input-group col-mb-3">
                                                     <select class="form-select" id="inputGroupSelect01" name="categorie"
                                                         required>
-                                                        <option selected disabled>Escoger...</option>
-                                                        <option value="1">C1</option>
-                                                        <option value="2">C2</option>
-                                                        <option value="3">C3</option>
+                                                        <% categories.forEach((data)=> { %>
+                                                            <option value="<%= data.categorie %>">
+                                                                <%= data.categorie %>
+                                                            </option>
+                                                            <% }) %>                                                
                                                     </select>
                                                 </div>
                                             </div>
