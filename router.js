@@ -7,8 +7,12 @@ const ROUTER = EXPRESS.Router()
 const RENDER = require('./services/render')
 const USERS = require('./api/users')
 const IMAGES = require('./api/images')
+
 const ORDERS = require('./api/orders')
 const DETAILS = require('./api/details')
+
+const PRODUCTS = require('./api/products')
+
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
@@ -28,11 +32,15 @@ ROUTER.post('/api/users', USERS.createUser)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
 
+
 //API orders
 ROUTER.post('/api/orders', ORDERS.createOrder)
 
 //API detaisl
-ROUTER.post('/api/details', DETAILS.createDetail)
+
+//API products
+ROUTER.post('/api/products', PRODUCTS.CreateProduct )
+
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor
