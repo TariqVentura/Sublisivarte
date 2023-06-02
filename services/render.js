@@ -27,6 +27,16 @@ exports.products = (req, res) =>{
     res.render('productos', { user: session })
     // AXIOS.get('http://localhost:443/api/products')
     // .then(function(products){
-    //     res.render('productos',{products: products.data, user: session } )
+    res.render('productos',{products: products.data} )
     // })
+}
+
+exports.categories = (req, res) =>{
+    let session
+    if (req.session.user) {
+        session = req.session   
+    } else {
+        session = false
+    }
+    res.render('productos', { user: session })
 }

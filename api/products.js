@@ -12,7 +12,7 @@ exports.CreateProduct = (req, res)=> {
     if (!req.body.product || !req.body.price || !req.body.description) {
         res.status(404).send('No se permiten campos vacios')
     } else {
-        const PRPDUCT = new PRPDUCTS({
+        const PRPDUCTS = new PRPDUCTS({
             product: req.body.product,
             price: req.body.price,
             description: req.body.description,

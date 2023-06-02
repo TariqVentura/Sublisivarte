@@ -47,8 +47,8 @@
                                             </div>
                                             <br>
                                             <div class="col-mb-3">
-                                                <label for="exampleFormControlTextarea1"
-                                                    class="form-label" name="description">Descripción</label>
+                                                <label for="exampleFormControlTextarea1" class="form-label"
+                                                    name="description">Descripción</label>
                                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                                                     required></textarea>
                                             </div>
@@ -56,7 +56,8 @@
                                             <div class="col-mb-3">
                                                 <label for="" name="categorie">Categorías</label>
                                                 <div class="input-group col-mb-3">
-                                                    <select class="form-select" id="inputGroupSelect01" name="categorie" required>
+                                                    <select class="form-select" id="inputGroupSelect01" name="categorie"
+                                                        required>
                                                         <option selected disabled>Escoger...</option>
                                                         <option value="1">C1</option>
                                                         <option value="2">C2</option>
@@ -67,7 +68,8 @@
                                             <br>
                                             <div class="col-mb-3">
                                                 <label class="form-label" for="">Stock</label>
-                                                <input type="number" min="1" class="form-control" name="stock" id="" required>
+                                                <input type="number" min="1" class="form-control" name="stock" id=""
+                                                    required>
                                             </div>
                                             <br>
                                             <div class="col-mb-3">
@@ -87,6 +89,32 @@
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cancelar</button>
                                         <button type="button" class="btn btn-success">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Crear Categoria
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear categoria</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal-2"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">                                        
+                                        <form action="/api/categories" method="post">
+                                            <input type="text" name="categorie" required>
+                                            <br><br>
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal-2">Cerrar</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

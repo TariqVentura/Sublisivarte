@@ -7,6 +7,7 @@ const ROUTER = EXPRESS.Router()
 const RENDER = require('./services/render')
 const USERS = require('./api/users')
 const IMAGES = require('./api/images')
+const CATEGORIES = require('./api/categories')
 
 const ORDERS = require('./api/orders')
 const DETAILS = require('./api/details')
@@ -21,7 +22,8 @@ const PRODUCTS = require('./api/products')
  */
 ROUTER.get('/', RENDER.index)
 ROUTER.get('/account', RENDER.newAccount)
-
+ROUTER.get('/products', RENDER.products)
+ROUTER.get('/categories', RENDER.categories)
 //API images
 
 ROUTER.post('/api/images', IMAGES.saveImages)
@@ -40,6 +42,8 @@ ROUTER.post('/api/orders', ORDERS.createOrder)
 
 //API products
 ROUTER.post('/api/products', PRODUCTS.CreateProduct )
+
+ROUTER.post('/api/categories', CATEGORIES.createCategorie)
 
 
 /**
