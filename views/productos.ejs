@@ -32,24 +32,24 @@
                                         <form action="/api/products" method="post">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label for="" class="form-label" name="product">Nombre del
+                                                    <label for="" class="form-label" >Nombre del
                                                         producto</label>
-                                                    <input type="text" class="form-control" id="" required>
+                                                    <input type="text" class="form-control" name="product" id="" required>
                                                 </div>
                                                 <div class="col-md-5">
-                                                    <label for="" class="form-label" name="price">Precio</label>
+                                                    <label for="" class="form-label" >Precio</label>
                                                     <div class="input-group input-group-col-md-3">
                                                         <span class="input-group-text" id="addon-wrapping">$</span>
-                                                        <input type="number" min="0.01" class="form-control" id=""
-                                                            aria-describedby="addon-wrapping" required>
+                                                        <input type="number" min="0" class="form-control" id=""
+                                                            aria-describedby="addon-wrapping" required name="price">
                                                     </div>
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="col-mb-3">
                                                 <label for="exampleFormControlTextarea1" class="form-label"
-                                                    name="description">Descripción</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                    >Descripción</label>
+                                                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"
                                                     required></textarea>
                                             </div>
                                             <br>
@@ -62,35 +62,28 @@
                                                             <option value="<%= data.categorie %>">
                                                                 <%= data.categorie %>
                                                             </option>
-                                                            <% }) %>                                                
+                                                            <% }) %>
                                                     </select>
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="col-mb-3">
+                                                <label for="formFile" class="form-label">Imagen</label>
+                                                <input class="form-control" name="image" type="file" id="formFile">
+                                            </div>
+                                            <div class="col-mb-3">
                                                 <label class="form-label" for="">Stock</label>
                                                 <input type="number" min="1" class="form-control" name="stock" id=""
                                                     required>
                                             </div>
-                                            <br>
-                                            <div class="col-mb-3">
-                                                <label for="formFile" class="form-label">Imagen</label>
-                                                <input class="form-control" type="file" id="formFile">
-                                            </div>
-                                            <br>
-                                            <div class="form-check form-switch col-mb-3">
-                                                <label class="form-check-label"
-                                                    for="flexSwitchCheckDefault">Estado</label>
-                                                <input class="form-check-input" type="checkbox"
-                                                    id="flexSwitchCheckDefault" required>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit"class="btn btn-primary">Guardar</button>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-success">Guardar</button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -100,7 +93,8 @@
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -108,7 +102,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal-2"
                                             aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">                                        
+                                    <div class="modal-body">
                                         <form action="/api/categories" method="post">
                                             <input type="text" name="categorie" required>
                                             <br><br>

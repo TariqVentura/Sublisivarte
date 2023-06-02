@@ -44,13 +44,13 @@ ROUTER.post('/api/details', DETAILS.createDetail)
 ROUTER.get('/delete/details/:key/:stock/:id', DETAILS.cancelDetail)
 
 //API products
-ROUTER.post('/api/products', PRODUCTS.CreateProduct )
-<<<<<<< Updated upstream
-=======
+ROUTER.post('/api/products', PRODUCTS.createProduct )
+
 ROUTER.get('/api/products', PRODUCTS.findProduct )
 
->>>>>>> Stashed changes
+
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)
+ROUTER.get('/api/categories', CATEGORIES.findCategorie)
 
 
 /**

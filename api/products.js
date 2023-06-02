@@ -8,9 +8,9 @@ const AXIOS = require('axios')
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
  * Haciendo uso ddel metodo SAVE de mongoose se guardan los datos en el servidor de Atlas
  */
-exports.CreateProduct = (req, res) => {
-    if (!req.body.product || !req.body.price || !req.body.description) {
-        res.status(404).send('No se permiten campos vacios')
+exports.createProduct = (req, res) => {
+    if (!req.body.product|| !req.body.price || !req.body.description || !req.body.categorie || !req.body.image || !req.body.stock) { 
+        res.status(404).send('no se permiten campos vacios')
     } else {
         const PRODUCT = new PRODUCTS({
             product: req.body.product,
@@ -20,7 +20,6 @@ exports.CreateProduct = (req, res) => {
             image: req.body.image,
             stock: req.body.stock,
             status: 'active'
-
         })
         PRODUCT
             .save(PRODUCT)
