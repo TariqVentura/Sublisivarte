@@ -10,12 +10,9 @@ let categoriesSchema = new MONGOOSE.Schema(
             type: String,
             require: true
         },
-        image: {
-            type: String,
-            require: true
-        },
         status: {
             type: Boolean,
+            default: true,
             require: true
         }
     },

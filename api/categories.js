@@ -2,17 +2,15 @@ const CATEGORIES = require('../models/categories')
 const AXIOS = require('axios')
 
 exports.createCategorie = (req, res) => {
-    if (!req.body.categorie || !req.body.image) {
-
+    if (!req.body.categorie ) {
+        res.status(404).send('no se permiten campos vacios')
     } else {
-        const CATEGORIES = new CATEGORIES({
-            categorie: req.body.categorie,
-            image: req.body.image,
-            status: req.body.status
+        const CATEGORIE = new CATEGORIES({
+            categorie: req.body.categorie
         })
 
-        CATEGORIES
-            .save(CATEGORIES)
+        CATEGORIE
+            .save(CATEGORIE)
             .then(data => {
                 if (!data) {
                     res.status(404).send('Ocurrio un error al crear la Categoria')

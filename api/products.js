@@ -1,7 +1,7 @@
 /**
  * Se declaran las constantes para mandar a llamar al controlador y las dependencias de node
  */
-const USERS = require('../models/products')
+const PRODUCTS = require('../models/products')
 const AXIOS = require('axios')
 
 /**
@@ -12,20 +12,18 @@ exports.CreateProduct = (req, res)=> {
     if (!req.body.product || !req.body.price || !req.body.description) {
         res.status(404).send('No se permiten campos vacios')
     } else {
-        const PRPDUCTS = new PRPDUCTS({
+        const PRODUCT = new PRODUCTS({
             product: req.body.product,
             price: req.body.price,
             description: req.body.description,
             categorie: req.body.categorie,
-            user: req.body.user,
             image: req.body.image,
-            review: req.body.review,
             stock: req.body.stock,
             status: 'active'
 
         })
-        PRODUCTS
-            .save(PRODUCTS)
+        PRODUCT
+            .save(PRODUCT)
             .then(data => {
                 if (!data) {
                     res.status(404).send('Ocurrio un error al crear el Producto')
