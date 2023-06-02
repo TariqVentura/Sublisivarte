@@ -31,3 +31,19 @@ exports.createOrder = (req, res) => {
     }
 }
 
+exports.finishOrder = (req, res) => {
+    const ID = req.params.id
+    const value = { status: 'finalizado' }
+
+    ORDERS.findByIdAndupdate(ID, value, { useFindAndModify: true })
+        .then(data => {
+            if (!data) {
+                res.send('err')
+            } else {
+                res.send('ok')
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}

@@ -36,6 +36,7 @@ ROUTER.get('/logOut/users', USERS.logOut)
 
 //API orders
 ROUTER.post('/api/orders', ORDERS.createOrder)
+ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
 
 //API details
 ROUTER.post('/api/details', DETAILS.createDetail)
