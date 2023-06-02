@@ -24,7 +24,7 @@ exports.CreateProduct = (req, res)=> {
             status: 'active'
 
         })
-        PRPDUCTS
+        PRODUCTS
             .save(PRODUCTS)
             .then(data => {
                 if (!data) {

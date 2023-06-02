@@ -7,6 +7,7 @@ const ROUTER = EXPRESS.Router()
 const RENDER = require('./services/render')
 const USERS = require('./api/users')
 const IMAGES = require('./api/images')
+const controllerProducts = require('./api/products')
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
@@ -15,6 +16,7 @@ const IMAGES = require('./api/images')
  */
 ROUTER.get('/', RENDER.index)
 ROUTER.get('/account', RENDER.newAccount)
+ROUTER.get('/products', RENDER.products)
 
 //API images
 
