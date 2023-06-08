@@ -440,3 +440,7 @@ a {
         z-index: 100;
     }
 }
+
+.btn-check:active+.btn-outline-secondary, .btn-check:checked+.btn-outline-secondary, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show, .btn-outline-secondary:active{
+    background-color: var(--bg-primary) !important;
+}
