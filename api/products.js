@@ -9,7 +9,7 @@ const AXIOS = require('axios')
  * Haciendo uso ddel metodo SAVE de mongoose se guardan los datos en el servidor de Atlas
  */
 exports.createProduct = (req, res) => {
-    if (!req.body.product|| !req.body.price || !req.body.description || !req.body.categorie || !req.body.image || !req.body.stock) { 
+    if (!req.body.product || !req.body.price || !req.body.description || !req.body.categorie || !req.body.image || !req.body.stock) {
         res.status(404).send('no se permiten campos vacios')
     } else {
         const PRODUCT = new PRODUCTS({
@@ -59,4 +59,28 @@ exports.findProduct = (req, res) => {
                 res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
             })
     }
+}
+
+exports.updateProduct = (req, res) => {
+    const id = req.body.id
+    PRODUCTS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: "No se encontro el producto" })
+            } else {
+                res.send('Producto Actualizado')
+            }
+        })
+}
+
+exports.deleteProducts = (req, res) => {
+    const id = req.params.id
+    PRODUCTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: 'Producto no encontrado' })
+            } else {
+                res.send('Producto Eliminado')
+            }
+        })
 }

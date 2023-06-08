@@ -32,12 +32,13 @@
                                         <form action="/api/products" method="post">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label for="" class="form-label" >Nombre del
+                                                    <label for="" class="form-label">Nombre del
                                                         producto</label>
-                                                    <input type="text" class="form-control" name="product" id="" required>
+                                                    <input type="text" class="form-control" name="product" id=""
+                                                        required>
                                                 </div>
                                                 <div class="col-md-5">
-                                                    <label for="" class="form-label" >Precio</label>
+                                                    <label for="" class="form-label">Precio</label>
                                                     <div class="input-group input-group-col-md-3">
                                                         <span class="input-group-text" id="addon-wrapping">$</span>
                                                         <input type="number" min="0" class="form-control" id=""
@@ -47,10 +48,10 @@
                                             </div>
                                             <br>
                                             <div class="col-mb-3">
-                                                <label for="exampleFormControlTextarea1" class="form-label"
-                                                    >Descripción</label>
-                                                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                                    required></textarea>
+                                                <label for="exampleFormControlTextarea1"
+                                                    class="form-label">Descripción</label>
+                                                <textarea name="description" class="form-control"
+                                                    id="exampleFormControlTextarea1" rows="3" required></textarea>
                                             </div>
                                             <br>
                                             <div class="col-mb-3">
@@ -79,7 +80,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="submit"class="btn btn-primary">Guardar</button>
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -118,30 +119,66 @@
                             <div class="row d-flex justify-content-around" id="Nuevos-productos">
                                 <div class="col-2 -align-self-start ">
                                     <% products.forEach((data)=> { %>
-                                    <div class="card text-dark text-center border-1" style="width: 13rem;">
-                                        <img src="/images/<%= data.image %>" class="card-img-top rounded" alt="Imagen del Producto">
-                                        <div class="card-body">
-                                            <h5 class="card-title">
-                                                Producto:
-                                                <%= data.product %>
-                                            </h5>
-                                            <h5 class="card-title">
-                                                Categoria:
-                                                <%= data.categorie %>
-                                            </h5>
-                                            <h5>
-                                                Productos Existentes:
-                                            </h5>
-                                            <p class="card-text"></p>
-                                            <a href="" class="btn btn-primary rounded">Ver
-                                                mas...</a>
+                                        <div class="card text-dark text-center border-1" style="width: 13rem;">
+                                            <img src="/images/<%= data.image %>" class="card-img-top rounded"
+                                                alt="Imagen del Producto">
+                                            <div class="card-body">
+
+                                                <h5 class="card-title">
+                                                    Producto:
+                                                    <%= data.product %>
+                                                </h5>
+                                                <h5 class="card-title">
+                                                    Categoria:
+                                                    <%= data.categorie %>
+                                                </h5>
+                                                <h5>
+                                                    Productos Existentes:
+                                                </h5>
+                                                <p class="card-text"></p>
+                                                <a href="" class="btn btn-primary rounded">Ver
+                                                    mas...</a>
+                                            </div>
+                                            <div class="card-footer">
+                                                <% if(user.role=='admin' ){ %>
+                                                    <button class="btn btn-info mt-3"><a
+                                                            href="/update/products/<%= data._id %>"
+                                                            class="text-light text-decoration-none">Actualizar</a>
+                                                    </button>
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-danger mb-3"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop<%= data._id %>delete">
+                                                        eliminar
+                                                    </button>
+                                                    <div class="modal fade" id="staticBackdrop<%= data._id %>delete"
+                                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    ¿Esta seguro que desea eliminar el producto?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary"><a
+                                                                            href="/delete/products/<%= data._id %>"
+                                                                            class="text-light text-decoration-none">Aceptar</a>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <%}%>
+                                                        </div>
+                                                    </div>
+                                                    <% }) %>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <% }) %>
                                 </div>
                             </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
