@@ -117,14 +117,17 @@
                         <% } %>
                             <div class="row d-flex justify-content-around" id="Nuevos-productos">
                                 <div class="col-2 -align-self-start ">
+                                    <% products.forEach((data)=> { %>
                                     <div class="card text-dark text-center border-1" style="width: 13rem;">
-                                        <img src="" class="card-img-top rounded" alt="Imagen del Producto">
+                                        <img src="/images/<%= data.image %>" class="card-img-top rounded" alt="Imagen del Producto">
                                         <div class="card-body">
                                             <h5 class="card-title">
                                                 Producto:
+                                                <%= data.product %>
                                             </h5>
                                             <h5 class="card-title">
                                                 Categoria:
+                                                <%= data.categorie %>
                                             </h5>
                                             <h5>
                                                 Productos Existentes:
@@ -134,6 +137,7 @@
                                                 mas...</a>
                                         </div>
                                     </div>
+                                    <% }) %>
                                 </div>
                             </div>
                 </div>
