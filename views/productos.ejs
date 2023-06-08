@@ -134,6 +134,7 @@
                                                 </h5>
                                                 <h5>
                                                     Productos Existentes:
+                                                    <%= data.stock %>
                                                 </h5>
                                                 <p class="card-text"></p>
                                                 <a href="" class="btn btn-primary rounded">Ver
@@ -162,13 +163,14 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <form action="/update/products" method="post">
+                                                                        <input type="text" value="<%= data._id %>" name="id" hidden>
                                                                         <div class="row">
                                                                             <div class="col-md-6">
                                                                                 <label for="" class="form-label">Nombre
                                                                                     del
                                                                                     producto</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="product" id="" required>
+                                                                                    name="product" id=""required>
                                                                             </div>
                                                                             <div class="col-md-5">
                                                                                 <label for=""
@@ -232,14 +234,7 @@
                                                                                 class="btn btn-primary">Guardar</button>
                                                                         </div>
                                                                     </form>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-primary"><a
-                                                                            href="/historial/<%= data.product %>"
-                                                                            class="text-light text-decoration-none">Ver
-                                                                            historial de
-                                                                            cambios</a> </button>
-                                                                </div>
+                                                                </div>                                                                
                                                             </div>
                                                         </div>
                                                     </div>
