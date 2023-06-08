@@ -141,10 +141,108 @@
                                             </div>
                                             <div class="card-footer">
                                                 <% if(user.role=='admin' ){ %>
-                                                    <button class="btn btn-info mt-3"><a
-                                                            href="/update/products/<%= data._id %>"
-                                                            class="text-light text-decoration-none">Actualizar</a>
+                                                    <button type="button" class="btn btn-warning mb-3"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop<%= data._id %>update">
+                                                        Actualizar
                                                     </button>
+                                                    <div class="modal fade" id="staticBackdrop<%= data._id %>update"
+                                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5"
+                                                                        id="staticBackdropLabel">Producto: <%=
+                                                                            data.product %>
+                                                                    </h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form action="/update/products" method="post">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <label for="" class="form-label">Nombre
+                                                                                    del
+                                                                                    producto</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="product" id="" required>
+                                                                            </div>
+                                                                            <div class="col-md-5">
+                                                                                <label for=""
+                                                                                    class="form-label">Precio</label>
+                                                                                <div
+                                                                                    class="input-group input-group-col-md-3">
+                                                                                    <span class="input-group-text"
+                                                                                        id="addon-wrapping">$</span>
+                                                                                    <input type="number" min="0"
+                                                                                        class="form-control" id=""
+                                                                                        aria-describedby="addon-wrapping"
+                                                                                        required name="price">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="col-mb-3">
+                                                                            <label for="exampleFormControlTextarea1"
+                                                                                class="form-label">Descripción</label>
+                                                                            <textarea name="description"
+                                                                                class="form-control"
+                                                                                id="exampleFormControlTextarea1"
+                                                                                rows="3" required></textarea>
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="col-mb-3">
+                                                                            <label for=""
+                                                                                name="categorie">Categorías</label>
+                                                                            <div class="input-group col-mb-3">
+                                                                                <select class="form-select"
+                                                                                    id="inputGroupSelect01"
+                                                                                    name="categorie" required>
+                                                                                    <% categories.forEach((data)=> { %>
+                                                                                        <option
+                                                                                            value="<%= data.categorie %>">
+                                                                                            <%= data.categorie %>
+                                                                                        </option>
+                                                                                        <% }) %>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="col-mb-3">
+                                                                            <label for="formFile"
+                                                                                class="form-label">Imagen</label>
+                                                                            <input class="form-control" name="image"
+                                                                                type="file" id="formFile">
+                                                                        </div>
+                                                                        <div class="col-mb-3">
+                                                                            <label class="form-label"
+                                                                                for="">Stock</label>
+                                                                            <input type="number" min="1"
+                                                                                class="form-control" name="stock" id=""
+                                                                                required>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Cancelar</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Guardar</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary"><a
+                                                                            href="/historial/<%= data.product %>"
+                                                                            class="text-light text-decoration-none">Ver
+                                                                            historial de
+                                                                            cambios</a> </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn btn-danger mb-3"
                                                         data-bs-toggle="modal"

@@ -46,7 +46,7 @@ ROUTER.get('/delete/details/:key/:stock/:id', DETAILS.cancelDetail)
 //API products
 ROUTER.post('/api/products', PRODUCTS.createProduct )
 ROUTER.get('/api/products', PRODUCTS.findProduct )
-ROUTER.get('update/products/:id', PRODUCTS.updateProduct)
+ROUTER.get('/update/products/:id', PRODUCTS.updateProduct)
 ROUTER.get('/delete/products/:id', PRODUCTS.deleteProducts)
 
 
