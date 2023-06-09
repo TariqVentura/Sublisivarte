@@ -57,8 +57,12 @@ exports.carrito = (req, res) => {
     let session
     if (req.session.user) {
         session = req.session
+        AXIOS.get('http://localhost:443/api/orders/' + req.session.user)
+        .then(function (order) {
+            res.render('carrito', { user: session, orders : order.data })
+        })
     } else {
         session = false
+        res.render('carrito', { user: session })
     }
-    res.render('carrito', { user: session })
 }

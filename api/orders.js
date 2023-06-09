@@ -47,3 +47,18 @@ exports.finishOrder = (req, res) => {
             res.send(err)
         })
 }
+
+exports.getOrders = (req, res) => {
+    const KEY = req.params.key
+    ORDERS.find({ $or: [{ client: { $regex: KEY } }, { status: { $regex: KEY } }, { name: { $regex: KEY } }] })
+        .then((data) => {
+            if (!data) {
+                res.send('no data')
+            } else {
+                res.send(data)
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}

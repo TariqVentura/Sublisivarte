@@ -1,0 +1,43 @@
+<div class="card text-center">
+    <div class="card-header">
+        Crear una nueva lista
+    </div>
+    <div class="card-body bg-dark">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary border-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/FFFFFF/add--v1.png" alt="add--v1" />
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade text-dark" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Lista
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/api/orders" method="post">
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Nombre: </span>
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" name="name">
+                            </div>
+                            <div class="input-group mb-3" hidden>
+                                <span class="input-group-text" id="inputGroup-sizing-default">Nombre: </span>
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" name="user" value="<%= user %>">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
