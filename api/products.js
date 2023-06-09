@@ -27,7 +27,13 @@ exports.createProduct = (req, res) => {
                 if (!data) {
                     res.status(404).send('Ocurrio un error al crear el Producto')
                 } else {
-                    res.send('Producto Creado')
+                    AXIOS.get('http://localhost:443/api/products')
+                    .then(function(response){
+                        AXIOS.get('http://localhost:443/api/categories')
+                        .then(function(categorie){
+                            res.render(('productos', {PRODUCTS: response.data, categories: categorie.data, mensaje: "Producto Ingresado", confirmation: true, icon: 'success' }))
+                        })
+                    })                    
                 }
             })
             .catch(err => {

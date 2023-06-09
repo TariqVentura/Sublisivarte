@@ -28,7 +28,7 @@ exports.products = (req, res) => {
         .then(function (response) {
             AXIOS.get('http://localhost:443/api/categories')
                 .then(function (categorie) {
-                    res.render('productos', { products: response.data, categories: categorie.data, user: session })
+                    res.render('productos', { products: response.data, categories: categorie.data, user: session, mensaje: ". ", confirmation: false, icon:" ." })
                 })
                 .catch(err => {
                     res.send('hola')

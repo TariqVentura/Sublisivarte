@@ -117,7 +117,7 @@
                         </div>
                         <% } %>
                             <div class="row d-flex justify-content-around" id="Nuevos-productos">
-                                <div class="col-2 -align-self-start ">
+                                <div class="col-6 -align-self-start ">
                                     <% products.forEach((data)=> { %>
                                         <div class="card text-dark text-center border-1" style="width: 13rem;">
                                             <img src="/images/<%= data.image %>" class="card-img-top rounded"
@@ -170,7 +170,7 @@
                                                                                     del
                                                                                     producto</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="product" id=""required>
+                                                                                    name="product" value="<%= data.product %>" id=""required>
                                                                             </div>
                                                                             <div class="col-md-5">
                                                                                 <label for=""
@@ -182,7 +182,7 @@
                                                                                     <input type="number" min="0"
                                                                                         class="form-control" id=""
                                                                                         aria-describedby="addon-wrapping"
-                                                                                        required name="price">
+                                                                                        required name="price" value="<%= data.price %>">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -191,9 +191,9 @@
                                                                             <label for="exampleFormControlTextarea1"
                                                                                 class="form-label">Descripción</label>
                                                                             <textarea name="description"
-                                                                                class="form-control"
+                                                                                class="form-control" 
                                                                                 id="exampleFormControlTextarea1"
-                                                                                rows="3" required></textarea>
+                                                                                rows="3" required><%= data.description %></textarea>
                                                                         </div>
                                                                         <br>
                                                                         <div class="col-mb-3">
@@ -203,6 +203,9 @@
                                                                                 <select class="form-select"
                                                                                     id="inputGroupSelect01"
                                                                                     name="categorie" required>
+                                                                                    <option selected>
+                                                                                        <%= data.categorie %>
+                                                                                    </option>
                                                                                     <% categories.forEach((data)=> { %>
                                                                                         <option
                                                                                             value="<%= data.categorie %>">
@@ -217,14 +220,14 @@
                                                                             <label for="formFile"
                                                                                 class="form-label">Imagen</label>
                                                                             <input class="form-control" name="image"
-                                                                                type="file" id="formFile">
+                                                                                type="file" id="formFile" value="<%= data.iamge %>">
                                                                         </div>
                                                                         <div class="col-mb-3">
                                                                             <label class="form-label"
                                                                                 for="">Stock</label>
                                                                             <input type="number" min="1"
                                                                                 class="form-control" name="stock" id=""
-                                                                                required>
+                                                                                required value="<%= data.stock %>">
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button"
@@ -232,7 +235,7 @@
                                                                                 data-bs-dismiss="modal">Cancelar</button>
                                                                             <button type="submit"
                                                                                 class="btn btn-primary">Guardar</button>
-                                                                        </div>
+                                                                        </div>                                                                      
                                                                     </form>
                                                                 </div>                                                                
                                                             </div>
