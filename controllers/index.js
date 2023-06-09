@@ -105,3 +105,19 @@ carousel.addEventListener('mouseleave', dragStop)
 carousel.addEventListener('touchstart', dragStart)
 carousel.addEventListener('touchmove', draggin)
 carousel.addEventListener('touchend', dragStop)
+
+const HEADER = document.querySelector('header');
+const LOGINBTN = document.querySelector('btn');
+
+LOGINBTN.addEventListener('click', () =>{
+    HEADER.innerHTML = `
+    <a href="" class="logo"><img src="../../resources/images/logo.png" alt="" class="logo-img"></a>
+    <nav class="navegation">
+        <a href="#">Inicio</a>
+        <a href="#">Sobre nosotros</a>
+        <a href="#">Servicios</a>
+        <a href="#">Contactos</a>
+        <a href="#">Gestionar cuenta</a>
+    </nav>
+            `;
+})

@@ -7,6 +7,11 @@ const ROUTER = EXPRESS.Router()
 const RENDER = require('./services/render')
 const USERS = require('./api/users')
 const IMAGES = require('./api/images')
+const CATEGORIES = require('./api/categories')
+const ORDERS = require('./api/orders')
+const DETAILS = require('./api/details')
+const PRODUCTS = require('./api/products')
+
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
@@ -14,9 +19,12 @@ const IMAGES = require('./api/images')
  * la informacion
  */
 ROUTER.get('/', RENDER.index)
+ROUTER.get('/account', RENDER.newAccount)
+ROUTER.get('/products', RENDER.products)
+ROUTER.get('/categories', RENDER.categories)
+ROUTER.get('/carrito', RENDER.carrito)
 
 //API images
-
 ROUTER.post('/api/images', IMAGES.saveImages)
 ROUTER.get('/api/images', IMAGES.getImages)
 
@@ -24,6 +32,27 @@ ROUTER.get('/api/images', IMAGES.getImages)
 ROUTER.post('/api/users', USERS.createUser)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
+
+//API orders
+ROUTER.post('/api/orders', ORDERS.createOrder)
+ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
+ROUTER.get('/api/orders/:key', ORDERS.getOrders)
+
+//API details
+ROUTER.post('/api/details', DETAILS.createDetail)
+ROUTER.get('/delete/details/:key/:stock/:id', DETAILS.cancelDetail)
+
+//API products
+ROUTER.post('/api/products', PRODUCTS.createProduct )
+ROUTER.get('/api/products', PRODUCTS.findProduct )
+ROUTER.post('/update/products/', PRODUCTS.updateProduct)
+ROUTER.get('/delete/products/:id', PRODUCTS.deleteProducts)
+
+
+
+ROUTER.post('/api/categories', CATEGORIES.createCategorie)
+ROUTER.get('/api/categories', CATEGORIES.findCategorie)
+
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor
