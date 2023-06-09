@@ -1,128 +1,33 @@
 <% if(user==false ){ %>
     <img src="/images/Error 404.png" alt="">
-    <% }else { %>
-        <div class="container">
-            <div class="row my-3">
-                <% orders.forEach((data)=> { %>
-                    <div class="col-3 my-2">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                <%= data.status %>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%= data.name %>
-                                </h5>
-                                <p class="card-text">
-                                    <%= data.user %>
-                                </p>
-                                <a href="/carrito/<%= data._id %>/<%= data.status %>" class="btn btn-primary">Ver
+<% }else { %>
+    <div class="container">
+        <div class="row my-3">
+            <% orders.forEach((data)=> { %>
+                <div class="col-3 my-2">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <%= data.status %>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= data.name %>
+                            </h5>
+                            <p class="card-text">
+                                <%= data.user %>
+                            </p>
+                            <a href="/carrito/<%= data._id %>/<%= data.status %>" class="btn btn-primary">Ver
                                     detalles</a>
-                            </div>
-                            <div class="card-footer text-muted">
-                                <%= data.date %>
-                            </div>
                         </div>
-                    </div>
-                    <% }) %>
-                        <div class="col-3 my-2">
-                            <%- include('include/newList') %>
-                        </div>
-            </div>
-        </div>
-        <input type="text" value="<%= confirmation %>" id="confirmation" hidden>
-        <input type="text" value="<%= mensaje %>" id="mensaje" hidden>
-        <input type="text" value="<%= icon %>" id="icon" hidden>
-        <script src="/alert.js"></script>
-        <% } %>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="container text-light" id="carrito">
-                        <p class="fs-3">Carrito de Compras</p>
-                        <div class="row mb-4">
-                            <div class="col-10">
-                                <div class="row mb-3">
-                                    <div class="col-3">
-                                        <img src="../../resources/images/camisas.jpg" alt="" class="img-fluid">
-                                    </div>
-                                    <div class="col-9">
-                                        <p class="fs-5 text-light">Centro de lavado MCL2040EPDG0 | 44 lb (lavado), 44 lb
-                                            (secado)</p>
-                                        <p class="fs-6">Mayor capacidad, diseño fácil de usar y panel Touch amigable.
-                                        </p>
-                                        <div class="d-flex flex-row justify-content-between">
-                                            <p class="fs-6">$199.99</p>
-                                            <p class="fs-6">cantidad: 1</p>
-                                            <p class="fs-6">Garantía: 12 meses</p>
-                                            <p class="fs-6">Total: $199.99</p>
-                                            <a href="">eliminar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-3">
-                                        <img src="../../resources/images/camisas.jpg" alt="" class="img-fluid">
-                                    </div>
-                                    <div class="col-9">
-                                        <p class="fs-5">Centro de lavado MCL2040EPDG0 | 44 lb (lavado), 44 lb (secado)
-                                        </p>
-                                        <p class="fs-6">Mayor capacidad, diseño fácil de usar y panel Touch amigable.
-                                        </p>
-                                        <div class="d-flex flex-row justify-content-between">
-                                            <p class="fs-6">$199.99</p>
-                                            <p class="fs-6">cantidad: 1</p>
-                                            <p class="fs-6">Garantía: 12 meses</p>
-                                            <p class="fs-6">Total: $199.99</p>
-                                            <a href="">eliminar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-3">
-                                        <img src="../../resources/images/camisas.jpg" alt="" class="img-fluid">
-                                    </div>
-                                    <div class="col-9">
-                                        <p class="fs-5">Centro de lavado MCL2040EPDG0 | 44 lb (lavado), 44 lb (secado)
-                                        </p>
-                                        <p class="fs-6">Mayor capacidad, diseño fácil de usar y panel Touch amigable.
-                                        </p>
-                                        <div class="d-flex flex-row justify-content-between">
-                                            <p class="fs-6">$199.99</p>
-                                            <p class="fs-6">cantidad: 1</p>
-                                            <p class="fs-6">Garantía: 12 meses</p>
-                                            <p class="fs-6">Total: $199.99</p>
-                                            <a href="">eliminar</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mt-3">
-                                        <a class="btn btn-primary text-light" data-bs-toggle="offcanvas"
-                                            href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                                            Confirmar
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2 mx-auto">
-                                <div class="offcanvas offcanvas-end text-light bg-dark" tabindex="-1"
-                                    id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-                                    <div class="offcanvas-header">
-                                        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Resumen de compra</h5>
-                                        <button type="button" class="btn-close-white text-reset"
-                                            data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                    </div>
-                                    <div class="offcanvas-body">
-                                        <div>
-                                            <p class="fs-4">Subtotal: $599.97</p>
-                                            <p class="fs-4">Cantidad de productos: 3</p>
-                                        </div>
-                                        <div class="d-grid gap-2 col-10 mx-auto my-3">
-                                            <button class="btn btn-primary" type="submit"
-                                                onclick="confirmacion()">Confirmar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="card-footer text-muted">
+                            <%= data.date %>
                         </div>
                     </div>
                 </div>
+            <% }) %>
+            <div class="col-3 my-2">
+                <%- include('include/newList') %>
             </div>
+        </div>
+    </div>
+<% } %>

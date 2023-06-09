@@ -11,7 +11,7 @@ let orderSchema = new MONGOOSE.Schema(
             require: true
         },
         status: {
-            type: ["en proceso", "finalizado", "cancelado"],
+            type: ["en proceso", "finalizado", "cancelado", "oculto"],
             default: "en proceso"
         },
         date: {
