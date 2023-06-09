@@ -448,3 +448,9 @@ a {
 #cards, .card{
     border: none;
 }
+
+@media (max-width: 900px) {
+    .alakazam {
+      display: none;
+    }
+  }
