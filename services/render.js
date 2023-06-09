@@ -77,3 +77,13 @@ exports.cuenta = (req, res) => {
     }
     res.render('cuenta', { user: session })
 }
+
+exports.usuarios = (req, res) => {
+    let session
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    res.render('usuarios', { user: session })
+}
