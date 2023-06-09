@@ -52,3 +52,13 @@ exports.categories = (req, res) => {
         })
 
 }
+
+exports.carrito = (req, res) => {
+    let session
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    res.render('carrito', { user: session })
+}

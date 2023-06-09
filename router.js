@@ -11,7 +11,6 @@ const CATEGORIES = require('./api/categories')
 const ORDERS = require('./api/orders')
 const DETAILS = require('./api/details')
 const PRODUCTS = require('./api/products')
-const { findById } = require('./models/users')
 
 
 /**
@@ -23,6 +22,7 @@ ROUTER.get('/', RENDER.index)
 ROUTER.get('/account', RENDER.newAccount)
 ROUTER.get('/products', RENDER.products)
 ROUTER.get('/categories', RENDER.categories)
+ROUTER.get('/carrito', RENDER.carrito)
 
 //API images
 
