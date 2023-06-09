@@ -1,0 +1,34 @@
+<button class="btnLogin-popup" id="btn-login">Login</button>
+<div class="overlay">
+    <div class="popup">
+        <div class="wrapper">
+            <span class="icon-close" id="btn-close-login">
+                <ion-icon name="close"></ion-icon>
+            </span>
+            <div class="form-box login">
+                <h2>Login</h2>
+                <form action="/login/users" method="post">
+                    <div class="imput-box">
+                        <span class="icon"><ion-icon name="user"></ion-icon></span>
+                        <input type="text" required name="user">
+                        <label for="">Usuario</label>
+                    </div>
+                    <div class="imput-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" name="password" required>
+                        <label for="">Contraseña</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label for="" class="text-light"><input type="checkbox"> Recordarme</label>
+                        <a href="#" class="text-light">Olvidé mi contraseña</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="login-register">
+                        <p class="text-light">¿No tienes una cuenta? <a href="../public/cuenta.html"
+                                class="register-link text-light">Registrarme</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

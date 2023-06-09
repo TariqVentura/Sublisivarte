@@ -1,0 +1,33 @@
+<% if(user==false ){ %>
+    <img src="/images/Error 404.png" alt="">
+<% }else { %>
+    <div class="container">
+        <div class="row my-3">
+            <% orders.forEach((data)=> { %>
+                <div class="col-3 my-2">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <%= data.status %>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= data.name %>
+                            </h5>
+                            <p class="card-text">
+                                <%= data.user %>
+                            </p>
+                            <a href="/carrito/<%= data._id %>/<%= data.status %>" class="btn btn-primary">Ver
+                                    detalles</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <%= data.date %>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+            <div class="col-3 my-2">
+                <%- include('include/newList') %>
+            </div>
+        </div>
+    </div>
+<% } %>

@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="navbar bg-primary mt-0 pt-2 px-0" id="nav-info">
+        <div class="container-fluid bg-primary d-flex justify-content-center ">
+            <!-- desaparece en pantallas pequeñas -->
+            <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
+                <li class="list-inline-item opacity-75 mr-2">
+                    <a class="text-light text-small pl-0 pr-2" href="">+503 2345 4657 &nbsp; | &nbsp;</a>
+                </li>
+                <li class="list-inline-item opacity-75 mr-2">
+                    <a class="text-light font-size-sm pl-0 pr-2" href=""><img
+                            src="https://img.icons8.com/ios/24/FFFFFF/mail.png" />&nbsp;
+                        Sublisivarte@gmail.com &nbsp; | &nbsp; </a>
+                </li>
+            </ul>
+            <div class="d-flex justify-content-around">
+                <div class="d-flex">
+                    <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
+                        <li class="list-inline-item opacity-75 mr-2">
+                            <a class="text-light text-small pl-0 pr-2" href="">Nosotros &nbsp; |
+                                &nbsp;</a>
+                        </li>
+                        <li class="list-inline-item opacity-75 mr-2">
+                            <a class="text-light text-small pl-0 pr-2" href="">Centro de ayuda &nbsp; |
+                                &nbsp;</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex flex-nowrap align-self-center">
+                    <a href=""><img src="https://img.icons8.com/material-rounded/18/FFFFFF/facebook.png" />&nbsp;</a>
+                    <a href=""><img src="https://img.icons8.com/windows/20/FFFFFF/instagram-new.png" />&nbsp;</a>
+                    <a href=""><img src="https://img.icons8.com/ios/16/FFFFFF/whatsapp--v1.png" />&nbsp;</a>
+                    <a href=""><img src="https://img.icons8.com/ios-filled/16/FFFFFF/twitter.png" />&nbsp;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header>
+        <a href="" class="logo mb-0 d-none d-lg-inline-block"><img src="../../resources/images/logo.png" alt=""
+                class="logo-img"></a>
+        <nav class="navegation">
+            <a href="/">Inicio</a>
+            <a href="/products">Productos</a>
+            <% if(user == false ) { %>
+                <%- include('login') %>
+            <% } else { %>
+                <% if(user.role == 'admin'){ %>
+                    <a href="/logOut/users"> <%= user.user %> </a>
+                <% } else { %>
+                    <a href="/carrito">Carrito</a>
+                    <a href="/logOut/users"> <%= user.user %> </a>
+                <% } %>
+            <% } %>
+        </nav>
+    </header>
+</div>
+
+                        

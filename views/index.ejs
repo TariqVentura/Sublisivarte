@@ -1,0 +1,108 @@
+<div class="container-fluid">
+    <div class="row">
+        <main>
+            <% if(user.role=='admin' ){ %>
+                <div class="container d-flex justify-content-start mt-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary border-0" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Subir Imagen</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form action="/api/images" method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Subir Imagen</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group flex-nowrap">
+                                            <input type="file" class="form-control" aria-describedby="addon-wrapping"
+                                                name="image" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                    <div class="carousel-principal">
+                        <div class="wrapper-carousel">
+                            <i id="left" class="fa-solid fa-angle-left"></i>
+                            <div class="carousel">
+                                <% resources.forEach((data)=> { %>
+                                    <img src="/images/<%= data.image %>" alt="" draggable="false">
+                                    <% }) %>
+                            </div>
+                            <i id="rigth" class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <div class="container mt-3 py-3 productos">
+                        <p class="fs-3 pb-3 text-light fw-bold">Ofertas</p>
+                        <div class="row d-flex justify-content-between" id="Nuevos-productos">
+                            <div class="col-2">
+                                <div class="card border border-0 bg-dark text-light text-center" style="width: 13rem;">
+                                    <img src="/images/camisas.jpg" class="card-img-top rounded" alt="...">
+                                    <div class="card-body d-grid gap-2">
+                                        <h5 class="card-title">Camisas</h5>
+                                        <p class="card-text"></p>
+                                        <a href="../public/producto.html" class="btn btn-primary rounded">Ver mas...</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card text-center bg-dark text-light border border-0" style="width: 13rem;">
+                                    <img src="/images/tazas.jpg" class="card-img-top rounded" alt="...">
+                                    <div class="card-body d-grid gap-2">
+                                        <h5 class="card-title">Vaso</h5>
+                                        <p class="card-text"></p>
+                                        <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card text-center bg-dark text-light border border-0" style="width: 13rem;">
+                                    <img src="/images/ropa.jpg" class="card-img-top rounded" alt="...">
+                                    <div class="card-body d-grid gap-2">
+                                        <h5 class="card-title">bolsa</h5>
+                                        <p class="card-text"></p>
+                                        <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 d-md-none d-lg-block">
+                                <div class="card text-center bg-dark text-light border border-0" style="width: 13rem;">
+                                    <img src="/images/accesorios.jpg" class="card-img-top rounded" alt="...">
+                                    <div class="card-body d-grid gap-2">
+                                        <h5 class="card-title">Collar para perro</h5>
+                                        <p class="card-text"></p>
+                                        <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 d-md-none">
+                                <div class="card text-center bg-dark text-light border border-0" style="width: 13rem;">
+                                    <img src="/images/frame.jpg" class="card-img-top rounded" alt="...">
+                                    <div class="card-body d-grid gap-2">
+                                        <h5 class="card-title">frame</h5>
+                                        <p class="card-text"></p>
+                                        <a href="#" class="btn btn-primary rounded">Ver mas...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </main>
+    </div>
+</div>
+<script src="/index.js"></script>
+<script src="/alerts.js"></script>
