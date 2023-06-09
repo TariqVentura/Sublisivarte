@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form action="/api/products" method="post">
-                                            
+
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="" class="form-label">Nombre del
@@ -118,8 +118,9 @@
                         </div>
                         <% } %>
                             <div class="row d-flex justify-content-around" id="Nuevos-productos">
-                                <div class="col-6 -align-self-start ">
-                                    <% products.forEach((data)=> { %>
+                                <% products.forEach((data)=> { %>
+                                    <div class="col-6 -align-self-start ">
+
                                         <div class="card text-dark text-center border-1" style="width: 13rem;">
                                             <img src="/images/<%= data.image %>" class="card-img-top rounded"
                                                 alt="Imagen del Producto">
@@ -164,14 +165,17 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <form action="/update/products" method="post">
-                                                                        <input type="text" value="<%= data._id %>" name="id" hidden>
+                                                                        <input type="text" value="<%= data._id %>"
+                                                                            name="id" hidden>
                                                                         <div class="row">
                                                                             <div class="col-md-6">
                                                                                 <label for="" class="form-label">Nombre
                                                                                     del
                                                                                     producto</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="product" value="<%= data.product %>" id=""required>
+                                                                                    name="product"
+                                                                                    value="<%= data.product %>" id=""
+                                                                                    required>
                                                                             </div>
                                                                             <div class="col-md-5">
                                                                                 <label for=""
@@ -183,7 +187,8 @@
                                                                                     <input type="number" min="0"
                                                                                         class="form-control" id=""
                                                                                         aria-describedby="addon-wrapping"
-                                                                                        required name="price" value="<%= data.price %>">
+                                                                                        required name="price"
+                                                                                        value="<%= data.price %>">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -192,9 +197,10 @@
                                                                             <label for="exampleFormControlTextarea1"
                                                                                 class="form-label">Descripción</label>
                                                                             <textarea name="description"
-                                                                                class="form-control" 
+                                                                                class="form-control"
                                                                                 id="exampleFormControlTextarea1"
-                                                                                rows="3" required><%= data.description %></textarea>
+                                                                                rows="3"
+                                                                                required><%= data.description %></textarea>
                                                                         </div>
                                                                         <br>
                                                                         <div class="col-mb-3">
@@ -221,7 +227,8 @@
                                                                             <label for="formFile"
                                                                                 class="form-label">Imagen</label>
                                                                             <input class="form-control" name="image"
-                                                                                type="file" id="formFile" value="<%= data.iamge %>">
+                                                                                type="file" id="formFile"
+                                                                                value="<%= data.iamge %>">
                                                                         </div>
                                                                         <div class="col-mb-3">
                                                                             <label class="form-label"
@@ -236,9 +243,9 @@
                                                                                 data-bs-dismiss="modal">Cancelar</button>
                                                                             <button type="submit"
                                                                                 class="btn btn-primary">Guardar</button>
-                                                                        </div>                                                                      
+                                                                        </div>
                                                                     </form>
-                                                                </div>                                                                
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -271,11 +278,13 @@
                                                             <%}%>
                                                         </div>
                                                     </div>
-                                                    <% }) %>
+
                                             </div>
                                         </div>
-                                </div>
+                                    </div>
+                                    <% }) %>
                             </div>
+                            
                 </div>
             </div>
         </div>

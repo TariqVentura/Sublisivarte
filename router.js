@@ -23,6 +23,7 @@ ROUTER.get('/account', RENDER.newAccount)
 ROUTER.get('/products', RENDER.products)
 ROUTER.get('/categories', RENDER.categories)
 ROUTER.get('/carrito', RENDER.carrito)
+ROUTER.get('/cuenta', RENDER.cuenta)
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)

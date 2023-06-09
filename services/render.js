@@ -1,4 +1,5 @@
 const AXIOS = require('axios')
+const session = require('express-session')
 
 exports.index = (req, res) => {
     let session
@@ -65,4 +66,14 @@ exports.carrito = (req, res) => {
         session = false
         res.render('carrito', { user: session })
     }
+}
+
+exports.cuenta = (req, res) => {
+    let session
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    res.render('cuenta', { user: session })
 }
