@@ -106,6 +106,7 @@ exports.findUsers = (req, res) =>{
 }
 
 exports.updateUsers = (req, res) => {
+    console.log(req.body.id)    
     const id = req.body.id
     USERS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
@@ -114,6 +115,9 @@ exports.updateUsers = (req, res) => {
             } else {
                 res.send('Usuario Actualizado')
             }
+        })
+        .catch(err => {
+            res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
         })
 }
 
