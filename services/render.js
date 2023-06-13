@@ -85,5 +85,11 @@ exports.usuarios = (req, res) => {
     } else {
         session = false
     }
-    res.render('usuarios', { user: session })
+    AXIOS.get('http://localhost:443/api/users')
+                .then(function (response) {
+                    res.render('usuarios', {users: response.data, user: session})
+                })
+                .catch(err => {
+                    res.send('No se pudieron cargar los usuarios')
+                })
 }

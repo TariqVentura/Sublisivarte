@@ -32,8 +32,11 @@ ROUTER.get('/api/images', IMAGES.getImages)
 
 //API users
 ROUTER.post('/api/users', USERS.createUser)
+ROUTER.get('/api/users', USERS.findUsers)
+ROUTER.post('/update/users', USERS.updateUsers)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
+
 
 //API orders
 ROUTER.post('/api/orders', ORDERS.createOrder)

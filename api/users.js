@@ -79,3 +79,41 @@ exports.logOut = (req, res) => {
     return res.redirect('/')
 }
 
+exports.findUsers = (req, res) =>{
+    if (req.params.id) {
+        const id = req.query.id
+        USERS.findById(id)
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "No se pudo encontrar este usuario" })
+                } else {
+                    res.send(data)
+                }
+            })
+            .catch(err => {
+                res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
+            })
+    } else {
+        USERS.find()
+            .then(user => {
+                res.send(user)
+                console.log(user)
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
+            })
+    }
+}
+
+exports.updateUsers = (req, res) => {
+    const id = req.body.id
+    USERS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: "No se encontro el usuario" })
+            } else {
+                res.send('Usuario Actualizado')
+            }
+        })
+}
+
