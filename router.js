@@ -34,6 +34,7 @@ ROUTER.get('/api/images', IMAGES.getImages)
 ROUTER.post('/api/users', USERS.createUser)
 ROUTER.get('/api/users', USERS.findUsers)
 ROUTER.post('/update/users', USERS.updateUsers)
+ROUTER.get('/delete/users/:id',USERS.deleteUsers)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
 

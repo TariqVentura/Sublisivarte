@@ -117,3 +117,15 @@ exports.updateUsers = (req, res) => {
         })
 }
 
+exports.deleteUsers = (req, res) => {
+    const id = req.params.id
+    USERS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: 'Usuario no encontrado' })
+            } else {
+                res.send('Usuario Eliminado')
+            }
+        })
+}
+
