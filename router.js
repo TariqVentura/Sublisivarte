@@ -25,6 +25,7 @@ ROUTER.get('/categories', RENDER.categories)
 ROUTER.get('/carrito', RENDER.carrito)
 ROUTER.get('/cuenta', RENDER.cuenta)
 ROUTER.get('/usuarios', RENDER.usuarios) 
+ROUTER.get('/carrito/:id/:status', RENDER.details)
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)
@@ -47,14 +48,13 @@ ROUTER.get('/api/orders/:key', ORDERS.getOrders)
 //API details
 ROUTER.post('/api/details', DETAILS.createDetail)
 ROUTER.get('/delete/details/:key/:stock/:id', DETAILS.cancelDetail)
+ROUTER.get('/api/details/:id', DETAILS.getDetails)
 
 //API products
 ROUTER.post('/api/products', PRODUCTS.createProduct )
 ROUTER.get('/api/products', PRODUCTS.findProduct )
 ROUTER.post('/update/products/', PRODUCTS.updateProduct)
 ROUTER.get('/delete/products/:id', PRODUCTS.deleteProducts)
-
-
 
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)
 ROUTER.get('/api/categories', CATEGORIES.findCategorie)

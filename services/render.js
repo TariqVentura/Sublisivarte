@@ -1,8 +1,7 @@
 const AXIOS = require('axios')
-const session = require('express-session')
+let session 
 
 exports.index = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
     } else {
@@ -19,7 +18,6 @@ exports.newAccount = (req, res) => {
 }
 
 exports.products = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
     } else {
@@ -41,7 +39,6 @@ exports.products = (req, res) => {
 }
 
 exports.categories = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
     } else {
@@ -55,7 +52,6 @@ exports.categories = (req, res) => {
 }
 
 exports.carrito = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
         AXIOS.get('http://localhost:443/api/orders/' + req.session.user)
@@ -68,8 +64,20 @@ exports.carrito = (req, res) => {
     }
 }
 
+exports.details = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+        AXIOS.get('http://localhost:443/api/details/' + req.params.id)
+        .then(function (detail) {
+            res.render('detalles', { user: session, details: detail.data, status: req.params.status, order: req.params.id })
+        })
+    } else {
+        session = false
+        res.render('detalles', { user: session })
+    }
+}
+
 exports.cuenta = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
     } else {
@@ -79,7 +87,6 @@ exports.cuenta = (req, res) => {
 }
 
 exports.usuarios = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
     } else {
