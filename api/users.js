@@ -60,10 +60,10 @@ exports.logIn = (req, res) => {
                             res.json(req.session)
                         } else {
                             req.session.authenticated = true,
-                            req.session.user = USER,
-                            req.session.role = data.role
+                                req.session.user = USER,
+                                req.session.role = data.role
                             req.session.status = data.status
-                            req.session.visitas = req.session.visitas ? ++ req.session.visitas : 1
+                            req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
                             console.log(req.session)
                             res.redirect('/')
                         }
@@ -80,7 +80,7 @@ exports.logOut = (req, res) => {
     return res.redirect('/')
 }
 
-exports.findUsers = (req, res) =>{
+exports.findUsers = (req, res) => {
     if (req.params.id) {
         const id = req.query.id
         USERS.findById(id)
@@ -107,7 +107,7 @@ exports.findUsers = (req, res) =>{
 }
 
 exports.updateUsers = (req, res) => {
-    console.log(req.body.id)    
+    console.log(req.body.id)
     const id = req.body.id
     USERS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
@@ -123,14 +123,21 @@ exports.updateUsers = (req, res) => {
 }
 
 exports.deleteUsers = (req, res) => {
-    const id = req.params.id
-    USERS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
-        .then(data => {
-            if (!data) {
-                res.status(404).send({ message: 'Usuario no encontrado' })
-            } else {
-                res.send('Usuario Eliminado')
-            }
-        })
+    if (req.session.user != req.params.user) {
+        const VALUE = { user: req.params.user }
+        USERS.deleteOne(VALUE)
+            .then(data => {
+                if (!data) {
+                    res.send('err')
+                } else {
+                    res.send('eliminacion completada')
+                }
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    } else {
+        res.send('no tiene permisos para realizar esta accion')
+    }
 }
 
