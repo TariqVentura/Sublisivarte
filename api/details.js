@@ -72,3 +72,19 @@ exports.cancelDetail = (req, res) => {
             }
         })
 }
+
+exports.getDetails = (req, res) => {
+    const ID = req.params.id
+
+    DETAILS.find({ $or: [{ order: { $regex: ID } }] })
+        .then(data => {
+            if (!data) {
+                res.send('error')
+            } else {
+                res.send(data)
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
