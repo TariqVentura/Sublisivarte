@@ -62,6 +62,7 @@ exports.logIn = (req, res) => {
                             req.session.authenticated = true,
                             req.session.user = USER,
                             req.session.role = data.role
+                            req.session.status = data.status
                             req.session.visitas = req.session.visitas ? ++ req.session.visitas : 1
                             console.log(req.session)
                             res.redirect('/')
