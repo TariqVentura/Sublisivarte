@@ -1,0 +1,289 @@
+<% if(user==false){ %>
+	<img src="/images/Error 404.png" alt="" width="100%" />
+	<% }else{ %>
+		<div class="comet">
+			<nav class="for-nav">
+				<ul class="list-group list-group-flush">
+					<li>
+						<a href="/cuenta" class="log">
+							<i class="men"><ion-icon name="grid"></ion-icon></i>
+							<span>Administrar</span>
+						</a>
+					</li>
+					<li>
+						<a href="/usuarios">
+							<i><ion-icon name="id-card"></ion-icon></i>
+							<span>Usuarios</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<i><ion-icon name="person-circle"></ion-icon></i>
+							<span>Clientes</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<i><ion-icon name="send"></ion-icon></i>
+							<span>Pedidos</span>
+						</a>
+					</li>
+					<li>
+						<a href="" class="logout">
+							<i><ion-icon name="log-out"></ion-icon></i>
+							<span>Logout</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="container">
+			<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+				<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-plus-filled"
+					width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#597e8d" fill="none"
+					stroke-linecap="round" stroke-linejoin="round">
+					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+					<path
+						d="M12 2l.324 .001l.318 .004l.616 .017l.299 .013l.579 .034l.553 .046c4.785 .464 6.732 2.411 7.196 7.196l.046 .553l.034 .579c.005 .098 .01 .198 .013 .299l.017 .616l.005 .642l-.005 .642l-.017 .616l-.013 .299l-.034 .579l-.046 .553c-.464 4.785 -2.411 6.732 -7.196 7.196l-.553 .046l-.579 .034c-.098 .005 -.198 .01 -.299 .013l-.616 .017l-.642 .005l-.642 -.005l-.616 -.017l-.299 -.013l-.579 -.034l-.553 -.046c-4.785 -.464 -6.732 -2.411 -7.196 -7.196l-.046 -.553l-.034 -.579a28.058 28.058 0 0 1 -.013 -.299l-.017 -.616c-.003 -.21 -.005 -.424 -.005 -.642l.001 -.324l.004 -.318l.017 -.616l.013 -.299l.034 -.579l.046 -.553c.464 -4.785 2.411 -6.732 7.196 -7.196l.553 -.046l.579 -.034c.098 -.005 .198 -.01 .299 -.013l.616 -.017c.21 -.003 .424 -.005 .642 -.005zm0 6a1 1 0 0 0 -1 1v2h-2l-.117 .007a1 1 0 0 0 .117 1.993h2v2l.007 .117a1 1 0 0 0 1.993 -.117v-2h2l.117 -.007a1 1 0 0 0 -.117 -1.993h-2v-2l-.007 -.117a1 1 0 0 0 -.993 -.883z"
+						fill="currentColor" stroke-width="0" />
+				</svg>
+			</button>
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+				aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="staticBackdropLabel">
+								Crear Usuario
+							</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form action="/api/users" method="post">
+								<div class="row">
+									<div class="col-md-6">
+										<label for="" class="form-label">Nombre:</label>
+										<input type="text" class="form-control" name="name" id="" required />
+									</div>
+									<div class="col-md-5">
+										<label for="" class="form-label">Apellido</label>
+										<div class="input-group input-group-col-md-3">
+											<input type="text" class="form-control" id=""
+												aria-describedby="addon-wrapping" required name="lastname" />
+										</div>
+									</div>
+								</div>
+								<br />
+								<div class="row">
+									<div class="col-md-6">
+										<label for="" class="form-label">Correo:</label>
+										<input type="text" class="form-control" name="email" id="" required />
+									</div>
+									<div class="col-md-5">
+										<label for="" class="form-label">Usuario</label>
+										<div class="input-group input-group-col-md-3">
+											<input type="text" class="form-control" id=""
+												aria-describedby="addon-wrapping" required name="user" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-5">
+										<label for="" class="form-label">Contraseña</label>
+										<div class="input-group input-group-col-md-3">
+											<input type="password" class="form-control bg-secondary"
+												id="exampleFormControlInput1" placeholder="" required name="password" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<label for="" class="form-label">Documento:</label>
+										<input type="text" class="form-control" name="document" id="" required />
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-5">
+										<label for="" class="form-label">Nivel</label>
+										<select class="form-select" id="inputGroupSelect01" name="role" required>
+											<option>admin</option>
+											<option>client</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="" class="form-label">Estado</label>
+										<select class="form-select" id="inputGroupSelect01" name="status" required>
+											<option>active</option>
+											<option>inactive</option>
+											<option>banned</option>
+										</select>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+										Cancelar
+									</button>
+									<button type="submit" class="btn btn-primary">Guardar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Nombre</th>
+						<th scope="col">Apellido</th>
+						<th scope="col">Correo</th>
+						<th scope="col">Usuario</th>
+						<th scope="col">Nivel</th>
+						<th scope="col">Estado</th>
+						<th scope="col">Editar</th>
+						<th scope="col">Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% users.forEach((data)=> { %>
+						<tr>
+							<td>
+								<%= data.name %>
+							</td>
+							<td>
+								<%= data.lastname %>
+							</td>
+							<td>
+								<%= data.email %>
+							</td>
+							<td>
+								<%= data.user %>
+							</td>
+							<td>
+								<%= data.role %>
+							</td>
+							<td>
+								<%= data.status %>
+							</td>
+							<td>
+								<button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal"
+									data-bs-target="#staticBackdrop<%= data._id %>update">
+									Actualizar
+								</button>
+								<div class="modal fade" id="staticBackdrop<%= data._id %>update"
+									data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+									aria-labelledby="staticBackdropLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h1 class="modal-title fs-5" id="staticBackdropLabel">
+													Actualizar: <%= data.name %>
+												</h1>
+												<button type="button" class="btn-close" data-bs-dismiss="modal"
+													aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<form action="/update/users/" method="post">
+													<input type="text" value="<%= data._id %>" name="id" hidden />
+													<div class="row">
+														<div class="col-md-6">
+															<label for="" class="form-label">Nombre:</label>
+															<input type="text" class="form-control" name="name"
+																value="<%= data.name %>" id="" required />
+														</div>
+														<div class="col-md-5">
+															<label for="" class="form-label">Apellido</label>
+															<div class="input-group input-group-col-md-3">
+																<input type="text" class="form-control" id=""
+																	aria-describedby="addon-wrapping" required
+																	name="lastname" value="<%= data.lastname %>" />
+															</div>
+														</div>
+													</div>
+													<br />
+													<div class="row">
+														<div class="col-md-6">
+															<label for="" class="form-label">Correo:</label>
+															<input type="text" class="form-control" name="email"
+																value="<%= data.email %>" id="" required />
+														</div>
+														<div class="col-md-5">
+															<label for="" class="form-label">Usuario</label>
+															<div class="input-group input-group-col-md-3">
+																<input type="text" class="form-control" id=""
+																	aria-describedby="addon-wrapping" required
+																	name="user" value="<%= data.user %>" />
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-5">
+															<label for="" class="form-label">Nivel</label>
+															<select class="form-select" id="inputGroupSelect01"
+																name="role" required>
+																<option selected>
+																	<%= data.role %>
+																</option>
+																<option>admin</option>
+																<option>client</option>
+															</select>
+														</div>
+														<div class="col-md-6">
+															<label for="" class="form-label">Estado</label>
+															<select class="form-select" id="inputGroupSelect01"
+																name="status" required>
+																<option selected>
+																	<%= data.status %>
+																</option>
+																<option>active</option>
+																<option>inactive</option>
+																<option>banned</option>
+															</select>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-bs-dismiss="modal">
+															Cancelar
+														</button>
+														<button type="submit" class="btn btn-primary">
+															Guardar
+														</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</td>
+							<td>
+								<button type="button" class="btn btn-danger mb-3" data-bs-toggle="modal"
+									data-bs-target="#staticBackdrop<%= data._id %>delete">
+									Eliminar
+								</button>
+								<div class="modal fade" id="staticBackdrop<%= data._id %>delete"
+									data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+									aria-labelledby="staticBackdropLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="btn-close" data-bs-dismiss="modal"
+													aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												¿Esta seguro que desea eliminar el producto?
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary">
+													<a href="/delete/users/<%= data.user %>"
+														class="text-light text-decoration-none">Aceptar</a>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<%})%>
+				</tbody>
+			</table>
+		</div>
+
+		<% } %>

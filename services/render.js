@@ -1,7 +1,7 @@
 const AXIOS = require('axios')
+let session 
 
 exports.index = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
     } else {
@@ -18,7 +18,6 @@ exports.newAccount = (req, res) => {
 }
 
 exports.products = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
     } else {
@@ -40,7 +39,6 @@ exports.products = (req, res) => {
 }
 
 exports.categories = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
     } else {
@@ -54,7 +52,6 @@ exports.categories = (req, res) => {
 }
 
 exports.carrito = (req, res) => {
-    let session
     if (req.session.user) {
         session = req.session
         AXIOS.get('http://localhost:443/api/orders/' + req.session.user)
@@ -65,4 +62,41 @@ exports.carrito = (req, res) => {
         session = false
         res.render('carrito', { user: session })
     }
+}
+
+exports.details = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+        AXIOS.get('http://localhost:443/api/details/' + req.params.id)
+        .then(function (detail) {
+            res.render('detalles', { user: session, details: detail.data, status: req.params.status, order: req.params.id })
+        })
+    } else {
+        session = false
+        res.render('detalles', { user: session })
+    }
+}
+
+exports.cuenta = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    res.render('cuenta', { user: session })
+}
+
+exports.usuarios = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/users')
+                .then(function (response) {
+                    res.render('usuarios', {users: response.data, user: session})
+                })
+                .catch(err => {
+                    res.send('No se pudieron cargar los usuarios')
+                })
 }

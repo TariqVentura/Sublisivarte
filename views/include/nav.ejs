@@ -45,6 +45,7 @@
             <% } else { %>
                 <% if(user.role == 'admin'){ %>
                     <a href="/logOut/users"> <%= user.user %> </a>
+                    <a href="/cuenta">Cuenta</a>
                 <% } else { %>
                     <a href="/carrito">Carrito</a>
                     <a href="/logOut/users"> <%= user.user %> </a>

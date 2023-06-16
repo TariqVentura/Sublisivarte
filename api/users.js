@@ -60,9 +60,10 @@ exports.logIn = (req, res) => {
                             res.json(req.session)
                         } else {
                             req.session.authenticated = true,
-                            req.session.user = USER,
-                            req.session.role = data.role
-                            req.session.visitas = req.session.visitas ? ++ req.session.visitas : 1
+                                req.session.user = USER,
+                                req.session.role = data.role
+                            req.session.status = data.status
+                            req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
                             console.log(req.session)
                             res.redirect('/')
                         }
@@ -77,5 +78,66 @@ exports.logIn = (req, res) => {
 exports.logOut = (req, res) => {
     req.session.destroy()
     return res.redirect('/')
+}
+
+exports.findUsers = (req, res) => {
+    if (req.params.id) {
+        const id = req.query.id
+        USERS.findById(id)
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "No se pudo encontrar este usuario" })
+                } else {
+                    res.send(data)
+                }
+            })
+            .catch(err => {
+                res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
+            })
+    } else {
+        USERS.find()
+            .then(user => {
+                res.send(user)
+                console.log(user)
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
+            })
+    }
+}
+
+exports.updateUsers = (req, res) => {
+    console.log(req.body.id)
+    const id = req.body.id
+    USERS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: "No se encontro el usuario" })
+            } else {
+                res.send('Usuario Actualizado')
+            }
+        })
+        .catch(err => {
+            res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
+        })
+}
+
+exports.deleteUsers = (req, res) => {
+    if (req.session.user != req.params.user) {
+        const VALUE = { user: req.params.user }
+        USERS.deleteOne(VALUE)
+            .then(data => {
+                if (!data) {
+                    res.send('err')
+                } else {
+                    res.send('eliminacion completada')
+                }
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    } else {
+        res.send('no tiene permisos para realizar esta accion')
+    }
 }
 

@@ -1,0 +1,124 @@
+<div class="container">
+    <div class="row">
+        <table class="table table-stripped table-bordered text-light my-3">
+            <thead>
+                <tr>
+                    <th scope="col">Productos</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total</th>
+                    <% if(status=='en proceso' ){ %>
+                        <th scope="col">Eliminar</th>
+                        <% } else if (status=='finalizado' ){ %>
+                            <th scope="col">Comentar</th>
+                            <%}%>
+                </tr>
+            </thead>
+            <tbody>
+                <% details.forEach((data)=> { %>
+                    <tr>
+                        <td>
+                            <%= data.product %>
+                        </td>
+                        <td>
+                            <%= data.price %>
+                        </td>
+                        <td>
+                            <%= data.amount %>
+                        </td>
+                        <td class="total">
+                            <%= data.total %>
+                        </td>
+                        <td>
+                            <% if(status=='en proceso' ){ %>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop<%= data._id %>delete">
+                                    Eliminar producto
+                                </button>
+
+                                <!-- Modal -->
+                                <form action="" method="post">
+                                    <div class="modal fade text-dark" id="staticBackdrop<%= data._id %>delete"
+                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Eliminar
+                                                        Pedido
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ¿Esta seguro que desea eliminar el producto <%= data.product %> (<%=
+                                                            data.amount %>)?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancelar</button>
+                                                    <button class="btn btn-danger"><a
+                                                            href="/api/deleteDetail/<%= data._id %>"
+                                                            class="text-light text-decoration-none">Eliminar</a></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <% }else if (status=='finalizado' ){ %>
+                                    <form action="/api/comments" method="post">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop<%= data._id %>comment">
+                                            Comentar producto
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade text-dark" id="staticBackdrop<%= data._id %>comment"
+                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Escribe un
+                                                            comentario
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <label for="customRange2" class="form-label">Calificacion 1 al
+                                                            10</label>
+                                                        <input type="range" class="form-range" min="0" max="10"
+                                                            id="customRange2" value="0" name="review">
+                                                        <textarea name="comment" id="" cols="60" rows="5"></textarea>
+                                                        <input type="text" name="user" value="<%= user %>" hidden>
+                                                        <input type="text" name="product" value="<%= data.product %>"
+                                                            hidden>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancelar</button>
+                                                        <button class="btn btn-success" type="submit">Enviar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <%}%>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <div class="row w-25 my-3 ">
+        <% if(status=='en proceso' ){ %>
+            <form action="/api/finishOrder" method="post">
+                <input type="text" value="<%= order %>" name="id" hidden>
+                <button class="btn btn-success" type="submit">Comprar</button>
+            </form>
+            <% } %>
+    </div>
+</div>

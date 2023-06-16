@@ -6,120 +6,151 @@
             <div class="row mb-3">
                 <div class="row mb-3">
                     <% if(user.role=='admin' ){ %>
-                        <div class="agregar-btn col-md-3">
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-square-rounded-plus-filled" width="40"
-                                    height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#597e8d" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M12 2l.324 .001l.318 .004l.616 .017l.299 .013l.579 .034l.553 .046c4.785 .464 6.732 2.411 7.196 7.196l.046 .553l.034 .579c.005 .098 .01 .198 .013 .299l.017 .616l.005 .642l-.005 .642l-.017 .616l-.013 .299l-.034 .579l-.046 .553c-.464 4.785 -2.411 6.732 -7.196 7.196l-.553 .046l-.579 .034c-.098 .005 -.198 .01 -.299 .013l-.616 .017l-.642 .005l-.642 -.005l-.616 -.017l-.299 -.013l-.579 -.034l-.553 -.046c-4.785 -.464 -6.732 -2.411 -7.196 -7.196l-.046 -.553l-.034 -.579a28.058 28.058 0 0 1 -.013 -.299l-.017 -.616c-.003 -.21 -.005 -.424 -.005 -.642l.001 -.324l.004 -.318l.017 -.616l.013 -.299l.034 -.579l.046 -.553c.464 -4.785 2.411 -6.732 7.196 -7.196l.553 -.046l.579 -.034c.098 -.005 .198 -.01 .299 -.013l.616 -.017c.21 -.003 .424 -.005 .642 -.005zm0 6a1 1 0 0 0 -1 1v2h-2l-.117 .007a1 1 0 0 0 .117 1.993h2v2l.007 .117a1 1 0 0 0 1.993 -.117v-2h2l.117 -.007a1 1 0 0 0 -.117 -1.993h-2v-2l-.007 -.117a1 1 0 0 0 -.993 -.883z"
-                                        fill="currentColor" stroke-width="0" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Agregar producto</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                        <div class="row">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                        data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                        aria-selected="true">Productos</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                        data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
+                                        aria-selected="false">Categorias</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                    aria-labelledby="home-tab">
+                                    <div class="agregar-btn col-md-3">
+                                        <button type="button" class="btn" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-square-rounded-plus-filled"
+                                                width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5"
+                                                stroke="#597e8d" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path
+                                                    d="M12 2l.324 .001l.318 .004l.616 .017l.299 .013l.579 .034l.553 .046c4.785 .464 6.732 2.411 7.196 7.196l.046 .553l.034 .579c.005 .098 .01 .198 .013 .299l.017 .616l.005 .642l-.005 .642l-.017 .616l-.013 .299l-.034 .579l-.046 .553c-.464 4.785 -2.411 6.732 -7.196 7.196l-.553 .046l-.579 .034c-.098 .005 -.198 .01 -.299 .013l-.616 .017l-.642 .005l-.642 -.005l-.616 -.017l-.299 -.013l-.579 -.034l-.553 -.046c-4.785 -.464 -6.732 -2.411 -7.196 -7.196l-.046 -.553l-.034 -.579a28.058 28.058 0 0 1 -.013 -.299l-.017 -.616c-.003 -.21 -.005 -.424 -.005 -.642l.001 -.324l.004 -.318l.017 -.616l.013 -.299l.034 -.579l.046 -.553c.464 -4.785 2.411 -6.732 7.196 -7.196l.553 -.046l.579 -.034c.098 -.005 .198 -.01 .299 -.013l.616 -.017c.21 -.003 .424 -.005 .642 -.005zm0 6a1 1 0 0 0 -1 1v2h-2l-.117 .007a1 1 0 0 0 .117 1.993h2v2l.007 .117a1 1 0 0 0 1.993 -.117v-2h2l.117 -.007a1 1 0 0 0 -.117 -1.993h-2v-2l-.007 -.117a1 1 0 0 0 -.993 -.883z"
+                                                    fill="currentColor" stroke-width="0" />
+                                            </svg>
+                                        </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <form action="/api/products" method="post">
-                                            
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label for="" class="form-label">Nombre del
-                                                        producto</label>
-                                                    <input type="text" class="form-control" name="product" id=""
-                                                        required>
+                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Agregar producto
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                                 </div>
-                                                <div class="col-md-5">
-                                                    <label for="" class="form-label">Precio</label>
-                                                    <div class="input-group input-group-col-md-3">
-                                                        <span class="input-group-text" id="addon-wrapping">$</span>
-                                                        <input type="number" min="0" class="form-control" id=""
-                                                            aria-describedby="addon-wrapping" required name="price">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="col-mb-3">
-                                                <label for="exampleFormControlTextarea1"
-                                                    class="form-label">Descripción</label>
-                                                <textarea name="description" class="form-control"
-                                                    id="exampleFormControlTextarea1" rows="3" required></textarea>
-                                            </div>
-                                            <br>
-                                            <div class="col-mb-3">
-                                                <label for="" name="categorie">Categorías</label>
-                                                <div class="input-group col-mb-3">
-                                                    <select class="form-select" id="inputGroupSelect01" name="categorie"
-                                                        required>
-                                                        <% categories.forEach((data)=> { %>
-                                                            <option value="<%= data.categorie %>">
-                                                                <%= data.categorie %>
-                                                            </option>
-                                                            <% }) %>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="col-mb-3">
-                                                <label for="formFile" class="form-label">Imagen</label>
-                                                <input class="form-control" name="image" type="file" id="formFile">
-                                            </div>
-                                            <div class="col-mb-3">
-                                                <label class="form-label" for="">Stock</label>
-                                                <input type="number" min="1" class="form-control" name="stock" id=""
-                                                    required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                                <div class="modal-body">
+                                                    <form action="/api/products" method="post">
 
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label for="" class="form-label">Nombre del
+                                                                    producto</label>
+                                                                <input type="text" class="form-control" name="product"
+                                                                    id="" required>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <label for="" class="form-label">Precio</label>
+                                                                <div class="input-group input-group-col-md-3">
+                                                                    <span class="input-group-text"
+                                                                        id="addon-wrapping">$</span>
+                                                                    <input type="number" min="0" class="form-control"
+                                                                        id="" aria-describedby="addon-wrapping" required
+                                                                        name="price">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-mb-3">
+                                                            <label for="exampleFormControlTextarea1"
+                                                                class="form-label">Descripción</label>
+                                                            <textarea name="description" class="form-control"
+                                                                id="exampleFormControlTextarea1" rows="3"
+                                                                required></textarea>
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-mb-3">
+                                                            <label for="" name="categorie">Categorías</label>
+                                                            <div class="input-group col-mb-3">
+                                                                <select class="form-select" id="inputGroupSelect01"
+                                                                    name="categorie" required>
+                                                                    <% categories.forEach((data)=> { %>
+                                                                        <option value="<%= data.categorie %>">
+                                                                            <%= data.categorie %>
+                                                                        </option>
+                                                                        <% }) %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-mb-3">
+                                                            <label for="formFile" class="form-label">Imagen</label>
+                                                            <input class="form-control" name="image" type="file"
+                                                                id="formFile">
+                                                        </div>
+                                                        <div class="col-mb-3">
+                                                            <label class="form-label" for="">Stock</label>
+                                                            <input type="number" min="1" class="form-control"
+                                                                name="stock" id="" required>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Cancelar</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Guardar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                            Crear Categoria
-                        </button>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    Crear Categoria
+                                </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear categoria</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal-2"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="/api/categories" method="post">
-                                            <input type="text" name="categorie" required>
-                                            <br><br>
-                                            <button type="submit" class="btn btn-primary">Enviar</button>
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal-2">Cerrar</button>
-                                        </form>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear
+                                                    categoria</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal-2"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/api/categories" method="post">
+                                                    <input type="text" name="categorie" required>
+                                                    <br><br>
+                                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal-2">Cerrar</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <% } %>
                             <div class="row d-flex justify-content-around" id="Nuevos-productos">
-                                <div class="col-6 -align-self-start ">
-                                    <% products.forEach((data)=> { %>
+                                <% products.forEach((data)=> { %>
+                                    <div class="col-6 -align-self-start ">
+
                                         <div class="card text-dark text-center border-1" style="width: 13rem;">
                                             <img src="/images/<%= data.image %>" class="card-img-top rounded"
                                                 alt="Imagen del Producto">
@@ -164,14 +195,17 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <form action="/update/products" method="post">
-                                                                        <input type="text" value="<%= data._id %>" name="id" hidden>
+                                                                        <input type="text" value="<%= data._id %>"
+                                                                            name="id" hidden>
                                                                         <div class="row">
                                                                             <div class="col-md-6">
                                                                                 <label for="" class="form-label">Nombre
                                                                                     del
                                                                                     producto</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="product" value="<%= data.product %>" id=""required>
+                                                                                    name="product"
+                                                                                    value="<%= data.product %>" id=""
+                                                                                    required>
                                                                             </div>
                                                                             <div class="col-md-5">
                                                                                 <label for=""
@@ -183,7 +217,8 @@
                                                                                     <input type="number" min="0"
                                                                                         class="form-control" id=""
                                                                                         aria-describedby="addon-wrapping"
-                                                                                        required name="price" value="<%= data.price %>">
+                                                                                        required name="price"
+                                                                                        value="<%= data.price %>">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -192,9 +227,10 @@
                                                                             <label for="exampleFormControlTextarea1"
                                                                                 class="form-label">Descripción</label>
                                                                             <textarea name="description"
-                                                                                class="form-control" 
+                                                                                class="form-control"
                                                                                 id="exampleFormControlTextarea1"
-                                                                                rows="3" required><%= data.description %></textarea>
+                                                                                rows="3"
+                                                                                required><%= data.description %></textarea>
                                                                         </div>
                                                                         <br>
                                                                         <div class="col-mb-3">
@@ -221,7 +257,8 @@
                                                                             <label for="formFile"
                                                                                 class="form-label">Imagen</label>
                                                                             <input class="form-control" name="image"
-                                                                                type="file" id="formFile" value="<%= data.iamge %>">
+                                                                                type="file" id="formFile"
+                                                                                value="<%= data.iamge %>">
                                                                         </div>
                                                                         <div class="col-mb-3">
                                                                             <label class="form-label"
@@ -236,9 +273,9 @@
                                                                                 data-bs-dismiss="modal">Cancelar</button>
                                                                             <button type="submit"
                                                                                 class="btn btn-primary">Guardar</button>
-                                                                        </div>                                                                      
+                                                                        </div>
                                                                     </form>
-                                                                </div>                                                                
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -271,11 +308,13 @@
                                                             <%}%>
                                                         </div>
                                                     </div>
-                                                    <% }) %>
+
                                             </div>
                                         </div>
-                                </div>
+                                    </div>
+                                    <% }) %>
                             </div>
+
                 </div>
             </div>
         </div>
