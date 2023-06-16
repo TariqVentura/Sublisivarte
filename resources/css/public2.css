@@ -459,3 +459,7 @@ a {
         display: none;
     }
 }
+
+.color-container h6 {
+    color: white;
+}
