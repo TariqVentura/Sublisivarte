@@ -11,8 +11,7 @@ let categoriesSchema = new MONGOOSE.Schema(
             require: true
         },
         status: {
-            type: Boolean,
-            default: true,
+            type: ["active", "inactive"],
             require: true
         }
     },
