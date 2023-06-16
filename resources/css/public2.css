@@ -468,3 +468,8 @@ a {
     width: 32px;
     height: 32px;
 }
+
+.carousel-inner > .carousel-item > img {
+    object-fit: scale-down;
+    height: 400px;
+  }
