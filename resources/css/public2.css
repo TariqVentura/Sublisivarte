@@ -463,3 +463,8 @@ a {
 .color-container h6 {
     color: white;
 }
+
+.color-container input {
+    width: 32px;
+    height: 32px;
+}
