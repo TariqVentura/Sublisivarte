@@ -58,6 +58,7 @@ ROUTER.get('/delete/products/:id', PRODUCTS.deleteProducts)
 
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)
 ROUTER.get('/api/categories', CATEGORIES.findCategorie)
+ROUTER.post('/update/categories' , CATEGORIES.updateCategorie)
 
 
 /**

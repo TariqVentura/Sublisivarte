@@ -7,7 +7,8 @@ exports.createCategorie = (req, res) => {
         res.status(404).send('no se permiten campos vacios')
     } else {
         const CATEGORIE = new CATEGORIES({
-            categorie: req.body.categorie
+            categorie: req.body.categorie,
+            status: req.body.status            
         })
 
         CATEGORIE
@@ -48,4 +49,20 @@ exports.findCategorie = (req, res) => {
             res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
         })
      }
+}
+
+exports.updateCategorie = (req, res) => {
+    console.log(req.body.id)
+    const id = req.body.id
+    CATEGORIES.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: "No se encontro el usuario" })
+            } else {
+                res.send('Categoria Actualizada')
+            }
+        })
+        .catch(err => {
+            res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
+        })
 }
