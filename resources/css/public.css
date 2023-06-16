@@ -498,7 +498,7 @@ a {
 }
 
 .for-nav:hover{
-    width: 220px;
+    width: 210px;
     transition: all 0.5s ease;
     top: 50px;
     box-sizing: border-box;
@@ -531,4 +531,11 @@ a {
 .logout{
     position: absolute;
     bottom: 0;
+}
+
+.m-c table{
+    color: #fff;
+    width: 80%;
+    margin-left: 220px;
+    position: absolute;
 }
