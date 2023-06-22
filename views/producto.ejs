@@ -1,0 +1,95 @@
+<div class="container my-3">
+    <div class="row d-flex justify-content-center">
+        <div class="col-10">
+            <p class="fs-3 text-center">Crea tu diseño</p>
+            <div class="d-flex flex-row">
+                <div class="col-8">
+                    <canvas id="myCanvas"></canvas>
+                </div>
+                <div class="col-4 my-3">
+                    <div class="row mb-2">
+                        <label for="imageURL" class="px-0">Imagen: </label>
+                        <input type="file" class="form-control" id="imageURL">
+                    </div>
+                    <div class="row mt-2 d-flex flex-row align-items-end">
+                        <div class="col-10 px-0">
+                            <label for="inputGroupFile01" class="px-0">Texto: </label>
+                            <input type="text" class="form-control" id="inputGroupFile01">
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-info text-light">Añadir</button>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <button class="btn btn-warning text-light mt-2">Guardar Diseño</button>
+                    </div>
+                    <div class="row mt-2 d-flex align-items-center justify-content-between">
+                        <div class="col-6 px-0">
+                            <p class="px-0">
+                                <a class="btn btn-info text-light mt-3" data-bs-toggle="collapse"
+                                    href="#collapseExample" role="button" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Diseños
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Hacer pedido
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="" method="post">
+                                                <div class="row my-2 mx-2 d-flex align-items-center">
+                                                    <div class="col-3">
+                                                        <label for="inputNumber01">Cantidad: </label>
+                                                        <input type="number" class="form-control pt-2"
+                                                            id="inputNumber01" min="1">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <label for="formFileMultiple" class="form-label">Imagenes:
+                                                        </label>
+                                                        <input class="form-control" type="file" id="formFileMultiple"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-success">Enviar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse px-0" id="collapseExample">
+                            <div class="card card-body d-flex flex-row">
+                                <button class="border-0 mx-2 bg-light" id="front"><img
+                                        src="/images/white.webp" alt="" height="100"
+                                        width="100"></button>
+                                <button class="border-0 mx-2 bg-light" id="back"><img
+                                        src="/images/white-back.webp" alt="" height="100"
+                                        width="100"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/orderDesign.js"></script>

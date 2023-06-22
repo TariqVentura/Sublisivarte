@@ -1,10 +1,10 @@
 @import 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap';
 
 :root {
-    --bg-dark: #1b1b1b;
-    --text: #ffffff;
-    --dark-blue: #061e46;
-    --bg-primary: #be4a7f;
+    --bg-dark: #ffffff;
+    --text: #000000;
+    --dark-blue: #ffffff;
+    --bg-primary: #ffc4cc;
     --bg-secondary: #2d2e2f;
 }
 
@@ -33,28 +33,6 @@ body {
     background: var(--bg-dark);
     background-size: cover;
     background-position: center;
-}
-
-header {
-    width: 100%;
-    background: var(--bg-dark);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-header.active {
-    position: fixed;
-    top: 4.41%;
-    left: 0%;
-    z-index: 100;
-}
-
-.navbar.active {
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    z-index: 100;
 }
 
 a {
@@ -102,25 +80,15 @@ a {
 }
 
 .navegation .btnLogin-popup {
-    width: 65px;
-    height: 35px;
     background: transparent;
-    border: 2px solid #fff;
     outline: none;
-    border-radius: 6px;
+    border: 0;
     cursor: pointer;
-    font-size: 12px;
-    color: #fff;
-    font-weight: 500;
+    color: var(--text);
     margin-left: 40px;
     transition: .5s;
 }
 
-.navegation .btnLogin-popup:hover {
-    background: #fff;
-    color: var(--bg-dark);
-
-}
 
 .overlay {
     background: rgba(0, 0, 0, .3);
@@ -538,4 +506,24 @@ a {
     width: 80%;
     margin-left: 220px;
     position: absolute;
+}
+
+canvas {
+    width: 500px;
+    height: 60vh;
+    background-image: url(https://media.vogue.co.uk/photos/6454efc3ad4b7de8bf02445b/master/w_1280%2Cc_limit/sunspel-White-Mid-Sleeve-T-shirt.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+canvas .active {
+    width: 500px;
+    height: 60vh;
+    background-image: url(../../resources/images/white-back.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
 }
