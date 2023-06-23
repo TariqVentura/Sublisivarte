@@ -46,22 +46,34 @@
                                                     <div class="col-3">
                                                         <label for="inputNumber01">Cantidad: </label>
                                                         <input type="number" class="form-control pt-2"
-                                                            id="inputNumber01" min="1">
+                                                            id="inputNumber01" min="1" name="amount">
                                                     </div>
                                                     <div class="col-9">
                                                         <label for="formFileMultiple" class="form-label">Imagenes:
                                                         </label>
                                                         <input class="form-control" type="file" id="formFileMultiple"
-                                                            multiple>
+                                                            multiple name="image">
                                                     </div>
                                                 </div>
                                                 <div class="row my-3 mx-2 d-flex align-items-center">
-                                                    <div class="col-3 d-flex flex-row align-items-center justify-content-between">
+                                                    <div
+                                                        class="col-3 d-flex flex-row align-items-center justify-content-between">
                                                         <label for="exampleColorInput" class="form-label">Color
                                                         </label>
                                                         <input type="color" class="form-control form-control-color"
                                                             id="exampleColorInput" value="#563d7c"
-                                                            title="Choose your color">
+                                                            title="Choose your color" name="color">
+                                                    </div>
+                                                    <div class="col-9 d-flex flex-row align-items-center justify-content-between">
+                                                        <label for="sizes" class="form-label mx-2">Tallas
+                                                        </label>
+                                                        <select class="form-select" id="sizes" aria-label="Default select example">
+                                                            <option selected>Seleccione una talla</option>
+                                                            <option value="S">S</option>
+                                                            <option value="M">M</option>
+                                                            <option value="L">L</option>
+                                                            <option value="XL">XL</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </form>
@@ -89,4 +101,18 @@
         </div>
     </div>
 </div>
+<div class="container-fluid px-3 mx-3 border-top mt-3">
+    <div class="row">
+        <div class="col-6">
+            <p class="fs-4 mt-2">Usuario</p>
+            <p class="fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium cum repellendus veniam? Nobis eveniet doloremque possimus veniam exercitationem explicabo culpa accusamus sequi numquam aperiam, eius, nesciunt facere laudantium magni impedit?</p>
+            <p class="fs-4 mt-2">Usuario</p>
+            <p class="fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium cum repellendus veniam? Nobis eveniet doloremque possimus veniam exercitationem explicabo culpa accusamus sequi numquam aperiam, eius, nesciunt facere laudantium magni impedit?</p>
+        </div>
+        <div class="col-6">
+            
+        </div>
+    </div>
+</div>
 <script src="/orderDesign.js"></script>
+<script src="/graphic.js"></script>
