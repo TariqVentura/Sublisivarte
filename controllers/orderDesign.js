@@ -1,6 +1,7 @@
 var imageURL = document.getElementById('imageURL')
 var canvas = document.getElementById("myCanvas")
 var ctx = canvas.getContext("2d")
+var design = document.getElementById('btn-design')
 
 imageURL.addEventListener('change', function () {
     var image = new Image()
@@ -41,4 +42,12 @@ imageURL.addEventListener('change', function () {
         canvas.addEventListener("mousedown", handleMouseDown)
     }
 
+})
+
+design.addEventListener('click', function () {
+    var imageDataURL = canvas.toDataURL()
+    const URL = document.createElement('a')
+    URL.download = "DiseñoSublisivarte.png"
+    URL.href = imageDataURL
+    URL.click()
 })

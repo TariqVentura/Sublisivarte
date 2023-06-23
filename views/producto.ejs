@@ -7,35 +7,25 @@
                     <canvas id="myCanvas"></canvas>
                 </div>
                 <div class="col-4 my-3">
-                    <div class="row mb-2">
+                    <div class="row mb-2 px-0">
                         <label for="imageURL" class="px-0">Imagen: </label>
                         <input type="file" class="form-control" id="imageURL">
                     </div>
-                    <div class="row mt-2 d-flex flex-row align-items-end">
-                        <div class="col-10 px-0">
-                            <label for="inputGroupFile01" class="px-0">Texto: </label>
-                            <input type="text" class="form-control" id="inputGroupFile01">
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-info text-light">Añadir</button>
-                        </div>
-                    </div>
                     <div class="row mt-2">
-                        <button class="btn btn-warning text-light mt-2">Guardar Diseño</button>
+                        <button class="btn btn-warning mt-2" id="btn-design">Guardar Diseño</button>
                     </div>
                     <div class="row mt-2 d-flex align-items-center justify-content-between">
                         <div class="col-6 px-0">
                             <p class="px-0">
-                                <a class="btn btn-info text-light mt-3" data-bs-toggle="collapse"
-                                    href="#collapseExample" role="button" aria-expanded="false"
-                                    aria-controls="collapseExample">
+                                <a class="btn btn-warning mt-3 w-100" data-bs-toggle="collapse" href="#collapseExample"
+                                    role="button" aria-expanded="false" aria-controls="collapseExample">
                                     Diseños
                                 </a>
                             </p>
                         </div>
                         <div class="col-6">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-warning w-100 mx-0" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 Hacer pedido
                             </button>
@@ -65,6 +55,15 @@
                                                             multiple>
                                                     </div>
                                                 </div>
+                                                <div class="row my-3 mx-2 d-flex align-items-center">
+                                                    <div class="col-3 d-flex flex-row align-items-center justify-content-between">
+                                                        <label for="exampleColorInput" class="form-label">Color
+                                                        </label>
+                                                        <input type="color" class="form-control form-control-color"
+                                                            id="exampleColorInput" value="#563d7c"
+                                                            title="Choose your color">
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
@@ -78,12 +77,10 @@
                         </div>
                         <div class="collapse px-0" id="collapseExample">
                             <div class="card card-body d-flex flex-row">
-                                <button class="border-0 mx-2 bg-light" id="front"><img
-                                        src="/images/white.webp" alt="" height="100"
-                                        width="100"></button>
-                                <button class="border-0 mx-2 bg-light" id="back"><img
-                                        src="/images/white-back.webp" alt="" height="100"
-                                        width="100"></button>
+                                <button class="border-0 mx-2 bg-light" id="front"><img src="/images/white.webp" alt=""
+                                        height="100" width="100"></button>
+                                <button class="border-0 mx-2 bg-light" id="back"><img src="/images/white-back.webp"
+                                        alt="" height="100" width="100"></button>
                             </div>
                         </div>
                     </div>
