@@ -1,0 +1,102 @@
+<% if(user==false){ %>
+    <%- include('include/error') %>
+        <% } else { %>
+            <div class="container">
+                <div class="row my-3">
+                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+                        aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/administracion" class="text-dark">Inicio</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="row d-flex align-items-center justify-content-between my-3">
+                    <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
+                        <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
+                            alt="search--v1" />
+                        <input class="form-control w-100 border-0" list="datalistOptions" id="exampleDataList"
+                            placeholder="buscar categoria..." type="text" name="busqueda">
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Añadir Categroia
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="/api/categories" method="post">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Crear usuario</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="" class="form-label">Nombre de la
+                                                        categoría</label>
+                                                    <input type="text" class="form-control" name="categorie" id=""
+                                                        required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="" class="form-label">Estado</label>
+                                                    <div class="input-group col-mb-3">
+                                                        <select class="form-select" id="inputGroupSelect01" required
+                                                            name="status">
+                                                            <option>active</option>
+                                                            <option>inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Crear</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% categories.forEach((data)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= data.categorie %>
+                                    </td>
+                                    <td>
+                                        <% if(data.status == 'active'){ %>
+                                            <button class="btn btn-primary">Desactivar</button>
+                                        <%} else {%>
+                                            <button class="btn btn-primary">Activar</button>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger text-light"><a class="text-light" href="/delete/categorie/<%= data._id %>">Eliminar</a></button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                        <% }) %>
+                    </table>
+                </div>
+            </div>
+            <% } %>

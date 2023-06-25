@@ -118,3 +118,18 @@ exports.administracion = (req, res) => {
     }
     res.render('administracion', { user: session })
 }
+
+exports.categorias = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/categories')
+        .then(function (categorie) {
+            res.render('categorias', { categories: categorie.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+        })
+        .catch(err => {
+            res.send('hola')
+        })
+}

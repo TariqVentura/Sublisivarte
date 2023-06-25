@@ -1,6 +1,5 @@
 const CATEGORIES = require('../models/categories')
 const AXIOS = require('axios')
-const { categories } = require('../services/render')
 
 exports.createCategorie = (req, res) => {
     if (!req.body.categorie ) {
@@ -65,4 +64,19 @@ exports.updateCategorie = (req, res) => {
         .catch(err => {
             res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
         })
+}
+
+exports.deleteCategorie = (req, res) => {
+    const id = req.params.key
+    CATEGORIES.findByIdAndDelete(id, req.body, { useFindAndModify: false })
+    .then(data => {
+        if (!data) {
+            res.send('error')
+        } else {
+            res.send('categoria eliminada')
+        }
+    })
+    .catch(err => {
+        res.send(err)
+    })
 }
