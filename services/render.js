@@ -109,3 +109,12 @@ exports.usuarios = (req, res) => {
             res.send('No se pudieron cargar los usuarios')
         })
 }
+
+exports.administracion = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    res.render('administracion', { user: session })
+}

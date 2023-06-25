@@ -27,6 +27,7 @@ ROUTER.get('/cuenta', RENDER.cuenta)
 ROUTER.get('/usuarios', RENDER.usuarios) 
 ROUTER.get('/carrito/:id/:status', RENDER.details)
 ROUTER.get('/producto', RENDER.producto)
+ROUTER.get('/administracion', RENDER.administracion)
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)

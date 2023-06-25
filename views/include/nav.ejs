@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <header>
-                <nav class="row d-flex flex-row navegation justify-content-between">
+                <nav class="row d-flex flex-row navegation justify-content-between align-items-center">
                     <div class="col-2 d-flex flex-row">
                         <a href="/" class="fs-6">Inicio</a>
                     </div>
@@ -11,10 +11,28 @@
                             <%- include('login') %>
                         <% } else { %>
                             <% if(user.role == 'admin'){ %>
-                                <a href="/logOut/users"> <%= user.user %> </a>
-                                <a href="/cuenta">Cuenta</a>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle user-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a href="" class="fs-6"> <%= user.user %> </a>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/administracion">Administracion</a></li>
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/cuenta">Cuenta</a></li>
+                                      <li><hr class="dropdown-divider mx-0 fw-light fs-6"></li>
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/logOut/users">Cerrar Sesion</a></li>
+                                    </ul>
+                                </div>
                             <% } else { %>
-                                <a href="/logOut/users"> <%= user.user %> </a>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle user-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a href="" class="fs-6"> <%= user.user %> </a>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/cuenta">Cuenta</a></li>
+                                      <li><hr class="dropdown-divider mx-0 fw-light fs-6"></li>
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/logOut/users">Cerrar Sesion</a></li>
+                                    </ul>
+                                </div>
                             <% } %>
                         <% } %>
                     </div>
@@ -23,36 +41,34 @@
         </div>
     </div>
 </div>             
-<% if(user != false ) { %>
-    <% if(user.role == 'admin'){ %>
-        <a href="/logOut/users"> <%= user.user %> </a>
-        <a href="/cuenta">Cuenta</a>
-    <% } else { %>
-        <div class="container py-2">
-            <div class="row py-3 d-flex justify-content-between">       
-                <div class="col">
-                    <nav class="navbar">
-                        <div class="container">
-                            <button class="navbar-toggler d-flex flex-row align-items-center border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                                <p class="fs-5 mx-2 mb-1">Comprar</p>
-                            </button>
-                        </div>
-                    </nav>    
-                </div>   
-                <div class="col d-flex justify-content-end align-items-center">
-                    <input class="form-control w-50 mx-3" list="datalistOptions" id="exampleDataList" placeholder="buscar..." type="text" name="busqueda">
-                    <datalist id="datalistOptions">
-                        <option value="Camisas">
-                    </datalist>
-                    <a href="/carrito"><img width="50" height="50" src="https://img.icons8.com/windows/50/737373/shopping-cart.png" alt="shopping-cart"/></a>
+<div class="container py-2">
+    <div class="row py-3 d-flex justify-content-between">       
+        <div class="col">
+            <nav class="navbar">
+                <div class="container">
+                    <button class="navbar-toggler d-flex flex-row align-items-center border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        <p class="fs-5 mx-2 mb-1">Comprar</p>
+                    </button>
                 </div>
-            </div>
+            </nav>    
+        </div>   
+        <div class="col d-flex justify-content-end align-items-center">
+            <input class="form-control w-50 mx-3" list="datalistOptions" id="exampleDataList" placeholder="buscar..." type="text" name="busqueda">
+            <datalist id="datalistOptions">
+                <option value="Camisas">
+            </datalist>
+            <% if(user != false ) { %>
+                <% if(user.role == 'admin'){ %>
+                <% } else { %>
+                    <a href="/carrito"><img width="50" height="50" src="https://img.icons8.com/windows/50/737373/shopping-cart.png" alt="shopping-cart"/></a>
+                <% } %>
+            <% } %>
         </div>
-        <div class="collapse" id="navbarToggleExternalContent">
-            <div class="container-fluid mx-3 bg-dark p-4 border-top">
-                <span class="text-muted">Toggleable via the navbar brand.</span>
-            </div>
-        </div>
-    <% } %>
-<% } %>
+    </div>
+</div>
+<div class="collapse" id="navbarToggleExternalContent">
+    <div class="container-fluid mx-3 bg-dark p-4 border-top">
+        <span class="text-muted">Toggleable via the navbar brand.</span>
+    </div>
+</div>
