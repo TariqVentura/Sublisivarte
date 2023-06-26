@@ -85,9 +85,9 @@
                                     </td>
                                     <td>
                                         <% if(data.status == 'active'){ %>
-                                            <button class="btn btn-primary">Desactivar</button>
+                                            <button class="btn btn-primary"><a class="text-dark" href="/status/categorie/<%= data._id %>/inactive">Desactivar</a></button>
                                         <%} else {%>
-                                            <button class="btn btn-primary">Activar</button>
+                                            <button class="btn btn-primary"><a class="text-dark" href="/status/categorie/<%= data._id %>/active">Activar</a></button>
                                         <% } %>
                                     </td>
                                     <td>

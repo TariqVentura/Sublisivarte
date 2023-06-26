@@ -63,6 +63,7 @@ ROUTER.post('/api/categories', CATEGORIES.createCategorie)
 ROUTER.get('/api/categories', CATEGORIES.findCategorie)
 ROUTER.post('/update/categories' , CATEGORIES.updateCategorie)
 ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
+ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
 
 
 /**

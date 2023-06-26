@@ -16,15 +16,7 @@ let productSchema = new MONGOOSE.Schema({
         type: Number,
         require: true
     },
-    description: {
-        type: String,
-        require: true
-    },
     categorie: {
-        type: String,
-        require: true
-    },
-    user: {
         type: String,
         require: true
     },
@@ -33,9 +25,6 @@ let productSchema = new MONGOOSE.Schema({
         require: true
     },
     stock: {
-        type: Number
-    },
-    review: {
         type: Number
     },
     status: {
