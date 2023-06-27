@@ -130,6 +130,22 @@ exports.categorias = (req, res) => {
             res.render('categorias', { categories: categorie.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
         })
         .catch(err => {
-            res.send('hola')
+            res.send('No se puede acceder a las categorias')
         })
+}
+
+exports.comments = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/comments')
+        .then(function (comments) {
+            res.render('comentarios', { comments: comments.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+        })
+        .catch(err => {
+            res.send('No se puede acceder a  los comentarios')
+        })
+    // res.render('comentarios', {user: session})
 }

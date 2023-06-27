@@ -11,6 +11,8 @@ const CATEGORIES = require('./api/categories')
 const ORDERS = require('./api/orders')
 const DETAILS = require('./api/details')
 const PRODUCTS = require('./api/products')
+const COMMENTS = require('./api/comments')
+
 
 
 /**
@@ -29,6 +31,7 @@ ROUTER.get('/carrito/:id/:status', RENDER.details)
 ROUTER.get('/producto', RENDER.producto)
 ROUTER.get('/administracion', RENDER.administracion)
 ROUTER.get('/categorias', RENDER.categorias)
+ROUTER.get('/comentarios', RENDER.comments )
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)
@@ -41,6 +44,10 @@ ROUTER.post('/update/users', USERS.updateUsers)
 ROUTER.get('/delete/users/:user',USERS.deleteUsers)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
+
+//API comments
+ROUTER.post('/api/comments', COMMENTS.createComment)
+ROUTER.get('/api/comments', COMMENTS.findComments)
 
 
 //API orders
@@ -59,6 +66,8 @@ ROUTER.get('/api/products', PRODUCTS.findProduct )
 ROUTER.post('/update/products/', PRODUCTS.updateProduct)
 ROUTER.get('/delete/products/:id', PRODUCTS.deleteProducts)
 
+
+//API categories
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)
 ROUTER.get('/api/categories', CATEGORIES.findCategorie)
 ROUTER.post('/update/categories' , CATEGORIES.updateCategorie)
