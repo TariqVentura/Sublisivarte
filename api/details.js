@@ -5,6 +5,8 @@ exports.createDetail = (req, res) => {
     if (!req.body.product || !req.body.amount || !req.body.price || !req.body.order) {
         res.status(404).send('no se permiten campos vacios')
     } else {
+        let orderDetail = {"color" : req.body.color, "talla" : req.body.size, "image" : req.body.image }
+
         let total = Number(req.body.price) * Number(req.body.amount)
 
         const DETAIL = new DETAILS({
@@ -12,7 +14,8 @@ exports.createDetail = (req, res) => {
             price: req.body.price,
             amount: req.body.amount,
             total: total.toFixed(2),
-            order: req.body.order
+            order: req.body.order,
+            description: orderDetail
         })
 
         DETAIL

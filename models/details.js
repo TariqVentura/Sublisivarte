@@ -19,7 +19,11 @@ let detailSchema = new MONGOOSE.Schema(
             require: true
         },
         order: {
-            type:String,
+            type: String,
+            require: true
+        },
+        description: {
+            type: String,
             require: true
         }
     },

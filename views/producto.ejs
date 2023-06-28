@@ -64,7 +64,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
-                                                <form action="" method="post">
+                                                <form action="/api/details" method="post">
                                                     <div class="modal-body">
                                                         <div class="row my-2 mx-2 d-flex align-items-center">
                                                             <div class="col-3">
@@ -91,7 +91,7 @@
                                                             <div class="col-9 d-flex flex-row align-items-center justify-content-between">
                                                                 <label for="sizes" class="form-label mx-2">Tallas
                                                                 </label>
-                                                                <select class="form-select" id="sizes" aria-label="Default select example">
+                                                                <select class="form-select" id="sizes" aria-label="Default select example" name="size">
                                                                     <option selected>Seleccione una talla</option>
                                                                     <option value="S">S</option>
                                                                     <option value="M">M</option>
@@ -102,6 +102,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
+                                                        <input type="number" name="stock" id="" value="<%= products.stock %>" hidden>
+                                                        <input type="text" name="id" value="<%= products._id %>" hidden>
                                                         <button type="button" class="btn btn-danger"
                                                             data-bs-dismiss="modal">Close</button>
                                                         <button type="submit" class="btn btn-success">Enviar</button>
