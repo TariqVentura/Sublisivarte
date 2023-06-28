@@ -42,8 +42,8 @@ exports.createProduct = (req, res) => {
 }
 
 exports.findProduct = (req, res) => {
-    if (req.body.id) {
-        const id = req.query.id
+    if (req.params.id) {
+        const id = req.params.id
         PRODUCTS.findById(id)
             .then(data => {
                 if (!data) {
