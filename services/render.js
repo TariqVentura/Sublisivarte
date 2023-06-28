@@ -142,7 +142,10 @@ exports.comments = (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/comments')
         .then(function (comments) {
-            res.render('comentarios', { comments: comments.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+            AXIOS.get('http://localhost:443/api/products')
+            .then(function(product){
+                res.render('comentarios', { comments: comments.data, products: product.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+            })            
         })
         .catch(err => {
             res.send('No se puede acceder a  los comentarios')

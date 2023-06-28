@@ -3,16 +3,16 @@ const COMMENTS = require('../models/comments')
 const AXIOS = require('axios')
 
 exports.createComment = (req, res) => {
-    if (!req.body.comments || !req.body.review || !req.body.product || !req.body.client) {
+    if (!req.body.comment || !req.body.review || !req.body.product || !req.body.client) {
         res.send('no se permiten campos vacios')
     } else {
         const COMMENT = new COMMENTS({
             comment: req.body.comment,
             review: Number(req.body.review),
-            client: req.body.user,
-            product: req.body.product
+            product: req.body.product,
+            client: req.body.client
+            
         })
-
         COMMENT
             .save(COMMENT)
             .then(data => {
@@ -62,4 +62,16 @@ exports.findComments = (req, res) => {
                 res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
             })
     }
+}
+
+exports.deleteComments = (req, res) => {
+    const id = req.params.id
+    COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: 'Producto no encontrado' })
+            } else {
+                res.send('Comentario Eliminado')
+            }
+        })
 }
