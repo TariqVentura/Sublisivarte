@@ -48,16 +48,25 @@
                                                             10</label>
                                                         <input type="range" class="form-range" min="0" max="10"
                                                             id="customRange2" value="0" name="review">
-                                                    </div>                                                    
+                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <label for="customRange2" class="form-label">Nombre del Producto</label>
-                                                        <input type="text" class="form-control" name="product">                                                            
+                                                        <label for="customRange2" class="form-label">Nombre del
+                                                            Producto</label>
+                                                            <select class="form-select" id="inputGroupSelect01"
+                                                            name="product" required>
+                                                                <% products.forEach((data)=> { %>                                                                    
+                                                                        <option value="<%= data.product %>">
+                                                                            <%= data.product %>
+                                                                        </option>                                                                    
+                                                                <% }) %>
+                                                            </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="customRange2" class="form-label">Nombre del Cliente</label>
-                                                        <input type="text" class="form-control" name="client">                                                            
+                                                        <label for="customRange2" class="form-label">Nombre del
+                                                            Cliente</label>
+                                                        <input type="text" class="form-control" name="client">
                                                     </div>
                                                 </div>
                                                 <br>
@@ -80,13 +89,14 @@
                                 <th scope="col">Reseña</th>
                                 <th scope="col">Producto</th>
                                 <th scope="col">Cliente</th>
+                                <th scope="col">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% comments.forEach((data)=>{ %>
                                 <tr>
                                     <td>
-                                        <%= data.comments %>
+                                        <%= data.comment %>
                                     </td>
                                     <td>
                                         <%= data.review %>
@@ -96,6 +106,9 @@
                                     </td>
                                     <td>
                                         <%= data.client %>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger"><a href="/delete/comments/<%= data._id %>" class="text-light">Eliminar</a></button>
                                     </td>
                                 </tr>
                                 <% }) %>
