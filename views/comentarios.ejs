@@ -29,7 +29,7 @@
                                 aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="/api/categories" method="post">
+                                        <form action="/api/comments" method="post">
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Comentario
                                                 </h1>
@@ -40,18 +40,24 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="" class="form-label">Comentario</label>
-                                                        <input type="text" class="form-control" name="categorie" id=""
+                                                        <input type="text" class="form-control" name="comment" id=""
                                                             required>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="" class="form-label">Estado</label>
-                                                        <div class="input-group col-mb-3">
-                                                            <select class="form-select" id="inputGroupSelect01" required
-                                                                name="status">
-                                                                <option>active</option>
-                                                                <option>inactive</option>
-                                                            </select>
-                                                        </div>
+                                                        <label for="customRange2" class="form-label">Calificacion 1 al
+                                                            10</label>
+                                                        <input type="range" class="form-range" min="0" max="10"
+                                                            id="customRange2" value="0" name="review">
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="customRange2" class="form-label">Nombre del Producto</label>
+                                                        <input type="text" class="form-control" name="product">                                                            
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="customRange2" class="form-label">Nombre del Cliente</label>
+                                                        <input type="text" class="form-control" name="client">                                                            
                                                     </div>
                                                 </div>
                                                 <br>
@@ -77,14 +83,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% comments.forEach((data)=> { %>
-                            <tr>
-                                <td>Comentario</td>
-                                <td>Review</td>
-                                <td>Producto</td>
-                                <td>Cliente</td>
-                            </tr> 
-                            <% }) %>                           
+                            <% comments.forEach((data)=>{ %>
+                                <tr>
+                                    <td>
+                                        <%= data.comments %>
+                                    </td>
+                                    <td>
+                                        <%= data.review %>
+                                    </td>
+                                    <td>
+                                        <%= data.product %>
+                                    </td>
+                                    <td>
+                                        <%= data.client %>
+                                    </td>
+                                </tr>
+                                <% }) %>
                         </tbody>
                     </table>
                 </div>
