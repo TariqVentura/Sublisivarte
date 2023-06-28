@@ -1,4 +1,3 @@
-const session = require('express-session')
 const COMMENTS = require('../models/comments')
 const AXIOS = require('axios')
 
@@ -19,10 +18,7 @@ exports.createComment = (req, res) => {
                 if (!data) {
                     res.status(404).send({ message: `Ocurrio un error al intentar subir los datos` })
                 } else {
-                    AXIOS.get('http://localhost:443/api/comments')
-                    .then(function(response){
-                        res.render('comentarios', {comments: response.data, })
-                    })
+                    res.send('ok')
                 }
             })
             .catch(err => {

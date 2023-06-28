@@ -97,6 +97,7 @@ exports.details = (req, res) => {
         session = req.session
         AXIOS.get('http://localhost:443/api/details/' + req.params.id)
             .then(function (detail) {
+                console.log(req.params.status)
                 res.render('detalles', { user: session, details: detail.data, status: req.params.status, order: req.params.id })
             })
     } else {
