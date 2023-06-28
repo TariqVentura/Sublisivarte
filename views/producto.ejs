@@ -17,9 +17,6 @@
                             <label for="imageURL" class="px-0">Imagen: </label>
                             <input type="file" class="form-control" id="imageURL">
                         </div>
-                        <div class="row mt-2">
-                            <button class="btn btn-warning mt-2" id="btn-design">Guardar Diseño</button>
-                        </div>
                         <div class="row mt-2 d-flex align-items-center justify-content-between">
                             <div class="col-6 px-0">
                                 <p class="px-0">
@@ -30,89 +27,7 @@
                                 </p>
                             </div>
                             <div class="col-6">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-warning w-100 mx-0" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                    Hacer pedido
-                                </button>
-
-                                <% if( products.status == 'No Stock' ){ %>
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h1 class="modal-title fs-5" id="exampleModalLabel"><%= products.product %></h1>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="fs-4">Producto Fuera de Stock !</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </div>
-                                <% } else { %>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel"><%= products.product %></h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <form action="/api/details" method="post">
-                                                    <div class="modal-body">
-                                                        <div class="row my-2 mx-2 d-flex align-items-center">
-                                                            <div class="col-3">
-                                                                <label for="inputNumber01">Cantidad: </label>
-                                                                <input type="number" class="form-control pt-2"
-                                                                    id="inputNumber01" min="1" name="amount" max="<%= products.stock %>">
-                                                            </div>
-                                                            <div class="col-9">
-                                                                <label for="formFileMultiple" class="form-label">Imagenes:
-                                                                </label>
-                                                                <input class="form-control" type="file" id="formFileMultiple"
-                                                                    multiple name="image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row my-3 mx-2 d-flex align-items-center">
-                                                            <div
-                                                                class="col-3 d-flex flex-row align-items-center justify-content-between">
-                                                                <label for="exampleColorInput" class="form-label">Color
-                                                                </label>
-                                                                <input type="color" class="form-control form-control-color"
-                                                                    id="exampleColorInput" value="#563d7c"
-                                                                    title="Choose your color" name="color">
-                                                            </div>
-                                                            <div class="col-9 d-flex flex-row align-items-center justify-content-between">
-                                                                <label for="sizes" class="form-label mx-2">Tallas
-                                                                </label>
-                                                                <select class="form-select" id="sizes" aria-label="Default select example" name="size">
-                                                                    <option selected>Seleccione una talla</option>
-                                                                    <option value="S">S</option>
-                                                                    <option value="M">M</option>
-                                                                    <option value="L">L</option>
-                                                                    <option value="XL">XL</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <input type="number" name="stock" id="" value="<%= products.stock %>" hidden>
-                                                        <input type="text" name="id" value="<%= products._id %>" hidden>
-                                                        <button type="button" class="btn btn-danger"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-success">Enviar</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <% } %>
+                                <button class="btn btn-warning w-100" id="btn-design">Guardar Diseño</button>
                             </div>
                             <div class="collapse px-0" id="collapseExample">
                                 <div class="card card-body d-flex flex-row">
@@ -123,6 +38,20 @@
                                 </div>
                             </div>
                         </div>
+                        <% if(orders != null) {%>
+                            <p class="px-0 mx-0">
+                                <a class="btn btn-primary w-100 px-0 mx-0" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                                  Añadir al carrito
+                                </a>
+                            </p>
+                            <div class="collapse" id="collapseExample2">
+                                <div class="card card-body">
+                                    <div class="row mt-3 d-flex flex-row">
+                                        <%- include('include/lists', { products: products }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
                     </div>
                 </div>
             </div>

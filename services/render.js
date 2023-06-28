@@ -42,17 +42,28 @@ exports.products = (req, res) => {
 exports.producto = (req, res) => {
     if (req.session.user) {
         session = req.session
+        AXIOS.get('http://localhost:443/api/products/' + req.params.id)
+            .then(function (product) {
+                AXIOS.get('http://localhost:443/api/orders/' + req.session.user)
+                    .then(function (order) {
+                        console.log(order.data)
+                        res.render('producto', { products: product.data, user: session, orders: order.data })
+                    })
+            })
+            .catch(err => {
+                res.send(err)
+            })
     } else {
         session = false
-    }
-    AXIOS.get('http://localhost:443/api/products/' + req.params.id)
+        AXIOS.get('http://localhost:443/api/products/' + req.params.id)
         .then(function (product) {
-            console.log(product.data)
-            res.render('producto', { products: product.data, user: session })
+            res.render('producto', { products: product.data, user: session, orders: null })
         })
         .catch(err => {
             res.send(err)
         })
+    }
+
 }
 
 exports.categories = (req, res) => {
@@ -170,10 +181,10 @@ exports.searchComments = (req, res) => {
     AXIOS.get('http://localhost:443/api/comments' + '/' + req.params.key)
         .then(function (comments) {
             AXIOS.get('http://localhost:443/api/products')
-            .then(function (product) {
-                console.log(comments.data)
-                res.render('comentarios', { comments: comments.data, products: product.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
-            })            
+                .then(function (product) {
+                    console.log(comments.data)
+                    res.render('comentarios', { comments: comments.data, products: product.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+                })
         })
 }
 

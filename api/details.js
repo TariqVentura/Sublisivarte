@@ -15,7 +15,7 @@ exports.createDetail = (req, res) => {
             amount: req.body.amount,
             total: total.toFixed(2),
             order: req.body.order,
-            description: orderDetail
+            description: JSON.stringify(orderDetail)
         })
 
         DETAIL
