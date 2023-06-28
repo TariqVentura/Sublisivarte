@@ -49,6 +49,9 @@ exports.producto = (req, res) => {
             console.log(product.data)
             res.render('producto', { products: product.data, user: session })
         })
+        .catch(err => {
+            res.send(err)
+        })
 }
 
 exports.categories = (req, res) => {
