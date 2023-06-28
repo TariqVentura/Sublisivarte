@@ -539,3 +539,9 @@ a {
     margin-left: 220px;
     position: absolute;
 }
+
+#bor{
+    margin-right: 5px;
+    padding-right: none;
+}
+
