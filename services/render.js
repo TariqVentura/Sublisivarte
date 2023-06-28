@@ -44,7 +44,11 @@ exports.producto = (req, res) => {
     } else {
         session = false
     }
-    res.render('producto', { user: session })
+    AXIOS.get('http://localhost:443/api/products/' + req.params.id)
+        .then(function (product) {
+            console.log(product.data)
+            res.render('producto', { products: product.data, user: session })
+        })
 }
 
 exports.categories = (req, res) => {

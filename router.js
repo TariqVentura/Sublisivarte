@@ -13,8 +13,6 @@ const DETAILS = require('./api/details')
 const PRODUCTS = require('./api/products')
 const COMMENTS = require('./api/comments')
 
-
-
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
  * la direccion con una '/' ocupe el service para renderizar 
@@ -28,7 +26,7 @@ ROUTER.get('/carrito', RENDER.carrito)
 ROUTER.get('/cuenta', RENDER.cuenta)
 ROUTER.get('/usuarios', RENDER.usuarios) 
 ROUTER.get('/carrito/:id/:status', RENDER.details)
-ROUTER.get('/producto', RENDER.producto)
+ROUTER.get('/producto/:id', RENDER.producto)
 ROUTER.get('/administracion', RENDER.administracion)
 ROUTER.get('/categorias', RENDER.categorias)
 ROUTER.get('/comentarios', RENDER.comments )
@@ -50,7 +48,6 @@ ROUTER.post('/api/comments', COMMENTS.createComment)
 ROUTER.get('/api/comments', COMMENTS.findComments)
 ROUTER.get('/delete/comments/:id', COMMENTS.deleteComments)
 
-
 //API orders
 ROUTER.post('/api/orders', ORDERS.createOrder)
 ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
@@ -64,9 +61,9 @@ ROUTER.get('/api/details/:id', DETAILS.getDetails)
 //API products
 ROUTER.post('/api/products', PRODUCTS.createProduct )
 ROUTER.get('/api/products', PRODUCTS.findProduct )
+ROUTER.get('/api/products/:id', PRODUCTS.findProduct )
 ROUTER.post('/update/products/', PRODUCTS.updateProduct)
 ROUTER.get('/delete/products/:id', PRODUCTS.deleteProducts)
-
 
 //API categories
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)
@@ -74,7 +71,6 @@ ROUTER.get('/api/categories', CATEGORIES.findCategorie)
 ROUTER.post('/update/categories' , CATEGORIES.updateCategorie)
 ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
 ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
-
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor

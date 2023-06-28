@@ -1,98 +1,100 @@
-<div class="container my-3">
-    <div class="row d-flex justify-content-center">
-        <div class="col-10">
-            <p class="fs-3 text-center">Crea tu diseño</p>
-            <div class="d-flex flex-row">
-                <div class="col-8">
-                    <canvas id="myCanvas"></canvas>
-                </div>
-                <div class="col-4 my-3">
-                    <div class="row mb-2 px-0">
-                        <label for="imageURL" class="px-0">Imagen: </label>
-                        <input type="file" class="form-control" id="imageURL">
+<% products.forEach((product)=> { %>
+    <div class="container my-3">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10">
+                <p class="fs-3 text-center">Crea tu diseño | <%= product.product %></p>
+                <div class="d-flex flex-row">
+                    <div class="col-8">
+                        <canvas id="myCanvas"></canvas>
                     </div>
-                    <div class="row mt-2">
-                        <button class="btn btn-warning mt-2" id="btn-design">Guardar Diseño</button>
-                    </div>
-                    <div class="row mt-2 d-flex align-items-center justify-content-between">
-                        <div class="col-6 px-0">
-                            <p class="px-0">
-                                <a class="btn btn-warning mt-3 w-100" data-bs-toggle="collapse" href="#collapseExample"
-                                    role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Diseños
-                                </a>
-                            </p>
+                    <div class="col-4 my-3">
+                        <div class="row mb-2 px-0">
+                            <label for="imageURL" class="px-0">Imagen: </label>
+                            <input type="file" class="form-control" id="imageURL">
                         </div>
-                        <div class="col-6">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-warning w-100 mx-0" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Hacer pedido
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="" method="post">
-                                                <div class="row my-2 mx-2 d-flex align-items-center">
-                                                    <div class="col-3">
-                                                        <label for="inputNumber01">Cantidad: </label>
-                                                        <input type="number" class="form-control pt-2"
-                                                            id="inputNumber01" min="1" name="amount">
+                        <div class="row mt-2">
+                            <button class="btn btn-warning mt-2" id="btn-design">Guardar Diseño</button>
+                        </div>
+                        <div class="row mt-2 d-flex align-items-center justify-content-between">
+                            <div class="col-6 px-0">
+                                <p class="px-0">
+                                    <a class="btn btn-warning mt-3 w-100" data-bs-toggle="collapse" href="#collapseExample"
+                                        role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Diseños
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-warning w-100 mx-0" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    Hacer pedido
+                                </button>
+    
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="" method="post">
+                                                    <div class="row my-2 mx-2 d-flex align-items-center">
+                                                        <div class="col-3">
+                                                            <label for="inputNumber01">Cantidad: </label>
+                                                            <input type="number" class="form-control pt-2"
+                                                                id="inputNumber01" min="1" name="amount">
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <label for="formFileMultiple" class="form-label">Imagenes:
+                                                            </label>
+                                                            <input class="form-control" type="file" id="formFileMultiple"
+                                                                multiple name="image">
+                                                        </div>
                                                     </div>
-                                                    <div class="col-9">
-                                                        <label for="formFileMultiple" class="form-label">Imagenes:
-                                                        </label>
-                                                        <input class="form-control" type="file" id="formFileMultiple"
-                                                            multiple name="image">
+                                                    <div class="row my-3 mx-2 d-flex align-items-center">
+                                                        <div
+                                                            class="col-3 d-flex flex-row align-items-center justify-content-between">
+                                                            <label for="exampleColorInput" class="form-label">Color
+                                                            </label>
+                                                            <input type="color" class="form-control form-control-color"
+                                                                id="exampleColorInput" value="#563d7c"
+                                                                title="Choose your color" name="color">
+                                                        </div>
+                                                        <div class="col-9 d-flex flex-row align-items-center justify-content-between">
+                                                            <label for="sizes" class="form-label mx-2">Tallas
+                                                            </label>
+                                                            <select class="form-select" id="sizes" aria-label="Default select example">
+                                                                <option selected>Seleccione una talla</option>
+                                                                <option value="S">S</option>
+                                                                <option value="M">M</option>
+                                                                <option value="L">L</option>
+                                                                <option value="XL">XL</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row my-3 mx-2 d-flex align-items-center">
-                                                    <div
-                                                        class="col-3 d-flex flex-row align-items-center justify-content-between">
-                                                        <label for="exampleColorInput" class="form-label">Color
-                                                        </label>
-                                                        <input type="color" class="form-control form-control-color"
-                                                            id="exampleColorInput" value="#563d7c"
-                                                            title="Choose your color" name="color">
-                                                    </div>
-                                                    <div class="col-9 d-flex flex-row align-items-center justify-content-between">
-                                                        <label for="sizes" class="form-label mx-2">Tallas
-                                                        </label>
-                                                        <select class="form-select" id="sizes" aria-label="Default select example">
-                                                            <option selected>Seleccione una talla</option>
-                                                            <option value="S">S</option>
-                                                            <option value="M">M</option>
-                                                            <option value="L">L</option>
-                                                            <option value="XL">XL</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-success">Enviar</button>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-success">Enviar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="collapse px-0" id="collapseExample">
-                            <div class="card card-body d-flex flex-row">
-                                <button class="border-0 mx-2 bg-light" id="front"><img src="/images/white.webp" alt=""
-                                        height="100" width="100"></button>
-                                <button class="border-0 mx-2 bg-light" id="back"><img src="/images/white-back.webp"
-                                        alt="" height="100" width="100"></button>
+                            <div class="collapse px-0" id="collapseExample">
+                                <div class="card card-body d-flex flex-row">
+                                    <button class="border-0 mx-2 bg-light" id="front"><img src="/images/white.webp" alt=""
+                                            height="100" width="100"></button>
+                                    <button class="border-0 mx-2 bg-light" id="back"><img src="/images/white-back.webp"
+                                            alt="" height="100" width="100"></button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,19 +102,19 @@
             </div>
         </div>
     </div>
-</div>
-<div class="container-fluid px-3 mx-3 border-top mt-3">
-    <div class="row">
-        <div class="col-6">
-            <p class="fs-4 mt-2">Usuario</p>
-            <p class="fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium cum repellendus veniam? Nobis eveniet doloremque possimus veniam exercitationem explicabo culpa accusamus sequi numquam aperiam, eius, nesciunt facere laudantium magni impedit?</p>
-            <p class="fs-4 mt-2">Usuario</p>
-            <p class="fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium cum repellendus veniam? Nobis eveniet doloremque possimus veniam exercitationem explicabo culpa accusamus sequi numquam aperiam, eius, nesciunt facere laudantium magni impedit?</p>
-        </div>
-        <div class="col-6">
-            
+    <div class="container-fluid px-3 mx-3 border-top mt-3">
+        <div class="row">
+            <div class="col-6">
+                <p class="fs-4 mt-2">Usuario</p>
+                <p class="fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium cum repellendus veniam? Nobis eveniet doloremque possimus veniam exercitationem explicabo culpa accusamus sequi numquam aperiam, eius, nesciunt facere laudantium magni impedit?</p>
+                <p class="fs-4 mt-2">Usuario</p>
+                <p class="fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium cum repellendus veniam? Nobis eveniet doloremque possimus veniam exercitationem explicabo culpa accusamus sequi numquam aperiam, eius, nesciunt facere laudantium magni impedit?</p>
+            </div>
+            <div class="col-6">
+                
+            </div>
         </div>
     </div>
-</div>
+<% }) %>
 <script src="/orderDesign.js"></script>
 <script src="/graphic.js"></script>

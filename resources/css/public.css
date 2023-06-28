@@ -573,3 +573,9 @@ canvas .active {
   .dropdown:hover .dropdown-menu{
     display: block !important;
   }
+
+#bor{
+    margin-right: 5px;
+    padding-right: none;
+}
+
