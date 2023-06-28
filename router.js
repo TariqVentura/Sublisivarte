@@ -31,6 +31,7 @@ ROUTER.get('/administracion', RENDER.administracion)
 ROUTER.get('/categorias', RENDER.categorias)
 ROUTER.get('/comentarios', RENDER.comments )
 ROUTER.get('/products/:key', RENDER.searchProduct)
+ROUTER.get('/comments/:key', RENDER.searchComments)
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)

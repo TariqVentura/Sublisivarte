@@ -24,7 +24,13 @@ let commentsSchena = new MONGOOSE.Schema(
         client: {
             type: String,
             require: true
+        },
+        status:{
+            type: ["activo", "editado","eliminado","removido"],
+            require: true,
+            default: "activo"
         }
+        
     },
     {
         timestamps: true,

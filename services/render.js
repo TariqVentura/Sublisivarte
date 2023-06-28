@@ -1,4 +1,5 @@
 const AXIOS = require('axios')
+const COMMENTS = require('../models/comments')
 let session
 
 exports.index = (req, res) => {
@@ -166,10 +167,13 @@ exports.searchComments = (req, res) => {
     } else {
         session = false
     }
-    AXIOS.get('http://localhost/api/comments' + '/' + req.params.key)
-        .then(function (response) {
-            console.log(response.data)
-            res.render('comentarios', { comments: response.data, user: session })
+    AXIOS.get('http://localhost:443/api/comments' + '/' + req.params.key)
+        .then(function (comments) {
+            AXIOS.get('http://localhost:443/api/products')
+            .then(function (product) {
+                console.log(comments.data)
+                res.render('comentarios', { comments: comments.data, products: product.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+            })            
         })
 }
 
