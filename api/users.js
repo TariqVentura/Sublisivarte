@@ -166,3 +166,19 @@ exports.searchUsers = (req, res) =>{
     })
 }
 
+exports.newPassword = (req, res) => {
+    const ID = req.body.id
+    const VALUE = { password: req.body.password }
+
+    USERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
+    .then(data => {
+        if (!data) {
+            res.send('err')
+        } else {
+            res.send('ok')
+        }
+    })
+    .catch(err => {
+        res.send(err)
+    })
+}
