@@ -75,3 +75,26 @@ exports.deleteComments = (req, res) => {
             }
         })
 }
+
+exports.serchComments = async (req, res) => {
+    const key = req.params.key
+    COMMENTS.find(
+        {
+            "$or": [
+                {comment: {$regex: key}},
+                {review: {$regex: key}},
+                {product: {$regex: key}}
+            ]
+        }
+    )
+    .then(data =>{
+        if (!data) {
+            res.status(404).send({ message: `Sin datos` })
+        } else {
+            res.send(data)
+        }
+    })
+    .catch(err => {
+        res.send(err)
+    })
+}

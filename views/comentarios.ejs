@@ -11,12 +11,19 @@
                         </ol>
                     </nav>
                     <div class="row d-flex align-items-center justify-content-between my-3">
-                        <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
-                            <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
-                                alt="search--v1" />
-                            <input class="form-control w-100 border-0" list="datalistOptions" id="exampleDataList"
-                                placeholder="Buscar Comentario..." type="text" name="busqueda">
-                        </div>
+                        <form action="get" id="search-form">
+                            <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
+                                <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
+                                    alt="search--v1" />
+                                <input class="form-control w-100 border-0" list="datalistOptions" id="search"
+                                    placeholder="Buscar Comentario..." type="text" name="busqueda">
+                                <!-- <button type="button" id="btn-search" class="btn waves-effect green tooltipped"
+                                    data-tooltip="Buscar">
+                                    <img src="https://img.icons8.com/glyph-neue/40/null/ok--v1.png" />
+                                </button> -->
+                            </div>
+                        </form>
+
                         <div class="col-3 d-flex justify-content-end">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-dark" data-bs-toggle="modal"
@@ -54,14 +61,14 @@
                                                     <div class="col-md-6">
                                                         <label for="customRange2" class="form-label">Nombre del
                                                             Producto</label>
-                                                            <select class="form-select" id="inputGroupSelect01"
+                                                        <select class="form-select" id="inputGroupSelect01"
                                                             name="product" required>
-                                                                <% products.forEach((data)=> { %>                                                                    
-                                                                        <option value="<%= data.product %>">
-                                                                            <%= data.product %>
-                                                                        </option>                                                                    
+                                                            <% products.forEach((data)=> { %>
+                                                                <option value="<%= data.product %>">
+                                                                    <%= data.product %>
+                                                                </option>
                                                                 <% }) %>
-                                                            </select>
+                                                        </select>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="customRange2" class="form-label">Nombre del
@@ -108,7 +115,8 @@
                                         <%= data.client %>
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger"><a href="/delete/comments/<%= data._id %>" class="text-light">Eliminar</a></button>
+                                        <button class="btn btn-danger"><a href="/delete/comments/<%= data._id %>"
+                                                class="text-light">Eliminar</a></button>
                                     </td>
                                 </tr>
                                 <% }) %>

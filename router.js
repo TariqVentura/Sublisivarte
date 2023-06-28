@@ -47,6 +47,7 @@ ROUTER.get('/logOut/users', USERS.logOut)
 ROUTER.post('/api/comments', COMMENTS.createComment)
 ROUTER.get('/api/comments', COMMENTS.findComments)
 ROUTER.get('/delete/comments/:id', COMMENTS.deleteComments)
+ROUTER.get('api/comments/:key', COMMENTS.serchComments)
 
 //API orders
 ROUTER.post('/api/orders', ORDERS.createOrder)

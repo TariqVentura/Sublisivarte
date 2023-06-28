@@ -159,3 +159,16 @@ exports.comments = (req, res) => {
         })
     // res.render('comentarios', {user: session})
 }
+
+exports.searchComments = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost/api/comments' + '/' + req.params.key)
+    .then(function(response){
+        console.log(response.data)
+        res.render('comentarios', {comments: response.data, user: session})
+    })
+}
