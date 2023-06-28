@@ -77,7 +77,7 @@ exports.deleteComments = (req, res) => {
 }
 
 exports.serchComments = async (req, res) => {
-    const key = req.params.key
+    const key = req.body.key
     COMMENTS.find(
         {
             "$or": [
