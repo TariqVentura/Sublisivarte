@@ -32,6 +32,7 @@ ROUTER.get('/categorias', RENDER.categorias)
 ROUTER.get('/comentarios', RENDER.comments )
 ROUTER.get('/products/:key', RENDER.searchProduct)
 ROUTER.get('/comments/:key', RENDER.searchComments)
+ROUTER.get('/users/:key', RENDER.searchUser)
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)
@@ -44,6 +45,7 @@ ROUTER.post('/update/users', USERS.updateUsers)
 ROUTER.get('/delete/users/:user',USERS.deleteUsers)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
+ROUTER.get('/api/users/:key', USERS.searchUsers)
 
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)

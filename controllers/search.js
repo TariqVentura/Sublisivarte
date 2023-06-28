@@ -5,3 +5,7 @@ function seacrhProduct() {
 function searchComment() {
     location.href = 'http://localhost:443/comments/' + document.getElementById('seacrhComment').value 
 }
+
+function searchUser() {
+    location.href = 'http://localhost:443/user/' + document.getElementById('seacrhUser').value 
+}

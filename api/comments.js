@@ -103,15 +103,6 @@ exports.commentStatus = (req, res) =>{
     const ID = req.params.id
     const VALUE = { status: STATUS }
     COMMENTS.findByIdAndUpdate(ID, VALUE, {useFindAndModify: false})
-        .then(data => {
-            if (!data) {
-                res.send('error')
-            } else {
-                res.send('estado cambiado')
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
+        .then
 
 }

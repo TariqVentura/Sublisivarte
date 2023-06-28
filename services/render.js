@@ -188,6 +188,18 @@ exports.searchComments = (req, res) => {
         })
 }
 
+exports.searchUser = (req,res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/users' + '/' + req.params.key)
+    .then(function(user){
+        
+    })
+}
+
 exports.searchProduct = (req, res) => {
     if (req.session.user) {
         session = req.session
