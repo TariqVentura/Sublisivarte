@@ -35,7 +35,7 @@ exports.finishOrder = (req, res) => {
     const ID = req.params.id
     const value = { status: 'finalizado' }
 
-    ORDERS.findByIdAndupdate(ID, value, { useFindAndModify: true })
+    ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
         .then(data => {
             if (!data) {
                 res.send('err')

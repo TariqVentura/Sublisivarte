@@ -9,9 +9,9 @@
                     <th scope="col">Total</th>
                     <% if(status=='en proceso' ){ %>
                         <th scope="col">Eliminar</th>
-                        <% } else if (status=='finalizado' ){ %>
-                            <th scope="col">Comentar</th>
-                            <%}%>
+                    <% } else if (status=='finalizado' ){ %>
+                        <th scope="col">Comentar</th>
+                    <%}%>
                 </tr>
             </thead>
             <tbody>
@@ -115,10 +115,7 @@
     </div>
     <div class="row w-25 my-3 ">
         <% if(status=='en proceso' ){ %>
-            <form action="/api/finishOrder" method="post">
-                <input type="text" value="<%= order %>" name="id" hidden>
-                <button class="btn btn-success" type="submit">Comprar</button>
-            </form>
-            <% } %>
+            <button class="btn btn-success w-50" type="submit"><a href="/finish/orders/<%= order %>" class="text-light">Comprar</a></button>
+        <% } %>
     </div>
 </div>
