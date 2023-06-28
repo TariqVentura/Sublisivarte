@@ -9,13 +9,12 @@ const AXIOS = require('axios')
  * Haciendo uso ddel metodo SAVE de mongoose se guardan los datos en el servidor de Atlas
  */
 exports.createProduct = (req, res) => {
-    if (!req.body.product || !req.body.price || !req.body.description || !req.body.categorie || !req.body.image || !req.body.stock) {
+    if (!req.body.product || !req.body.price || !req.body.categorie || !req.body.image || !req.body.stock) {
         res.status(404).send('no se permiten campos vacios')
     } else {
         const PRODUCT = new PRODUCTS({
             product: req.body.product,
             price: req.body.price,
-            description: req.body.description,
             categorie: req.body.categorie,
             image: req.body.image,
             stock: req.body.stock,
@@ -31,7 +30,7 @@ exports.createProduct = (req, res) => {
                         .then(function (response) {
                             AXIOS.get('http://localhost:443/api/categories')
                                 .then(function (categorie) {
-                                    res.render('productos', { PRODUCTS: response.data, categories: categorie.data, mensaje: "Producto Ingresado", confirmation: true, icon: 'success' })
+                                    res.render('productos', { products: response.data, categories: categorie.data, mensaje: "Producto Ingresado", confirmation: true, icon: 'success', user: req.session })
                                 })
                         })
                 }

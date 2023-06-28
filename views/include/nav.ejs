@@ -1,58 +1,97 @@
-<div class="row">
-    <div class="navbar bg-primary mt-0 pt-2 px-0" id="nav-info">
-        <div class="container-fluid bg-primary d-flex justify-content-center ">
-            <!-- desaparece en pantallas pequeñas -->
-            <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
-                <li class="list-inline-item opacity-75 mr-2">
-                    <a class="text-light text-small pl-0 pr-2" href="">+503 2345 4657 &nbsp; | &nbsp;</a>
-                </li>
-                <li class="list-inline-item opacity-75 mr-2">
-                    <a class="text-light font-size-sm pl-0 pr-2" href=""><img
-                            src="https://img.icons8.com/ios/24/FFFFFF/mail.png" />&nbsp;
-                        Sublisivarte@gmail.com &nbsp; | &nbsp; </a>
-                </li>
-            </ul>
-            <div class="d-flex justify-content-around">
-                <div class="d-flex">
-                    <ul class="list-inline mb-0 d-none d-lg-inline-block p-1">
-                        <li class="list-inline-item opacity-75 mr-2">
-                            <a class="text-light text-small pl-0 pr-2" href="">Nosotros &nbsp; |
-                                &nbsp;</a>
-                        </li>
-                        <li class="list-inline-item opacity-75 mr-2">
-                            <a class="text-light text-small pl-0 pr-2" href="">Centro de ayuda &nbsp; |
-                                &nbsp;</a>
-                        </li>
-                    </ul>
+<div class="container-fluid py-2 border-bottom">
+    <div class="container">
+        <div class="row">
+            <header>
+                <nav class="row d-flex flex-row navegation justify-content-between align-items-center">
+                    <div class="col-2 d-flex flex-row">
+                        <a href="/" class="fs-6">Inicio</a>
+                    </div>
+                    <div class="col-2  d-flex justify-content-end">
+                        <% if(user == false ) { %>
+                            <%- include('login') %>
+                        <% } else { %>
+                            <% if(user.role == 'admin'){ %>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle user-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a href="" class="fs-6"> <%= user.user %> </a>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/administracion">Administracion</a></li>
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/cuenta">Cuenta</a></li>
+                                      <li><hr class="dropdown-divider mx-0 fw-light fs-6"></li>
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/logOut/users">Cerrar Sesion</a></li>
+                                    </ul>
+                                </div>
+                            <% } else { %>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle user-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a href="" class="fs-6"> <%= user.user %> </a>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/cuenta">Cuenta</a></li>
+                                      <li><hr class="dropdown-divider mx-0 fw-light fs-6"></li>
+                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/logOut/users">Cerrar Sesion</a></li>
+                                    </ul>
+                                </div>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </nav>
+            </header>
+        </div>
+    </div>
+</div>             
+<div class="container py-2">
+    <div class="row py-3 d-flex justify-content-between">       
+        <div class="col">
+            <nav class="navbar">
+                <div class="container">
+                    <button class="navbar-toggler d-flex flex-row align-items-center border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        <p class="fs-5 mx-2 mb-1">Comprar</p>
+                    </button>
                 </div>
-                <div class="d-flex flex-nowrap align-self-center">
-                    <a href=""><img src="https://img.icons8.com/material-rounded/18/FFFFFF/facebook.png" />&nbsp;</a>
-                    <a href=""><img src="https://img.icons8.com/windows/20/FFFFFF/instagram-new.png" />&nbsp;</a>
-                    <a href=""><img src="https://img.icons8.com/ios/16/FFFFFF/whatsapp--v1.png" />&nbsp;</a>
-                    <a href=""><img src="https://img.icons8.com/ios-filled/16/FFFFFF/twitter.png" />&nbsp;</a>
-                </div>
+            </nav>    
+        </div>   
+        <div class="col d-flex justify-content-end align-items-center">
+            <input class="form-control w-50 mx-3" list="datalistOptions" id="exampleDataList" placeholder="buscar..." type="text" name="busqueda">
+            <datalist id="datalistOptions">
+                <option value="Camisas">
+            </datalist>
+            <% if(user != false ) { %>
+                <% if(user.role == 'admin'){ %>
+                <% } else { %>
+                    <a href="/carrito"><img width="50" height="50" src="https://img.icons8.com/windows/50/737373/shopping-cart.png" alt="shopping-cart"/></a>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+</div>
+<div class="collapse" id="navbarToggleExternalContent">
+    <div class="container-fluid mx-3 bg-dark p-4 border-top">
+        <div class="row">
+            <div class="col-4 border-end d-flex justify-content-center">
+                Ofertas
+            </div>
+            <div class="col-4 border-end d-flex justify-content-around">
+                <ul class="list-group">
+                    <div class="row">
+                        <div class="col-6">
+                            <li class="list-group-item border-0"><a href="/productos/textil" class="text-dark">textil</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/superficies planas" class="text-dark">superficies planas</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/ceramica" class="text-dark">ceramica</a></li>
+                        </div>
+                        <div class="col-6">
+                            <li class="list-group-item border-0"><a href="/productos/aluminio" class="text-dark">aluminio</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/vidrio" class="text-dark">vidrio</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/papeleriaw" class="text-dark">papeleria</a></li>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <div class="col-4 border-end d-flex justify-content-start">
+                <a href="/productos" class="text-dark">Todos los productos</a>
             </div>
         </div>
     </div>
-    <header>
-        <a href="" class="logo mb-0 d-none d-lg-inline-block"><img src="../../resources/images/logo.png" alt=""
-                class="logo-img"></a>
-        <nav class="navegation">
-            <a href="/">Inicio</a>
-            <a href="/products">Productos</a>
-            <% if(user == false ) { %>
-                <%- include('login') %>
-            <% } else { %>
-                <% if(user.role == 'admin'){ %>
-                    <a href="/logOut/users"> <%= user.user %> </a>
-                    <a href="/cuenta">Cuenta</a>
-                <% } else { %>
-                    <a href="/carrito">Carrito</a>
-                    <a href="/logOut/users"> <%= user.user %> </a>
-                <% } %>
-            <% } %>
-        </nav>
-    </header>
 </div>
-
-                        

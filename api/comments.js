@@ -1,0 +1,65 @@
+const session = require('express-session')
+const COMMENTS = require('../models/comments')
+const AXIOS = require('axios')
+
+exports.createComment = (req, res) => {
+    if (!req.body.comments || !req.body.review || !req.body.product || !req.body.client) {
+        res.send('no se permiten campos vacios')
+    } else {
+        const COMMENT = new COMMENTS({
+            comment: req.body.comment,
+            review: Number(req.body.review),
+            client: req.body.user,
+            product: req.body.product
+        })
+
+        COMMENT
+            .save(COMMENT)
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: `Ocurrio un error al intentar subir los datos` })
+                } else {
+                    AXIOS.get('http://localhost:443/api/comments')
+                    .then(function(response){
+                        res.render('comentarios', {comments: response.data, })
+                    })
+                }
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: err.message || "Ocurrio un error al intentar ingresar el comentario"
+                })
+            })
+    }
+}
+
+/**  
+ * obtenemos el parametro de la URL (key) y lo utilizamos para hacer una 
+ * busqueda en la collecion donde se busca una coincidencia entre los 
+ * datos que tienen los campos que se especifica y el parametro que se envia
+*/
+exports.findComments = (req, res) => {
+    if (req.params.id) {
+        const id = req.query.id
+        COMMENTS.findById(id)
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "No se pudo encontrar este usuario" })
+                } else {
+                    res.send(data)
+                }
+            })
+            .catch(err => {
+                res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
+            })
+    } else {
+        COMMENTS.find()
+            .then(user => {
+                res.send(user)
+                console.log(user)
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
+            })
+    }
+}

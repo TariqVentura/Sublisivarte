@@ -5,7 +5,7 @@
     --text: #ffffff;
     --dark-blue: #061e46;
     --bg-primary: #be4a7f;
-    --bg-secondary: #2d2e2f;
+    --bg-secondary: #ffffff;
 }
 
 .bg-dark {
@@ -459,3 +459,17 @@ a {
         display: none;
     }
 }
+
+.color-container h6 {
+    color: white;
+}
+
+.color-container input {
+    width: 32px;
+    height: 32px;
+}
+
+.carousel-inner > .carousel-item > img {
+    object-fit: scale-down;
+    height: 400px;
+  }

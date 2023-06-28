@@ -1,0 +1,106 @@
+<% if(user==false){ %>
+    <%- include('include/error') %>
+        <% } else { %>
+            <div class="container">
+                <div class="row">
+                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+                        aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/administracion" class="text-dark">Inicio</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+                        </ol>
+                    </nav>
+                    <div class="row d-flex align-items-center justify-content-between my-3">
+                        <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
+                            <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
+                                alt="search--v1" />
+                            <input class="form-control w-100 border-0" list="datalistOptions" id="exampleDataList"
+                                placeholder="Buscar Comentario..." type="text" name="busqueda">
+                        </div>
+                        <div class="col-3 d-flex justify-content-end">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Crear Comentario
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="/api/comments" method="post">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Comentario
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="" class="form-label">Comentario</label>
+                                                        <input type="text" class="form-control" name="comment" id=""
+                                                            required>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="customRange2" class="form-label">Calificacion 1 al
+                                                            10</label>
+                                                        <input type="range" class="form-range" min="0" max="10"
+                                                            id="customRange2" value="0" name="review">
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="customRange2" class="form-label">Nombre del Producto</label>
+                                                        <input type="text" class="form-control" name="product">                                                            
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="customRange2" class="form-label">Nombre del Cliente</label>
+                                                        <input type="text" class="form-control" name="client">                                                            
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="submit" class="btn btn-primary">Crear</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Comentario</th>
+                                <th scope="col">Reseña</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Cliente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% comments.forEach((data)=>{ %>
+                                <tr>
+                                    <td>
+                                        <%= data.comments %>
+                                    </td>
+                                    <td>
+                                        <%= data.review %>
+                                    </td>
+                                    <td>
+                                        <%= data.product %>
+                                    </td>
+                                    <td>
+                                        <%= data.client %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <% } %>
