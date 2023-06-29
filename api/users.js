@@ -117,7 +117,10 @@ exports.updateUsers = (req, res) => {
             if (!data) {
                 res.status(404).send({ message: "No se encontro el usuario" })
             } else {
-                res.send('Usuario Actualizado')
+                AXIOS.get('http://localhost:443/api/users')
+                    .then(function (response) {
+                        res.render('usuarios', { users: response.data, mensaje: "Usuario Actualizado", confirmation: true, icon: 'success', user: req.session })
+                    })
             }
         })
         .catch(err => {
@@ -154,7 +157,10 @@ exports.deleteUsers = (req, res) => {
                 if (!data) {
                     res.send('err')
                 } else {
-                    res.send('eliminacion completada')
+                    AXIOS.get('http://localhost:443/api/users')
+                        .then(function (response) {
+                            res.render('usuarios', { users: response.data, mensaje: "Usuario Eliminado", confirmation: true, icon: 'success', user: req.session })
+                        })
                 }
             })
             .catch(err => {
