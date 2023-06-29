@@ -38,6 +38,8 @@ ROUTER.get('/views/products', RENDER.allProducts)
 ROUTER.get('/views/products/:key', RENDER.newViewProducts)
 ROUTER.get('/categories/:key', RENDER.searchCategorie)
 ROUTER.get('/pedidos', RENDER.orders)
+ROUTER.get('/views/pedidos/:key', RENDER.ordersSearch)
+ROUTER.get('/pedidos/detalles/:id', RENDER.details)
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)
@@ -52,6 +54,7 @@ ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
 ROUTER.get('/api/users/:key', USERS.searchUsers)
 ROUTER.post('/api/newPassword/', USERS.newPassword)
+ROUTER.get('/bann/users/:id', USERS.bannUser)
 
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)
@@ -65,6 +68,7 @@ ROUTER.post('/api/orders', ORDERS.createOrder)
 ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
 ROUTER.get('/api/orders/:key', ORDERS.getOrders)
 ROUTER.get('/api/orders', ORDERS.getOrders)
+ROUTER.get('/delete/orders/:id', ORDERS.cancelOrder)
 
 //API details
 ROUTER.post('/api/details', DETAILS.createDetail)

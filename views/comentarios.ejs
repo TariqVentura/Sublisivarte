@@ -16,10 +16,6 @@
                                 alt="search--v1" onclick="searchComment()" />
                             <input class="form-control w-100 border-0" list="datalistOptions" id="seacrhComment"
                                 placeholder="Buscar Comentario..." type="text" name="busqueda">
-                            <!-- <button type="button" id="btn-search" class="btn waves-effect green tooltipped"
-                                    data-tooltip="Buscar">
-                                    <img src="https://img.icons8.com/glyph-neue/40/null/ok--v1.png" />
-                                </button> -->
                         </div>
                         <div class="col-3 d-flex justify-content-end">
                             <!-- Button trigger modal -->
@@ -113,11 +109,13 @@
                                         <%= data.client %>
                                     </td>
                                     <td>
-                                        <% if(data.status == 'activo'){ %>
-                                            <button class="btn btn-primary"><a class="text-dark" href="/status/comment/<%= data._id %>/inactivo">Desactivar</a></button>
-                                        <%} else {%>
-                                            <button class="btn btn-primary"><a class="text-dark" href="/status/comment/<%= data._id %>/activo">Activar</a></button>
-                                        <% } %>
+                                        <% if(data.status=='activo' ){ %>
+                                            <button class="btn btn-primary"><a class="text-dark"
+                                                    href="/status/comment/<%= data._id %>/inactivo">Desactivar</a></button>
+                                            <%} else {%>
+                                                <button class="btn btn-primary"><a class="text-dark"
+                                                        href="/status/comment/<%= data._id %>/activo">Activar</a></button>
+                                                <% } %>
                                     </td>
                                     <td>
                                         <button class="btn btn-danger"><a href="/delete/comment/<%= data._id %>"
@@ -131,4 +129,8 @@
             </div>
             <% } %>
 
-                <script src="search.js"></script>
+                <input type="text" value="<%= confirmation %>" id="confirmation" hidden>
+                <input type="text" value="<%= mensaje %>" id="mensaje" hidden>
+                <input type="text" value="<%= icon %>" id="icon" hidden>
+                <script src="/search.js"></script>
+                <script src="/alerts.js"></script>
