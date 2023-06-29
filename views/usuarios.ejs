@@ -13,8 +13,8 @@
 				</div>
 				<div class="row d-flex align-items-center justify-content-between my-3">
 					<div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
-						<img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
-							alt="search--v1" onclick="searchUser()" />
+						<img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png" alt="search--v1"
+							onclick="searchUser()" />
 						<input class="form-control w-100 border-0" list="datalistOptions" id="seacrhUser"
 							placeholder="Buscar usuario..." type="text" name="busqueda">
 					</div>
@@ -58,7 +58,7 @@
 													<label for="" class="form-label">Correo:</label>
 													<input type="text" class="form-control" name="email" id=""
 														required />
-												</div>	
+												</div>
 												<div class="col-md-5">
 													<label for="username" class="form-label">Usuario</label>
 													<div class="input-group input-group-col-md-3">
@@ -281,4 +281,8 @@
 			</div>
 			<% } %>
 
-	<script src="search.js"></script>
+				<input type="text" value="<%= confirmation %>" id="confirmation" hidden>
+				<input type="text" value="<%= mensaje %>" id="mensaje" hidden>
+				<input type="text" value="<%= icon %>" id="icon" hidden>
+				<script src="/search.js"></script>
+				<script src="/alerts.js"></script>
