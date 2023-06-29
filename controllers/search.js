@@ -13,3 +13,7 @@ function searchUser() {
 function viewsProducts() {
     location.href = 'http://localhost:443/views/products/' + document.getElementById('searchViewProduct').value
 }
+
+function searchCategorie() {
+    location.href = 'http://localhost:443/categories/' + document.getElementById('searchCategorie').value
+}
