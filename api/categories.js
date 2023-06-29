@@ -3,7 +3,13 @@ const AXIOS = require('axios')
 
 exports.createCategorie = (req, res) => {
     if (!req.body.categorie) {
-        res.status(404).send('no se permiten campos vacios')
+        AXIOS.get('http://localhost:443/api/categories')
+            .then(function (categorie) {
+                res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "No se permten campos vacios", confirmation: true, icon: "error" })
+            })
+            .catch(err => {
+                res.send('No se puede acceder a las categorias')
+            })
     } else {
         const CATEGORIE = new CATEGORIES({
             categorie: req.body.categorie,
@@ -16,7 +22,13 @@ exports.createCategorie = (req, res) => {
                 if (!data) {
                     res.status(404).send('Ocurrio un error al crear la Categoria')
                 } else {
-                    res.send('Categoria Creada')
+                    AXIOS.get('http://localhost:443/api/categories')
+                        .then(function (categorie) {
+                            res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "Categoria creada", confirmation: true, icon: "success" })
+                        })
+                        .catch(err => {
+                            res.send('No se puede acceder a las categorias')
+                        })
                 }
             })
             .catch(err => {
@@ -58,7 +70,13 @@ exports.updateCategorie = (req, res) => {
             if (!data) {
                 res.status(404).send({ message: "No se encontro el usuario" })
             } else {
-                res.send('Categoria Actualizada')
+                AXIOS.get('http://localhost:443/api/categories')
+                    .then(function (categorie) {
+                        res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "Categoria actualizada", confirmation: true, icon: "success" })
+                    })
+                    .catch(err => {
+                        res.send('No se puede acceder a las categorias')
+                    })
             }
         })
         .catch(err => {
@@ -73,7 +91,13 @@ exports.deleteCategorie = (req, res) => {
             if (!data) {
                 res.send('error')
             } else {
-                res.send('categoria eliminada')
+                AXIOS.get('http://localhost:443/api/categories')
+                    .then(function (categorie) {
+                        res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "Categoria eliminada", confirmation: true, icon: "success" })
+                    })
+                    .catch(err => {
+                        res.send('No se puede acceder a las categorias')
+                    })
             }
         })
         .catch(err => {
@@ -91,7 +115,13 @@ exports.categorieStatus = (req, res) => {
             if (!data) {
                 res.send('error')
             } else {
-                res.send('estado cambiado')
+                AXIOS.get('http://localhost:443/api/categories')
+                    .then(function (categorie) {
+                        res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "estado cambiado", confirmation: true, icon: "success" })
+                    })
+                    .catch(err => {
+                        res.send('No se puede acceder a las categorias')
+                    })
             }
         })
         .catch(err => {
