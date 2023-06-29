@@ -1,32 +1,21 @@
 <div class="row">
     <main>
         <!-- espacio para productos -->
-        <div class="container">
-            <div class="row">
-                <!-- espacio para productos -->
-                <div class="col-9 mt-5">
-                    <div class="row mb-3">
-                        <div class="row d-flex justify-content-around" id="Nuevos-productos">
-                            <% products.forEach((product) => { %>
-                                <div class="col-2">
-                                    <div class="card border border-0 bg-dark text-light text-center"
-                                        style="width: 13rem;">
-                                        <img src="/images/<%= product.image %>" class="card-img-top rounded"
-                                            alt="...">
-                                        <div class="card-body d-grid gap-2">
-                                            <h5 class="card-title text-dark"><%= product.product %></h5>
-                                            <p class="card-text"></p>
-                                            <a href="/producto/<%= product._id %>" class="btn btn-primary rounded">Ver
-                                                mas...</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% }) %>
-                        </div>
+        <div class="row ms-4">
+            <!-- espacio para productos -->
+            <% products.forEach((product)=> { %>
+                <div class="card ms-4 mt-4 col-2" style="width: 18rem;">
+                    <img src="/images/<%= product.image %>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= product.product %>
+                        </h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                            of the card's content.</p>
+                        <a href="/producto/<%= product._id %>" class="btn btn-primary">Ver producto</a>
                     </div>
                 </div>
-            </div>
+                <% }) %>
         </div>
     </main>
 </div>
-
