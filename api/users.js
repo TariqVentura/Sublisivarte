@@ -141,44 +141,51 @@ exports.deleteUsers = (req, res) => {
     }
 }
 
-exports.searchUsers = (req, res) =>{
+exports.searchUsers = (req, res) => {
     const key = req.params.key
     USERS.find(
         {
-            "$or":[
-                {name: {$regex: key}},
-                {lastname:{ $regex:key}},
-                {email: {$regex: key}},
-                {user: {$regex: key}},
-                {document: {$regex: key}}
+            "$or": [
+                { name: { $regex: key } },
+                { lastname: { $regex: key } },
+                { email: { $regex: key } },
+                { user: { $regex: key } },
+                { document: { $regex: key } }
             ]
         }
     )
-    .then(data =>{
-        if (!data) {
-            res.status(404).send({ message: `Sin datos` })
-        } else {
-            res.send(data)
-        }
-    })
-    .catch(err => {
-        res.send(err)
-    })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: `Sin datos` })
+            } else {
+                res.send(data)
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
 }
 
 exports.newPassword = (req, res) => {
-    const KEY = { user:  req.session.user }
-    const VALUE = { password: req.body.password }
+    const SALT_ROUNDS = 10
+    const ENCRYPTED_PASSWORD = req.body.password
 
-    USERS.updateOne(KEY, VALUE, { useFindAndModify: false })
-    .then(data => {
-        if (!data) {
-            res.send('err')
-        } else {
-            res.send('ok')
-        }
-    })
-    .catch(err => {
-        res.send(err)
+    BCRYPT.genSalt(SALT_ROUNDS, function (err, salt) {
+        BCRYPT.hash(ENCRYPTED_PASSWORD, salt, function (err, hash) {
+            const KEY = { user: req.session.user }
+            const VALUE = { password: hash }
+
+            USERS.updateOne(KEY, VALUE, { useFindAndModify: false })
+                .then(data => {
+                    if (!data) {
+                        res.send('err')
+                    } else {
+                        res.send('ok')
+                    }
+                })
+                .catch(err => {
+                    res.send(err)
+                })
+        })
     })
 }

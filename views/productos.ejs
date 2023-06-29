@@ -185,7 +185,29 @@
                                 </div>
                             </td>
                             <td>
-                                <button class="btn btn-danger"><a href="/delete/products/<%= data._id %>" class="text-light">Eliminar</a></button>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModaldelete<%= data._id %>">
+                                    Eliminar
+                                </button>
+                                
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModaldelete<%= data._id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmacion</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Esta seguro que desea eliminar el producto <%= data.product %>?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-danger"><a href="/delete/products/<%= data._id %>" class="text-light">Eliminar</a></button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                 </tbody>
@@ -195,4 +217,10 @@
     </div>
 <% } %>
 
-<script src="search.js"></script>
+
+<input type="text" value="<%= confirmation %>" id="confirmation" hidden>
+<input type="text" value="<%= mensaje %>" id="mensaje" hidden>
+<input type="text" value="<%= icon %>" id="icon" hidden>
+
+<script src="/alerts.js"></script>
+<script src="/search.js"></script>

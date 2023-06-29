@@ -73,7 +73,13 @@ exports.updateProduct = (req, res) => {
             if (!data) {
                 res.status(404).send({ message: "No se encontro el producto" })
             } else {
-                res.send('Producto Actualizado')
+                AXIOS.get('http://localhost:443/api/products')
+                    .then(function (response) {
+                        AXIOS.get('http://localhost:443/api/categories')
+                            .then(function (categorie) {
+                                res.render('productos', { products: response.data, categories: categorie.data, mensaje: "Producto Actualizado", confirmation: true, icon: 'success', user: req.session })
+                            })
+                    })
             }
         })
 }
@@ -85,7 +91,13 @@ exports.deleteProducts = (req, res) => {
             if (!data) {
                 res.status(404).send({ message: 'Producto no encontrado' })
             } else {
-                res.send('Producto Eliminado')
+                AXIOS.get('http://localhost:443/api/products')
+                    .then(function (response) {
+                        AXIOS.get('http://localhost:443/api/categories')
+                            .then(function (categorie) {
+                                res.render('productos', { products: response.data, categories: categorie.data, mensaje: "Producto Eliminado", confirmation: true, icon: 'success', user: req.session })
+                            })
+                    })
             }
         })
 }
