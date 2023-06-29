@@ -31,17 +31,20 @@ exports.createUser = (req, res) => {
                 })
 
                 USER
-                    .save(USER)
-                    .then(data => {
-                        if (!data) {
-                            res.status(404).send('Ocurrio un error al crear el usuario')
-                        } else {
-                            res.send('usuario creado')
-                        }
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
+                .save(USER)
+                .then(data => {
+                    if (!data) {
+                        res.status(404).send('Ocurrio un error al crear el usuario')
+                    } else {
+                        AXIOS.get('http://localhost:443/api/users')
+                        .then(function(response){
+                             res.render('usuarios', {users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session})
+                        })
+                    }
+                })
+                .catch(err => {
+                    res.send(err)
+                })
             })
         })
     }

@@ -116,14 +116,9 @@ exports.cuenta = (req, res) => {
 }
 
 exports.usuarios = (req, res) => {
-    if (req.session.user) {
-        session = req.session
-    } else {
-        session = false
-    }
     AXIOS.get('http://localhost:443/api/users')
         .then(function (response) {
-            res.render('usuarios', { users: response.data, user: session, mensaje: ". ", confirmation: false, icon: " ."  })
+            res.render('usuarios', { users: response.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ."  })
         })
         .catch(err => {
             res.send('No se pudieron cargar los usuarios')
