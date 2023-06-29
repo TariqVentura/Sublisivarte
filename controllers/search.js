@@ -9,3 +9,7 @@ function searchComment() {
 function searchUser() {
     location.href = 'http://localhost:443/users/' + document.getElementById('seacrhUser').value 
 }
+
+function viewsProducts() {
+    location.href = 'http://localhost:443/views/products/' + document.getElementById('searchViewProduct').value
+}

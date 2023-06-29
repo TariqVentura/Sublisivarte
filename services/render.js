@@ -221,3 +221,39 @@ exports.searchProduct = (req, res) => {
             res.send('No se puedieron cargar los productos')
         })
 }
+
+exports.viewProducts = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/categorie/api/products/' + req.params.key)
+    .then(function(products) {
+        res.render('viewPorducts', { user: session, products: products.data })
+    })
+}
+
+exports.newViewProducts = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/view/products/' + req.params.key)
+    .then(function(products) {
+        res.render('viewPorducts', { user: session, products: products.data })
+    })
+}
+
+exports.allProducts = (req , res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/products')
+    .then(function(products) {
+        res.render('viewPorducts', { user: session, products: products.data })
+    })
+}

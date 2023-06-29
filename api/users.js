@@ -167,10 +167,10 @@ exports.searchUsers = (req, res) =>{
 }
 
 exports.newPassword = (req, res) => {
-    const ID = req.body.id
+    const KEY = { user:  req.session.user }
     const VALUE = { password: req.body.password }
 
-    USERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
+    USERS.updateOne(KEY, VALUE, { useFindAndModify: false })
     .then(data => {
         if (!data) {
             res.send('err')
