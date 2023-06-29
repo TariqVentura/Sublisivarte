@@ -17,3 +17,7 @@ function viewsProducts() {
 function searchCategorie() {
     location.href = 'http://localhost:443/categories/' + document.getElementById('searchCategorie').value
 }
+
+function searchOrders() {
+    location.href = 'http://localhost:443/views/pedidos/' + document.getElementById('seacrhOrder').value
+}
