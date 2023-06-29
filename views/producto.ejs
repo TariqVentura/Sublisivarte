@@ -1,6 +1,8 @@
 <% if( products.status == 'inactive'){ %>
     <%- include('include/error402') %>
 <% } else { %>
+    <!-- Espacio para poder mostrar el producto que el usuario ha 
+    seleccionado y sus caracteristicas -->
     <div class="container my-3">
         <div class="row d-flex justify-content-center">
             <div class="col-10">
@@ -57,13 +59,16 @@
             </div>
         </div>
     </div>
+    <!-- Parte de mass producto -->
     <div class="container-fluid px-3 mx-3 border-top mt-3">
         <div class="row">
             <div class="col-6">
-                <p class="fs-4 mt-2">Usuario</p>
-                <p class="fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium cum repellendus veniam? Nobis eveniet doloremque possimus veniam exercitationem explicabo culpa accusamus sequi numquam aperiam, eius, nesciunt facere laudantium magni impedit?</p>
-                <p class="fs-4 mt-2">Usuario</p>
-                <p class="fs-6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium cum repellendus veniam? Nobis eveniet doloremque possimus veniam exercitationem explicabo culpa accusamus sequi numquam aperiam, eius, nesciunt facere laudantium magni impedit?</p>
+                <p class="fs-4 mt-2">Producto</p>
+                <p class="fs-6">Este producto ofrece la mayor calidad en materiales y elemetnos de su creacion
+                    para la atisfaccion de todos nuestros usuarios
+                </p>
+                <p class="fs-4 mt-2">Garantia</p>
+                <p class="fs-6">Todos nuestros productos cuentan con garantia</p>
             </div>
             <div class="col-6">
                 
