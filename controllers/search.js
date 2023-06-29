@@ -7,5 +7,5 @@ function searchComment() {
 }
 
 function searchUser() {
-    location.href = 'http://localhost:443/user/' + document.getElementById('seacrhUser').value 
+    location.href = 'http://localhost:443/users/' + document.getElementById('seacrhUser').value 
 }

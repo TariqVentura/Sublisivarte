@@ -197,7 +197,7 @@ exports.searchUser = (req,res) => {
     }
     AXIOS.get('http://localhost:443/api/users' + '/' + req.params.key)
     .then(function(user){
-        
+        res.render('usuarios',{users: user.data, user: session})
     })
 }
 
