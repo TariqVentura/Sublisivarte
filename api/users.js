@@ -219,3 +219,19 @@ exports.newPassword = (req, res) => {
         })
     })
 }
+
+exports.statusUser = (req, res) => {
+    const PARAM = { user: req.params.id }
+    const VALUE = { status: 'inactive' }
+
+    USERS.updateOne(PARAM, VALUE)
+        .then(data => {
+            if (data) {
+                req.session.destroy()
+                return res.redirect('/')
+            } else {
+                res.send('err')
+            }
+        })
+
+}

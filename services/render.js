@@ -92,7 +92,7 @@ exports.carrito = (req, res) => {
     }
 }
 
-exports.details = (req, res) => {
+exports.details1 = (req, res) => {
     if (req.session.user) {
         session = req.session
         AXIOS.get('http://localhost:443/api/details/' + req.params.id)
