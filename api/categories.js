@@ -124,9 +124,9 @@ exports.categorieStatus = (req, res) => {
                     })
             }
         })
-        .catch(err => {
-            res.send(err)
-        })
+            .catch(err => {
+                res.send(err)
+            })
 }
 
 exports.searchCategories = (req, res) =>{

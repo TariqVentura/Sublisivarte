@@ -73,8 +73,23 @@ exports.deleteComments = (req, res) => {
             if (!data) {
                 res.status(404).send({ message: 'Producto no encontrado' })
             } else {
-                res.send('Comentario Eliminado')
+                AXIOS.get('http://localhost:443/api/comments')
+                        .then(function (response) {
+                            AXIOS.get('http://localhost:443/api/products')
+                                .then(function (productos) {
+                                    res.render('comentarios', { comments: response.data, products: productos.data, user: req.session, mensaje: "Comentario Eliminado", confirmation: true, icon: 'success'})
+                                })
+                                .catch(err => {
+                                    res.send(err)
+                                })
+                        })
+                        .catch(err => {
+                            res.send(err)
+                        })
             }
+        })
+        .catch(err => {
+            res.send(err)
         })
 }
 
