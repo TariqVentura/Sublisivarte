@@ -37,6 +37,7 @@ ROUTER.get('/productos/:key', RENDER.viewProducts)
 ROUTER.get('/views/products', RENDER.allProducts)
 ROUTER.get('/views/products/:key', RENDER.newViewProducts)
 ROUTER.get('/categories/:key', RENDER.searchCategorie)
+ROUTER.get('/pedidos', RENDER.orders)
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)
@@ -63,6 +64,7 @@ ROUTER.get('/status/comment/:id/:status', COMMENTS.commentStatus)
 ROUTER.post('/api/orders', ORDERS.createOrder)
 ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
 ROUTER.get('/api/orders/:key', ORDERS.getOrders)
+ROUTER.get('/api/orders', ORDERS.getOrders)
 
 //API details
 ROUTER.post('/api/details', DETAILS.createDetail)

@@ -10,7 +10,13 @@ const AXIOS = require('axios')
  */
 exports.createProduct = (req, res) => {
     if (!req.body.product || !req.body.price || !req.body.categorie || !req.body.image || !req.body.stock) {
-        res.status(404).send('no se permiten campos vacios')
+        AXIOS.get('http://localhost:443/api/products')
+            .then(function (response) {
+                AXIOS.get('http://localhost:443/api/categories')
+                    .then(function (categorie) {
+                        res.render('productos', { products: response.data, categories: categorie.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'erro', user: req.session })
+                    })
+            })
     } else {
         const PRODUCT = new PRODUCTS({
             product: req.body.product,
