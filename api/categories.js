@@ -98,3 +98,25 @@ exports.categorieStatus = (req, res) => {
             res.send(err)
         })
 }
+
+exports.searchCategories = (req, res) =>{
+    const key = req.params.key
+    CATEGORIES.find(
+        {
+            "$or": [
+                {categorie: {$regex:key}},
+                {status: {$regex: key}}
+            ]
+        }
+    )
+    .then(data =>{
+        if (!data) {
+            res.status(404).send({ message: `Sin datos` })
+        } else {
+            res.send(data)
+        }
+    })
+    .catch(err => {
+        res.send(err)
+    })
+}

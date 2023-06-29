@@ -36,6 +36,7 @@ ROUTER.get('/users/:key', RENDER.searchUser)
 ROUTER.get('/productos/:key', RENDER.viewProducts)
 ROUTER.get('/views/products', RENDER.allProducts)
 ROUTER.get('/views/products/:key', RENDER.newViewProducts)
+ROUTER.get('/categories/:key', RENDER.searchCategorie)
 
 //API images
 ROUTER.post('/api/images', IMAGES.saveImages)
@@ -83,6 +84,7 @@ ROUTER.get('/api/categories', CATEGORIES.findCategorie)
 ROUTER.post('/update/categories' , CATEGORIES.updateCategorie)
 ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
 ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
+ROUTER.get('/api/categories/:key', CATEGORIES.searchCategories)
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor

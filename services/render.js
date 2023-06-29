@@ -257,3 +257,18 @@ exports.allProducts = (req , res) => {
         res.render('viewPorducts', { user: session, products: products.data })
     })
 }
+
+exports.searchCategorie = (req, res) =>{
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/categories' + '/' + req.params.key)
+    .then(function(categorie) {
+        res.render('categorias', { categories: categorie.data, user: session })
+    })
+    .catch(err => {
+        res.send('No se pudieron cargar las Categorias')
+    })
+}
