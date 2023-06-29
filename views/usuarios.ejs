@@ -258,7 +258,7 @@
 															aria-label="Close"></button>
 													</div>
 													<div class="modal-body">
-														¿Esta seguro que desea eliminar el producto?
+														¿Esta seguro que desea eliminar el usuario?
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-primary">
@@ -271,7 +271,10 @@
 										</div>
 									</td>
 									<td>
-										<button class="btn btn-danger">Banear</button>
+										<button type="button" class="btn btn-danger">
+											<a href="/bann/users/<%= data._id %>"
+												class="text-light text-decoration-none">Banear</a>
+										</button>
 									</td>
 								</tr>
 								<%})%>

@@ -31,20 +31,20 @@ exports.createUser = (req, res) => {
                 })
 
                 USER
-                .save(USER)
-                .then(data => {
-                    if (!data) {
-                        res.status(404).send('Ocurrio un error al crear el usuario')
-                    } else {
-                        AXIOS.get('http://localhost:443/api/users')
-                        .then(function(response){
-                             res.render('usuarios', {users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session})
-                        })
-                    }
-                })
-                .catch(err => {
-                    res.send(err)
-                })
+                    .save(USER)
+                    .then(data => {
+                        if (!data) {
+                            res.status(404).send('Ocurrio un error al crear el usuario')
+                        } else {
+                            AXIOS.get('http://localhost:443/api/users')
+                                .then(function (response) {
+                                    res.render('usuarios', { users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session })
+                                })
+                        }
+                    })
+                    .catch(err => {
+                        res.send(err)
+                    })
             })
         })
     }
@@ -123,6 +123,27 @@ exports.updateUsers = (req, res) => {
         .catch(err => {
             res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
         })
+}
+
+exports.bannUser = (req, res) => {
+    const ID = req.params.id
+    const VALUE = { status: 'banned' }
+
+    USERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.send('error')
+            } else {
+                AXIOS.get('http://localhost:443/api/users')
+                    .then(function (response) {
+                        res.render('usuarios', { users: response.data, mensaje: "Usuario Baneado", confirmation: true, icon: 'success', user: req.session })
+                    })
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+
 }
 
 exports.deleteUsers = (req, res) => {
