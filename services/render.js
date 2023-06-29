@@ -282,3 +282,33 @@ exports.orders = (req, res) => {
             res.send('No se pudieron cargar las Categorias')
         })
 }
+
+exports.details = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/details/' + req.params.id)
+        .then(function (details) {
+            res.render('details', { details: details.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+        })
+        .catch(err => {
+            res.send('No se pudieron cargar las Categorias')
+        })
+}
+
+exports.ordersSearch = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/orders/' + req.params.key )
+        .then(function (orders) {
+            res.render('orders', { orders: orders.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+        })
+        .catch(err => {
+            res.send('No se pudieron cargar las Categorias')
+        })
+}

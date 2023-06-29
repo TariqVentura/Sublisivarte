@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <table class="table table-stripped table-bordered my-3">
+            <thead>
+                <tr>
+                    <th scope="col">Productos</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% details.forEach((data)=> { %>
+                    <tr>
+                        <td>
+                            <%= data.product %>
+                        </td>
+                        <td>
+                            <%= data.price %>
+                        </td>
+                        <td>
+                            <%= data.amount %>
+                        </td>
+                        <td class="total">
+                            <%= data.total %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

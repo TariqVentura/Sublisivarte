@@ -33,9 +33,9 @@ exports.createOrder = (req, res) => {
 
 exports.finishOrder = (req, res) => {
     const ID = req.params.id
-    const value = { status: 'finalizado' }
+    const VALUE = { status: 'finalizado' }
 
-    ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
+    ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
         .then(data => {
             if (!data) {
                 res.send('err')
@@ -76,4 +76,27 @@ exports.getOrders = (req, res) => {
             })
     }
 
+}
+
+exports.cancelOrder = (req, res) => {
+    const ID = req.params.id
+    const VALUE = { status: 'cancelado' }
+
+    ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
+        .then(data => {
+            if (!data) {
+                res.send('err')
+            } else {
+                AXIOS.get('http://localhost:443/api/orders')
+                    .then(function (orders) {
+                        res.render('orders', { orders: orders.data, user: req.session, mensaje: "Pedido Cancelado", confirmation: true, icon: "success" })
+                    })
+                    .catch(err => {
+                        res.send(err)
+                    })
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
 }
