@@ -235,3 +235,45 @@ exports.statusUser = (req, res) => {
         })
 
 }
+
+exports.getUser = (req, res) => {
+    const KEY = req.params.key
+
+    USERS.find({
+        "$or": [
+            { user: { $regex: KEY } }
+        ]
+    })
+        .then(data => {
+            if (!data) {
+                res.send('error')
+            } else {
+                res.send(data)
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
+
+exports.modifyUser = (req, res) => {
+    if (!req.body.name || !req.body.lastname || !req.body.email) {
+        res.send('no se permiten campos vacios')
+    } else {
+        console.log(req.body.user)
+        const PARAM = { user: req.body.user }
+        const VALUE = { name: req.body.name, lastname: req.body.lastname, email: req.body.email }
+
+        USERS.updateOne(PARAM, VALUE)
+        .then(data => {
+            if (!data) {
+                console.log('error')
+            } else {
+                res.send('ok')
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    }
+}

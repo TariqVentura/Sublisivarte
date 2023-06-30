@@ -56,6 +56,8 @@ ROUTER.get('/api/users/:key', USERS.searchUsers)
 ROUTER.post('/api/newPassword/', USERS.newPassword)
 ROUTER.get('/bann/users/:id', USERS.bannUser)
 ROUTER.get('/status/user/:id', USERS.statusUser)
+ROUTER.get('/api/get/users/:key', USERS.getUser)
+ROUTER.post('/api/modifyUser', USERS.modifyUser)
 
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)

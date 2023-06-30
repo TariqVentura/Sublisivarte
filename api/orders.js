@@ -97,6 +97,6 @@ exports.cancelOrder = (req, res) => {
             }
         })
         .catch(err => {
-            res.send(err)
+            res.send(err) 
         })
 }
