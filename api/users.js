@@ -12,7 +12,7 @@ const BCRYPT = require('bcrypt')
 exports.createUser = (req, res) => {
     //validamos los campos para que no esten vacios
     if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document || !req.body.role) {
-        res.status(404).send('No se permiten campos vacios')
+        res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
     } else {
         const SALT_ROUNDS = 10
         const ENCRYPTED_PASSWORD = req.body.password
@@ -55,7 +55,10 @@ exports.logIn = (req, res) => {
     USERS.findOne({ user: USER })
         .then(data => {
             if (!data) {
-                res.send('usuario inexistente')
+                AXIOS.get('http://localhost:443/api/images')
+                            .then(function (images) {
+                                res.render('index', { resources: images.data, mensaje: "Usuario Inexistente  ", confirmation: true, icon: 'error', user: false })
+                            })
             } else {
                 BCRYPT.compare(req.body.password, data.password, function (err, result) {
                     if (result) {
@@ -71,7 +74,10 @@ exports.logIn = (req, res) => {
                             res.redirect('/')
                         }
                     } else {
-                        res.send('contraseña incorrecta')
+                        AXIOS.get('http://localhost:443/api/images')
+                            .then(function (images) {
+                                res.render('index', { resources: images.data, mensaje: "Contraseña Erronea", confirmation: true, icon: 'error', user: false })
+                            })
                     }
                 })
             }
@@ -265,15 +271,15 @@ exports.modifyUser = (req, res) => {
         const VALUE = { name: req.body.name, lastname: req.body.lastname, email: req.body.email }
 
         USERS.updateOne(PARAM, VALUE)
-        .then(data => {
-            if (!data) {
-                console.log('error')
-            } else {
-                res.send('ok')
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
+            .then(data => {
+                if (!data) {
+                    console.log('error')
+                } else {
+                    res.send('ok')
+                }
+            })
+            .catch(err => {
+                res.send(err)
+            })
     }
 }
