@@ -43,7 +43,10 @@ exports.findCategorie = (req, res) => {
         CATEGORIES.findById(id)
             .then(data => {
                 if (!data) {
-                    res.status(404).send({ message: "No se pudo encontrar esta Categoria" })
+                    AXIOS.get('http://localhost:443/api/categories')
+                    .then(function (categorie) {
+                        res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "No se pudieron cargar las categorias", confirmation: true, icon: "error" })
+                    })                    
                 } else {
                     res.send(data)
                 }
