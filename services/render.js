@@ -10,7 +10,7 @@ exports.index = (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/images')
         .then(function (images) {
-            res.render('index', { user: session, resources: images.data })
+            res.render('index', { user: session, resources: images.data, mensaje: ". ", confirmation: false, icon: " ." })
         })
 }
 
