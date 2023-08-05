@@ -1,6 +1,10 @@
 const ORDERS = require('../models/orders')
 const AXIOS = require('axios')
 const FECHA = new Date()
+const PDF = require('pdf-creator-node')
+const PATH = require('path')
+const FS = require('fs')
+const OPTIONS = require('../helpers/format/invoice')
 
 exports.createOrder = (req, res) => {
     if (!req.body.name) {
@@ -33,7 +37,11 @@ exports.createOrder = (req, res) => {
 
 exports.finishOrder = (req, res) => {
     const ID = req.params.id
-    const VALUE = { status: 'finalizado' }
+    let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
+
+    console.log(newDate)
+
+    const VALUE = { status: 'finalizado', date: newDate }
 
     ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
         .then(data => {
@@ -97,6 +105,44 @@ exports.cancelOrder = (req, res) => {
             }
         })
         .catch(err => {
-            res.send(err) 
+            res.send(err)
         })
+}
+
+exports.getInvoice = (req, res) => {
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/invoice.html'), 'utf-8')
+    const FILE_NAME = req.params.key + '.pdf'
+
+    AXIOS.get('http://localhost:443/api/details/' + req.params.key).then(function (detail) {
+        let obj = detail.data, total = 0
+        console.log(obj)
+        ORDERS.findById(req.params.key).then(data => {
+            obj.forEach(i => {
+                total += i.total
+            })            
+
+            const DATA = {
+                user: req.session.user,
+                data: obj,
+                date: data.date,
+                total: total,
+                order: req.params.key
+            }
+
+            const DOCUMENT = {
+                html: HMTL,
+                data: {
+                    data: DATA
+                },
+                path: "./docs/" + FILE_NAME,
+                type: ""
+            }
+
+            PDF.create(DOCUMENT, OPTIONS).then(p => {
+                res.redirect('/' + FILE_NAME)
+            }).catch(err => {
+                res.send(err)
+            })
+        })
+    })
 }

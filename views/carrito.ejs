@@ -16,8 +16,20 @@
                             <p class="card-text">
                                 <%= data.user %>
                             </p>
-                            <a href="/carrito/<%= data._id %>/<%= data.status %>" class="btn btn-primary">Ver
+                            <% if(data.status == 'finalizado'){ %>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="/carrito/<%= data._id %>/<%= data.status %>" class="btn btn-primary">Ver
+                                            detalles</a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="/report/invoice/<%= data._id %>" class="btn btn-primary" target="_blank">Factura</a>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <a href="/carrito/<%= data._id %>/<%= data.status %>" class="btn btn-primary">Ver
                                     detalles</a>
+                            <% } %>
                         </div>
                         <div class="card-footer text-muted">
                             <%= data.date %>

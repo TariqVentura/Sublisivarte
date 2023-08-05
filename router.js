@@ -72,6 +72,8 @@ ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
 ROUTER.get('/api/orders/:key', ORDERS.getOrders)
 ROUTER.get('/api/orders', ORDERS.getOrders)
 ROUTER.get('/delete/orders/:id', ORDERS.cancelOrder)
+ROUTER.get('/report/invoice/:key', ORDERS.getInvoice)
+
 
 //API details
 ROUTER.post('/api/details', DETAILS.createDetail)
