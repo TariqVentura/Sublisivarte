@@ -96,6 +96,7 @@ ROUTER.post('/update/categories' , CATEGORIES.updateCategorie)
 ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
 ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
 ROUTER.get('/api/categories/:key', CATEGORIES.searchCategories)
+ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor

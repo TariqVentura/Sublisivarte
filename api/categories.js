@@ -1,5 +1,10 @@
 const CATEGORIES = require('../models/categories')
 const AXIOS = require('axios')
+const FECHA = new Date()
+const PDF = require('pdf-creator-node')
+const PATH = require('path')
+const FS = require('fs')
+const OPTIONS = require('../helpers/format/invoice')
 
 exports.createCategorie = (req, res) => {
     if (!req.body.categorie) {
@@ -153,3 +158,34 @@ exports.searchCategories = (req, res) =>{
         res.send(err)
     })
 }
+
+exports.getReport = (req, res) => {
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/report.html'), 'utf-8')
+    const FILE_NAME = req.params.key + '.pdf'
+    AXIOS.get('http://localhost:443/api/products/' + req.params.key).then(function (product) {
+        let obj = product.data
+        let newDate = FECHA.toISOString().substring(0, 10)
+        const DATA = {
+            user: req.session.user,
+            obj: obj,
+            newDate: newDate,
+            product: req.params.key
+        }
+        const DOCUMENT = {
+            html: HMTL,
+            data: {
+                data: DATA
+            },
+            path: "./docs/" + FILE_NAME,
+            type: ""
+        }
+        PDF.create(DOCUMENT, OPTIONS).then(p => {
+            //redirecciona al documento creato
+            res.redirect('/' + FILE_NAME)
+        }).catch(err => {
+            res.send(err)
+        })
+    }) 
+}
+
+

@@ -132,6 +132,7 @@ exports.cancelOrder = (req, res) => {
         })
 }
 
+
 exports.getInvoice = (req, res) => {
     //obetner la plantilla de la carpeta helpers/templates
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/invoice.html'), 'utf-8')
