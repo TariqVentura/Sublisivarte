@@ -56,9 +56,9 @@ exports.logIn = (req, res) => {
         .then(data => {
             if (!data) {
                 AXIOS.get('http://localhost:443/api/images')
-                            .then(function (images) {
-                                res.render('index', { resources: images.data, mensaje: "Usuario Inexistente  ", confirmation: true, icon: 'error', user: false })
-                            })
+                    .then(function (images) {
+                        res.render('index', { resources: images.data, mensaje: "Usuario Inexistente  ", confirmation: true, icon: 'error', user: false })
+                    })
             } else {
                 BCRYPT.compare(req.body.password, data.password, function (err, result) {
                     if (result) {
@@ -203,27 +203,37 @@ exports.searchUsers = (req, res) => {
 }
 
 exports.newPassword = (req, res) => {
-    const SALT_ROUNDS = 10
-    const ENCRYPTED_PASSWORD = req.body.password
+    if (!req.body.password) {
+        AXIOS.get('http://localhost:443/api/images')
+            .then(function (images) {
+                res.render('index', { user: session, resources: images.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: "error" })
+            })
+    } else {
+        const SALT_ROUNDS = 10
+        const ENCRYPTED_PASSWORD = req.body.password
 
-    BCRYPT.genSalt(SALT_ROUNDS, function (err, salt) {
-        BCRYPT.hash(ENCRYPTED_PASSWORD, salt, function (err, hash) {
-            const KEY = { user: req.session.user }
-            const VALUE = { password: hash }
+        BCRYPT.genSalt(SALT_ROUNDS, function (err, salt) {
+            BCRYPT.hash(ENCRYPTED_PASSWORD, salt, function (err, hash) {
+                const KEY = { user: req.session.user }
+                const VALUE = { password: hash }
 
-            USERS.updateOne(KEY, VALUE, { useFindAndModify: false })
-                .then(data => {
-                    if (!data) {
-                        res.send('err')
-                    } else {
-                        res.send('ok')
-                    }
-                })
-                .catch(err => {
-                    res.send(err)
-                })
+                USERS.updateOne(KEY, VALUE, { useFindAndModify: false })
+                    .then(data => {
+                        if (!data) {
+                            res.send('err')
+                        } else {
+                            AXIOS.get('http://localhost:443/api/images')
+                                .then(function (images) {
+                                    res.render('index', { user: session, resources: images.data, mensaje: "Se ha actualizado la contraseña", confirmation: true, icon: "success" })
+                                })
+                        }
+                    })
+                    .catch(err => {
+                        res.send(err)
+                    })
+            })
         })
-    })
+    }
 }
 
 exports.statusUser = (req, res) => {
@@ -264,7 +274,10 @@ exports.getUser = (req, res) => {
 
 exports.modifyUser = (req, res) => {
     if (!req.body.name || !req.body.lastname || !req.body.email) {
-        res.send('no se permiten campos vacios')
+        AXIOS.get('http://localhost:443/api/images')
+            .then(function (images) {
+                res.render('index', { user: session, resources: images.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: "error" })
+            })
     } else {
         console.log(req.body.user)
         const PARAM = { user: req.body.user }
@@ -275,7 +288,10 @@ exports.modifyUser = (req, res) => {
                 if (!data) {
                     console.log('error')
                 } else {
-                    res.send('ok')
+                    AXIOS.get('http://localhost:443/api/images')
+                        .then(function (images) {
+                            res.render('index', { user: session, resources: images.data, mensaje: "Sus datos han sido actualizados", confirmation: true, icon: "success" })
+                        })
                 }
             })
             .catch(err => {

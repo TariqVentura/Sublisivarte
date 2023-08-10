@@ -21,7 +21,7 @@ let productSchema = new MONGOOSE.Schema({
         require: true
     },
     image: {
-        type: String,
+        type: Array,
         require: true
     },
     stock: {

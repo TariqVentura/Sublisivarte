@@ -73,7 +73,7 @@
                                                 <div class="col d-flex flex-row align-items-center">
                                                     <label for="" class="form-label me-2">Imagen: </label>
                                                     <input type="file" class="form-control" id="inputGroupFile01"
-                                                        name="image">
+                                                        name="image" multiple="multiple">
                                                 </div>
                                             </div>
                                         </div>
@@ -146,8 +146,8 @@
                                         <%= data.status %>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary"> <a href="/images/<%= data.image %>"
-                                                class="text-dark">Ver imagen</a></button>
+                                        <button class="btn btn-primary"> <a href="/images/<%= data.image[0] %>"
+                                                class="text-dark" target="_blank">Ver imagen</a></button>
                                     </td>
                                     <td>
                                         <!-- Button trigger modal -->
@@ -216,7 +216,7 @@
                                                                     <label for="" class="form-label me-2">Imagen:
                                                                     </label>
                                                                     <input type="file" class="form-control"
-                                                                        id="inputGroupFile01" name="image">
+                                                                        id="inputGroupFile01" name="image" multiple>
                                                                     <input type="text" value="<%= data._id %>" name="id"
                                                                         hidden>
                                                                 </div>
