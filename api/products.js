@@ -151,3 +151,14 @@ exports.categorieProduct = (req, res) => {
             res.send(err)
         })
 }
+
+exports.countProducts = (req, res) => {
+    PRODUCTS.aggregate({ status: true }).group({
+        _id: "$categorie",
+        count: { $count: {} }
+    }).then(data => {
+        res.send(data)
+    }).catch(err => {
+        res.status(404).send(err)
+    })
+}
