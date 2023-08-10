@@ -4,6 +4,11 @@
 const USERS = require('../models/users')
 const AXIOS = require('axios')
 const BCRYPT = require('bcrypt')
+const FECHA = new Date()
+const PDF = require('pdf-creator-node')
+const PATH = require('path')
+const FS = require('fs')
+const OPTIONS = require('../helpers/format/users')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -56,9 +61,9 @@ exports.logIn = (req, res) => {
         .then(data => {
             if (!data) {
                 AXIOS.get('http://localhost:443/api/images')
-                            .then(function (images) {
-                                res.render('index', { resources: images.data, mensaje: "Usuario Inexistente  ", confirmation: true, icon: 'error', user: false })
-                            })
+                    .then(function (images) {
+                        res.render('index', { resources: images.data, mensaje: "Usuario Inexistente  ", confirmation: true, icon: 'error', user: false })
+                    })
             } else {
                 BCRYPT.compare(req.body.password, data.password, function (err, result) {
                     if (result) {
@@ -282,4 +287,31 @@ exports.modifyUser = (req, res) => {
                 res.send(err)
             })
     }
+}
+
+exports.getUserReport = (req, res) => {
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')
+    const FILE_NAME = 'REPORTE_USUARIOS' + '.pdf'
+    AXIOS.get('http://localhost:443/api/users/').then(function (detail) {
+        let obj = detail.data
+
+        const DATA = {
+            user: req.session.user,
+            obj: obj,
+            date: FECHA.toISOString().substring(0, 10)
+        }
+        const DOCUMENT = {
+            html: HMTL,
+            data: {
+                data: DATA
+            },
+            path: "./docs/" + FILE_NAME,
+            type: ""
+        }
+        PDF.create(DOCUMENT, OPTIONS).then(p => {
+            res.redirect('/' + FILE_NAME)
+        }).catch(err => {
+            res.send(err)
+        })
+    })
 }
