@@ -65,6 +65,7 @@ ROUTER.post('/api/orders', ORDERS.createOrder)
 ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
 ROUTER.get('/api/orders/:key', ORDERS.getOrders)
 ROUTER.get('/api/orders', ORDERS.getOrders)
+ROUTER.get('/cancel/orders/:id', ORDERS.cancelOrder)
 
 //API details
 ROUTER.post('/api/details', DETAILS.createDetail)

@@ -48,6 +48,29 @@ exports.finishOrder = (req, res) => {
         })
 }
 
+exports.cancelOrder = (req, res) => {
+    const ID = req.params.id
+    const value = { status: 'cancelado' }
+
+    ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
+        .then(data => {
+            if (!data) {
+                res.send('err')
+            } else {
+                AXIOS.get('http://localhost:443/api/orders')
+                    .then(function (orders) {
+                        res.render('orders', { orders: orders.data, user: req.session, mensaje: "Orden cancelada", confirmation: true, icon: "success" })
+                    })
+                    .catch(err => {
+                        res.send('No se pudieron cargar las Categorias')
+                    })
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
+
 exports.getOrders = (req, res) => {
     if (req.params.key) {
         const KEY = req.params.key
@@ -75,5 +98,4 @@ exports.getOrders = (req, res) => {
                 res.send(err)
             })
     }
-
 }
