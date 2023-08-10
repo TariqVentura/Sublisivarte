@@ -58,6 +58,7 @@ ROUTER.get('/bann/users/:id', USERS.bannUser)
 ROUTER.get('/status/user/:id', USERS.statusUser)
 ROUTER.get('/api/get/users/:key', USERS.getUser)
 ROUTER.post('/api/modifyUser', USERS.modifyUser)
+ROUTER.get('/report/user', USERS.getUserReport)
 
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)
@@ -74,6 +75,7 @@ ROUTER.get('/api/orders', ORDERS.getOrders)
 ROUTER.get('/cancel/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/delete/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/report/invoice/:key', ORDERS.getInvoice)
+ROUTER.get('/api/count/orders', ORDERS.countOrders)
 
 //API details
 ROUTER.post('/api/details', DETAILS.createDetail)
@@ -88,6 +90,7 @@ ROUTER.post('/update/products/', PRODUCTS.updateProduct)
 ROUTER.get('/delete/products/:id', PRODUCTS.deleteProducts)
 ROUTER.get('/api/view/products/:key', PRODUCTS.searchProduct)
 ROUTER.get('/categorie/api/products/:key', PRODUCTS.categorieProduct)
+ROUTER.get('/api/count/products', PRODUCTS.countProducts)
 
 //API categories
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)

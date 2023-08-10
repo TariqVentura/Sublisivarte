@@ -7,26 +7,55 @@ const FS = require('fs')
 const OPTIONS = require('../helpers/format/invoice')
 
 exports.createOrder = (req, res) => {
-    if (!req.body.name) {
-        res.status(404).send('no se permiten campos vacios')
+    if (!req.session.user) {
+        res.redirect('/images/Error 404.png')
     } else {
-        //convertimos la fecha a formato ISO
-        let newDate = FECHA.toISOString()
+        if (!req.body.name) {
+            res.status(404).send('no se permiten campos vacios')
+        } else {
+            //convertimos la fecha a formato ISO
+            let newDate = FECHA.toISOString()
 
-        const ORDER = new ORDERS({
-            name: req.body.name,
-            client: req.body.user,
-            //le asignamos la fecha con formato ISO a date pero unicamente los primeros 10 caracteres
-            date: newDate.substring(0, 10)
-        })
+            const ORDER = new ORDERS({
+                name: req.body.name,
+                client: req.body.user,
+                //le asignamos la fecha con formato ISO a date pero unicamente los primeros 10 caracteres
+                date: newDate.substring(0, 10)
+            })
 
-        ORDER
-            .save(ORDER)
+            ORDER
+                .save(ORDER)
+                .then(data => {
+                    if (!data) {
+                        res.status(404).send('error')
+                    } else {
+                        res.redirect('/carrito')
+                    }
+                })
+                .catch(err => {
+                    res.send(err)
+                })
+        }
+    }
+}
+
+exports.finishOrder = (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/images/Error 404.png')
+    } else {
+        const ID = req.params.id
+        let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
+
+        console.log(newDate)
+
+        const VALUE = { status: 'finalizado', date: newDate }
+
+        ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
             .then(data => {
                 if (!data) {
-                    res.status(404).send('error')
+                    res.send('err')
                 } else {
-                    res.send(data)
+                    res.send('ok')
                 }
             })
             .catch(err => {
@@ -35,48 +64,31 @@ exports.createOrder = (req, res) => {
     }
 }
 
-exports.finishOrder = (req, res) => {
-    const ID = req.params.id
-    let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
-
-    console.log(newDate)
-
-    const VALUE = { status: 'finalizado', date: newDate }
-
-    ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
-        .then(data => {
-            if (!data) {
-                res.send('err')
-            } else {
-                res.send('ok')
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
-}
-
 exports.cancelOrder = (req, res) => {
-    const ID = req.params.id
-    const value = { status: 'cancelado' }
+    if (!req.session.user) {
+        res.redirect('/images/Error 404.png')
+    } else {
+        const ID = req.params.id
+        const value = { status: 'cancelado' }
 
-    ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
-        .then(data => {
-            if (!data) {
-                res.send('err')
-            } else {
-                AXIOS.get('http://localhost:443/api/orders')
-                    .then(function (orders) {
-                        res.render('orders', { orders: orders.data, user: req.session, mensaje: "Orden cancelada", confirmation: true, icon: "success" })
-                    })
-                    .catch(err => {
-                        res.send('No se pudieron cargar las Categorias')
-                    })
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
+        ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
+            .then(data => {
+                if (!data) {
+                    res.send('err')
+                } else {
+                    AXIOS.get('http://localhost:443/api/orders')
+                        .then(function (orders) {
+                            res.render('orders', { orders: orders.data, user: req.session, mensaje: "Orden cancelada", confirmation: true, icon: "success" })
+                        })
+                        .catch(err => {
+                            res.send('No se pudieron cargar las Categorias')
+                        })
+                }
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    }
 }
 
 exports.getOrders = (req, res) => {
@@ -150,7 +162,7 @@ exports.getInvoice = (req, res) => {
             obj.forEach(i => {
                 //se suman los atributos total del objeto que creamos
                 total += i.total
-            })            
+            })
 
             // let newDate = FECHA.toISOString().substring(0, 10)
 
@@ -162,7 +174,7 @@ exports.getInvoice = (req, res) => {
                 total: total,
                 order: req.params.key
             }
-            
+
             //Objeto DOCUMENT donde se almacena los datos que se le enviar a la dependencia
             const DOCUMENT = {
                 html: HMTL,
@@ -173,13 +185,26 @@ exports.getInvoice = (req, res) => {
                 type: ""
             }
 
-            //ocupar metodo create y pasas parametros del documents y del options 
+            //ocupar metodo create y pasas parametros del documents y
             PDF.create(DOCUMENT, OPTIONS).then(p => {
-                //redirecciona al documento creato
                 res.redirect('/' + FILE_NAME)
             }).catch(err => {
                 res.send(err)
             })
         })
+    })
+}
+
+exports.countOrders = (req, res) => {
+    //usamos un funcion de agregacion y filtramos a los productos que esten activos
+    ORDERS.aggregate().group({
+        //agrupamos los productos en categorias y contamos cuantos porductos tiene cada categoria
+        _id: "$status",
+        count: { $count: {} }
+    }).then(data => {
+        //enviamos la data
+        res.send(data)
+    }).catch(err => {
+        res.status(404).send(err)
     })
 }

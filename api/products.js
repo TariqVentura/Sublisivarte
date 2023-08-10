@@ -151,3 +151,17 @@ exports.categorieProduct = (req, res) => {
             res.send(err)
         })
 }
+
+exports.countProducts = (req, res) => {
+    //usamos un funcion de agregacion y filtramos a los productos que esten activos
+    PRODUCTS.aggregate({ status: 'active' }).group({
+        //agrupamos los productos en categorias y contamos cuantos porductos tiene cada categoria
+        _id: "$categorie",
+        count: { $count: {} }
+    }).then(data => {
+        //enviamos la data
+        res.send(data)
+    }).catch(err => {
+        res.status(404).send(err)
+    })
+}

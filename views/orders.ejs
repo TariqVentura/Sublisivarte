@@ -19,6 +19,31 @@
                     placeholder="buscar producto..." type="text" name="busqueda">
             </div>
         </div>
+        <div class="col-3">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#exampleModalCategorie">
+                Graficos
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCategorie" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Graficos</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="fs-4 text-center">Cantidad de pedidos por estado</p>
+                            <canvas id="statusOrder"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row my-3">
             <table class="table table-bordered">
                 <thead>
@@ -50,11 +75,8 @@
                                 <button class="btn btn-info"><a href="/pedidos/detalles/<%= data._id %>" class="text-light">Detalles</a></button>
                             </td>
                             <td>
-<<<<<<< HEAD
                                 <button class="btn btn-danger"><a href="/cancel/orders/<%= data._id %>" class="text-light">Cancelar pedido</a></button>
-=======
                                 <button class="btn btn-danger"><a href="/delete/orders/<%= data._id %>" class="text-light">Cancelar</a></button>
->>>>>>> c9dd994d48e65010d712233b9dcba8d7e35558f4
                             </td>
                         </tr>
                 </tbody>
@@ -65,9 +87,13 @@
 <% } %>
 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
 <input type="text" value="<%= confirmation %>" id="confirmation" hidden>
 <input type="text" value="<%= mensaje %>" id="mensaje" hidden>
 <input type="text" value="<%= icon %>" id="icon" hidden>
 
 <script src="/alerts.js"></script>
 <script src="/search.js"></script>
+<script src="/orders.js"></script>
