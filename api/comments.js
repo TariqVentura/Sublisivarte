@@ -3,14 +3,20 @@ const AXIOS = require('axios')
 
 exports.createComment = (req, res) => {
     if (!req.body.comment || !req.body.review || !req.body.product || !req.body.client) {
-        res.send('no se permiten campos vacios')
+        AXIOS.get('http://localhost:443/api/comments')
+        .then(function (response) {
+            AXIOS.get('http://localhost:443/api/products')
+                .then(function (productos) {
+                    res.render('comentarios', { comments: response.data, products: productos.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
+                })
+        })
     } else {
         const COMMENT = new COMMENTS({
             comment: req.body.comment,
             review: Number(req.body.review),
             product: req.body.product,
             client: req.body.client
-            
+
         })
         COMMENT
             .save(COMMENT)
@@ -18,7 +24,13 @@ exports.createComment = (req, res) => {
                 if (!data) {
                     res.status(404).send({ message: `Ocurrio un error al intentar subir los datos` })
                 } else {
-                    res.send('ok')
+                    AXIOS.get('http://localhost:443/api/comments')
+                        .then(function (response) {
+                            AXIOS.get('http://localhost:443/api/products')
+                                .then(function (productos) {
+                                    res.render('comentarios', { comments: response.data, products: productos.data, mensaje: "Comentario Creado", confirmation: true, icon: 'success', user: req.session })
+                                })
+                        })
                 }
             })
             .catch(err => {
@@ -67,8 +79,23 @@ exports.deleteComments = (req, res) => {
             if (!data) {
                 res.status(404).send({ message: 'Producto no encontrado' })
             } else {
-                res.send('Comentario Eliminado')
+                AXIOS.get('http://localhost:443/api/comments')
+                    .then(function (response) {
+                        AXIOS.get('http://localhost:443/api/products')
+                            .then(function (productos) {
+                                res.render('comentarios', { comments: response.data, products: productos.data, user: req.session, mensaje: "Comentario Eliminado", confirmation: true, icon: 'success' })
+                            })
+                            .catch(err => {
+                                res.send(err)
+                            })
+                    })
+                    .catch(err => {
+                        res.send(err)
+                    })
             }
+        })
+        .catch(err => {
+            res.send(err)
         })
 }
 
@@ -77,28 +104,28 @@ exports.serchComments = (req, res) => {
     COMMENTS.find(
         {
             "$or": [
-                {comment: {$regex: key}},                
-                {product: {$regex: key}}
+                { comment: { $regex: key } },
+                { product: { $regex: key } }
             ]
         }
     )
-    .then(data =>{
-        if (!data) {
-            res.status(404).send({ message: `Sin datos` })
-        } else {
-            res.send(data)
-        }
-    })
-    .catch(err => {
-        res.send(err)
-    })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: `Sin datos` })
+            } else {
+                res.send(data)
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
 }
 
-exports.commentStatus = (req, res) =>{
+exports.commentStatus = (req, res) => {
     const STATUS = req.params.status
     const ID = req.params.id
     const VALUE = { status: STATUS }
-    COMMENTS.findByIdAndUpdate(ID, VALUE, {useFindAndModify: false})
+    COMMENTS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
         .then
 
 }

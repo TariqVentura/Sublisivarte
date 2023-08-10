@@ -1,6 +1,10 @@
 const ORDERS = require('../models/orders')
 const AXIOS = require('axios')
 const FECHA = new Date()
+const PDF = require('pdf-creator-node')
+const PATH = require('path')
+const FS = require('fs')
+const OPTIONS = require('../helpers/format/invoice')
 
 exports.createOrder = (req, res) => {
     if (!req.body.name) {
@@ -33,9 +37,13 @@ exports.createOrder = (req, res) => {
 
 exports.finishOrder = (req, res) => {
     const ID = req.params.id
-    const value = { status: 'finalizado' }
+    let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 
-    ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
+    console.log(newDate)
+
+    const VALUE = { status: 'finalizado', date: newDate }
+
+    ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
         .then(data => {
             if (!data) {
                 res.send('err')
@@ -98,4 +106,79 @@ exports.getOrders = (req, res) => {
                 res.send(err)
             })
     }
+
+}
+
+exports.cancelOrder = (req, res) => {
+    const ID = req.params.id
+    const VALUE = { status: 'cancelado' }
+
+    ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
+        .then(data => {
+            if (!data) {
+                res.send('err')
+            } else {
+                AXIOS.get('http://localhost:443/api/orders')
+                    .then(function (orders) {
+                        res.render('orders', { orders: orders.data, user: req.session, mensaje: "Pedido Cancelado", confirmation: true, icon: "success" })
+                    })
+                    .catch(err => {
+                        res.send(err)
+                    })
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
+
+exports.getInvoice = (req, res) => {
+    //obetner la plantilla de la carpeta helpers/templates
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/invoice.html'), 'utf-8')
+    //req.params.key es el id de la orden que se manda en la url 
+    const FILE_NAME = req.params.key + '.pdf'
+
+    //obtener la data que se necesita
+    AXIOS.get('http://localhost:443/api/details/' + req.params.key).then(function (detail) {
+        //crea un objeto para almacenar los datos que se pidieron y hacemos una variable total igualada a 0
+        let obj = detail.data, total = 0
+
+        //obtenemos la fecha de la orden con el id de la orden
+        ORDERS.findById(req.params.key).then(data => {
+            //creamos un forEach para calcular el total
+            obj.forEach(i => {
+                //se suman los atributos total del objeto que creamos
+                total += i.total
+            })            
+
+            // let newDate = FECHA.toISOString().substring(0, 10)
+
+            // creamos un objeto DATA
+            const DATA = {
+                user: req.session.user,
+                obj: obj,
+                date: data.date,
+                total: total,
+                order: req.params.key
+            }
+            
+            //Objeto DOCUMENT donde se almacena los datos que se le enviar a la dependencia
+            const DOCUMENT = {
+                html: HMTL,
+                data: {
+                    data: DATA
+                },
+                path: "./docs/" + FILE_NAME,
+                type: ""
+            }
+
+            //ocupar metodo create y pasas parametros del documents y del options 
+            PDF.create(DOCUMENT, OPTIONS).then(p => {
+                //redirecciona al documento creato
+                res.redirect('/' + FILE_NAME)
+            }).catch(err => {
+                res.send(err)
+            })
+        })
+    })
 }

@@ -12,7 +12,7 @@ const BCRYPT = require('bcrypt')
 exports.createUser = (req, res) => {
     //validamos los campos para que no esten vacios
     if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document || !req.body.role) {
-        res.status(404).send('No se permiten campos vacios')
+        res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
     } else {
         const SALT_ROUNDS = 10
         const ENCRYPTED_PASSWORD = req.body.password
@@ -36,7 +36,10 @@ exports.createUser = (req, res) => {
                         if (!data) {
                             res.status(404).send('Ocurrio un error al crear el usuario')
                         } else {
-                            res.send('usuario creado')
+                            AXIOS.get('http://localhost:443/api/users')
+                                .then(function (response) {
+                                    res.render('usuarios', { users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session })
+                                })
                         }
                     })
                     .catch(err => {
@@ -52,7 +55,10 @@ exports.logIn = (req, res) => {
     USERS.findOne({ user: USER })
         .then(data => {
             if (!data) {
-                res.send('usuario inexistente')
+                AXIOS.get('http://localhost:443/api/images')
+                            .then(function (images) {
+                                res.render('index', { resources: images.data, mensaje: "Usuario Inexistente  ", confirmation: true, icon: 'error', user: false })
+                            })
             } else {
                 BCRYPT.compare(req.body.password, data.password, function (err, result) {
                     if (result) {
@@ -68,7 +74,10 @@ exports.logIn = (req, res) => {
                             res.redirect('/')
                         }
                     } else {
-                        res.send('contraseña incorrecta')
+                        AXIOS.get('http://localhost:443/api/images')
+                            .then(function (images) {
+                                res.render('index', { resources: images.data, mensaje: "Contraseña Erronea", confirmation: true, icon: 'error', user: false })
+                            })
                     }
                 })
             }
@@ -114,12 +123,36 @@ exports.updateUsers = (req, res) => {
             if (!data) {
                 res.status(404).send({ message: "No se encontro el usuario" })
             } else {
-                res.send('Usuario Actualizado')
+                AXIOS.get('http://localhost:443/api/users')
+                    .then(function (response) {
+                        res.render('usuarios', { users: response.data, mensaje: "Usuario Actualizado", confirmation: true, icon: 'success', user: req.session })
+                    })
             }
         })
         .catch(err => {
             res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
         })
+}
+
+exports.bannUser = (req, res) => {
+    const ID = req.params.id
+    const VALUE = { status: 'banned' }
+
+    USERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.send('error')
+            } else {
+                AXIOS.get('http://localhost:443/api/users')
+                    .then(function (response) {
+                        res.render('usuarios', { users: response.data, mensaje: "Usuario Baneado", confirmation: true, icon: 'success', user: req.session })
+                    })
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+
 }
 
 exports.deleteUsers = (req, res) => {
@@ -130,7 +163,10 @@ exports.deleteUsers = (req, res) => {
                 if (!data) {
                     res.send('err')
                 } else {
-                    res.send('eliminacion completada')
+                    AXIOS.get('http://localhost:443/api/users')
+                        .then(function (response) {
+                            res.render('usuarios', { users: response.data, mensaje: "Usuario Eliminado", confirmation: true, icon: 'success', user: req.session })
+                        })
                 }
             })
             .catch(err => {
@@ -188,4 +224,62 @@ exports.newPassword = (req, res) => {
                 })
         })
     })
+}
+
+exports.statusUser = (req, res) => {
+    const PARAM = { user: req.params.id }
+    const VALUE = { status: 'inactive' }
+
+    USERS.updateOne(PARAM, VALUE)
+        .then(data => {
+            if (data) {
+                req.session.destroy()
+                return res.redirect('/')
+            } else {
+                res.send('err')
+            }
+        })
+
+}
+
+exports.getUser = (req, res) => {
+    const KEY = req.params.key
+
+    USERS.find({
+        "$or": [
+            { user: { $regex: KEY } }
+        ]
+    })
+        .then(data => {
+            if (!data) {
+                res.send('error')
+            } else {
+                res.send(data)
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
+
+exports.modifyUser = (req, res) => {
+    if (!req.body.name || !req.body.lastname || !req.body.email) {
+        res.send('no se permiten campos vacios')
+    } else {
+        console.log(req.body.user)
+        const PARAM = { user: req.body.user }
+        const VALUE = { name: req.body.name, lastname: req.body.lastname, email: req.body.email }
+
+        USERS.updateOne(PARAM, VALUE)
+            .then(data => {
+                if (!data) {
+                    console.log('error')
+                } else {
+                    res.send('ok')
+                }
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    }
 }

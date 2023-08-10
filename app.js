@@ -63,12 +63,13 @@ APP.use(MORGAN('tiny'))
 APP.use(BODY_PARSER.urlencoded({ extended: true }))
 
 /**
- * Le damos a la APP las rutas de las carpetas 'controllers' y 'resoruces'
+ * Le damos a la APP las rutas de las carpetas 'controllers' y 'resoruces como archivos estaicos'
  * la carpeta 'controllers' almacena los archivos JS del frontend
  * la carpeta 'resources' alamcena los archivos CSS y las imagenes
  */
 APP.use(EXPRESS.static(__dirname + '/controllers'))
 APP.use(EXPRESS.static(__dirname + '/resources'))
+APP.use(EXPRESS.static(__dirname + '/docs'))
 
 //nos permite manejar los resultados de los request de la pagina
 APP.use(EXPRESS.urlencoded({ extended: true }))

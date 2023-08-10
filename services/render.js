@@ -10,7 +10,7 @@ exports.index = (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/images')
         .then(function (images) {
-            res.render('index', { user: session, resources: images.data })
+            res.render('index', { user: session, resources: images.data, mensaje: ". ", confirmation: false, icon: " ." })
         })
 }
 
@@ -92,7 +92,7 @@ exports.carrito = (req, res) => {
     }
 }
 
-exports.details = (req, res) => {
+exports.details1 = (req, res) => {
     if (req.session.user) {
         session = req.session
         AXIOS.get('http://localhost:443/api/details/' + req.params.id)
@@ -112,18 +112,17 @@ exports.cuenta = (req, res) => {
     } else {
         session = false
     }
-    res.render('cuenta', { user: session })
+    AXIOS.get('http://localhost:443/api/get/users/' + req.session.user)
+        .then(function (info) {
+            console.log(info.data)
+            res.render('cuenta', { user: session, data: info.data })
+        })
 }
 
 exports.usuarios = (req, res) => {
-    if (req.session.user) {
-        session = req.session
-    } else {
-        session = false
-    }
     AXIOS.get('http://localhost:443/api/users')
         .then(function (response) {
-            res.render('usuarios', { users: response.data, user: session, mensaje: ". ", confirmation: false, icon: " ."  })
+            res.render('usuarios', { users: response.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
         })
         .catch(err => {
             res.send('No se pudieron cargar los usuarios')
@@ -197,7 +196,7 @@ exports.searchUser = (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/users' + '/' + req.params.key)
         .then(function (user) {
-            res.render('usuarios', { users: user.data, user: session, mensaje: ". ", confirmation: false, icon: " ."  })
+            res.render('usuarios', { users: user.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
         })
 }
 
@@ -230,7 +229,7 @@ exports.viewProducts = (req, res) => {
     }
     AXIOS.get('http://localhost:443/categorie/api/products/' + req.params.key)
         .then(function (products) {
-            res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ."  })
+            res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ." })
         })
 }
 
@@ -242,7 +241,7 @@ exports.newViewProducts = (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/view/products/' + req.params.key)
         .then(function (products) {
-            res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ."  })
+            res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ." })
         })
 }
 
@@ -254,7 +253,7 @@ exports.allProducts = (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/products')
         .then(function (products) {
-            res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ."  })
+            res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ." })
         })
 }
 
@@ -266,7 +265,7 @@ exports.searchCategorie = (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/categories' + '/' + req.params.key)
         .then(function (categorie) {
-            res.render('categorias', { categories: categorie.data, user: session, mensaje: ". ", confirmation: false, icon: " ."  })
+            res.render('categorias', { categories: categorie.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
         })
         .catch(err => {
             res.send('No se pudieron cargar las Categorias')
@@ -280,6 +279,36 @@ exports.orders = (req, res) => {
         session = false
     }
     AXIOS.get('http://localhost:443/api/orders')
+        .then(function (orders) {
+            res.render('orders', { orders: orders.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+        })
+        .catch(err => {
+            res.send('No se pudieron cargar las Categorias')
+        })
+}
+
+exports.details = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/details/' + req.params.id)
+        .then(function (details) {
+            res.render('details', { details: details.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+        })
+        .catch(err => {
+            res.send('No se pudieron cargar las Categorias')
+        })
+}
+
+exports.ordersSearch = (req, res) => {
+    if (req.session.user) {
+        session = req.session
+    } else {
+        session = false
+    }
+    AXIOS.get('http://localhost:443/api/orders/' + req.params.key)
         .then(function (orders) {
             res.render('orders', { orders: orders.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
         })
