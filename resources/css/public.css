@@ -513,14 +513,9 @@ a {
     position: absolute;
 }
 
-canvas {
+#myCanvas {
     width: 500px;
     height: 60vh;
-    background-image: url('https://media.vogue.co.uk/photos/6454efc3ad4b7de8bf02445b/master/w_1280%2Cc_limit/sunspel-White-Mid-Sleeve-T-shirt.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
 }
 
 canvas .active {

@@ -3,9 +3,21 @@ const PRODUCTS = require('../models/products')
 
 exports.createDetail = (req, res) => {
     if (!req.body.product || !req.body.amount || !req.body.price || !req.body.order) {
-        res.status(404).send('no se permiten campos vacios')
+        AXIOS.get('http://localhost:443/api/products')
+            .then(function (response) {
+                AXIOS.get('http://localhost:443/api/categories')
+                    .then(function (categorie) {
+                        res.render('productos', { products: response.data, categories: categorie.data, user: session, mensaje: "No se permiten campos vacios", confirmation: true, icon: "success" })
+                    })
+                    .catch(err => {
+                        res.send('hola')
+                    })
+            })
+            .catch(err => {
+                res.send('No se puedieron cargar los productos')
+            })
     } else {
-        let orderDetail = {"color" : req.body.color, "talla" : req.body.size, "image" : req.body.image }
+        let orderDetail = { "color": req.body.color, "talla": req.body.size, "image": req.body.image }
 
         let total = Number(req.body.price) * Number(req.body.amount)
 
@@ -32,7 +44,19 @@ exports.createDetail = (req, res) => {
                             if (!product) {
                                 res.status(404).send('no se permiten campos vacios')
                             } else {
-                                res.send('OK')
+                                AXIOS.get('http://localhost:443/api/products')
+                                    .then(function (response) {
+                                        AXIOS.get('http://localhost:443/api/categories')
+                                            .then(function (categorie) {
+                                                res.render('productos', { products: response.data, categories: categorie.data, user: session, mensaje: "Se ha Añadido el Producto", confirmation: true, icon: "success" })
+                                            })
+                                            .catch(err => {
+                                                res.send('hola')
+                                            })
+                                    })
+                                    .catch(err => {
+                                        res.send('No se puedieron cargar los productos')
+                                    })
                             }
                         })
                 }

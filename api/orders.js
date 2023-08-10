@@ -46,9 +46,15 @@ exports.finishOrder = (req, res) => {
     ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
         .then(data => {
             if (!data) {
-                res.send('err')
+                AXIOS.get('http://localhost:443/api/images')
+                    .then(function (images) {
+                        res.render('index', { user: session, resources: images.data, mensaje: "Ocurrio un Error al Efectuar la Compra", confirmation: true, icon: "error" })
+                    })
             } else {
-                res.send('ok')
+                AXIOS.get('http://localhost:443/api/images')
+                    .then(function (images) {
+                        res.render('index', { user: session, resources: images.data, mensaje: "Compra Completada", confirmation: true, icon: "success" })
+                    })
             }
         })
         .catch(err => {
@@ -149,7 +155,7 @@ exports.getInvoice = (req, res) => {
             obj.forEach(i => {
                 //se suman los atributos total del objeto que creamos
                 total += i.total
-            })            
+            })
 
             // let newDate = FECHA.toISOString().substring(0, 10)
 
@@ -161,7 +167,7 @@ exports.getInvoice = (req, res) => {
                 total: total,
                 order: req.params.key
             }
-            
+
             //Objeto DOCUMENT donde se almacena los datos que se le enviar a la dependencia
             const DOCUMENT = {
                 html: HMTL,
