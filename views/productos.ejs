@@ -140,7 +140,45 @@
                                         <%= data.categorie %>
                                     </td>
                                     <td>
-                                        <%= data.stock %>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModalStock<%= data._id %>">
+                                            Stock Actual: <%= data.stock  %>
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalStock<%= data._id %>" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Stock
+                                                            Producto</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="/api/record" method="post">
+                                                        <div class="modal-body">
+                                                            <div class="col-8 d-flex flex-row align-items-center">
+                                                                <label for="" class="form-label me-2">Stock:
+                                                                </label>
+                                                                <input type="number" class="form-control" name="stock"
+                                                                    id="" required step="0">
+                                                                <input type="number" value="<%= data.stock %>" required hidden name="prevStock">
+                                                                <input type="text" value="<%= data._id %>" hidden required name="id">
+                                                                <input type="text" value="<%= data.product %>" hidden required name="product">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Actualizar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>
                                         <%= data.status %>
@@ -202,13 +240,6 @@
                                                                                 <% } %>
                                                                                     <% }) %>
                                                                     </select>
-                                                                </div>
-                                                                <div class="col-4 d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Stock:
-                                                                    </label>
-                                                                    <input type="number" class="form-control"
-                                                                        name="stock" id="" required min="1" step="1"
-                                                                        value="<%= data.stock %>">
                                                                 </div>
                                                             </div>
                                                             <div class="row my-3">

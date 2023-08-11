@@ -73,21 +73,32 @@ exports.findProduct = (req, res) => {
 }
 
 exports.updateProduct = (req, res) => {
-    const id = req.body.id
-    PRODUCTS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-        .then(data => {
-            if (!data) {
-                res.status(404).send({ message: "No se encontro el producto" })
-            } else {
-                AXIOS.get('http://localhost:443/api/products')
-                    .then(function (response) {
-                        AXIOS.get('http://localhost:443/api/categories')
-                            .then(function (categorie) {
-                                res.render('productos', { products: response.data, categories: categorie.data, mensaje: "Producto Actualizado", confirmation: true, icon: 'success', user: req.session })
-                            })
+    if (!req.body.product || !req.body.price || req.body.price < 0 || !req.body.categorie || !req.body.image) {
+        AXIOS.get('http://localhost:443/api/products')
+            .then(function (response) {
+                AXIOS.get('http://localhost:443/api/categories')
+                    .then(function (categorie) {
+                        res.render('productos', { products: response.data, categories: categorie.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
                     })
-            }
-        })
+            })
+    } else {
+        const id = req.body.id
+        PRODUCTS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "No se encontro el producto" })
+                } else {
+                    AXIOS.get('http://localhost:443/api/products')
+                        .then(function (response) {
+                            AXIOS.get('http://localhost:443/api/categories')
+                                .then(function (categorie) {
+                                    res.render('productos', { products: response.data, categories: categorie.data, mensaje: "Producto Actualizado", confirmation: true, icon: 'success', user: req.session })
+                                })
+                        })
+                }
+            })
+    }
+
 }
 
 exports.deleteProducts = (req, res) => {
