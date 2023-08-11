@@ -1,65 +1,97 @@
-<% if( products.status == 'inactive'){ %>
+<% if( products.status=='inactive' ){ %>
     <%- include('include/error402') %>
-<% } else { %>
-    <!-- Espacio para poder mostrar el producto que el usuario ha 
+        <% } else { %>
+            <!-- Espacio para poder mostrar el producto que el usuario ha 
     seleccionado y sus caracteristicas -->
-    <div class="container my-3">
-        <div class="row d-flex justify-content-center">
-            <div class="col-10">
-                <p class="fs-3 text-center">Crea tu diseño | <%= products.product %></p>
-                <div class="d-flex flex-row">
-                    <div class="col-8">
-                        <canvas id="myCanvas" style="background-image: url(http://localhost:443/images/<%= products.image[0] %>); background-position: center; background-repeat: no-repeat; background-size: cover; position: relative;"></canvas>
-                    </div>
-                    <div class="col-4 my-3">
-                        <div class="row mb-2">
-                            <p class="fs-4 px-0">Precio: $<%= products.price %></p>
-                        </div>
-                        <div class="row mt-2 px-0">
-                            <label for="imageURL" class="px-0">Imagen: </label>
-                            <input type="file" class="form-control" id="imageURL">
-                        </div>
-                        <div class="row mt-2 d-flex align-items-center justify-content-between">
-                            <div class="col-6 px-0">
-                                <p class="px-0">
-                                    <a class="btn btn-warning mt-3 w-100" data-bs-toggle="collapse" href="#collapseExample"
-                                        role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        Diseños
-                                    </a>
-                                </p>
+            <div class="container my-3">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10">
+                        <p class="fs-3 text-center">Crea tu diseño | <%= products.product %>
+                        </p>
+                        <div class="d-flex flex-row">
+                            <div class="col-8">
+                                <canvas id="myCanvas"
+                                    style="background-image: url(http://localhost:443/images/<%= products.image[0] %>); background-position: center; background-repeat: no-repeat; background-size: cover; position: relative;"></canvas>
                             </div>
-                            <div class="col-6">
-                                <button class="btn btn-warning w-100" id="btn-design">Guardar Diseño</button>
-                            </div>
-                            <div class="collapse px-0" id="collapseExample">
-                                <div class="card card-body d-flex flex-row">
-                                    <button class="border-0 mx-2 bg-light" id="front"><img src="/images/white.webp" alt=""
-                                            height="100" width="100"></button>
-                                    <button class="border-0 mx-2 bg-light" id="back"><img src="/images/white-back.webp"
-                                            alt="" height="100" width="100"></button>
+                            <div class="col-4 my-3">
+                                <div class="row mb-2">
+                                    <p class="fs-4 px-0">Precio: $<%= products.price %>
+                                    </p>
                                 </div>
-                            </div>
-                        </div>
-                        <% if(orders != null) {%>
-                            <p class="px-0 mx-0">
-                                <a class="btn btn-primary w-100 px-0 mx-0" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
-                                  Añadir al carrito
-                                </a>
-                            </p>
-                            <div class="collapse" id="collapseExample2">
-                                <div class="card card-body">
-                                    <div class="row mt-3 d-flex flex-row">
-                                        <%- include('include/lists', { products: products }) %>
+                                <div class="row mt-2 px-0">
+                                    <label for="imageURL" class="px-0">Imagen: </label>
+                                    <input type="file" class="form-control" id="imageURL">
+                                </div>
+                                <div class="row mt-2 d-flex align-items-center justify-content-between">
+                                    <div class="col-6 px-0">
+                                        <p class="px-0">
+                                            <a class="btn btn-warning mt-3 w-100" data-bs-toggle="collapse"
+                                                href="#collapseExample" role="button" aria-expanded="false"
+                                                aria-controls="collapseExample">
+                                                Diseños
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-warning w-100" id="btn-design">Guardar Diseño</button>
+                                    </div>
+                                    <div class="collapse px-0" id="collapseExample">
+                                        <div class="card card-body d-flex flex-row">
+                                            <button class="border-0 mx-2 bg-light" id="front"><img
+                                                    src="/images/white.webp" alt="" height="100" width="100"></button>
+                                            <button class="border-0 mx-2 bg-light" id="back"><img
+                                                    src="/images/white-back.webp" alt="" height="100"
+                                                    width="100"></button>
+                                        </div>
                                     </div>
                                 </div>
+                                <% if(orders !=null) {%>
+                                    <p class="px-0 mx-0">
+                                        <a class="btn btn-primary w-100 px-0 mx-0" data-bs-toggle="collapse"
+                                            href="#collapseExample2" role="button" aria-expanded="false"
+                                            aria-controls="collapseExample2">
+                                            Añadir al carrito
+                                        </a>
+                                    </p>
+                                    <div class="col-5">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary s-5" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModalCategorie">
+                                            Grafica de reseñas
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalCategorie" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-6" id="exampleModalLabel">Reseñas
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <canvas id="categorieProducts"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="collapse" id="collapseExample2">
+                                        <div class="card card-body">
+                                            <div class="row mt-3 d-flex flex-row">
+                                                <%- include('include/lists', { products: products }) %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
                             </div>
-                        <% } %>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-<% } %>
+            <% } %>
 
-<script src="/orderDesign.js"></script>
-<script src="/graphic.js"></script>
+                <script src="/orderDesign.js"></script>
+                <script src="/graphic.js"></script>
