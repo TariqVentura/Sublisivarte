@@ -12,6 +12,7 @@ const ORDERS = require('./api/orders')
 const DETAILS = require('./api/details')
 const PRODUCTS = require('./api/products')
 const COMMENTS = require('./api/comments')
+const RECORD = require('./api/record')
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
@@ -102,6 +103,10 @@ ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
 ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
 ROUTER.get('/api/categories/:key', CATEGORIES.searchCategories)
 ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
+
+//API record
+ROUTER.post('/api/record', RECORD.newRecord)
+ROUTER.get('/api/record/:key', RECORD.getRecord)
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor

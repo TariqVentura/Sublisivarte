@@ -27,11 +27,16 @@
                                 <p>Apparecchio</p>
                                 <p>Apparecchio@gmail.com</p>
                                 <p>San Salvador, El Salvador</p>
-                                <p>{{data.date}}</p>
+                                <p>{{data.newDate}}</p>
                             </div>
                         </td>
                     </tr>
                 </Table>
+            </div>
+        </div>
+        <div style="margin-top: 2%;">
+            <div style="width: 50%;">
+                <p style="font-size: medium; font-family: Arial, Helvetica, sans-serif;">Usuario: {{data.user}}</p>
             </div>
         </div>
         <div style="margin-top: 2%;">
@@ -53,7 +58,7 @@
                     <tr>
                         <th>{{this.product}}</th>
                         <td>${{this.price}}</td>
-                        <td>{{this.amount}}</td>
+                        <td>{{this.stock}}</td>
                     </tr>
                     {{/each}}
                 </tbody>
