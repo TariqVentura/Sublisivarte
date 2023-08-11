@@ -182,6 +182,7 @@ exports.countProducts = (req, res) => {
     })
 }
 
+<<<<<<< Updated upstream
 exports.getStockReport = (req, res) => {
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/products.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
@@ -209,5 +210,14 @@ exports.getStockReport = (req, res) => {
         }).catch(err => {
             res.send(err)
         })
+=======
+exports.countStockProducts = (req, res) => {
+    //usamos un funcion de agregacion y filtramos a los productos que esten activos
+    PRODUCTS.find().then(data => {
+        //enviamos la data
+        res.send(data.stock)
+    }).catch(err => {
+        res.status(404).send(err)
+>>>>>>> Stashed changes
     })
 }
