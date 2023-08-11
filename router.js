@@ -61,6 +61,7 @@ ROUTER.post('/api/modifyUser', USERS.modifyUser)
 ROUTER.get('/report/user/:key', USERS.getUserReport)
 ROUTER.get('/api/count/users', USERS.countUsers)
 
+
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)
 ROUTER.get('/api/comments', COMMENTS.findComments)
@@ -101,7 +102,6 @@ ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
 ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
 ROUTER.get('/api/categories/:key', CATEGORIES.searchCategories)
 ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
-ROUTER.get('/api/count/categories', USERS.countUsers)
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor
