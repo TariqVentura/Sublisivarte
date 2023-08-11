@@ -356,3 +356,17 @@ exports.getUserReport = (req, res) => {
         }
     })
 }
+
+exports.countCategories = (req, res) => {
+    //Usamos un funcion de agregacion y filtramos a los usuarios que esten activos e inactivos
+    USERS.aggregate().group({
+        //Agrupamos los usuarios en estados y contamos cuantos usuarios por estado hay.
+        _id: "$status",
+        count: { $count: {} }
+    }).then(data => {
+        //Enviamos la data
+        res.send(data)
+    }).catch(err => {
+        res.status(404).send(err)
+    })
+}

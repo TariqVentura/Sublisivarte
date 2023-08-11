@@ -59,6 +59,8 @@ ROUTER.get('/status/user/:id', USERS.statusUser)
 ROUTER.get('/api/get/users/:key', USERS.getUser)
 ROUTER.post('/api/modifyUser', USERS.modifyUser)
 ROUTER.get('/report/user/:key', USERS.getUserReport)
+ROUTER.get('/api/count/users', USERS.countUsers)
+
 
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)
