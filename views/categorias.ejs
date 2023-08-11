@@ -75,6 +75,7 @@
                                 <th scope="col">Categoría</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Eliminar</th>
+                                <th scope="col">Reporte de Productos</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,7 +95,9 @@
                                     </td>
                                     <td>
                                         <button class="btn btn-danger text-light"><a class="text-light"
-                                                href="/delete/categorie/<%= data._id %>">Eliminar</a></button>
+                                                href="/delete/categorie/<%= data._id %>">Eliminar</a></button>                                        
+                                    </td>
+                                    <td>
                                         <a class="btn btn-warning text-light" href="/report/categories/<%= data.categorie %>" target="_blank">Reporte</a>
                                     </td>
                                 </tr>

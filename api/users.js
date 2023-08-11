@@ -380,3 +380,4 @@ exports.countUsers = (req, res) => {
         res.status(404).send(err)
     })
 }
+

@@ -3,6 +3,11 @@
  */
 const PRODUCTS = require('../models/products')
 const AXIOS = require('axios')
+const FECHA = new Date()
+const PDF = require('pdf-creator-node')
+const PATH = require('path')
+const FS = require('fs')
+const OPTIONS = require('../helpers/format/invoice')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -174,5 +179,35 @@ exports.countProducts = (req, res) => {
         res.send(data)
     }).catch(err => {
         res.status(404).send(err)
+    })
+}
+
+exports.getStockReport = (req, res) => {
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/products.html'), 'utf-8')
+    const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
+    AXIOS.get('http://localhost:443/api/products/' + req.params.key).then(function (stock) {
+
+        let obj = stock.data
+        
+        const DATA = {
+            user: req.session.user,
+            obj: obj,
+            date: data.date            
+        }
+
+        const DOCUMENT = {
+            html: HMTL,
+            data: {
+                data: DATA
+            },
+            path: "./docs/" + FILE_NAME,
+            type: ""
+        }
+
+        PDF.create(DOCUMENT, OPTIONS).then(p => {
+            res.redirect('/' + FILE_NAME)
+        }).catch(err => {
+            res.send(err)
+        })
     })
 }
