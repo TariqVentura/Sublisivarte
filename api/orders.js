@@ -196,13 +196,13 @@ exports.getInvoice = (req, res) => {
 }
 
 exports.countOrders = (req, res) => {
-    //usamos un funcion de agregacion y filtramos a los productos que esten activos
+    //Hacemos uso de una funcion de agregacion y obtenemos las ordenes de la tienda
     ORDERS.aggregate().group({
-        //agrupamos los productos en categorias y contamos cuantos porductos tiene cada categoria
+        //Agrupamos las ordenes por estado y contamos cuantos ordene tiene cada estado
         _id: "$status",
         count: { $count: {} }
     }).then(data => {
-        //enviamos la data
+        //Enviamos la informacion requerida
         res.send(data)
     }).catch(err => {
         res.status(404).send(err)
