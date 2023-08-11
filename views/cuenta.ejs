@@ -33,16 +33,16 @@
                             </div>
                         </div>
                         <div class="row d-flex flex-row my-3 justify-content-center">
-                            <button type="submit" class="btn btn-success w-50 mt-3">Guardar Cambios</button>
+                            <button type="submit" class="btn btn-success w-50 mt-3">Guardar cambios</button>
                         </div>
                     <% }) %>
                 </form>
             </div>
             <div class="col-6 d-flex align-items-center flex-column">
-                <p class="fs-4">Acciones de Cuenta</p>
+                <p class="fs-4">Acciones</p>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-info w-50 my-2 text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Cambiar Contraseña
+                    Cambiar contraseña
                 </button>
     
                 <!-- Modal -->
@@ -51,23 +51,23 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar Contraseña</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar contraseña</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form action="/api/newPassword/" method="post">
                                 <div class="modal-body">
-                                    Nueva Contraseña: 
+                                    Nueva contraseña: 
                                     <input type="password" name="password">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-success">Guardar</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-danger w-50 my-2"><a href="/status/user/<%= user.user %>" class="text-light">Desactivar Cuenta</a></button>
+                <button class="btn btn-danger w-50 my-2"><a href="/status/user/<%= user.user %>" class="text-light">Desactivar cuenta</a></button>
             </div>
         </div>
     </div>

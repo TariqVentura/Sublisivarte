@@ -7,7 +7,7 @@
                         aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/administracion" class="text-dark">Inicio</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+                            <li class="breadcrumb-item active" aria-current="page">Categorías</li>
                         </ol>
                     </nav>
                     <div class="row d-flex align-items-center justify-content-between my-3">
@@ -21,7 +21,7 @@
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-dark" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
-                                Crear Comentario
+                                Crear comentario
                             </button>
 
                             <!-- Modal -->
@@ -44,16 +44,14 @@
                                                             required>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="customRange2" class="form-label">Calificacion 1 al
-                                                            10</label>
+                                                        <label for="customRange2" class="form-label">Calificación</label>
                                                         <input type="range" class="form-range" min="0" max="10"
                                                             id="customRange2" value="0" name="review">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <label for="customRange2" class="form-label">Nombre del
-                                                            Producto</label>
+                                                        <label for="customRange2" class="form-label">Producto</label>
                                                         <select class="form-select" id="inputGroupSelect01"
                                                             name="product" required>
                                                             <% products.forEach((data)=> { %>
@@ -64,8 +62,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="customRange2" class="form-label">Nombre del
-                                                            Cliente</label>
+                                                        <label for="customRange2" class="form-label">Cliente</label>
                                                         <input type="text" class="form-control" name="client">
                                                     </div>
                                                 </div>

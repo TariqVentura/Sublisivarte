@@ -95,8 +95,8 @@
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCategorie" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
+                        <div class="modal fade" id="exampleModalCategorie" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -260,6 +260,31 @@
                                                         <button type="button" class="btn btn-danger"><a
                                                                 href="/delete/products/<%= data._id %>"
                                                                 class="text-light">Eliminar</a></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModalCategorie">
+                                            Graficos
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalCategorie" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Graficos
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="fs-4 text-center">Cantidad de pedidos por estado</p>
+                                                        <canvas id="statusOrder"></canvas>
                                                     </div>
                                                 </div>
                                             </div>
