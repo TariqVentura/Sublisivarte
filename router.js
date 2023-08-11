@@ -95,6 +95,8 @@ ROUTER.get('/api/view/products/:key', PRODUCTS.searchProduct)
 ROUTER.get('/categorie/api/products/:key', PRODUCTS.categorieProduct)
 ROUTER.get('/api/count/products', PRODUCTS.countProducts)
 ROUTER.get('/report/stock/:key', PRODUCTS.getStockReport)
+ROUTER.get('/api/count/stock', PRODUCTS.countStockProducts)
+
 
 //API categories
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)
