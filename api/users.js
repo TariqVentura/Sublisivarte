@@ -308,14 +308,20 @@ exports.modifyUser = (req, res) => {
 }
 
 exports.getUserReport = (req, res) => {
+    //creamos constante de FILE_NAME y HTML como parametros para la dependencia
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_USUARIOS_' + req.params.key + '.pdf'
+    //ocupamos el axios para obtener los datos de la api
     AXIOS.get('http://localhost:443/api/users/' + req.params.key).then(function (detail) {
+        //declaramos arreglos vacios y un objeto donde guardaremos los datos de la api
         let obj = detail.data, active = [], inactive = [], banned = []
 
+        //navegamos en el objeto con un forEach
         obj.forEach(i => {
+            //almacenamos los datos del salto en un nuevo objeto
             let filter = { name: i.name, lastname: i.lastname, email: i.email, user: i.user, document: i.document }
 
+            //filtramos los datos y los almacenamos en los arreglos que creamos antes segun su estado
             if (i.status == 'active') {
                 active.push(filter)
             } else if (i.status == 'inactive') {
@@ -325,6 +331,7 @@ exports.getUserReport = (req, res) => {
             }
         })
 
+        //creamos otros objeto donde almacenamos los datos que enviaremos al reporte
         const DATA = {
             user: req.session.user,
             active: active,
@@ -332,6 +339,8 @@ exports.getUserReport = (req, res) => {
             banned: banned,
             date: FECHA.toISOString().substring(0, 10)
         }
+
+        //creamos la constante que enviaremos como parametro a la dependencia
         const DOCUMENT = {
             html: HMTL,
             data: {
@@ -341,6 +350,7 @@ exports.getUserReport = (req, res) => {
             type: ""
         }
 
+        //validamos que tipo de usuario sera el que tendra el reporte y abrimos el reporte en el navegador
         if (req.params.key == 'admin') {
             PDF.create(DOCUMENT, OPTIONS).then(p => {
                 res.redirect('/' + FILE_NAME)
