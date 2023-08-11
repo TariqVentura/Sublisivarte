@@ -60,6 +60,7 @@ ROUTER.get('/status/user/:id', USERS.statusUser)
 ROUTER.get('/api/get/users/:key', USERS.getUser)
 ROUTER.post('/api/modifyUser', USERS.modifyUser)
 ROUTER.get('/report/user/:key', USERS.getUserReport)
+ROUTER.get('/api/count/users', USERS.countUsers)
 
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)
@@ -101,6 +102,7 @@ ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
 ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
 ROUTER.get('/api/categories/:key', CATEGORIES.searchCategories)
 ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
+ROUTER.get('/api/count/categories', USERS.countUsers)
 
 //API record
 ROUTER.post('/api/record', RECORD.newRecord)
