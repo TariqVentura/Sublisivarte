@@ -111,7 +111,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
                 <div class="row my-3">
                     <table class="table table-bordered">
@@ -125,6 +125,8 @@
                                 <th scope="col">Imagen</th>
                                 <th scope="col">Actualizar</th>
                                 <th scope="col">Eliminar</th>
+                                <th scope="col">Graficos</th>
+                                <th scope="col">Reportes</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,7 +145,7 @@
                                         <!-- Button trigger modal -->
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#exampleModalStock<%= data._id %>">
-                                            Stock Actual: <%= data.stock  %>
+                                            Stock Actual: <%= data.stock %>
                                         </button>
 
                                         <!-- Modal -->
@@ -164,9 +166,12 @@
                                                                 </label>
                                                                 <input type="number" class="form-control" name="stock"
                                                                     id="" required step="0">
-                                                                <input type="number" value="<%= data.stock %>" required hidden name="prevStock">
-                                                                <input type="text" value="<%= data._id %>" hidden required name="id">
-                                                                <input type="text" value="<%= data.product %>" hidden required name="product">
+                                                                <input type="number" value="<%= data.stock %>" required
+                                                                    hidden name="prevStock">
+                                                                <input type="text" value="<%= data._id %>" hidden
+                                                                    required name="id">
+                                                                <input type="text" value="<%= data.product %>" hidden
+                                                                    required name="product">
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -320,6 +325,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning text-light" href="/report/categories/<% data.product %>" target="_blank">Reporte</a>
                                     </td>
                                 </tr>
                         </tbody>
