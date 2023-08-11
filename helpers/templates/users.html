@@ -36,7 +36,7 @@
         </div>
         <div style="margin-top: 2%;">
             <div style="width: 50%;">
-                <p style="font-size: medium; font-family: Arial, Helvetica, sans-serif;">Cliente: {{data.user}}</p>
+                <p style="font-size: medium; font-family: Arial, Helvetica, sans-serif;">Usuario: {{data.user}}</p>
             </div>            
         </div>
         <div class="row my-3">
@@ -47,19 +47,44 @@
                         <th scope="col">Apellido</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Usuario</th>
-                        <th scope="col">Nivel</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">Documento</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each data.obj}}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Usuarios activos</td>
+                    </tr>
+                    {{#each data.active}}
                     <tr>
                         <th>{{this.name}}</th>
                         <td>{{this.lastname}}</td>
                         <td>{{this.email}}</td>
                         <td>{{this.user}}</td>
-                        <td>{{this.role}}</td>
-                        <td>{{this.status}}</td>
+                        <td>{{this.document}}</td>
+                    </tr>
+                    {{/each}}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Usuarios inactivos</td>
+                    </tr>
+                    {{#each data.inactive}}
+                    <tr>
+                        <th>{{this.name}}</th>
+                        <td>{{this.lastname}}</td>
+                        <td>{{this.email}}</td>
+                        <td>{{this.user}}</td>
+                        <td>{{this.document}}</td>
+                    </tr>
+                    {{/each}}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Usuarios baneados</td>
+                    </tr>
+                    {{#each data.banned}}
+                    <tr>
+                        <th>{{this.name}}</th>
+                        <td>{{this.lastname}}</td>
+                        <td>{{this.email}}</td>
+                        <td>{{this.user}}</td>
+                        <td>{{this.document}}</td>
                     </tr>
                     {{/each}}
                 </tbody>

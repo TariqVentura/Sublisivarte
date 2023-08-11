@@ -9,6 +9,7 @@ const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/users')
+const OPTIONS_CLIENTS = require('../helpers/format/clients')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -191,7 +192,8 @@ exports.searchUsers = (req, res) => {
                 { lastname: { $regex: key } },
                 { email: { $regex: key } },
                 { user: { $regex: key } },
-                { document: { $regex: key } }
+                { document: { $regex: key } },
+                { role: { $regex: key } }
             ]
         }
     )
@@ -307,13 +309,27 @@ exports.modifyUser = (req, res) => {
 
 exports.getUserReport = (req, res) => {
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')
-    const FILE_NAME = 'REPORTE_USUARIOS' + '.pdf'
-    AXIOS.get('http://localhost:443/api/users/').then(function (detail) {
-        let obj = detail.data
+    const FILE_NAME = 'REPORTE_USUARIOS_' + req.params.key + '.pdf'
+    AXIOS.get('http://localhost:443/api/users/' + req.params.key).then(function (detail) {
+        let obj = detail.data, active = [], inactive = [], banned = []
+
+        obj.forEach(i => {
+            let filter = { name: i.name, lastname: i.lastname, email: i.email, user: i.user, document: i.document }
+
+            if (i.status == 'active') {
+                active.push(filter)
+            } else if (i.status == 'inactive') {
+                inactive.push(filter)
+            } else if (i.status == 'banned') {
+                banned.push(filter)
+            }
+        })
 
         const DATA = {
             user: req.session.user,
-            obj: obj,
+            active: active,
+            inactive: inactive,
+            banned: banned,
             date: FECHA.toISOString().substring(0, 10)
         }
         const DOCUMENT = {
@@ -324,10 +340,19 @@ exports.getUserReport = (req, res) => {
             path: "./docs/" + FILE_NAME,
             type: ""
         }
-        PDF.create(DOCUMENT, OPTIONS).then(p => {
-            res.redirect('/' + FILE_NAME)
-        }).catch(err => {
-            res.send(err)
-        })
+
+        if (req.params.key == 'admin') {
+            PDF.create(DOCUMENT, OPTIONS).then(p => {
+                res.redirect('/' + FILE_NAME)
+            }).catch(err => {
+                res.send(err)
+            })
+        } else {
+            PDF.create(DOCUMENT, OPTIONS_CLIENTS).then(p => {
+                res.redirect('/' + FILE_NAME)
+            }).catch(err => {
+                res.send(err)
+            })
+        }
     })
 }

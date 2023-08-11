@@ -49,8 +49,8 @@ CONNECTION()
  * Le definimos un tiempo de vida a la session
  */
 APP.use(SESSION({
-    key: 'user',
-    secret: 'zymuxtDKz4VcGMpx',
+    key: process.env.SECRET,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 180 * 60 * 1000 }
