@@ -1,36 +1,37 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-    // se ocupa axios para obtener la informacion de la api
+    //Se utiliza axios para obtener la informacion de la api
     axios.get('http://localhost:443/api/count/orders').then(function (orders) {
-        //declaramos la variables que ocuparemos
-        //alamcenamos los datos de la api en la variable data
+        //Declaramos la variables que utilizaremos
+        //Almacenamos los datos de la api en una variable data
         let data = orders.data, statusName = [], orderCount = [], order, status
 
-        //navegamos con un for dentro del objeto data
+        //Navegamos con un for dentro del objeto data
         for (let i = 0; i < data.length; i++) {
-            //obtenemos el atributo count del objeto
+            //Obtenemos el atributo count del objeto
             order = data[i].count
-            //enviamos el dato count al arreglo categorieCount
+            //Enviamos el dato count al arreglo orderCount
             orderCount.push(order)
-            //obtenemos el atrbuto _id del objeto
+            //Obtenemos el atrbuto _id del objeto
             status = data[i]._id
-            //enviamos el datp _id al arreglo categorieName
+            //Enviamos el dato _id al arreglo statusName
             statusName.push(status)
-        }   
+        }
 
         console.log(orderCount)
 
-        //declaramos una constante donde ubicaremos al canvas 
+        //Declaramos una constante donde ubicaremos el canvas 
         const ORDER_STATUS = document.getElementById('statusOrder')
 
-        //generamos el chart
+        //Creamo el grafico chart.js
         new Chart(ORDER_STATUS, {
             type: 'bar',
             data: {
-                //enviamos el arreglo categorieName que llenamos con el for
+                //Enviamos el arreglo categorieName que llenamos con el for
                 labels: statusName,
                 datasets: [{
-                    label: 'Cantidad de Ordenes por estado',
-                    //enviamos el arreglo categorieCount que llenamos con el for
+                    //Le damos un titulo al grafico
+                    label: 'Cantidad de ordenes por estado',
+                    //Enviamos el arreglo orderCount que llenamos con el for
                     data: orderCount,
                     borderWidth: 1
                 }]
