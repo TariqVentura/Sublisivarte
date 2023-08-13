@@ -212,13 +212,21 @@ exports.getStockReport = (req, res) => {
         })
     })
 }
+
 exports.countStockProducts = (req, res) => {
     //usamos un funcion de agregacion y filtramos a los productos que esten activos
-    PRODUCTS.find().then(data => {
+    PRODUCTS.aggregate([
+        { $match: { status: 'active' } }, // Filtrar productos activos
+        { 
+            $sort: { stock: -1 } // Ordenar de forma descendente por stock
+        },
+        {
+            $limit: 5 // Obtener los 5 productos con más stock
+        }
+    ]).then(data => {
         //enviamos la data
-        res.send(data.stock)
+        res.send(data)
     }).catch(err => {
         res.status(404).send(err)
-
     })
 }
