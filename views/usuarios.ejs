@@ -112,38 +112,37 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-3 d-flex justify-content-end">
-						<a href="/report/user/admin" class="btn btn-primary" target="_blank">Reporte de Administradores</a>
-					</div>
-					<div class="col-3 d-flex justify-content-end">
-						<a href="/report/user/client" class="btn btn-primary" target="_blank">Reporte de Clientes</a>
-					</div>
-				</div>
-				<div class="col-3">
-					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-						data-bs-target="#exampleModalCategorie">
-						Graficos
-					</button>
-		
-					<!-- Modal -->
-					<div class="modal fade" id="exampleModalCategorie" tabindex="-1" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="exampleModalLabel">Gráficos</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<p class="fs-4 text-center">Cantidad de usuarios por estado</p>
-									<canvas id="statusUser"></canvas>
+						<button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
+							data-bs-target="#exampleModalCategorie">
+							Graficos
+						</button>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModalCategorie" tabindex="-1"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">Gráficos</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p class="fs-4 text-center">Cantidad de usuarios por estado</p>
+										<canvas id="statusUser"></canvas>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="col-3 d-flex justify-content-end">
+						<a href="/report/user/admin" class="btn btn-primary" target="_blank">Reporte de
+							Administradores</a>
+					</div>
+					<div class="col-3 d-flex justify-content-end">
+						<a href="/report/user/client" class="btn btn-primary" target="_blank">Reporte de Clientes</a>
+					</div>
+
 				</div>
 				<!-- tabla para mostrar los usuarios del sistema -->
 				<div class="row my-3">
@@ -316,12 +315,12 @@
 			</div>
 			<% } %>
 
-			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-			<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-			
-			<input type="text" value="<%= confirmation %>" id="confirmation" hidden>
-			<input type="text" value="<%= mensaje %>" id="mensaje" hidden>
-			<input type="text" value="<%= icon %>" id="icon" hidden>
-			<script src="/search.js"></script>
-			<script src="/alerts.js"></script>
-			<script src="/users.js"></script>
+				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+				<input type="text" value="<%= confirmation %>" id="confirmation" hidden>
+				<input type="text" value="<%= mensaje %>" id="mensaje" hidden>
+				<input type="text" value="<%= icon %>" id="icon" hidden>
+				<script src="/search.js"></script>
+				<script src="/alerts.js"></script>
+				<script src="/users.js"></script>
