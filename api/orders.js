@@ -5,6 +5,7 @@ const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/invoice')
+const OPTIONS2 = require('../helpers/format/detail')
 
 exports.createOrder = (req, res) => {
     if (!req.session.user) {
@@ -237,4 +238,8 @@ exports.countOrdersDate = (req, res) => {
     }).catch(err => {
         res.status(404).send(err)
     })
+}
+
+exports.getReportDetail = (req, res ) =>{
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/detail.html'), 'utf-8')
 }

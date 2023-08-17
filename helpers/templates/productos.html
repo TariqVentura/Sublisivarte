@@ -44,8 +44,9 @@
                 <thead style="background-color: chocolate; color: azure;">
                     <tr>
                         <th scope="col">Producto</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>                        
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Stock</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,8 +55,9 @@
                     </tr>
                     {{#each data.active}}
                     <tr>
-                        <th>{{this.product}}</th>
-                        <td>${{this.price}}</td>
+                        <td>{{this.product}}</td>
+                        <td>{{this.price}}</td>
+                        <td>{{this.categorie}}</td>
                         <td>{{this.stock}}</td>
                     </tr>
                     {{/each}}
