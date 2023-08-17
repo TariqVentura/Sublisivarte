@@ -8,11 +8,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         //navegamos con un for dentro del objeto data
         for (let i = 0; i < data.length; i++) {
             //obtenemos el atributo count del objeto
-            count = data[i].count
+            count = data[i].stock
             //enviamos el dato count al arreglo categorieCount
             stockCount.push(count)
             //obtenemos el atrbuto _id del objeto
-            name = data[i]._id
+            name = data[i].product
             //enviamos el datp _id al arreglo categorieName
             productName.push(name)
         }
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 //enviamos el arreglo categorieName que llenamos con el for
                 labels: productName,
                 datasets: [{
-                    label: 'Cantidad de Productos por Categoria',
+                    label: 'Stock',
                     //enviamos el arreglo categorieCount que llenamos con el for
                     data: stockCount,
                     borderWidth: 1
