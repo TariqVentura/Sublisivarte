@@ -12,13 +12,13 @@
                     </nav>
                 </div>
                 <div class="row d-flex align-items-center justify-content-between my-3">
-                    <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
+                    <div class="col-4 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
                         <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png" alt="search--v1"
                             onclick="seacrhProduct()" />
                         <input class="form-control w-100 border-0" list="datalistOptions" id="seacrhProduct"
                             placeholder="buscar producto..." type="text" name="busqueda">
                     </div>
-                    <div class="col-3 d-flex justify-content-end">
+                    <div class="col-2 d-flex justify-content-end">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModalCategorie">
@@ -111,9 +111,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    
                     </div>
-                    <div class="col-3">
+                    <div class="col-2 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModalStock">
@@ -121,8 +120,8 @@
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModalStock" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModalStock" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -138,230 +137,210 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-2 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
+                        <a class="btn btn-warning text-light" href="/report/stock/" target="_blank">Reporte</a>
+                    </div>
                 </div>
-                <div class="row my-3">
-                    <table class="table table-bordered">
-                        <thead>
+
+
+            </div>
+            <div class="container">
+                 <div class="row my-3">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Actualizar</th>
+                            <th scope="col">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach((data)=> { %>
                             <tr>
-                                <th scope="col">Producto</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Imagen</th>
-                                <th scope="col">Actualizar</th>
-                                <th scope="col">Eliminar</th>
-                                <th scope="col">Graficos</th>
-                                <th scope="col">Reportes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% products.forEach((data)=> { %>
-                                <tr>
-                                    <td>
-                                        <%= data.product %>
-                                    </td>
-                                    <td>
-                                        <%= data.price %>
-                                    </td>
-                                    <td>
-                                        <%= data.categorie %>
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalStock<%= data._id %>">
-                                            Stock Actual: <%= data.stock %>
-                                        </button>
+                                <td>
+                                    <%= data.product %>
+                                </td>
+                                <td>
+                                    <%= data.price %>
+                                </td>
+                                <td>
+                                    <%= data.categorie %>
+                                </td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalStock<%= data._id %>">
+                                        Stock Actual: <%= data.stock %>
+                                    </button>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModalStock<%= data._id %>" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Stock
-                                                            Producto</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <form action="/api/record" method="post">
-                                                        <div class="modal-body">
-                                                            <div class="col-8 d-flex flex-row align-items-center">
-                                                                <label for="" class="form-label me-2">Stock:
-                                                                </label>
-                                                                <input type="number" class="form-control" name="stock"
-                                                                    id="" required step="0">
-                                                                <input type="number" value="<%= data.stock %>" required
-                                                                    hidden name="prevStock">
-                                                                <input type="text" value="<%= data._id %>" hidden
-                                                                    required name="id">
-                                                                <input type="text" value="<%= data.product %>" hidden
-                                                                    required name="product">
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cerrar</button>
-                                                            <button type="submit"
-                                                                class="btn btn-primary">Actualizar</button>
-                                                        </div>
-                                                    </form>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalStock<%= data._id %>" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Stock
+                                                        Producto</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <%= data.status %>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-primary"> <a href="/images/<%= data.image[0] %>"
-                                                class="text-dark" target="_blank">Ver imagen</a></button>
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalUpdate<%= data._id %>">
-                                            Actualizar
-                                        </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModalUpdate<%= data._id %>" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar
-                                                            Producto</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <form action="/update/products/" method="post">
-                                                        <div class="modal-body">
-                                                            <div class="row my-3">
-                                                                <div class="col-8 d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Producto:
-                                                                    </label>
-                                                                    <input type="text" class="form-control"
-                                                                        name="product" id="" required
-                                                                        value="<%= data.product %>">
-                                                                </div>
-                                                                <div class="col-4 d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Precio:
-                                                                    </label>
-                                                                    <input type="number" class="form-control"
-                                                                        name="price" id="" required min="1" step="0.01"
-                                                                        value="<%= data.price %>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="row my-3">
-                                                                <div class="col-8 d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Categoria:
-                                                                    </label>
-                                                                    <select class="form-select" id="inputGroupSelect01"
-                                                                        name="categorie" required>
-                                                                        <option value="<%= data.categorie %>" selected>
-                                                                            <%= data.categorie %>
-                                                                        </option>
-                                                                        <% categories.forEach((data)=> { %>
-                                                                            <% if(data.status=='active' ) { %>
-                                                                                <option value="<%= data.categorie %>">
-                                                                                    <%= data.categorie %>
-                                                                                </option>
-                                                                                <% } %>
-                                                                                    <% }) %>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row my-3">
-                                                                <div class="col d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Imagen:
-                                                                    </label>
-                                                                    <input type="file" class="form-control"
-                                                                        id="inputGroupFile01" name="image" multiple>
-                                                                    <input type="text" value="<%= data._id %>" name="id"
-                                                                        hidden>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cerrar</button>
-                                                            <button type="submit"
-                                                                class="btn btn-primary">Actualizar</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModaldelete<%= data._id %>">
-                                            Eliminar
-                                        </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModaldelete<%= data._id %>" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmacion
-                                                        </h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
+                                                <form action="/api/record" method="post">
                                                     <div class="modal-body">
-                                                        ¿Esta seguro que desea eliminar el producto <%= data.product %>?
+                                                        <div class="col-8 d-flex flex-row align-items-center">
+                                                            <label for="" class="form-label me-2">Stock:
+                                                            </label>
+                                                            <input type="number" class="form-control" name="stock" id=""
+                                                                required step="0">
+                                                            <input type="number" value="<%= data.stock %>" required
+                                                                hidden name="prevStock">
+                                                            <input type="text" value="<%= data._id %>" hidden required
+                                                                name="id">
+                                                            <input type="text" value="<%= data.product %>" hidden
+                                                                required name="product">
+                                                        </div>
+                                                        <br>
+                                                        <a class="btn btn-warning text-light"
+                                                            href="/report/stock/<%=  data.product %>"
+                                                            target="_blank">Reporte</a>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Cerrar</button>
-                                                        <button type="button" class="btn btn-danger"><a
-                                                                href="/delete/products/<%= data._id %>"
-                                                                class="text-light">Eliminar</a></button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary">Actualizar</button>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
-                                    </td>
+                                    </div>
+                                </td>
+                                <td>
+                                    <%= data.status %>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary"> <a href="/images/<%= data.image[0] %>"
+                                            class="text-dark" target="_blank">Ver imagen</a></button>
+                                </td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalUpdate<%= data._id %>">
+                                        Actualizar
+                                    </button>
 
-                                    <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalCategorie">
-                                            Graficos
-                                        </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModalCategorie" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Graficos
-                                                        </h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalUpdate<%= data._id %>" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar
+                                                        Producto</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form action="/update/products/" method="post">
                                                     <div class="modal-body">
-                                                        <p class="fs-4 text-center">Cantidad de pedidos por estado</p>
-                                                        <canvas id="statusOrder"></canvas>
+                                                        <div class="row my-3">
+                                                            <div class="col-8 d-flex flex-row align-items-center">
+                                                                <label for="" class="form-label me-2">Producto:
+                                                                </label>
+                                                                <input type="text" class="form-control" name="product"
+                                                                    id="" required value="<%= data.product %>">
+                                                            </div>
+                                                            <div class="col-4 d-flex flex-row align-items-center">
+                                                                <label for="" class="form-label me-2">Precio:
+                                                                </label>
+                                                                <input type="number" class="form-control" name="price"
+                                                                    id="" required min="1" step="0.01"
+                                                                    value="<%= data.price %>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row my-3">
+                                                            <div class="col-8 d-flex flex-row align-items-center">
+                                                                <label for="" class="form-label me-2">Categoria:
+                                                                </label>
+                                                                <select class="form-select" id="inputGroupSelect01"
+                                                                    name="categorie" required>
+                                                                    <option value="<%= data.categorie %>" selected>
+                                                                        <%= data.categorie %>
+                                                                    </option>
+                                                                    <% categories.forEach((data)=> { %>
+                                                                        <% if(data.status=='active' ) { %>
+                                                                            <option value="<%= data.categorie %>">
+                                                                                <%= data.categorie %>
+                                                                            </option>
+                                                                            <% } %>
+                                                                                <% }) %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row my-3">
+                                                            <div class="col d-flex flex-row align-items-center">
+                                                                <label for="" class="form-label me-2">Imagen:
+                                                                </label>
+                                                                <input type="file" class="form-control"
+                                                                    id="inputGroupFile01" name="image" multiple>
+                                                                <input type="text" value="<%= data._id %>" name="id"
+                                                                    hidden>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cerrar</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary">Actualizar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModaldelete<%= data._id %>">
+                                        Eliminar
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModaldelete<%= data._id %>" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmacion
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ¿Esta seguro que desea eliminar el producto <%= data.product %>?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="button" class="btn btn-danger"><a
+                                                            href="/delete/products/<%= data._id %>"
+                                                            class="text-light">Eliminar</a></button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-warning text-light" href="/report/stock/<%=  data.product %>" target="_blank">Reporte</a>
-                                    </td>
-
-                                </tr>
-                        </tbody>
-                        <% }) %>
-                    </table>
-                </div>
+                                    </div>
+                                </td>
+                            </tr>
+                    </tbody>
+                    <% }) %>
+                </table>
+            </div>
+            </div>
+           
             </div>
             <% } %>
 
