@@ -1,99 +1,135 @@
 <% if(user==false){ %>
     <%- include('include/error') %>
-<% } else { %>
-    <div class="container">
-        <div class="row my-3">
-            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
-                aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/administracion" class="text-dark">Inicio</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="row d-flex align-items-center justify-content-between my-3">
-            <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
-                <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
-                    alt="search--v1" onclick="searchOrders()" />
-                <input class="form-control w-100 border-0" list="datalistOptions" id="seacrhOrder"
-                    placeholder="buscar producto..." type="text" name="busqueda">
-            </div>
-        </div>
-        <div class="col-3">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#exampleModalCategorie">
-                Graficos
-            </button>
+        <% } else { %>
+            <div class="container">
+                <div class="row my-3">
+                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+                        aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/administracion" class="text-dark">Inicio</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="row d-flex align-items-center justify-content-between my-3">
+                    <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
+                        <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png" alt="search--v1"
+                            onclick="searchOrders()" />
+                        <input class="form-control w-100 border-0" list="datalistOptions" id="seacrhOrder"
+                            placeholder="buscar producto..." type="text" name="busqueda">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalCategorie">
+                        Graficos
+                    </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCategorie" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Graficos</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCategorie" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Graficos</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="fs-4 text-center">Cantidad de pedidos por estado</p>
+                                    <canvas id="statusOrder"></canvas>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <p class="fs-4 text-center">Cantidad de pedidos por estado</p>
-                            <canvas id="statusOrder"></canvas>
+                    </div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Ver pedidos
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Pedidos del cliente</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="/api/orders.js" method="post">
+                                    <div class="modal-body">
+                                        <div class="row my-3">
+                                            <div class="col-12 d-flex flex-row align-items-center">
+                                                <label for="" class="form-label me-2">Cliente: </label>
+                                                <input type="text" class="form-control" name="product" id="" required>
+                                                <button type="submit" class="btn btn-primary ms-3">Buscar</button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <canvas id="statusOrder"></canvas>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row my-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Pedido</th>
+                                <th scope="col">Fecha del pedido</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Estado del pedido</th>
+                                <th scope="col">Informacion</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% orders.forEach((data)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= data.name %>
+                                    </td>
+                                    <td>
+                                        <%= data.date %>
+                                    </td>
+                                    <td>
+                                        <%= data.client %>
+                                    </td>
+                                    <td>
+                                        <%= data.status %>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-info"><a href="/pedidos/detalles/<%= data._id %>"
+                                                class="text-light">Detalles</a></button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger"><a href="/cancel/orders/<%= data._id %>"
+                                                class="text-light">Cancelar pedido</a></button>
+                                        <button class="btn btn-danger"><a href="/delete/orders/<%= data._id %>"
+                                                class="text-light">Cancelar</a></button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                        <% }) %>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="row my-3">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Pedido</th>
-                        <th scope="col">Fecha del pedido</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Estado del pedido</th>
-                        <th scope="col">Informacion</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% orders.forEach((data)=> { %>
-                        <tr>
-                            <td>
-                                <%= data.name %>
-                            </td>
-                            <td>
-                                <%= data.date %>
-                            </td>
-                            <td>
-                                <%= data.client %>
-                            </td>
-                            <td>
-                                <%= data.status %>
-                            </td>
-                            <td>
-                                <button class="btn btn-info"><a href="/pedidos/detalles/<%= data._id %>" class="text-light">Detalles</a></button>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger"><a href="/cancel/orders/<%= data._id %>" class="text-light">Cancelar pedido</a></button>
-                                <button class="btn btn-danger"><a href="/delete/orders/<%= data._id %>" class="text-light">Cancelar</a></button>
-                            </td>
-                        </tr>
-                </tbody>
-                <% }) %>
-            </table>
-        </div>
-    </div>
-<% } %>
+            <% } %>
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 
-<input type="text" value="<%= confirmation %>" id="confirmation" hidden>
-<input type="text" value="<%= mensaje %>" id="mensaje" hidden>
-<input type="text" value="<%= icon %>" id="icon" hidden>
+                <input type="text" value="<%= confirmation %>" id="confirmation" hidden>
+                <input type="text" value="<%= mensaje %>" id="mensaje" hidden>
+                <input type="text" value="<%= icon %>" id="icon" hidden>
 
-<script src="/alerts.js"></script>
-<script src="/search.js"></script>
-<script src="/orders.js"></script>
+                <script src="/alerts.js"></script>
+                <script src="/search.js"></script>
+                <script src="/orders.js"></script>
