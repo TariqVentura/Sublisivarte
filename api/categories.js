@@ -180,6 +180,7 @@ exports.getReport = (req, res) => {
             path: "./docs/" + FILE_NAME,
             type: ""
         }
+        
         PDF.create(DOCUMENT, OPTIONS).then(p => {
             //redirecciona al documento creato
             res.redirect('/' + FILE_NAME)
