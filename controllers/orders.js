@@ -51,61 +51,71 @@ const BUSCAR_ORDEN = document.getElementById('btn-buscar')
 
 BUSCAR_ORDEN.addEventListener('click', function () {
 
-    //vaciamos el canvas
-    document.getElementById('container-canvas').innerHTML = ''
+    const PARAM = document.getElementById('cliente-pedido').value
 
-    //creamos el canvas
-    document.getElementById('container-canvas').innerHTML = '<canvas id="clientOrder"></canvas>'
+    if (!PARAM.trim()) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'No se permiten campos vacios',
+        })
+    } else {
+        //vaciamos el canvas
+        document.getElementById('container-canvas').innerHTML = ''
 
-    //Se utiliza axios para obtener la informacion de la api
-    axios.get('http://localhost:443/api/count/orders/' + document.getElementById('cliente-pedido').value).then(function (data) {
-        //Almacenamos los datos de la api en una variable
-        let obj = data.data
+        //creamos el canvas
+        document.getElementById('container-canvas').innerHTML = '<canvas id="clientOrder"></canvas>'
 
-        //Creamos arreglos para almacenar los estados y el numero de pedidos
-        let status = [], count = []
+        //Se utiliza axios para obtener la informacion de la api
+        axios.get('http://localhost:443/api/count/orders/' + PARAM).then(function (data) {
+            //Almacenamos los datos de la api en una variable
+            let obj = data.data
 
-        //Creamos variables para almacenar el dato recorrido en el for
-        let newStatus, newCount
+            //Creamos arreglos para almacenar los estados y el numero de pedidos
+            let status = [], count = []
 
-        //utilizamos un for para recorrer en los datos del objeto
-        for (let i = 0; i < obj.length; i++) {
-            //alamcenamos el estado de la poscicion i dentro de una variable
-            newStatus = obj[i]._id
+            //Creamos variables para almacenar el dato recorrido en el for
+            let newStatus, newCount
 
-            //enviamos el dato del estado al arreglo
-            status.push(newStatus)
+            //utilizamos un for para recorrer en los datos del objeto
+            for (let i = 0; i < obj.length; i++) {
+                //alamcenamos el estado de la poscicion i dentro de una variable
+                newStatus = obj[i]._id
 
-            //almacenamos la cantidad de pedidos en la posicion i en una variable
-            newCount = obj[i].count
+                //enviamos el dato del estado al arreglo
+                status.push(newStatus)
 
-            //enviamos la cantidad de pedidos al arreglo
-            count.push(newCount)
-        }
+                //almacenamos la cantidad de pedidos en la posicion i en una variable
+                newCount = obj[i].count
 
-        const ORDER_CLIENT = document.getElementById('clientOrder')
+                //enviamos la cantidad de pedidos al arreglo
+                count.push(newCount)
+            }
 
-        //Creamo el grafico chart.js
-        new Chart(ORDER_CLIENT, {
-            type: 'bar',
-            data: {
-                //Enviamos el arreglo categorieName que llenamos con el for
-                labels: status,
-                datasets: [{
-                    //Le damos un titulo al grafico
-                    label: 'Cantidad de pedidos por estado',
-                    //Enviamos el arreglo orderCount que llenamos con el for
-                    data: count,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            const ORDER_CLIENT = document.getElementById('clientOrder')
+
+            //Creamo el grafico chart.js
+            new Chart(ORDER_CLIENT, {
+                type: 'bar',
+                data: {
+                    //Enviamos el arreglo categorieName que llenamos con el for
+                    labels: status,
+                    datasets: [{
+                        //Le damos un titulo al grafico
+                        label: 'Cantidad de pedidos por estado',
+                        //Enviamos el arreglo orderCount que llenamos con el for
+                        data: count,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
+            })
         })
-    })
+    }
 })
