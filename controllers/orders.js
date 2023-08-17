@@ -50,10 +50,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 const BUSCAR_ORDEN = document.getElementById('btn-buscar')
 
 BUSCAR_ORDEN.addEventListener('click', function () {
-
+    //almacenamos los datos del buscador
     const PARAM = document.getElementById('cliente-pedido').value
 
+    //validamos la existencia de datos
     if (!PARAM.trim()) {
+        //sino hay datos en el buscador se envia una alerta
         Swal.fire({
             icon: 'error',
             title: 'Error!',
