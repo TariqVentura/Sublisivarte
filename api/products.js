@@ -7,7 +7,7 @@ const FECHA = new Date()
 const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
-const OPTIONS = require('../helpers/format/invoice')
+const OPTIONS = require('../helpers/format/product')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -234,21 +234,20 @@ exports.countStockProducts = (req, res) => {
 
 exports.getReportProducts = (req, res) => {
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/productos.html'), 'utf-8')
-    const FILE_NAME = 'REPORTE_DE_PRODUCTOS.pdf'
+    const FILE_NAME = 'REPORTE_DE_PRODUCTOS_.pdf'
     AXIOS.get('http://localhost:443/api/products/').then(function (product) {
         let obj = product.data , active = [], inactive = [], NoStock = []
         obj.forEach(i => {
-            let filter = { product: i.product, price: i.price, categorie: i.categorie, image: i.image, stock: i.stock }
+            let filter = { product: i.product, price: i.price, categorie: i.categorie, stock: i.stock }
             if (i.status == 'active') {
                 active.push(filter)
             } else if (i.status == 'inactive') {
-                active.push(filter)
+                inactive.push(filter)
             } else if (i.status == 'No Stock') {
-                active.push(filter)
+                NoStock.push(filter)
             }
 
             const DATA = {
-
                 user: req.session.user,
                 active: active,
                 inactive: inactive,
