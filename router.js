@@ -69,6 +69,7 @@ ROUTER.get('/api/comments', COMMENTS.findComments)
 ROUTER.get('/delete/comments/:id', COMMENTS.deleteComments)
 ROUTER.get('/api/comments/:key', COMMENTS.serchComments)
 ROUTER.get('/status/comment/:id/:status', COMMENTS.commentStatus)
+ROUTER.get('/api/count/comments/:key', COMMENTS.countCommentsProduct)
 
 //API orders
 ROUTER.post('/api/orders', ORDERS.createOrder)
