@@ -58,20 +58,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <form action="/api/orders.js" method="post">
-                                    <div class="modal-body">
-                                        <div class="row my-3">
-                                            <div class="col-12 d-flex flex-row align-items-center">
-                                                <label for="" class="form-label me-2">Cliente: </label>
-                                                <input type="text" class="form-control" name="product" id="" required>
-                                                <button type="submit" class="btn btn-primary ms-3">Buscar</button>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <canvas id="statusOrder"></canvas>
-                                        </div>
+                                <div class="row my-3">
+                                    <div class="col-12 d-flex flex-row align-items-center">
+                                        <label for="" class="form-label me-2">Cliente: </label>
+                                        <input type="text" class="form-control" name="product" id="cliente-pedido" required>
+                                        <button type="button" class="btn btn-primary ms-3" id="btn-buscar">Buscar</button>
                                     </div>
-                                </form>
+                                </div>
+                                <div id="container-canvas"></div>
                             </div>
                         </div>
                     </div>
