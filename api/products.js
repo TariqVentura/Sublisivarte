@@ -218,7 +218,7 @@ exports.countStockProducts = (req, res) => {
     //usamos un funcion de agregacion y filtramos a los productos que esten activos
     PRODUCTS.aggregate([
         { $match: { status: 'active' } }, // Filtrar productos activos
-        { 
+        {
             $sort: { stock: -1 } // Ordenar de forma descendente por stock
         },
         {
@@ -229,5 +229,47 @@ exports.countStockProducts = (req, res) => {
         res.send(data)
     }).catch(err => {
         res.status(404).send(err)
+    })
+}
+
+exports.getReportProducts = (req, res) => {
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/productos.html'), 'utf-8')
+    const FILE_NAME = 'REPORTE_DE_PRODUCTOS.pdf'
+    AXIOS.get('http://localhost:443/api/products/').then(function (product) {
+        let obj = product.data , active = [], inactive = [], NoStock = []
+        obj.forEach(i => {
+            let filter = { product: i.product, price: i.price, categorie: i.categorie, image: i.image, stock: i.stock }
+            if (i.status == 'active') {
+                active.push(filter)
+            } else if (i.status == 'inactive') {
+                active.push(filter)
+            } else if (i.status == 'No Stock') {
+                active.push(filter)
+            }
+
+            const DATA = {
+
+                user: req.session.user,
+                active: active,
+                inactive: inactive,
+                NoStock: NoStock,
+                date: FECHA.toISOString().substring(0, 10)
+            }
+
+            const DOCUMENT = {
+                html: HMTL,
+                data: {
+                    data: DATA
+                },
+                path: "./docs/" + FILE_NAME,
+                type: ""
+            }
+
+            PDF.create(DOCUMENT, OPTIONS).then(p => {
+                res.redirect('/' + FILE_NAME)
+            }).catch(err => {
+                res.send(err)
+            })
+        })
     })
 }
