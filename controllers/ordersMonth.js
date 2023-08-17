@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         console.log(ordersCount)
 
         //Declaramos una constante donde ubicaremos el canvas 
-        const ORDER_STATUS = document.getElementById('statusOrder')
+        const ORDERS_MONTH = document.getElementById('monthOrder')
 
         //Creamo el grafico chart.js
-        new Chart(ORDER_STATUS, {
+        new Chart(ORDERS_MONTH, {
             type: 'bar',
             data: {
                 //Enviamos el arreglo categorieName que llenamos con el for
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     //Le damos un titulo al grafico
                     label: 'Cantidad de ordenes por estado',
                     //Enviamos el arreglo orderCount que llenamos con el for
-                    data: orderCount,
+                    data: ordersCount,
                     borderWidth: 1
                 }]
             },
@@ -89,7 +89,7 @@ BUSCAR_ORDEN.addEventListener('click', function () {
 
             //Creamo el grafico chart.js
             new Chart(ORDER_CLIENT, {
-                type: 'bar',
+                type: 'line',
                 data: {
                     //Enviamos el arreglo categorieName que llenamos con el for
                     labels: status,

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function (event) {
+    
     //Se utiliza axios para obtener la informacion de la api
     axios.get('http://localhost:443/api/count/orders').then(function (orders) {
         //Declaramos la variables que utilizaremos
