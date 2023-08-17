@@ -4,7 +4,7 @@ module.exports = {
     border: '10mm',
     header: {
         height: '15mm',
-        contents: '<h4 style=" color: red;font-size:20;font-weight:800;text-align:center;">PRODUCTOS DE CATEGORÍA</h4>'
+        contents: '<h4 style=" color: red;font-size:20;font-weight:800;text-align:center;">Reporte de cambios de Stock</h4>'
     },
     footer: {
         height: '20mm',
