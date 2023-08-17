@@ -184,7 +184,7 @@ exports.countProducts = (req, res) => {
 
 
 exports.getStockReport = (req, res) => {
-    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/products.html'), 'utf-8')
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/report.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/record/' + req.params.key).then(function (stock) {
 
@@ -193,7 +193,8 @@ exports.getStockReport = (req, res) => {
         const DATA = {
             user: req.session.user,
             obj: obj,
-            date: data.date
+            date: FECHA.toISOString().substring(0, 10),
+            product: req.params.key
         }
 
         const DOCUMENT = {
