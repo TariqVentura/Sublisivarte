@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-    
+
     //Se utiliza axios para obtener la informacion de la api
     axios.get('http://localhost:443/api/count/orders').then(function (orders) {
         //Declaramos la variables que utilizaremos
@@ -119,6 +119,72 @@ BUSCAR_ORDEN.addEventListener('click', function () {
                     }
                 }
             })
+        })
+    }
+})
+
+const BUSCAR_FECHA = document.getElementById('btn-busqueda')
+
+BUSCAR_FECHA.addEventListener('submit', function (e) {
+    e.preventDefault()
+
+    let fecha = document.getElementById('fecha').value
+
+    if (!fecha.trim()) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ingrese una fecha!',
+        })
+
+    } else {
+        document.getElementById('canvas').innerHTML = ''
+
+        axios.get('http://localhost:443/api/count/date/' + fecha).then(function (date) {
+            let obj = date.data
+            if (!obj.length) {
+                document.getElementById('canvas').innerHTML = `<div class="alert alert-warning" role="alert">
+                No se realizarón pedidos en esta fecha
+              </div>`
+            } else {
+                let statusArray = [], countArray = []
+
+                let status, count
+
+                for (let i = 0; i < obj.length; i++) {
+                    status = obj[i]._id
+                    count = obj[i].count
+
+                    statusArray.push(status)
+                    countArray.push(count)
+                }
+
+                document.getElementById('canvas').innerHTML = '<canvas id="monthOrder"></canvas>'
+
+                const MONTH_ORDER = document.getElementById('monthOrder')
+
+                new Chart(MONTH_ORDER, {
+                    type: 'pie',
+                    data: {
+                        //Enviamos el arreglo categorieName que llenamos con el for
+                        labels: statusArray,
+                        datasets: [{
+                            //Le damos un titulo al grafico
+                            label: 'Pedidos por dia',
+                            //Enviamos el arreglo orderCount que llenamos con el for
+                            data: countArray,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            }
         })
     }
 })

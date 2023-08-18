@@ -270,3 +270,24 @@ exports.getReportDetail = (req, res) => {
         })
     })
 }
+
+exports.dateOrders = (req, res) => {
+    const FECHA = req.params.key
+ORDERS.aggregate().match({
+    "$or": [
+        { date: { $regex: FECHA } }
+    ]
+}).group({
+        //Agrupamos las ordenes por estado y contamos cuantos ordene tiene cada estado
+        _id: "$status",
+        count: { $count: {} }
+    }).then(data => {
+        if (!data) {
+            res.send('error')
+        } else {
+            res.send(data)
+        }
+    }).catch(err => {
+        res.send(err)
+    })
+}
