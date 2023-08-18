@@ -18,7 +18,7 @@
 						<input class="form-control w-100 border-0" list="datalistOptions" id="seacrhUser"
 							placeholder="Buscar usuario..." type="text" name="busqueda">
 					</div>
-					<div class="col-3 d-flex justify-content-end">
+					<div class="col-6 d-flex justify-content-end">
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-dark" data-bs-toggle="modal"
 							data-bs-target="#exampleModal">
@@ -96,9 +96,9 @@
 													<label for="" class="form-label">Estado</label>
 													<select class="form-select" id="inputGroupSelect01" name="status"
 														required>
-														<option>active</option>
-														<option>inactive</option>
-														<option>banned</option>
+														<option>Activo</option>
+														<option>Inactivo</option>
+														<option>Baneado</option>
 													</select>
 												</div>
 											</div>
@@ -134,15 +134,13 @@
 								</div>
 							</div>
 						</div>
+						<button type="button" href="/report/user/admin" class="btn btn-primary ms-3" target="_blank">
+							Reporte de Administradores
+						</button>
+						<button type="button" href="/report/user/client" class="btn btn-primary ms-3" target="_blank">
+							Reporte de clientes
+						</button>
 					</div>
-					<div class="col-3 d-flex justify-content-end">
-						<a href="/report/user/admin" class="btn btn-primary" target="_blank">Reporte de
-							Administradores</a>
-					</div>
-					<div class="col-3 d-flex justify-content-end">
-						<a href="/report/user/client" class="btn btn-primary" target="_blank">Reporte de Clientes</a>
-					</div>
-
 				</div>
 				<!-- tabla para mostrar los usuarios del sistema -->
 				<div class="row my-3">
