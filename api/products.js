@@ -254,7 +254,9 @@ exports.reportProducts = (req, res) => {
 
         const DATA = {
             user: req.session.user,
-            obj: obj,
+            active: active,
+            inactive: inactive,
+            NoStock: NoStock,
             date: newDate
         }
 
