@@ -337,7 +337,7 @@ exports.getUserReport = (req, res) => {
             active: active,
             inactive: inactive,
             banned: banned,
-            date: FECHA.toISOString().substring(0, 10)
+            date: FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
         }
 
         //creamos la constante que enviaremos como parametro a la dependencia
