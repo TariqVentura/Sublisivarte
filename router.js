@@ -80,6 +80,8 @@ ROUTER.get('/cancel/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/delete/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/report/invoice/:key', ORDERS.getInvoice)
 
+ROUTER.get('report/detail/:key', ORDERS.getReportDetail)
+ROUTER.get('/api/count/date/:key', ORDERS.dateOrders)
 ROUTER.get('/api/count/orders', ORDERS.countOrders)
 ROUTER.get('/api/count/orders/:key', ORDERS.countOrdersClient)
 ROUTER.get('/api/count/ordersMonth/:key', ORDERS.countOrdersDate)

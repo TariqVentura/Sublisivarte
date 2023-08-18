@@ -62,14 +62,23 @@
                                 </div>
                                 <div class="row my-3">
                                     <div class="col-10 d-flex flex-row align-items-center ms-4">
+<<<<<<< HEAD
                                         <label for="" class="form-label me-2">Fecha: </label>
                                         <input type="date" placeholder="yyyy-mm-dd" value="" min="2022-01-01"
                                             id="fecha">
                                         <button type="button" class="btn btn-primary ms-3"
                                             id="btn-busqueda">Buscar</button>
+=======
+                                        <form id="btn-busqueda">
+                                            <label for="fecha" class="form-label me-2">Fecha: </label>
+                                            <input type="date" placeholder="yyyy-mm-dd" value="" min="2022-01-01"
+                                                id="fecha" required>
+                                            <button type="submit" class="btn btn-primary ms-3">Buscar</button>
+                                        </form>
+>>>>>>> afe9c04e8a7bbe2b07c29c8d71ea239f6f278632
                                     </div>
                                 </div>
-                                <canvas id="monthOrder"></canvas>
+                                <div id="canvas"> </div>
                             </div>
                         </div>
                     </div>
@@ -131,11 +140,14 @@
                                         <%= data.status %>
                                     </td>
                                     <td>
+
                                         <!-- <button class="btn btn-info"><a href="/pedidos/detalles/<%= data._id %>"
                                                 class="text-light">Detalles</a></button> -->
                                         <a class="btn btn-warning text-light" href="report/detail/<%= data._id %>/<%= data.client %>"
                                             target="_blank">Reporte</a>
 
+                                        <button class="btn btn-info"><a href="/pedidos/detalles/<%= data._id %>"
+                                                class="text-light">Detalles</a></button>
                                     </td>
                                     <td>
                                         <button class="btn btn-danger"><a href="/cancel/orders/<%= data._id %>"
