@@ -5,7 +5,7 @@ const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/invoice')
-const OPTIONS2 = require('../helpers/format/detail')
+
 
 exports.createOrder = (req, res) => {
     if (!req.session.user) {
@@ -240,33 +240,3 @@ exports.countOrdersDate = (req, res) => {
     })
 }
 
-exports.getReportDetail = (req, res) => {
-    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/detail.html'), 'utf-8')
-    const FILE_NAME = 'REPORTE_DE_PRODUCTOS_' + req.params.key + '.pdf'
-    AXIOS.get('http://localhost:443/api/details/').then(function (detail) {
-        let obj = detail.data
-        let newDate = FECHA.toISOString().substring(0, 10)
-
-        const DATA = {
-            user: req.session.user,
-            obj: obj,
-            newDate: newDate
-        }
-
-        const DOCUMENT = {
-            html: HMTL,
-            data: {
-                data: DATA
-            },
-            path: "./docs/" + FILE_NAME,
-            type: ""
-        }
-
-        PDF.create(DOCUMENT, OPTIONS2).then(p => {
-            //redirecciona al documento creato
-            res.redirect('/' + FILE_NAME)
-        }).catch(err => {
-            res.send(err)
-        })
-    })
-}

@@ -79,7 +79,6 @@ ROUTER.get('/api/orders', ORDERS.getOrders)
 ROUTER.get('/cancel/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/delete/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/report/invoice/:key', ORDERS.getInvoice)
-ROUTER.get('report/detail/:key', ORDERS.getReportDetail)
 
 ROUTER.get('/api/count/orders', ORDERS.countOrders)
 ROUTER.get('/api/count/orders/:key', ORDERS.countOrdersClient)
@@ -90,6 +89,7 @@ ROUTER.get('/api/count/ordersMonth/:key', ORDERS.countOrdersDate)
 ROUTER.post('/api/details', DETAILS.createDetail)
 ROUTER.get('/delete/details/:key/:stock/:id', DETAILS.cancelDetail)
 ROUTER.get('/api/details/:id', DETAILS.getDetails)
+ROUTER.get('/report/detail/:key/:client', DETAILS.getReportDetail)
 
 //API products
 ROUTER.post('/api/products', PRODUCTS.createProduct )
