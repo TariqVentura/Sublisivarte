@@ -25,7 +25,7 @@
                         <td style="width: 50%; text-align: end;">
                             <div style="margin-right: 35px;">
                                 <p>Sublisivarte</p>
-                                <p>Apparecchio@gmail.com</p>
+                                <p>Sublisivarte@gmail.com</p>
                                 <p>San Salvador, El Salvador</p>
                                 <p>{{data.newDate}}</p>
                             </div>
@@ -44,8 +44,7 @@
                 <thead style="background-color: chocolate; color: azure;">
                     <tr>
                         <th scope="col">Producto</th>
-                        <th scope="col">Precio</th>                        
-                        <th scope="col">Categoria</th>
+                        <th scope="col">Precio</th>                                                
                         <th scope="col">Stock</th>
                     </tr>
                 </thead>
@@ -55,9 +54,8 @@
                     </tr>
                     {{#each data.active}}
                     <tr>
-                        <td>{{this.product}}</td>
+                        <td>{{this.product}}</td>                        
                         <td>{{this.price}}</td>
-                        <td>{{this.categorie}}</td>
                         <td>{{this.stock}}</td>
                     </tr>
                     {{/each}}
@@ -66,8 +64,8 @@
                     </tr>
                     {{#each data.inactive}}
                     <tr>
-                        <th>{{this.product}}</th>
-                        <td>${{this.price}}</td>
+                        <td>{{this.product}}</td>                        
+                        <td>{{this.price}}</td>
                         <td>{{this.stock}}</td>
                     </tr>
                     {{/each}}
@@ -76,8 +74,8 @@
                     </tr>
                     {{#each data.NoStock}}
                     <tr>
-                        <th>{{this.product}}</th>
-                        <td>${{this.price}}</td>
+                        <td>{{this.product}}</td>                        
+                        <td>{{this.price}}</td>
                         <td>{{this.stock}}</td>
                     </tr>
                     {{/each}}

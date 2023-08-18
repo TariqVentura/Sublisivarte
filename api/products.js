@@ -8,6 +8,7 @@ const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/product')
+const OPTIONS2 = require('../helpers/format/stock')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -184,7 +185,7 @@ exports.countProducts = (req, res) => {
 
 
 exports.getStockReport = (req, res) => {
-    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/report.html'), 'utf-8')
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/stock.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/record/' + req.params.key).then(function (stock) {
 
@@ -206,7 +207,7 @@ exports.getStockReport = (req, res) => {
             type: ""
         }
 
-        PDF.create(DOCUMENT, OPTIONS).then(p => {
+        PDF.create(DOCUMENT, OPTIONS2).then(p => {
             res.redirect('/' + FILE_NAME)
         }).catch(err => {
             res.send(err)
@@ -232,13 +233,16 @@ exports.countStockProducts = (req, res) => {
     })
 }
 
-exports.getReportProducts = (req, res) => {
+exports.reportProducts = (req, res) => {
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/productos.html'), 'utf-8')
-    const FILE_NAME = 'REPORTE_DE_PRODUCTOS_.pdf'
-    AXIOS.get('http://localhost:443/api/products/').then(function (product) {
-        let obj = product.data , active = [], inactive = [], NoStock = []
+    const FILE_NAME2 = 'REPORTE_DE_PRODUCTOS.pdf'
+    AXIOS.get('http://localhost:443/api/products/').then(function (products) {
+
+        let obj = products.data, active = [], inactive = [], NoStock = []
+        let newDate = FECHA.toISOString().substring(0, 10)
+
         obj.forEach(i => {
-            let filter = { product: i.product, price: i.price, categorie: i.categorie, stock: i.stock }
+            let filter = { product: i.product, price: i.price, stock: i.stock }
             if (i.status == 'active') {
                 active.push(filter)
             } else if (i.status == 'inactive') {
@@ -246,29 +250,28 @@ exports.getReportProducts = (req, res) => {
             } else if (i.status == 'No Stock') {
                 NoStock.push(filter)
             }
-
-            const DATA = {
-                user: req.session.user,
-                active: active,
-                inactive: inactive,
-                NoStock: NoStock,
-                date: FECHA.toISOString().substring(0, 10)
-            }
-
-            const DOCUMENT = {
-                html: HMTL,
-                data: {
-                    data: DATA
-                },
-                path: "./docs/" + FILE_NAME,
-                type: ""
-            }
-
-            PDF.create(DOCUMENT, OPTIONS).then(p => {
-                res.redirect('/' + FILE_NAME)
-            }).catch(err => {
-                res.send(err)
-            })
         })
+
+        const DATA = {
+            user: req.session.user,
+            obj: obj,
+            date: newDate
+        }
+
+        const DOCUMENT1 = {
+            html: HMTL,
+            data: {
+                data: DATA
+            },
+            path: "./docs/" + FILE_NAME2,
+            type: ""
+        }
+
+        PDF.create(DOCUMENT1, OPTIONS).then(p => {
+            res.redirect('/' + FILE_NAME2)            
+        }).catch(err => {
+            res.send(err)
+        })
+        
     })
 }
