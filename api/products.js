@@ -194,7 +194,7 @@ exports.getStockReport = (req, res) => {
         const DATA = {
             user: req.session.user,
             obj: obj,
-            date: FECHA.toISOString().substring(0, 10),
+            date:FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds(),
             product: req.params.key
         }
 
@@ -239,7 +239,7 @@ exports.reportProducts = (req, res) => {
     AXIOS.get('http://localhost:443/api/products/').then(function (products) {
 
         let obj = products.data, active = [], inactive = [], NoStock = []
-        let newDate = FECHA.toISOString().substring(0, 10)
+        let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 
         obj.forEach(i => {
             let filter = { product: i.product, price: i.price, stock: i.stock }

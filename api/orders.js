@@ -247,7 +247,7 @@ exports.getReportDetail = (req, res) => {
     const FILE_NAME = 'REPORTE_DE_PRODUCTOS_' + req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/details/').then(function (detail) {
         let obj = detail.data
-        let newDate = FECHA.toISOString().substring(0, 10)
+        let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 
         const DATA = {
             user: req.session.user,
