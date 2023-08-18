@@ -29,26 +29,59 @@ exports.newRecord = (req, res) => {
             if (!data) {
                 res.send('Ha ocurrido un error')
             } else {
-                let value = { stock: Number(req.body.prevStock) + Number(req.body.stock) }
-                PRODUCTS.findByIdAndUpdate(req.body.id, value, { useFindAndModify: false }).then(product => {
-                    if (!product) {
-                        res.send('ocurrio un error al actualizar')
-                    } else {
-                        AXIOS.get('http://localhost:443/api/products')
-                            .then(function (response) {
-                                AXIOS.get('http://localhost:443/api/categories')
-                                    .then(function (categorie) {
-                                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "Se ha actualizado el stock", confirmation: true, icon: "success" })
-                                    })
-                                    .catch(err => {
-                                        res.send('hola')
-                                    })
-                            })
-                            .catch(err => {
-                                res.send('No se puedieron cargar los productos')
-                            })
-                    }
-                })
+                let sum = Number(req.body.prevStock) + Number(req.body.stock)
+                if (sum < 0) {
+                    res.send('Existencias insuficientes')
+                } else {
+                    let value = { stock: sum }
+                    PRODUCTS.findByIdAndUpdate(req.body.id, value, { useFindAndModify: false }).then(product => {
+                        if (!product) {
+                            res.send('ocurrio un error al actualizar')
+                        } else {
+                            if (sum === 0) {
+                                PRODUCTS.findByIdAndUpdate(req.body.id, { status: 'No Stock' }, { useFindAndModify: false }).then(status => {
+                                    if (product) {
+                                        AXIOS.get('http://localhost:443/api/products')
+                                            .then(function (response) {
+                                                AXIOS.get('http://localhost:443/api/categories')
+                                                    .then(function (categorie) {
+                                                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "Se ha actualizado el stock", confirmation: true, icon: "success" })
+                                                    })
+                                                    .catch(err => {
+                                                        res.send('hola')
+                                                    })
+                                            })
+                                            .catch(err => {
+                                                res.send('No se puedieron cargar los productos')
+                                            })
+                                    } else {
+                                        res.send('err')
+                                    }
+                                })
+                            } else if (sum > 0) {
+                                PRODUCTS.findByIdAndUpdate(req.body.id, { status: 'active' }, { useFindAndModify: false }).then(status => {
+                                    if (product) {
+                                        AXIOS.get('http://localhost:443/api/products')
+                                            .then(function (response) {
+                                                AXIOS.get('http://localhost:443/api/categories')
+                                                    .then(function (categorie) {
+                                                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "Se ha actualizado el stock", confirmation: true, icon: "success" })
+                                                    })
+                                                    .catch(err => {
+                                                        res.send('hola')
+                                                    })
+                                            })
+                                            .catch(err => {
+                                                res.send('No se puedieron cargar los productos')
+                                            })
+                                    } else {
+                                        res.send('err')
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
             }
         })
     }
