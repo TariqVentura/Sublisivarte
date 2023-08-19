@@ -164,7 +164,7 @@ BUSCAR_FECHA.addEventListener('submit', function (e) {
                 const MONTH_ORDER = document.getElementById('monthOrder')
 
                 new Chart(MONTH_ORDER, {
-                    type: 'pie',
+                    type: 'line',
                     data: {
                         //Enviamos el arreglo categorieName que llenamos con el for
                         labels: statusArray,
