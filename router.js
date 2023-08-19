@@ -105,7 +105,7 @@ ROUTER.get('/api/count/products', PRODUCTS.countProducts)
 ROUTER.get('/report/stock/:key', PRODUCTS.getStockReport)
 ROUTER.get('/report/products', PRODUCTS.reportProducts)
 ROUTER.get('/api/count/stock', PRODUCTS.countStockProducts)
-ROUTER.get('api/count/products/:key', PRODUCTS.countPriceProducts)
+ROUTER.get('api/count/productsp/:key', PRODUCTS.countPriceProducts)
 
 
 //API categories
