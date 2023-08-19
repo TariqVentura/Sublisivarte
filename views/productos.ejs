@@ -132,6 +132,35 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Button trigger modal Top productos(precio) -->
+                    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
+                    data-bs-target="#exampleTopProducts">
+                        Top productos por precio
+                    </button>
+
+                    <!--Modal de productos con mayor precio por categoría-->
+                    <div class="modal fade" id="exampleTopProducts" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                        Top 5 productos con mayor precio por categoría
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="row my-3">
+                                    <div class="col-10 d-flex flex-row align-items-center ms-4">
+                                        <label for="" class="form-label me-2">Categoría: </label>
+                                        <input type="text" class="form-control" name="product" id="producto-categoria" required>
+                                        <button type="button" class="btn btn-primary ms-3" id="btn-buscap">Buscar</button>
+                                    </div>
+                                </div>
+                                <div id="canvas-container"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="button" class="btn btn-primary ms-3">
                         <a href="/report/products" target="_blank" class="text-dark">Reporte</a>
                     </button>

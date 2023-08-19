@@ -194,7 +194,7 @@ exports.getStockReport = (req, res) => {
         const DATA = {
             user: req.session.user,
             obj: obj,
-            date:FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds(),
+            date: FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds(),
             product: req.params.key
         }
 
@@ -270,10 +270,33 @@ exports.reportProducts = (req, res) => {
         }
 
         PDF.create(DOCUMENT1, OPTIONS).then(p => {
-            res.redirect('/' + FILE_NAME2)            
+            res.redirect('/' + FILE_NAME2)
         }).catch(err => {
             res.send(err)
         })
-        
+
+    })
+}
+
+exports.countPriceProducts = (req, res) => {
+    // Se inicia una función de agregación para obtener información de los productos en la base de datos
+    PRODUCTS.aggregate([
+        {
+            // Filtra los productos por la categoría proporcionada en el parámetro de la solicitud
+            $match: { category: req.params.category }
+        },
+        {
+            // Ordena los productos por precio descendente
+            $sort: { price: -1 }
+        },
+        {
+            // Limita a los primeros 5 productos
+            $limit: 5
+        }
+    ]).then(data => {
+        //Enviamos la informacion requerida
+        res.send(data)
+    }).catch(err => {
+        res.status(404).send(err)
     })
 }
