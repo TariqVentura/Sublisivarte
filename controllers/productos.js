@@ -66,7 +66,7 @@ BUSCAR_CATEGORIA.addEventListener('click', function () {
         document.getElementById('canvas-container').innerHTML = '<canvas id="productCategorie"></canvas>'
 
         //Se utiliza axios para obtener la información de la API
-        axios.get('http://localhost:443/api/count/productsp/' + PARAM).then(function (data) {
+        axios.get('http://localhost:443/categorieTop/api/products/' + PARAM).then(function (data) {
             //Almacenamos los datos de la API en una variable
             let obj = data.data;
 

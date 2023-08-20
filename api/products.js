@@ -296,8 +296,11 @@ exports.countPriceProducts = (req, res) => {
         {
             // Agrupa los productos por precio y cuenta cuántos productos tienen el mismo precio
             $group: {
-                _id: "$price",
-                count: { $count: {} }
+                _id: "$_id",
+                // Agregado para obtener el precio
+                price: { $first: "$price" },
+                // Usar $sum en lugar de $count para contar
+                count: { $sum: 1 } 
             }
         }
     ]).then(data => {
