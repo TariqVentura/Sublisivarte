@@ -290,8 +290,8 @@ exports.countPriceProducts = (req, res) => {
             $sort: { price: -1 }
         },
         {
-            // Limita a los primeros 5 productos
-            $limit: 5
+            // Limita a los primeros 3 productos
+            $limit: 3
         },
         {
             // Agrupa los productos por precio y cuenta cuántos productos tienen el mismo precio
