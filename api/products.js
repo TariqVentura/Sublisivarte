@@ -292,6 +292,13 @@ exports.countPriceProducts = (req, res) => {
         {
             // Limita a los primeros 5 productos
             $limit: 5
+        },
+        {
+            // Agrupa los productos por precio y cuenta cuántos productos tienen el mismo precio
+            $group: {
+                _id: "$price",
+                count: { $count: {} }
+            }
         }
     ]).then(data => {
         //Enviamos la informacion requerida
