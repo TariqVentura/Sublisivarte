@@ -39,6 +39,6 @@ let productSchema = new MONGOOSE.Schema({
     }
 )
 
-const PRODUCTS = new MONGOOSE.model('poducts', productSchema)
+const PRODUCTS = new MONGOOSE.model('products', productSchema)
 
 module.exports = PRODUCTS

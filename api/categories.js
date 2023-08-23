@@ -117,7 +117,7 @@ exports.categorieStatus = (req, res) => {
     const STATUS = req.params.status
     const ID = req.params.id
     const VALUE = { status: STATUS }
-
+    console.log(STATUS)
     CATEGORIES.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
         .then(data => {
             if (!data) {

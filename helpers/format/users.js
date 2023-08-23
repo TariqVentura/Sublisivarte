@@ -11,7 +11,6 @@ module.exports = {
         contents: {
             first: '1',
             2: '2',
-            default: '<span style="color: #444; margin-top: 20%;">{{page}}</span>/<span>{{pages}}</span>', 
             last: 'Ultima pagina'
         }
     }
