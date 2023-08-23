@@ -17,25 +17,33 @@ const OPTIONS_CLIENTS = require('../helpers/format/clients')
  */
 exports.createUser = (req, res) => {
     //validamos los campos para que no esten vacios
-    if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document || !req.body.role) {
-        res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
+    if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document) {
+        if (req.session.user) {
+            AXIOS.get('http://localhost:443/api/users').then(function (response) {
+                res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
+            })
+        } else {
+            res.render('account', { user: false, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error' })
+        }
     } else {
         const SALT_ROUNDS = 10
         const ENCRYPTED_PASSWORD = req.body.password
 
         BCRYPT.genSalt(SALT_ROUNDS, function (err, salt) {
             BCRYPT.hash(ENCRYPTED_PASSWORD, salt, function (err, hash) {
-                const USER = new USERS({
-                    name: req.body.name,
-                    lastname: req.body.lastname,
-                    email: req.body.email,
-                    user: req.body.user,
-                    password: hash,
-                    document: req.body.document,
-                    role: req.body.role
-                })
+                console.log(req.session.user)
+                if (req.session.user) {
+                    const USER = new USERS({
+                        name: req.body.name,
+                        lastname: req.body.lastname,
+                        email: req.body.email,
+                        user: req.body.user,
+                        password: hash,
+                        document: req.body.document,
+                        role: req.body.role
+                    })
 
-                USER
+                    USER
                     .save(USER)
                     .then(data => {
                         if (!data) {
@@ -50,6 +58,36 @@ exports.createUser = (req, res) => {
                     .catch(err => {
                         res.send(err)
                     })
+
+                } else {
+                    const USER = new USERS({
+                        name: req.body.name,
+                        lastname: req.body.lastname,
+                        email: req.body.email,
+                        user: req.body.user,
+                        password: hash,
+                        document: req.body.document,
+                    })
+
+                    USER
+                    .save(USER)
+                    .then(data => {
+                        if (!data) {
+                            res.status(404).send('Ocurrio un error al crear el usuario')
+                        } else {
+                            req.session.authenticated = true,
+                                req.session.user = req.body.user,
+                                req.session.role = 'cliente'
+                            req.session.status = 'activo'
+                            req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+                            console.log(req.session)
+                            res.redirect('/')
+                        }
+                    })
+                    .catch(err => {
+                        res.send(err)
+                    })
+                }
             })
         })
     }

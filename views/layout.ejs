@@ -15,12 +15,14 @@
 
 <body>
     <% if(user !=false) {%>
-        <% if(user.status == 'active') {%>
+        <% if(user.status == 'activo') {%>
             <%- include('include/nav') %>
             <%- body %>
             <%- include('include/footer') %>
-        <% } else { %>
+        <% } else if(user.status == 'baneado') { %>
             <%- include('include/error401') %>
+        <% } else { %>  
+            <%- include('include/error402') %>
         <% } %>
     <% } else {%>
         <%- include('include/nav') %>
