@@ -32,12 +32,14 @@ let userSchema = new MONGOOSE.Schema(
             require: true
         },
         role: {
-            type: ["admin", "client"],
+            type: ["admin", "cliente"],
+            default: 'cliente',
             require: true
         },
         status: {
-            type: ["active", "inactive", "banned"],
-            require: true
+            type: ["activo", "inactivo", "baneado"],
+            require: true,
+            default: 'activo'
         },
         document: {
             type: String,

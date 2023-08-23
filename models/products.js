@@ -28,8 +28,8 @@ let productSchema = new MONGOOSE.Schema({
         type: Number
     },
     status: {
-        type: ['active', 'inactive', 'No Stock'],
-        default: 'acive',
+        type: ['activo', 'inactivo', 'No Stock'],
+        default: 'activo',
         require: true
     }
 },

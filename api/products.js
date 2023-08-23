@@ -30,7 +30,7 @@ exports.createProduct = (req, res) => {
             categorie: req.body.categorie,
             image: req.body.image,
             stock: req.body.stock,
-            status: 'active'
+            status: 'activo'
         })
         PRODUCT
             .save(PRODUCT)
@@ -171,7 +171,7 @@ exports.categorieProduct = (req, res) => {
 
 exports.countProducts = (req, res) => {
     //usamos un funcion de agregacion y filtramos a los productos que esten activos
-    PRODUCTS.aggregate({ status: 'active' }).group({
+    PRODUCTS.aggregate().group({
         //agrupamos los productos en categorias y contamos cuantos porductos tiene cada categoria
         _id: "$categorie",
         count: { $count: {} }
@@ -218,7 +218,7 @@ exports.getStockReport = (req, res) => {
 exports.countStockProducts = (req, res) => {
     //usamos un funcion de agregacion y filtramos a los productos que esten activos
     PRODUCTS.aggregate([
-        { $match: { status: 'active' } }, // Filtrar productos activos
+        { $match: { status: 'activo' } }, // Filtrar productos activos
         {
             $sort: { stock: -1 } // Ordenar de forma descendente por stock
         },
@@ -243,9 +243,9 @@ exports.reportProducts = (req, res) => {
 
         obj.forEach(i => {
             let filter = { product: i.product, price: i.price, stock: i.stock }
-            if (i.status == 'active') {
+            if (i.status == 'activo') {
                 active.push(filter)
-            } else if (i.status == 'inactive') {
+            } else if (i.status == 'inactivo') {
                 inactive.push(filter)
             } else if (i.status == 'No Stock') {
                 NoStock.push(filter)

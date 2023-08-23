@@ -32,8 +32,7 @@ exports.createUser = (req, res) => {
                     user: req.body.user,
                     password: hash,
                     document: req.body.document,
-                    role: req.body.role,
-                    status: 'active'
+                    role: req.body.role
                 })
 
                 USER
@@ -142,7 +141,7 @@ exports.updateUsers = (req, res) => {
 
 exports.bannUser = (req, res) => {
     const ID = req.params.id
-    const VALUE = { status: 'banned' }
+    const VALUE = { status: 'baneado' }
 
     USERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
         .then(data => {
@@ -245,7 +244,7 @@ exports.newPassword = (req, res) => {
 
 exports.statusUser = (req, res) => {
     const PARAM = { user: req.params.id }
-    const VALUE = { status: 'inactive' }
+    const VALUE = { status: 'inactivo' }
 
     USERS.updateOne(PARAM, VALUE)
         .then(data => {
@@ -322,11 +321,11 @@ exports.getUserReport = (req, res) => {
             let filter = { name: i.name, lastname: i.lastname, email: i.email, user: i.user, document: i.document }
 
             //filtramos los datos y los almacenamos en los arreglos que creamos antes segun su estado
-            if (i.status == 'active') {
+            if (i.status == 'activo') {
                 active.push(filter)
-            } else if (i.status == 'inactive') {
+            } else if (i.status == 'inactivo') {
                 inactive.push(filter)
-            } else if (i.status == 'banned') {
+            } else if (i.status == 'baneado') {
                 banned.push(filter)
             }
         })
