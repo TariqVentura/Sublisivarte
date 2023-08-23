@@ -79,7 +79,7 @@ BUSCAR_CATEGORIA.addEventListener('click', function () {
             //Utilizamos un for para recorrer en los datos del objeto
             for (let i = 0; i < obj.length; i++) {
                 //Almacenamos el estado de la posición i dentro de una variable
-                newStatus = obj[i].product
+                newStatus = obj[i].price
 
                 //Enviamos el dato del estado al arreglo
                 status.push(newStatus)
