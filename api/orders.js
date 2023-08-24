@@ -22,7 +22,8 @@ exports.createOrder = (req, res) => {
                 name: req.body.name,
                 client: req.body.user,
                 //le asignamos la fecha con formato ISO a date pero unicamente los primeros 10 caracteres
-                date: newDate.substring(0, 10)
+                date: newDate.substring(0, 10),
+                status: "en proceso"
             })
 
             ORDER
