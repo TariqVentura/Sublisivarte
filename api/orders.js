@@ -5,6 +5,7 @@ const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/invoice')
+const OPTIONS_2 = require('../helpers/format/order')
 
 
 exports.createOrder = (req, res) => {
@@ -291,5 +292,39 @@ ORDERS.aggregate().match({
         }
     }).catch(err => {
         res.send(err)
+    })
+}
+
+
+exports.reportOrders = (req, res) => {
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/order.html'), 'utf-8')
+    const FILE_NAME = 'REPORTE_DE_ORDENES.pdf'
+    AXIOS.get('http://localhost:443/api/view/products/' + req.params.key).then(function (product) {
+        let obj = product.data
+        let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
+
+        const DATA = {
+            user: req.session.user,
+            order: req.params.key,
+            obj: obj,
+            product: req.params.key,
+            date: newDate
+        }
+
+        const DOCUMENTS = {
+            html: HMTL,
+            data: {
+                data: DATA
+            },
+            path: "./docs/" + FILE_NAME,
+            type: ""
+        }
+
+        PDF.create(DOCUMENTS, OPTIONS_2).then(p => {
+            res.redirect('/' + FILE_NAME)
+        }).catch(err => {
+            res.send(err)
+        })
+
     })
 }

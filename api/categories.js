@@ -182,7 +182,7 @@ exports.getReport = (req, res) => {
         }
 
         PDF.create(DOCUMENT, OPTIONS).then(p => {
-            //redirecciona al documento creato
+            //redirecciona al documento creado
             res.redirect('/' + FILE_NAME)
         }).catch(err => {
             res.send(err)
