@@ -1,4 +1,4 @@
-<% if(user==false){ %>
+<% if(user==false || user.role != 'admin'){ %>
 	<%- include('include/error') %>
 		<% } else { %>
 			<div class="container">
