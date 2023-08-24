@@ -299,15 +299,25 @@ ORDERS.aggregate().match({
 exports.reportOrders = (req, res) => {
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/order.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_ORDENES.pdf'
-    AXIOS.get('http://localhost:443/api/view/products/' + req.params.key).then(function (product) {
-        let obj = product.data
+    AXIOS.get('http://localhost:443/api/orders/' + req.params.key).then(function (order) {
+        let obj = order.data, finalizado = [], en_proceso = []
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 
+        obj.forEach(i => {
+            let filter = { client: i.client, name: i.name }
+            if (i.status == 'finalizado') {
+                finalizado.push(filter)
+            } else if (i.status == 'en_proceso') {
+                en_proceso.push(filter)
+            } 
+        })
+        
         const DATA = {
             user: req.session.user,
             order: req.params.key,
             obj: obj,
-            product: req.params.key,
+            finalizado: finalizado,
+            en_proceso: en_proceso,
             date: newDate
         }
 
