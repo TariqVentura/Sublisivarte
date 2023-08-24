@@ -283,25 +283,19 @@ exports.countPriceProducts = (req, res) => {
     PRODUCTS.aggregate([
         {
             // Filtra los productos por la categoría proporcionada en el parámetro de la solicitud
-            $match: { category: req.params.category }
+            $match: { categorie: req.params.key}
         },
         {
-            // Ordena los productos por precio descendente
-            $sort: { price: -1 }
-        },
-        {
-            // Limita a los primeros 3 productos
-            $limit: 3
-        },
-        {
-            // Agrupa los productos por precio y cuenta cuántos productos tienen el mismo precio
             $group: {
-                _id: "$_id",
-                // Agregado para obtener el precio
-                price: { $first: "$price" },
-                // Usar $sum en lugar de $count para contar
-                count: { $sum: 1 } 
+              _id: "$product",
+              maxPrice: { $max: "$price" }
             }
+        },
+        {
+            $sort: { maxPrice: -1 }
+        },
+        {
+            $limit: 3
         }
     ]).then(data => {
         //Enviamos la informacion requerida
