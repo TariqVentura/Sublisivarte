@@ -2,7 +2,7 @@
     <div class="col-6">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-warning w-100 mx-0" data-bs-toggle="modal"
-            data-bs-target="#exampleModal">
+            data-bs-target="#exampleModal<%= data._id %>">
             Añadir a <%= data.name %>
         </button>
         <% if( products.status == 'No Stock' ){ %>
@@ -24,7 +24,7 @@
             </div>
         <% } else { %>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="exampleModal<%= data._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
