@@ -43,18 +43,29 @@
             <table class="table table-striped table-bordered">
                 <thead style="background-color: chocolate; color: azure;">
                     <tr>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Nombre</th>                                                
                         <th scope="col">Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each data.obj}}
                     <tr>
-                        <th>{{this.product}}</th>
-                        <td>${{this.price}}</td>
-                        <td>{{this.amount}}</td>
+                        <td colspan="5" style="text-align: center;">Pedidos finalizados</td>
+                    </tr>
+                    {{#each data.finalizado}}
+                    <tr>
+                        <td>{{this.client}}</td>                        
+                        <td>{{this.name}}</td>
+                        <td>{{this.date}}</td>
+                    </tr>
+                    {{/each}}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Pedidos en proceso</td>
+                    </tr>
+                    {{#each data.enProceso}}
+                    <tr>
+                        <td>{{this.client}}</td>                        
+                        <td>{{this.name}}</td>
                         <td>{{this.date}}</td>
                     </tr>
                     {{/each}}
