@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 const BUSCAR_CATEGORIA = document.getElementById('btn-buscap')
 
-BUSCAR_CATEGORIA.addEventListener('click', function (e) {
+BUSCAR_CATEGORIA.addEventListener('submit', function (e) {
     e.preventDefault()
 
     //Almacenamos los datos del buscador
