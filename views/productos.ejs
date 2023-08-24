@@ -1,4 +1,4 @@
-<% if(user==false){ %>
+<% if(user==false || user.role != 'admin'){ %>
     <%- include('include/error') %>
         <% } else { %>
             <div class="container">
@@ -19,9 +19,9 @@
                             placeholder="buscar producto..." type="text" name="busqueda">
                     </div>
                 </div>
-                <div class="col-6 d-flex justify-content-end">
+                <div class="col-8 d-flex justify-content-start">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         Añadir un producto
                     </button>
@@ -165,7 +165,6 @@
                         <a href="/report/products" target="_blank" class="text-dark">Reporte</a>
                     </button>
                 </div>
-            </div>
             </div>
             <div class="container">
                 <div class="row my-3">

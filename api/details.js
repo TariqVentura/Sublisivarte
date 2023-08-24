@@ -4,7 +4,7 @@ const AXIOS = require('axios')
 const FECHA = new Date()
 const PDF = require('pdf-creator-node')
 const PATH = require('path')
-const FS = require('fs') 
+const FS = require('fs')
 const OPTIONS2 = require('../helpers/format/detail')
 
 exports.createDetail = (req, res) => {
@@ -27,6 +27,8 @@ exports.createDetail = (req, res) => {
 
         let total = Number(req.body.price) * Number(req.body.amount)
 
+        let math = Number(req.body.stock) - Number(req.body.amount)
+
         const DETAIL = new DETAILS({
             product: req.body.product,
             price: req.body.price,
@@ -36,15 +38,14 @@ exports.createDetail = (req, res) => {
             description: JSON.stringify(orderDetail)
         })
 
-        DETAIL
-            .save(DETAIL)
-            .then(data => {
+        if (math > 0) {
+            DETAIL.save(DETAIL).then(data => {
                 if (!data) {
                     res.status(404).send('error')
                 } else {
                     let id, value
                     id = req.body.id
-                    value = { stock: Number(req.body.stock) - Number(req.body.amount) }
+                    value = { stock: math }
                     PRODUCTS.findByIdAndUpdate(id, value, { useFindAndModify: false })
                         .then(product => {
                             if (!product) {
@@ -55,6 +56,31 @@ exports.createDetail = (req, res) => {
                         })
                 }
             })
+        } else if (math == 0) {
+            DETAIL.save(DETAIL).then(data => {
+                if (!data) {
+                    res.status(404).send('error')
+                } else {
+                    let id, value
+                    id = req.body.id
+                    value = { stock: math, status: 'No Stock' }
+                    PRODUCTS.findByIdAndUpdate(id, value, { useFindAndModify: false })
+                        .then(product => {
+                            if (!product) {
+                                res.status(404).send('no se permiten campos vacios')
+                            } else {
+                                res.redirect('/carrito')
+                            }
+                        })
+                }
+            })
+        } else {
+            res.send('Stock insuficiente')
+        }
+
+
+
+
     }
 }
 
