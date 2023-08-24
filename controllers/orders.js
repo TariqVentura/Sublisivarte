@@ -105,7 +105,7 @@ BUSCAR_ORDEN.addEventListener('click', function () {
                     labels: status,
                     datasets: [{
                         //Le damos un titulo al grafico
-                        label: 'Cantidad de pedidos por estado',
+                        label: 'Cantidad de pedidos realizados por el cliente ' + PARAM,
                         //Enviamos el arreglo orderCount que llenamos con el for
                         data: count,
                         borderWidth: 1
