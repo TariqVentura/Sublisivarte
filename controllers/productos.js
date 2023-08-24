@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
             }
         });
-    }) 
+    })
 })
 
 const BUSCAR_CATEGORIA = document.getElementById('btn-buscap')
@@ -64,59 +64,64 @@ BUSCAR_CATEGORIA.addEventListener('submit', function (e) {
         //Vaciamos el canvas para volver a generar un nuevo gráfico
         document.getElementById('canvas-container').innerHTML = ''
 
-        //Creamos un nuevo canvas
-        document.getElementById('canvas-container').innerHTML = '<canvas id="productCategorie"></canvas>'
-
         //Se utiliza axios para obtener la información de la API
         axios.get('http://localhost:443/categorieTop/api/products/' + PARAM).then(function (data) {
             //Almacenamos los datos de la API en una variable
             let obj = data.data;
+            if (!obj.length) {
+                document.getElementById('canvas-container').innerHTML = `<div class="alert alert-warning" role="alert">
+                Esta categoría no existe
+              </div>`
+            } else {
+                //Creamos un nuevo canvas
+                document.getElementById('canvas-container').innerHTML = '<canvas id="productCategorie"></canvas>'
 
-            //Creamos arreglos para almacenar los estados y el número de pedidos
-            let product = [], price = []
+                //Creamos arreglos para almacenar los estados y el número de pedidos
+                let product = [], price = []
 
-            //Creamos variables para almacenar el dato recorrido en el for
-            let productName, productPrice
+                //Creamos variables para almacenar el dato recorrido en el for
+                let productName, productPrice
 
-            //Utilizamos un for para recorrer en los datos del objeto
-            for (let i = 0; i < obj.length; i++) {
-                //Almacenamos el estado de la posición i dentro de una variable
-                productName = obj[i]._id
+                //Utilizamos un for para recorrer en los datos del objeto
+                for (let i = 0; i < obj.length; i++) {
+                    //Almacenamos el estado de la posición i dentro de una variable
+                    productName = obj[i]._id
 
-                //Enviamos el dato del estado al arreglo
-                product.push(productName)
+                    //Enviamos el dato del estado al arreglo
+                    product.push(productName)
 
-                //Almacenamos la cantidad de productos en la posición i en una variable
-                productPrice = obj[i].maxPrice
-                
-                //Enviamos la cantidad de productos al arreglo
-                price.push(productPrice)
-            }
+                    //Almacenamos la cantidad de productos en la posición i en una variable
+                    productPrice = obj[i].maxPrice
 
-            const CATEGORIE_PRODUCT = document.getElementById('productCategorie')
+                    //Enviamos la cantidad de productos al arreglo
+                    price.push(productPrice)
+                }
 
-            //Creamos el gráfico chart.js
-            new Chart(CATEGORIE_PRODUCT, {
-                type: 'polarArea',
-                data: {
-                    //Enviamos el arreglo categorieName que llenamos con el for
-                    labels: product,
-                    datasets: [{
-                        //Le damos un titulo al grafico
-                        label: 'Precio del producto: ',
-                        //Enviamos el arreglo orderCount que llenamos con el for
-                        data: price,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                const CATEGORIE_PRODUCT = document.getElementById('productCategorie')
+
+                //Creamos el gráfico chart.js
+                new Chart(CATEGORIE_PRODUCT, {
+                    type: 'polarArea',
+                    data: {
+                        //Enviamos el arreglo categorieName que llenamos con el for
+                        labels: product,
+                        datasets: [{
+                            //Le damos un titulo al grafico
+                            label: 'Precio del producto: ',
+                            //Enviamos el arreglo orderCount que llenamos con el for
+                            data: price,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
         })
     }
 })
