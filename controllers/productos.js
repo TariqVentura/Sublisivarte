@@ -46,14 +46,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 const BUSCAR_CATEGORIA = document.getElementById('btn-buscap')
 
-BUSCAR_CATEGORIA.addEventListener('click', function () {
+BUSCAR_CATEGORIA.addEventListener('submit', function (e) {
+    e.preventDefault()
+
     //Almacenamos los datos del buscador
     const PARAM = document.getElementById('producto-categoria').value
 
     //Validamos la existencia de los datos
     if (!PARAM.trim()) {
         //Si no hay datos en el buscador se envía una alerta
-        Swal.Fire({
+        Swal.fire({
             icon: 'Error',
             title: '¡Error!',
             text: 'No se permiten campos vacíos',
@@ -71,24 +73,24 @@ BUSCAR_CATEGORIA.addEventListener('click', function () {
             let obj = data.data;
 
             //Creamos arreglos para almacenar los estados y el número de pedidos
-            let status = [], count = []
+            let product = [], price = []
 
             //Creamos variables para almacenar el dato recorrido en el for
-            let newStatus, newCount
+            let productName, productPrice
 
             //Utilizamos un for para recorrer en los datos del objeto
             for (let i = 0; i < obj.length; i++) {
                 //Almacenamos el estado de la posición i dentro de una variable
-                newStatus = obj[i].price
+                productName = obj[i]._id
 
                 //Enviamos el dato del estado al arreglo
-                status.push(newStatus)
+                product.push(productName)
 
                 //Almacenamos la cantidad de productos en la posición i en una variable
-                newCount = obj[i].count
-
+                productPrice = obj[i].maxPrice
+                
                 //Enviamos la cantidad de productos al arreglo
-                count.push(newCount)
+                price.push(productPrice)
             }
 
             const CATEGORIE_PRODUCT = document.getElementById('productCategorie')
@@ -98,12 +100,12 @@ BUSCAR_CATEGORIA.addEventListener('click', function () {
                 type: 'polarArea',
                 data: {
                     //Enviamos el arreglo categorieName que llenamos con el for
-                    labels: status,
+                    labels: product,
                     datasets: [{
                         //Le damos un titulo al grafico
-                        label: 'Producto',
+                        label: 'Precio del producto: ',
                         //Enviamos el arreglo orderCount que llenamos con el for
-                        data: count,
+                        data: price,
                         borderWidth: 1
                     }]
                 },

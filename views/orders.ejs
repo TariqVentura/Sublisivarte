@@ -79,7 +79,7 @@
                     <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Pedidos por cliente
                     </button>
-
+                    
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
@@ -92,13 +92,14 @@
                                 </div>
                                 <div class="row my-3">
                                     <div class="col-10 d-flex flex-row align-items-center ms-4">
-                                        <label for="" class="form-label me-2">Cliente: </label>
-                                        <input type="text" class="form-control" name="product" id="cliente-pedido">
-                                        <button type="button" class="btn btn-primary ms-3"
-                                            id="btn-buscar">Buscar</button>
+                                        <form id="btn-buscar">
+                                        <label for="text" class="form-label me-2">Cliente: </label>
+                                        <input type="text" id="cliente-pedido" required>
+                                        <button type="submit" class="btn btn-primary ms-3">Buscar</button>
+                                        </form>
                                     </div>
                                 </div>
-                                <div id="container-canvas"></div>
+                                <div id="canvas2"></div>
                             </div>
                         </div>
                     </div>
