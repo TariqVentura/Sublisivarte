@@ -31,3 +31,7 @@ window.onscroll = function () {
         nav.classList.remove('active')
     }
 }
+
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault()
+})
