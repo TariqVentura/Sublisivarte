@@ -13,6 +13,7 @@ const DETAILS = require('./api/details')
 const PRODUCTS = require('./api/products')
 const COMMENTS = require('./api/comments')
 const RECORD = require('./api/record')
+const EMAIL = require('./api/email')
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
@@ -61,7 +62,6 @@ ROUTER.get('/api/get/users/:key', USERS.getUser)
 ROUTER.post('/api/modifyUser', USERS.modifyUser)
 ROUTER.get('/report/user/:key', USERS.getUserReport)
 ROUTER.get('/api/count/users', USERS.countUsers)
-ROUTER.post('/api/mail/user', USERS.sendEmail)
 
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)
@@ -121,6 +121,9 @@ ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
 //API record
 ROUTER.post('/api/record', RECORD.newRecord)
 ROUTER.get('/api/record/:key', RECORD.getRecord)
+
+//API email
+ROUTER.post('/email/password', EMAIL.newPasswordEmail)
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor

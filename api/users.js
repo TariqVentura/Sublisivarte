@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 /**
  * Se declaran las constantes para mandar a llamar al controlador y las dependencias de node
  */
@@ -12,7 +10,6 @@ const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
-const MAIL = require('../config/email')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -421,15 +418,4 @@ exports.countUsers = (req, res) => {
     })
 }
 
-//funcion para enviar correo a clientes
-exports.sendEmail = (req, res) => {
-    let info = MAIL.sendMail({
-        from: `Sublisivarte ${process.env.EMAIL}`,
-        to: "20190052@ricaldone.edu.sv",
-        subject: "prueba",
-        text: "prueba de envio de correo",
-        html: "<p> Saludos</p> </br> <a href=''>a</a>"
-    }) 
 
-    console.log("Mensage enviado" + info.messageId)
-}
