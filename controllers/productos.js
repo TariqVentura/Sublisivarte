@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }
                 }
             }
-        });
+        })
     })
 })
 
@@ -67,7 +67,7 @@ BUSCAR_CATEGORIA.addEventListener('submit', function (e) {
         //Se utiliza axios para obtener la información de la API
         axios.get('http://localhost:443/categorieTop/api/products/' + PARAM).then(function (data) {
             //Almacenamos los datos de la API en una variable
-            let obj = data.data;
+            let obj = data.data
             if (!obj.length) {
                 document.getElementById('canvas-container').innerHTML = `<div class="alert alert-warning" role="alert">
                 Esta categoría no existe

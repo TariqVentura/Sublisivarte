@@ -26,31 +26,31 @@ arrowIcon.forEach(icon => {
     })
 })
 
-const wrapper = document.querySelector('.wrapper');
-const loginLink = document.querySelector('.login-link');
-const registerLink = document.querySelector('.register-link');
-const btnPopup = document.querySelector('.btnLogin-popup');
-const iconClose = document.querySelector('.icon-close');
+const wrapper = document.querySelector('.wrapper')
+const loginLink = document.querySelector('.login-link')
+const registerLink = document.querySelector('.register-link')
+const btnPopup = document.querySelector('.btnLogin-popup')
+const iconClose = document.querySelector('.icon-close')
 
 
 /** al escuchar el evento click añade la clase active */
 registerLink.addEventListener('click', () => {
-    wrapper.classList.add('active');
+    wrapper.classList.add('active')
 })
 
 /** al escuchar el evento click remueve la clase active */
 loginLink.addEventListener('click', () => {
-    wrapper.classList.remove('active');
+    wrapper.classList.remove('active')
 })
 
 /** al escuchar el evento click añade la clase active */
 btnPopup.addEventListener('click', () => {
-    wrapper.classList.add('active-popup');
+    wrapper.classList.add('active-popup')
 })
 
 /** al escuchar el evento click remueve la clase active */
 iconClose.addEventListener('click', () => {
-    wrapper.classList.remove('active-popup');
+    wrapper.classList.remove('active-popup')
 })
 
 /* al detectar movimiento de scroll centra la imagen en el carousel */
@@ -74,7 +74,7 @@ const dragStart = (e) => {
 
 /** esta funcion se ejecuta mientras se este agarrando el objeto */
 const draggin = (e) => {
-    if (!isDragStart) return;
+    if (!isDragStart) return
     e.preventDefault()
     isDragging = true
     /** si el usuario esta con contacto con la imagen se agrega la clase dragging al carousel */
@@ -106,18 +106,5 @@ carousel.addEventListener('touchstart', dragStart)
 carousel.addEventListener('touchmove', draggin)
 carousel.addEventListener('touchend', dragStop)
 
-const HEADER = document.querySelector('header');
-const LOGINBTN = document.querySelector('btn');
-
-LOGINBTN.addEventListener('click', () =>{
-    HEADER.innerHTML = `
-    <a href="" class="logo"><img src="../../resources/images/logo.png" alt="" class="logo-img"></a>
-    <nav class="navegation">
-        <a href="#">Inicio</a>
-        <a href="#">Sobre nosotros</a>
-        <a href="#">Servicios</a>
-        <a href="#">Contactos</a>
-        <a href="#">Gestionar cuenta</a>
-    </nav>
-            `;
-})
+const HEADER = document.querySelector('header')
+const LOGINBTN = document.querySelector('btn')
