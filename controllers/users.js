@@ -50,7 +50,7 @@ function passwordValidator(control) {
     // Esta expresión regular verifica si la contraseña cumple con los requisitos
     const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?!.*\s).{8,}$/
     // Estos son los nombres de usuario que no se permiten en la contraseña
-    const FORBIDDEN_USERNAMES = ['usuario', 'nombreusuario', 'admin', 'administrador']
+    const FORBIDDEN_USERNAMES = ['usuario', 'nombreusuario', 'admin', 'administrador', '12345678']
     // Esta variable verifica si la contraseña contiene un nombre de usuario no permitido
     const FORBIDDEN = FORBIDDEN_USERNAMES.some(username => control.value.toLowerCase().includes(username.toLowerCase()))
     // Esta variable verifica si la contraseña cumple con la expresión regular
