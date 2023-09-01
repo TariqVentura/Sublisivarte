@@ -35,3 +35,13 @@ window.onscroll = function () {
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault()
 })
+
+document.addEventListener('DOMContentLoaded', function () {
+    let input = document.getElementsByTagName('input')
+
+    for (let index = 0; index < input.length; index++) {
+        input[index].setAttribute('autocomplete', 'off')
+        input[index].removeAttribute('value')
+    }
+})
+
