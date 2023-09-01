@@ -7,7 +7,7 @@
             </span>
             <div class="form-box login">
                 <h2>Login</h2>
-                <form action="/login/users" method="post">
+                <form action="/login/users" method="post" autocomplete="off">
                     <div class="imput-box">
                         <span class="icon"><ion-icon name="user"></ion-icon></span>
                         <input type="text" required name="user">
@@ -22,7 +22,7 @@
                         <label for="" class="text-light"><input type="checkbox"> Recordarme</label>
                         <a href="#" class="text-light">Olvidé mi contraseña</a>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
                     <div class="login-register">
                         <p class="text-light">¿No tienes una cuenta? <a href="/account"
                                 class="register-link text-light">Registrarme</a></p>
@@ -32,3 +32,5 @@
         </div>
     </div>
 </div>
+
+<script src="/controllers/users.js"></script>
