@@ -53,15 +53,22 @@ exports.newPasswordEmail = (req, res) => {
                             from: `Sublisivarte <${process.env.EMAIL}>`,
                             to: req.body.email,
                             subject: "Cambio de contraseña",
+<<<<<<< Updated upstream
                             html: `
                             <!DOCTYPE html>
                             <html lang="en">
 
+=======
+                            html: `<!DOCTYPE html>
+                            <html lang="en">
+                            
+>>>>>>> Stashed changes
                             <head>
                                 <meta charset="UTF-8">
                                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                                 <link rel="stylesheet" href="../resources/css/dashbard.css">
                             </head>
+<<<<<<< Updated upstream
 
                             <body style="background-color: #ffffff;">
                                 <div style="position: absolute; top: 15%; left: 40%;">
@@ -100,6 +107,39 @@ exports.newPasswordEmail = (req, res) => {
 
                             </html>
                             `
+=======
+                            
+                            <body style="background-color: #ffffff;">
+                                <div style="position: absolute; top: 15%; left: 40%;">
+                                    <form style="height: 500px; width: 350px; background-color: #000000; border-radius: 5%;" action="">
+                                        <div>
+                                            <h3 style="display:inline-block; color: #4280EF; padding-left: 3%;">¿Has olvidado tu <br> contraseña?</h1>
+                                            <img src="http://localhost:443/images/LOG23-01.png"
+                                                style=" display:inline-block; margin-left: 15%; height: 15%; width: 20%;"
+                                                alt="">
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <h4 style=" color: #ffffff; padding-top: 3%; padding-left: 3%;">Si usted no ha realizado ninguna
+                                                peticion de cambio <br> de contraseña puede bloquear su cuenta.</h4>
+                                            <h4 style=" color: #ffffff; padding-top: 7%; padding-left: 3%;">Codigo de recuperación:</h4>
+                                        </div>
+                                        <div style="text-align: center; margin-top: 20px;">
+                                            <input style="margin-top: 2%; margin-left: 2%; height: 35px; width: 250px;" type="text">
+                                        </div>
+                                        <div style="text-align: center; margin-top: 20px;">
+                                            <button type="button" style="cursor: pointer; background-color: #4280EF; border-radius: 5px; margin-top: 5%; margin-left: 3%; height: 30px; width: 250px; font-size: medium; border: none;">Cambiar
+                                                contraseña</button>
+                                        </div>
+                                        <footer style="position: fixed; bottom: 32%; width: 18.22%; background-color: #4280EF; padding: 20px; text-align: center; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                                            <p>Copyright © 2023 Sublisivarte</p>
+                                            <p>Contacto: sublisivarte@email.com</p>
+                                          </footer>
+                                    </form>
+                                </div>
+                            </body>
+                            
+                            </html>`
+>>>>>>> Stashed changes
                         })
                     }
                 }).catch(err => {
