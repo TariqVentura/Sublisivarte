@@ -9,3 +9,10 @@ Estandares de JavaScript
 - atributos de objetos en camel case
 - utilizar funciones de flecha para las API
 - espacio entre argumentos de funciones de flecha
+
+Top 10 OWASP
+
+A07 Fallas de identificacion
+    -
+
+Buscar numero de combinación de teclas para programita de desarrollador
