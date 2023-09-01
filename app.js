@@ -53,7 +53,7 @@ APP.use(SESSION({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 180 * 60 * 1000 }
+    cookie: { maxAge: 1* 60 * 1000 }
 }))
 
 //declaramos el middleware de morgan que ayuda con los request de loggeo a la aplicacion
