@@ -70,6 +70,7 @@ APP.use(BODY_PARSER.urlencoded({ extended: true }))
 APP.use(EXPRESS.static(__dirname + '/controllers'))
 APP.use(EXPRESS.static(__dirname + '/resources'))
 APP.use(EXPRESS.static(__dirname + '/docs'))
+APP.use(EXPRESS.static(__dirname + '/helpers'))
 
 //nos permite manejar los resultados de los request de la pagina
 APP.use(EXPRESS.urlencoded({ extended: true }))

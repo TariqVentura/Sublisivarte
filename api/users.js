@@ -10,6 +10,7 @@ const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
+const VALIDATION = require('../helpers/validations/password')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -44,20 +45,20 @@ exports.createUser = (req, res) => {
                     })
 
                     USER
-                    .save(USER)
-                    .then(data => {
-                        if (!data) {
-                            res.status(404).send('Ocurrio un error al crear el usuario')
-                        } else {
-                            AXIOS.get('http://localhost:443/api/users')
-                                .then(function (response) {
-                                    res.render('usuarios', { users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session })
-                                })
-                        }
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
+                        .save(USER)
+                        .then(data => {
+                            if (!data) {
+                                res.status(404).send('Ocurrio un error al crear el usuario')
+                            } else {
+                                AXIOS.get('http://localhost:443/api/users')
+                                    .then(function (response) {
+                                        res.render('usuarios', { users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session })
+                                    })
+                            }
+                        })
+                        .catch(err => {
+                            res.send(err)
+                        })
 
                 } else {
                     const USER = new USERS({
@@ -70,23 +71,23 @@ exports.createUser = (req, res) => {
                     })
 
                     USER
-                    .save(USER)
-                    .then(data => {
-                        if (!data) {
-                            res.status(404).send('Ocurrio un error al crear el usuario')
-                        } else {
-                            req.session.authenticated = true,
-                                req.session.user = req.body.user,
-                                req.session.role = 'cliente'
-                            req.session.status = 'activo'
-                            req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-                            console.log(req.session)
-                            res.redirect('/')
-                        }
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
+                        .save(USER)
+                        .then(data => {
+                            if (!data) {
+                                res.status(404).send('Ocurrio un error al crear el usuario')
+                            } else {
+                                req.session.authenticated = true,
+                                    req.session.user = req.body.user,
+                                    req.session.role = 'cliente'
+                                req.session.status = 'activo'
+                                req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+                                console.log(req.session)
+                                res.redirect('/')
+                            }
+                        })
+                        .catch(err => {
+                            res.send(err)
+                        })
                 }
             })
         })
@@ -246,37 +247,13 @@ exports.searchUsers = (req, res) => {
         })
 }
 
-exports.newPassword = (req, res) => {
-    if (!req.body.password) {
-        AXIOS.get('http://localhost:443/api/images')
-            .then(function (images) {
-                res.render('index', { user: session, resources: images.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: "error" })
-            })
+exports.newPassword =  async (req, res) => {
+    let username = 'TariqVentura'
+    let codeValidation = await VALIDATION.codeValidation(username)
+    if (codeValidation == true) {
+        res.send('codigo valido')
     } else {
-        const SALT_ROUNDS = 10
-        const ENCRYPTED_PASSWORD = req.body.password
-
-        BCRYPT.genSalt(SALT_ROUNDS, function (err, salt) {
-            BCRYPT.hash(ENCRYPTED_PASSWORD, salt, function (err, hash) {
-                const KEY = { user: req.session.user }
-                const VALUE = { password: hash }
-
-                USERS.updateOne(KEY, VALUE, { useFindAndModify: false })
-                    .then(data => {
-                        if (!data) {
-                            res.send('err')
-                        } else {
-                            AXIOS.get('http://localhost:443/api/images')
-                                .then(function (images) {
-                                    res.render('index', { user: session, resources: images.data, mensaje: "Se ha actualizado la contraseña", confirmation: true, icon: "success" })
-                                })
-                        }
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
-            })
-        })
+        res.send('Codigo no valido')
     }
 }
 
