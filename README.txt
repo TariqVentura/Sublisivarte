@@ -2,11 +2,10 @@ Estandares de JavaScript
 - sangria de 4 espacios
 - constantes en mayusculas y separadas con '_'
 - evitar uso de ';'
-- variables en camel case
+- variables, funciones y atributos de objetos en camelCase
 - declarar variables locales con let
 - dejar un espacio entre la ',' y el valor en un arreglo
 - dejar un espacio entre la condicion y el if 
-- atributos de objetos en camel case
 - utilizar funciones de flecha para las API
 - espacio entre argumentos de funciones de flecha
 
