@@ -1,20 +1,33 @@
 const CODE = require('../../models/code')
 const FECHA = require('node-datetime')
+const BCRYPT = require('bcrypt')
 
-exports.codeValidation = async (username) => {
+exports.codeValidation = async (username, code) => {
     let obj = await CODE.find({ user: username, status: 'activo' }).exec()
-    let newDate = FECHA.create()
-    let date = Number(obj[0].date.substring(14, 16)) + 15
-
-    console.log(obj[0].date.substring(0, 13))
-
-    if (obj[0].status == 'inactivo') {
+    console.log(obj)
+    if (!obj.length) {
         return false
-    } else if (newDate.format('M') > date && newDate.format('Y-m-d H') == obj[0].date.substring(0, 12)) {
-        return true
     } else {
-        await CODE.findByIdAndUpdate(obj[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
-        return false
+        let compare = await BCRYPT.compareSync(code, obj[0].code)
+
+        console.log(compare)
+        if (compare == false) {
+            return false
+        } else {
+            let newDate = FECHA.create()
+            let createCode = Number(obj[0].date.substring(11, 13)) * 60 + Number(obj[0].date.substring(14, 16))
+            let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
+            let date = insertCode - createCode
+            console.log(obj[0].date.substring(0, 10))
+            if (obj[0].status == 'inactivo') {
+                return false
+            } else if (date <= 15 && newDate.format('Y-m-d') == obj[0].date.substring(0, 10)) {
+                return true
+            } else {
+                await CODE.findByIdAndUpdate(obj[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
+                return false
+            }
+        }
     }
 }
 

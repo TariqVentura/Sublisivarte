@@ -113,6 +113,7 @@ exports.logIn = (req, res) => {
                                 req.session.user = USER,
                                 req.session.role = data.role
                             req.session.status = data.status
+                            req.session.email = data.email
                             req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
                             console.log(req.session)
                             res.redirect('/')
@@ -247,13 +248,48 @@ exports.searchUsers = (req, res) => {
         })
 }
 
-exports.newPassword =  async (req, res) => {
-    let username = 'TariqVentura'
-    let codeValidation = await VALIDATION.codeValidation(username)
-    if (codeValidation == true) {
-        res.send('codigo valido')
+exports.newPassword = async (req, res) => {
+    let password, newPassword, encryptedPassword, rounds, username, code
+
+    password = req.body.password
+    newPassword = req.body.newPassword
+    rounds = 10
+    code = req.body.code
+
+    console.log( 'password:' + password)
+
+    if (req.session.user) {
+        username = req.session.user
     } else {
-        res.send('Codigo no valido')
+        username = req.body.username
+    }
+
+    if (!password.trim() || !newPassword.trim() || !code.trim()) {
+        res.send('vacio')
+    } else {
+        let codeValidation = await VALIDATION.codeValidation(username, code)
+
+        if (codeValidation == true) {
+            if (password != newPassword) {
+                res.send('coincidencia')
+            } else {
+                let passwordValidation = await VALIDATION.passwordValidation(newPassword)
+
+                if (!passwordValidation) {
+                    encryptedPassword = await BCRYPT.hashSync(newPassword, rounds)
+                    try {
+                        await USERS.updateOne({ user: username }, { password: encryptedPassword })
+                        res.send(true)
+                    } catch (error) {
+                        res.send(false)
+                    }
+                } else {
+                    res.send('invalido')
+                }
+            }
+        } else {
+            res.send('codigo')
+        }
     }
 }
 
