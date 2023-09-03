@@ -129,3 +129,18 @@ exports.commentStatus = (req, res) => {
         .then
 
 }
+
+exports.countCommentsProduct = (req, res) => {
+    //Hacemos uso de una funcion de agregacion y obtenemos las ordenes de la tienda
+    //Utilizamos match para filtrar los pedidos de un solo cliente
+    COMMENTS.aggregate().match({ product : req.params.key }).group({
+        //Agrupamos las ordenes por estado y contamos cuantos ordene tiene cada estado
+        _id: "$status",
+        count: { $count: {} }
+    }).then(data => {
+        //Enviamos la informacion requerida
+        res.send(data)
+    }).catch(err => {
+        res.status(404).send(err)
+    })
+}

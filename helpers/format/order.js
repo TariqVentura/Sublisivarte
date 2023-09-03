@@ -1,10 +1,10 @@
 module.exports = {
     formate: 'Letter',
     orientation: 'portrait',
-    border: '10mm',
+    border: '15mm',
     header: {
         height: '15mm',
-        contents: '<h4 style=" color: red;font-size:20;font-weight:800;text-align:center;">REPORTE DE CAMBIO DE STOCK</h4>'
+        contents: '<h4 style=" color: red;font-size:20;font-weight:800;text-align:center;">REPORTE DE ORDENES</h4>'
     },
     footer: {
         height: '20mm',

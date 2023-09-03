@@ -18,15 +18,15 @@
                     <tr>
                         <td style="width: 50%;">
                             <div style="margin-left: 35px;">
-                                <img src="http://localhost:443/images/logo.png" alt="A"
+                                <img src="http://localhost:443/images/logo-report.png" alt="A"
                                     width="50%">
                             </div>
                         </td>
                         <td style="width: 50%; text-align: end;">
                             <div style="margin-right: 35px;">
-                                <p>Apparecchio</p>
-                                <p>Apparecchio@gmail.com</p>
-                                <p>San Salvador, El Salvador</p>
+                                <p>Mario Edgardo Rios Menjivar</p>
+                                <p>CEO - Lic en Animación Digital y Videojuegos</p>
+                                <p>San Salvador</p>
                                 <p>{{data.newDate}}</p>
                             </div>
                         </td>
@@ -41,24 +41,26 @@
         </div>
         <div style="margin-top: 2%;">
             <div style="width: 50%;">
-                <p style="font-size: medium; font-family: Arial, Helvetica, sans-serif;">Categoria: {{data.category}}</p>
+                <p style="font-size: medium; font-family: Arial, Helvetica, sans-serif;">Categoria: {{data.product}}</p>
             </div>
         </div>
         <div class="row my-3">
             <table class="table table-striped table-bordered">
                 <thead style="background-color: chocolate; color: azure;">
-                    <tr>
-                        <th scope="col">Producto</th>
+                    <tr>                        
+                        <th scope="col" style="width: 50%;">Producto</th>
                         <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Estado</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{#each data.obj}}
-                    <tr>
-                        <th>{{this.product}}</th>
-                        <td>${{this.price}}</td>
+                    <tr>                        
+                        <td>{{this.product}}</td>
+                        <td>{{this.price}}</td>
                         <td>{{this.stock}}</td>
+                        <td>{{this.status}}</td>
                     </tr>
                     {{/each}}
                 </tbody>

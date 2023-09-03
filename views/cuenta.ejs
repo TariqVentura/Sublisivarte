@@ -54,16 +54,7 @@
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar contraseña</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="/api/newPassword/" method="post">
-                                <div class="modal-body">
-                                    Nueva contraseña: 
-                                    <input type="password" name="password">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-success">Guardar</button>
-                                </div>
-                            </form>
+                            <%- include('include/newPassword') %>
                         </div>
                     </div>
                 </div>

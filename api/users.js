@@ -10,6 +10,7 @@ const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
+const VALIDATION = require('../helpers/validations/password')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -17,40 +18,77 @@ const OPTIONS_CLIENTS = require('../helpers/format/clients')
  */
 exports.createUser = (req, res) => {
     //validamos los campos para que no esten vacios
-    if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document || !req.body.role) {
-        res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
+    if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document) {
+        if (req.session.user) {
+            AXIOS.get('http://localhost:443/api/users').then(function (response) {
+                res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
+            })
+        } else {
+            res.render('account', { user: false, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error' })
+        }
     } else {
         const SALT_ROUNDS = 10
         const ENCRYPTED_PASSWORD = req.body.password
 
         BCRYPT.genSalt(SALT_ROUNDS, function (err, salt) {
             BCRYPT.hash(ENCRYPTED_PASSWORD, salt, function (err, hash) {
-                const USER = new USERS({
-                    name: req.body.name,
-                    lastname: req.body.lastname,
-                    email: req.body.email,
-                    user: req.body.user,
-                    password: hash,
-                    document: req.body.document,
-                    role: req.body.role,
-                    status: 'active'
-                })
+                console.log(req.session.user)
+                if (req.session.user) {
+                    const USER = new USERS({
+                        name: req.body.name,
+                        lastname: req.body.lastname,
+                        email: req.body.email,
+                        user: req.body.user,
+                        password: hash,
+                        document: req.body.document,
+                        role: req.body.role
+                    })
 
-                USER
-                    .save(USER)
-                    .then(data => {
-                        if (!data) {
-                            res.status(404).send('Ocurrio un error al crear el usuario')
-                        } else {
-                            AXIOS.get('http://localhost:443/api/users')
-                                .then(function (response) {
-                                    res.render('usuarios', { users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session })
-                                })
-                        }
+                    USER
+                        .save(USER)
+                        .then(data => {
+                            if (!data) {
+                                res.status(404).send('Ocurrio un error al crear el usuario')
+                            } else {
+                                AXIOS.get('http://localhost:443/api/users')
+                                    .then(function (response) {
+                                        res.render('usuarios', { users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session })
+                                    })
+                            }
+                        })
+                        .catch(err => {
+                            res.send(err)
+                        })
+
+                } else {
+                    const USER = new USERS({
+                        name: req.body.name,
+                        lastname: req.body.lastname,
+                        email: req.body.email,
+                        user: req.body.user,
+                        password: hash,
+                        document: req.body.document,
                     })
-                    .catch(err => {
-                        res.send(err)
-                    })
+
+                    USER
+                        .save(USER)
+                        .then(data => {
+                            if (!data) {
+                                res.status(404).send('Ocurrio un error al crear el usuario')
+                            } else {
+                                req.session.authenticated = true,
+                                    req.session.user = req.body.user,
+                                    req.session.role = 'cliente'
+                                req.session.status = 'activo'
+                                req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+                                console.log(req.session)
+                                res.redirect('/')
+                            }
+                        })
+                        .catch(err => {
+                            res.send(err)
+                        })
+                }
             })
         })
     }
@@ -142,7 +180,7 @@ exports.updateUsers = (req, res) => {
 
 exports.bannUser = (req, res) => {
     const ID = req.params.id
-    const VALUE = { status: 'banned' }
+    const VALUE = { status: 'baneado' }
 
     USERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
         .then(data => {
@@ -209,43 +247,19 @@ exports.searchUsers = (req, res) => {
         })
 }
 
-exports.newPassword = (req, res) => {
-    if (!req.body.password) {
-        AXIOS.get('http://localhost:443/api/images')
-            .then(function (images) {
-                res.render('index', { user: session, resources: images.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: "error" })
-            })
+exports.newPassword =  async (req, res) => {
+    let username = 'TariqVentura'
+    let codeValidation = await VALIDATION.codeValidation(username)
+    if (codeValidation == true) {
+        res.send('codigo valido')
     } else {
-        const SALT_ROUNDS = 10
-        const ENCRYPTED_PASSWORD = req.body.password
-
-        BCRYPT.genSalt(SALT_ROUNDS, function (err, salt) {
-            BCRYPT.hash(ENCRYPTED_PASSWORD, salt, function (err, hash) {
-                const KEY = { user: req.session.user }
-                const VALUE = { password: hash }
-
-                USERS.updateOne(KEY, VALUE, { useFindAndModify: false })
-                    .then(data => {
-                        if (!data) {
-                            res.send('err')
-                        } else {
-                            AXIOS.get('http://localhost:443/api/images')
-                                .then(function (images) {
-                                    res.render('index', { user: session, resources: images.data, mensaje: "Se ha actualizado la contraseña", confirmation: true, icon: "success" })
-                                })
-                        }
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
-            })
-        })
+        res.send('Codigo no valido')
     }
 }
 
 exports.statusUser = (req, res) => {
     const PARAM = { user: req.params.id }
-    const VALUE = { status: 'inactive' }
+    const VALUE = { status: 'inactivo' }
 
     USERS.updateOne(PARAM, VALUE)
         .then(data => {
@@ -322,11 +336,11 @@ exports.getUserReport = (req, res) => {
             let filter = { name: i.name, lastname: i.lastname, email: i.email, user: i.user, document: i.document }
 
             //filtramos los datos y los almacenamos en los arreglos que creamos antes segun su estado
-            if (i.status == 'active') {
+            if (i.status == 'activo') {
                 active.push(filter)
-            } else if (i.status == 'inactive') {
+            } else if (i.status == 'inactivo') {
                 inactive.push(filter)
-            } else if (i.status == 'banned') {
+            } else if (i.status == 'baneado') {
                 banned.push(filter)
             }
         })
@@ -337,7 +351,7 @@ exports.getUserReport = (req, res) => {
             active: active,
             inactive: inactive,
             banned: banned,
-            date: FECHA.toISOString().substring(0, 10)
+            date: FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
         }
 
         //creamos la constante que enviaremos como parametro a la dependencia
@@ -380,4 +394,5 @@ exports.countUsers = (req, res) => {
         res.status(404).send(err)
     })
 }
+
 

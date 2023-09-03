@@ -7,7 +7,8 @@ const FECHA = new Date()
 const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
-const OPTIONS = require('../helpers/format/invoice')
+const OPTIONS = require('../helpers/format/product')
+const OPTIONS2 = require('../helpers/format/stock')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -29,7 +30,7 @@ exports.createProduct = (req, res) => {
             categorie: req.body.categorie,
             image: req.body.image,
             stock: req.body.stock,
-            status: 'active'
+            status: 'activo'
         })
         PRODUCT
             .save(PRODUCT)
@@ -170,7 +171,7 @@ exports.categorieProduct = (req, res) => {
 
 exports.countProducts = (req, res) => {
     //usamos un funcion de agregacion y filtramos a los productos que esten activos
-    PRODUCTS.aggregate({ status: 'active' }).group({
+    PRODUCTS.aggregate().group({
         //agrupamos los productos en categorias y contamos cuantos porductos tiene cada categoria
         _id: "$categorie",
         count: { $count: {} }
@@ -184,7 +185,7 @@ exports.countProducts = (req, res) => {
 
 
 exports.getStockReport = (req, res) => {
-    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/products.html'), 'utf-8')
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/stock.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/record/' + req.params.key).then(function (stock) {
 
@@ -193,7 +194,8 @@ exports.getStockReport = (req, res) => {
         const DATA = {
             user: req.session.user,
             obj: obj,
-            date: data.date
+            date: FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds(),
+            product: req.params.key
         }
 
         const DOCUMENT = {
@@ -205,20 +207,100 @@ exports.getStockReport = (req, res) => {
             type: ""
         }
 
-        PDF.create(DOCUMENT, OPTIONS).then(p => {
+        PDF.create(DOCUMENT, OPTIONS2).then(p => {
             res.redirect('/' + FILE_NAME)
         }).catch(err => {
             res.send(err)
         })
     })
 }
+
 exports.countStockProducts = (req, res) => {
     //usamos un funcion de agregacion y filtramos a los productos que esten activos
-    PRODUCTS.find().then(data => {
+    PRODUCTS.aggregate([
+        { $match: { status: 'activo' } }, // Filtrar productos activos
+        {
+            $sort: { stock: -1 } // Ordenar de forma descendente por stock
+        },
+        {
+            $limit: 5 // Obtener los 5 productos con más stock
+        }
+    ]).then(data => {
         //enviamos la data
-        res.send(data.stock)
+        res.send(data)
     }).catch(err => {
         res.status(404).send(err)
+    })
+}
 
+exports.reportProducts = (req, res) => {
+    const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/productos.html'), 'utf-8')
+    const FILE_NAME2 = 'REPORTE_DE_PRODUCTOS.pdf'
+    AXIOS.get('http://localhost:443/api/products/').then(function (products) {
+
+        let obj = products.data, active = [], inactive = [], NoStock = []
+        let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
+
+        obj.forEach(i => {
+            let filter = { product: i.product, price: i.price, stock: i.stock }
+            if (i.status == 'activo') {
+                active.push(filter)
+            } else if (i.status == 'inactivo') {
+                inactive.push(filter)
+            } else if (i.status == 'No Stock') {
+                NoStock.push(filter)
+            }
+        })
+
+        const DATA = {
+            user: req.session.user,
+            active: active,
+            inactive: inactive,
+            NoStock: NoStock,
+            date: newDate
+        }
+
+        const DOCUMENT1 = {
+            html: HMTL,
+            data: {
+                data: DATA
+            },
+            path: "./docs/" + FILE_NAME2,
+            type: ""
+        }
+
+        PDF.create(DOCUMENT1, OPTIONS).then(p => {
+            res.redirect('/' + FILE_NAME2)
+        }).catch(err => {
+            res.send(err)
+        })
+
+    })
+}
+
+exports.countPriceProducts = (req, res) => {
+    // Se inicia una función de agregación para obtener información de los productos en la base de datos
+    PRODUCTS.aggregate([
+        {
+            // Filtra los productos por la categoría proporcionada en el parámetro de la solicitud
+            $match: { categorie: req.params.key}
+        },
+        {
+            $group: {
+              _id: "$product",
+              maxPrice: { $max: "$price" }
+            }
+        },
+        {
+            $sort: { maxPrice: -1 }
+        },
+        {
+            $limit: 3
+        }
+    ]).then(data => {
+        //Enviamos la informacion requerida
+        res.send(data)
+    }).catch(err => {
+        res.status(404).send(err)
     })
 }

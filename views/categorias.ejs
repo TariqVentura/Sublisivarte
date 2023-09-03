@@ -1,8 +1,8 @@
-<% if(user==false){ %>
+<% if(user==false || user.role !='admin' ){ %>
     <%- include('include/error') %>
         <% } else { %>
             <div class="container">
-                <div class="row my-3">
+                <div class="row">
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
                         aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -13,8 +13,8 @@
                 </div>
                 <div class="row d-flex align-items-center justify-content-between my-3">
                     <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
-                        <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
-                            alt="search--v1" onclick="searchCategorie()" />
+                        <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png" alt="search--v1"
+                            onclick="searchCategorie()" />
                         <input class="form-control w-100 border-0" list="datalistOptions" id="searchCategorie"
                             placeholder="buscar categoria..." type="text" name="busqueda">
                     </div>
@@ -26,11 +26,11 @@
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="/api/categories" method="post">
+                        <form id="new-category">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="exampleModalLabel">Crear usuario</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -41,8 +41,8 @@
                                                 <div class="col-md-6">
                                                     <label for="" class="form-label">Nombre de la
                                                         categoría</label>
-                                                    <input type="text" class="form-control" name="categorie" id=""
-                                                        required>
+                                                    <input type="text" class="form-control" name="categorie"
+                                                        id="category" required>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="" class="form-label">Estado</label>
@@ -62,14 +62,14 @@
                                                 data-bs-dismiss="modal">Cerrar</button>
                                             <button type="submit" class="btn btn-primary">Crear</button>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="row">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered ">
                         <thead>
                             <tr>
                                 <th scope="col">Categoría</th>
@@ -95,22 +95,24 @@
                                     </td>
                                     <td>
                                         <button class="btn btn-danger text-light"><a class="text-light"
-                                                href="/delete/categorie/<%= data._id %>">Eliminar</a></button>                                        
+                                                href="/delete/categorie/<%= data._id %>">Eliminar</a></button>
                                     </td>
                                     <td>
-                                        <a class="btn btn-warning text-light" href="/report/categories/<%= data.categorie %>" target="_blank">Reporte</a>
+                                        <a class="btn btn-primary" href="/report/categories/<%= data.categorie %>"
+                                            target="_blank">Reporte</a>
                                     </td>
                                 </tr>
                         </tbody>
                         <% }) %>
                     </table>
                 </div>
-            </div>
-            <% } %>
                 <input type="text" value="<%= confirmation %>" id="confirmation" hidden>
                 <input type="text" value="<%= mensaje %>" id="mensaje" hidden>
                 <input type="text" value="<%= icon %>" id="icon" hidden>
-
+                <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script src="/alerts.js"></script>
-
-<script src="search.js"></script>
+                <script src="/search.js"></script>
+                <script src="/categories.js"></script>
+            </div>
+            <% } %>

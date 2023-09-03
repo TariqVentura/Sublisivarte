@@ -13,6 +13,7 @@ const DETAILS = require('./api/details')
 const PRODUCTS = require('./api/products')
 const COMMENTS = require('./api/comments')
 const RECORD = require('./api/record')
+const EMAIL = require('./api/email')
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
@@ -54,7 +55,7 @@ ROUTER.get('/delete/users/:user',USERS.deleteUsers)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
 ROUTER.get('/api/users/:key', USERS.searchUsers)
-ROUTER.post('/api/newPassword/', USERS.newPassword)
+ROUTER.get('/api/newPassword/', USERS.newPassword)
 ROUTER.get('/bann/users/:id', USERS.bannUser)
 ROUTER.get('/status/user/:id', USERS.statusUser)
 ROUTER.get('/api/get/users/:key', USERS.getUser)
@@ -62,13 +63,13 @@ ROUTER.post('/api/modifyUser', USERS.modifyUser)
 ROUTER.get('/report/user/:key', USERS.getUserReport)
 ROUTER.get('/api/count/users', USERS.countUsers)
 
-
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)
 ROUTER.get('/api/comments', COMMENTS.findComments)
 ROUTER.get('/delete/comments/:id', COMMENTS.deleteComments)
 ROUTER.get('/api/comments/:key', COMMENTS.serchComments)
 ROUTER.get('/status/comment/:id/:status', COMMENTS.commentStatus)
+ROUTER.get('/api/count/comments/:key', COMMENTS.countCommentsProduct)
 
 //API orders
 ROUTER.post('/api/orders', ORDERS.createOrder)
@@ -78,12 +79,20 @@ ROUTER.get('/api/orders', ORDERS.getOrders)
 ROUTER.get('/cancel/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/delete/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/report/invoice/:key', ORDERS.getInvoice)
+ROUTER.get('/report/orders', ORDERS.reportOrders)
+
+ROUTER.get('report/detail/:key', ORDERS.getReportDetail)
+ROUTER.get('/api/count/date/:key', ORDERS.dateOrders)
 ROUTER.get('/api/count/orders', ORDERS.countOrders)
+ROUTER.get('/api/count/orders/:key', ORDERS.countOrdersClient)
+ROUTER.get('/api/count/ordersMonth/:key', ORDERS.countOrdersDate)
+
 
 //API details
 ROUTER.post('/api/details', DETAILS.createDetail)
 ROUTER.get('/delete/details/:key/:stock/:id', DETAILS.cancelDetail)
 ROUTER.get('/api/details/:id', DETAILS.getDetails)
+ROUTER.get('/report/detail/:key/:client', DETAILS.getReportDetail)
 
 //API products
 ROUTER.post('/api/products', PRODUCTS.createProduct )
@@ -95,7 +104,9 @@ ROUTER.get('/api/view/products/:key', PRODUCTS.searchProduct)
 ROUTER.get('/categorie/api/products/:key', PRODUCTS.categorieProduct)
 ROUTER.get('/api/count/products', PRODUCTS.countProducts)
 ROUTER.get('/report/stock/:key', PRODUCTS.getStockReport)
+ROUTER.get('/report/products', PRODUCTS.reportProducts)
 ROUTER.get('/api/count/stock', PRODUCTS.countStockProducts)
+ROUTER.get('/categorieTop/api/products/:key', PRODUCTS.countPriceProducts)
 
 
 //API categories
@@ -110,6 +121,9 @@ ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
 //API record
 ROUTER.post('/api/record', RECORD.newRecord)
 ROUTER.get('/api/record/:key', RECORD.getRecord)
+
+//API email
+ROUTER.post('/email/password', EMAIL.newPasswordEmail)
 
 /**
  * Exportamos el router para que puedo ser accesido por el servidor

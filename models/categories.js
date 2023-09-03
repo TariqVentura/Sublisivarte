@@ -8,7 +8,8 @@ let categoriesSchema = new MONGOOSE.Schema(
     {
         categorie: {
             type: String,
-            require: true
+            require: true,
+            unique: true
         },
         status: {
             type: ["active", "inactive"],

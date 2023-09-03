@@ -1,4 +1,4 @@
-<% if(user==false){ %>
+<% if(user==false || user.role != 'admin'){ %>
 	<%- include('include/error') %>
 		<% } else { %>
 			<div class="container">
@@ -12,121 +12,108 @@
 					</nav>
 				</div>
 				<div class="row d-flex align-items-center justify-content-between my-3">
-					<div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
+					<div class="col-4 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
 						<img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png" alt="search--v1"
 							onclick="searchUser()" />
 						<input class="form-control w-100 border-0" list="datalistOptions" id="seacrhUser"
 							placeholder="Buscar usuario..." type="text" name="busqueda">
 					</div>
-					<div class="col-3 d-flex justify-content-end">
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-dark" data-bs-toggle="modal"
-							data-bs-target="#exampleModal">
-							Añadir Usuario
-						</button>
+				</div>
+				<div class="col-8 d-flex justify-content-start">
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Añadir Usuario
+					</button>
 
-						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-							aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<form action="/api/users" method="post">
-										<div class="modal-header">
-											<h1 class="modal-title fs-5" id="exampleModalLabel">Crear usuario</h1>
-											<button type="button" class="btn-close" data-bs-dismiss="modal"
-												aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<div class="row">
-												<div class="col-md-6">
-													<label for="" class="form-label">Nombre:</label>
-													<input type="text" class="form-control" name="name" id=""
-														required />
-												</div>
-												<div class="col-md-5">
-													<label for="" class="form-label">Apellido</label>
-													<div class="input-group input-group-col-md-3">
-														<input type="text" class="form-control" id=""
-															aria-describedby="addon-wrapping" required
-															name="lastname" />
-													</div>
-												</div>
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form action="/api/users" method="post">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">Crear usuario</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-6">
+												<label for="" class="form-label">Nombre:</label>
+												<input type="text" class="form-control" name="name" id="" required />
 											</div>
-											<br />
-											<div class="row">
-												<div class="col-md-6">
-													<label for="" class="form-label">Correo:</label>
-													<input type="text" class="form-control" name="email" id=""
-														required />
-												</div>
-												<div class="col-md-5">
-													<label for="username" class="form-label">Usuario</label>
-													<div class="input-group input-group-col-md-3">
-														<input type="text" class="form-control" id="username"
-															aria-describedby="addon-wrapping" required name="user"
-															autocomplete="off" />
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-5">
-													<label for="password" class="form-label">Contraseña</label>
-													<div class="input-group input-group-col-md-3">
-														<input type="password" class="form-control bg-secondary"
-															id="password" placeholder="" required name="password"
-															autocomplete="off" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<label for="" class="form-label">Documento:</label>
-													<input type="text" class="form-control" name="document" id=""
-														required />
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-5">
-													<label for="" class="form-label">Rol</label>
-													<select class="form-select" id="inputGroupSelect01" name="role"
-														required>
-														<option>admin</option>
-														<option>client</option>
-													</select>
-												</div>
-												<div class="col-md-6">
-													<label for="" class="form-label">Estado</label>
-													<select class="form-select" id="inputGroupSelect01" name="status"
-														required>
-														<option>active</option>
-														<option>inactive</option>
-														<option>banned</option>
-													</select>
+											<div class="col-md-5">
+												<label for="" class="form-label">Apellido</label>
+												<div class="input-group input-group-col-md-3">
+													<input type="text" class="form-control" id=""
+														aria-describedby="addon-wrapping" required name="lastname" />
 												</div>
 											</div>
 										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">Cerrar</button>
-											<button type="submit" class="btn btn-primary">Crear</button>
+										<br />
+										<div class="row">
+											<div class="col-md-6">
+												<label for="" class="form-label">Correo:</label>
+												<input type="text" class="form-control" name="email" id="" required />
+											</div>
+											<div class="col-md-5">
+												<label for="username" class="form-label">Usuario</label>
+												<div class="input-group input-group-col-md-3">
+													<input type="text" class="form-control" id="username"
+														aria-describedby="addon-wrapping" required name="user"
+														autocomplete="off" />
+												</div>
+											</div>
 										</div>
-									</form>
-								</div>
+										<div class="row">
+											<div class="col-md-5">
+												<label for="password" class="form-label">Contraseña</label>
+												<div class="input-group input-group-col-md-3">
+													<input type="password" class="form-control bg-secondary"
+														id="password" placeholder="" required name="password"
+														autocomplete="off" />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<label for="" class="form-label">Documento:</label>
+												<input type="text" class="form-control" name="document" id=""
+													required />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-5">
+												<label for="" class="form-label">Rol</label>
+												<select class="form-select" id="inputGroupSelect01" name="role"
+													required>
+													<option>admin</option>
+													<option>cliente</option>
+												</select>
+											</div>
+											<div class="col-md-6">
+												<label for="" class="form-label">Estado</label>
+												<select class="form-select" id="inputGroupSelect01" name="status"
+													required>
+													<option>activo</option>
+													<option>inactivo</option>
+													<option>baneado</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Cerrar</button>
+										<button type="submit" class="btn btn-primary">Crear</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
-					<div class="col-3 d-flex justify-content-end">
-						<a href="/report/user/admin" class="btn btn-primary" target="_blank">Reporte de Administradores</a>
-					</div>
-					<div class="col-3 d-flex justify-content-end">
-						<a href="/report/user/client" class="btn btn-primary" target="_blank">Reporte de Clientes</a>
-					</div>
-				</div>
-				<div class="col-3">
-					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+					<button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
 						data-bs-target="#exampleModalCategorie">
 						Graficos
 					</button>
-		
+
 					<!-- Modal -->
 					<div class="modal fade" id="exampleModalCategorie" tabindex="-1" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
@@ -144,8 +131,16 @@
 							</div>
 						</div>
 					</div>
+					<button type="button" class="btn btn-primary ms-3">
+						<a href="/report/user/admin" target="_blank" class="text-dark">Reporte de Administradores</a>
+					</button>
+					<button type="button" class="btn btn-primary ms-3">
+						<a href="/report/user/client" target="_blank" class="text-dark">Reporte de clientes</a>
+					</button>
 				</div>
-				<!-- tabla para mostrar los usuarios del sistema -->
+			</div>
+			<!-- tabla para mostrar los usuarios del sistema -->
+			<div class="container">
 				<div class="row my-3">
 					<table class="table my-3 table-bordered">
 						<thead>
@@ -183,7 +178,7 @@
 										<%= data.status %>
 									</td>
 									<td>
-										<button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal"
+										<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
 											data-bs-target="#staticBackdrop<%= data._id %>update">
 											Actualizar
 										</button>
@@ -244,7 +239,7 @@
 																			<%= data.role %>
 																		</option>
 																		<option>admin</option>
-																		<option>client</option>
+																		<option>cliente</option>
 																	</select>
 																</div>
 																<div class="col-md-6">
@@ -254,9 +249,9 @@
 																		<option selected>
 																			<%= data.status %>
 																		</option>
-																		<option>active</option>
-																		<option>inactive</option>
-																		<option>banned</option>
+																		<option>activo</option>
+																		<option>inactivo</option>
+																		<option>baneado</option>
 																	</select>
 																</div>
 															</div>
@@ -314,14 +309,15 @@
 					</table>
 				</div>
 			</div>
+			</div>
 			<% } %>
 
-			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-			<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-			
-			<input type="text" value="<%= confirmation %>" id="confirmation" hidden>
-			<input type="text" value="<%= mensaje %>" id="mensaje" hidden>
-			<input type="text" value="<%= icon %>" id="icon" hidden>
-			<script src="/search.js"></script>
-			<script src="/alerts.js"></script>
-			<script src="/users.js"></script>
+				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+				<input type="text" value="<%= confirmation %>" id="confirmation" hidden>
+				<input type="text" value="<%= mensaje %>" id="mensaje" hidden>
+				<input type="text" value="<%= icon %>" id="icon" hidden>
+				<script src="/search.js"></script>
+				<script src="/alerts.js"></script>
+				<script src="/users.js"></script>

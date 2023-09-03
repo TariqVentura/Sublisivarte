@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             status = data[i]._id
             //enviamos el datp _id al arreglo categorieName
             statusName.push(status)
-        }   
+        }
 
         console.log(usersCount)
 
@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }
                 }
             }
-        });
+        })
     })
 })
+

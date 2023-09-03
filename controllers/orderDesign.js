@@ -1,20 +1,20 @@
-var imageURL = document.getElementById('imageURL')
-var canvas = document.getElementById("myCanvas")
-var ctx = canvas.getContext("2d")
-var design = document.getElementById('btn-design')
+let imageURL = document.getElementById('imageURL')
+let canvas = document.getElementById("myCanvas")
+let ctx = canvas.getContext("2d")
+let design = document.getElementById('btn-design')
 
 imageURL.addEventListener('change', function () {
-    var image = new Image()
+    let image = new Image()
     image.src = "/images/" + document.getElementById('imageURL').files[0].name
-    var imageX = 0
-    var imageY = 0
+    let imageX = 0
+    let imageY = 0
 
     image.onload = function () {
         ctx.drawImage(image, 0, 0, 100, 75)
 
         function handleMouseDown(e) {
-            var mouseX = e.clientX - canvas.offsetLeft;
-            var mouseY = e.clientY - canvas.offsetTop;
+            let mouseX = e.clientX - canvas.offsetLeft;
+            let mouseY = e.clientY - canvas.offsetTop;
 
             if (mouseX >= imageX && mouseX <= imageX + image.width &&
                 mouseY >= imageY && mouseY <= imageY + image.height) {
@@ -24,8 +24,8 @@ imageURL.addEventListener('change', function () {
         }
 
         function handleMouseMove(e) {
-            var mouseX = e.clientX - canvas.offsetLeft
-            var mouseY = e.clientY - canvas.offsetTop
+            let mouseX = e.clientX - canvas.offsetLeft
+            let mouseY = e.clientY - canvas.offsetTop
 
             imageX = mouseX - image.width / 2
             imageY = mouseY - image.height / 2
@@ -45,9 +45,9 @@ imageURL.addEventListener('change', function () {
 })
 
 design.addEventListener('click', function () {
-    var imageDataURL = canvas.toDataURL()
+    let imageDataURL = canvas.toDataURL()
     const URL = document.createElement('a')
-    URL.download = "DiseñoSublisivarte.png"
+    URL.download = "DiseñoSublisilette.png"
     URL.href = imageDataURL
     URL.click()
 })

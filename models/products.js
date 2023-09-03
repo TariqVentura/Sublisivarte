@@ -28,8 +28,8 @@ let productSchema = new MONGOOSE.Schema({
         type: Number
     },
     status: {
-        type: ['active', 'inactive', 'No Stock'],
-        default: 'acive',
+        type: ['activo', 'inactivo', 'No Stock'],
+        default: 'activo',
         require: true
     }
 },
@@ -39,6 +39,6 @@ let productSchema = new MONGOOSE.Schema({
     }
 )
 
-const PRODUCTS = new MONGOOSE.model('poducts', productSchema)
+const PRODUCTS = new MONGOOSE.model('products', productSchema)
 
 module.exports = PRODUCTS

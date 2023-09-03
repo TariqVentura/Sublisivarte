@@ -1,4 +1,4 @@
-<% if(user==false){ %>
+<% if(user==false || user.role != 'admin'){ %>
     <%- include('include/error') %>
         <% } else { %>
             <div class="container">
@@ -10,18 +10,18 @@
                             <li class="breadcrumb-item active" aria-current="page">Categorías</li>
                         </ol>
                     </nav>
-                    <div class="row d-flex align-items-center justify-content-between my-3">
+                    <div class="row d-flex align-items-center my-3">
                         <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
                             <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
                                 alt="search--v1" onclick="searchComment()" />
                             <input class="form-control w-100 border-0" list="datalistOptions" id="seacrhComment"
                                 placeholder="Buscar Comentario..." type="text" name="busqueda">
                         </div>
-                        <div class="col-3 d-flex justify-content-end">
+                        <div class="col-3">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-primary justify-content-end" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
-                                Crear comentario
+                                Ver reseñas
                             </button>
 
                             <!-- Modal -->
@@ -29,57 +29,28 @@
                                 aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="/api/comments" method="post">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Comentario
-                                                </h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Reseñas del producto
+                                            </h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="row my-3">
+                                            <div class="col-10 d-flex flex-row align-items-center ms-4">
+                                                <label for="" class="form-label me-2">Producto: </label>
+                                                <input type="text" class="form-control" name="product"
+                                                    id="producto-comentario" required>
+                                                <button type="button" class="btn btn-primary ms-3"
+                                                    id="btn-buscar">Buscar</button>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label for="" class="form-label">Comentario</label>
-                                                        <input type="text" class="form-control" name="comment" id=""
-                                                            required>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="customRange2" class="form-label">Calificación</label>
-                                                        <input type="range" class="form-range" min="0" max="10"
-                                                            id="customRange2" value="0" name="review">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label for="customRange2" class="form-label">Producto</label>
-                                                        <select class="form-select" id="inputGroupSelect01"
-                                                            name="product" required>
-                                                            <% products.forEach((data)=> { %>
-                                                                <option value="<%= data.product %>">
-                                                                    <%= data.product %>
-                                                                </option>
-                                                                <% }) %>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="customRange2" class="form-label">Cliente</label>
-                                                        <input type="text" class="form-control" name="client">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Cerrar</button>
-                                                <button type="submit" class="btn btn-primary">Crear</button>
-                                            </div>
-                                        </form>
+                                        </div>
+                                        <div id="container-canvas"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <table class="table">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Comentario</th>
@@ -106,30 +77,30 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-danger mb-3" data-bs-toggle="modal"
-											data-bs-target="#staticBackdrop<%= data._id %>delete">
-											Eliminar
-										</button>
-										<div class="modal fade" id="staticBackdrop<%= data._id %>delete"
-											data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-											aria-labelledby="staticBackdropLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="btn-close" data-bs-dismiss="modal"
-															aria-label="Close"></button>
-													</div>
-													<div class="modal-body">
-														¿Esta seguro que desea eliminar el comentario?
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-primary">
-															<a href="/delete/comments/<%= data._id %>"
-																class="text-light text-decoration-none">Aceptar</a>
-														</button>
-													</div>
-												</div>
-											</div>
-										</div>
+                                            data-bs-target="#staticBackdrop<%= data._id %>delete">
+                                            Eliminar
+                                        </button>
+                                        <div class="modal fade" id="staticBackdrop<%= data._id %>delete"
+                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ¿Esta seguro que desea eliminar el comentario?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary">
+                                                            <a href="/delete/comments/<%= data._id %>"
+                                                                class="text-light text-decoration-none">Aceptar</a>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <% }) %>
@@ -139,8 +110,14 @@
             </div>
             <% } %>
 
-                <input type="text" value="<%= confirmation %>" id="confirmation" hidden>
-                <input type="text" value="<%= mensaje %>" id="mensaje" hidden>
-                <input type="text" value="<%= icon %>" id="icon" hidden>
-                <script src="/search.js"></script>
-                <script src="/alerts.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <input type="text" value="<%= confirmation %>" id="confirmation" hidden>
+            <input type="text" value="<%= mensaje %>" id="mensaje" hidden>
+            <input type="text" value="<%= icon %>" id="icon" hidden>
+
+            <script src="/alerts.js"></script>
+            <script src="/search.js"></script>
+            <script src="/comentarios.js"></script>
