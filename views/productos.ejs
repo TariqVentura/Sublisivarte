@@ -111,34 +111,35 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    
                     </div>
-                    <div class="col-3">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalStock">
-                            Gráfico de productos
-                        </button>
+                </div>
+                <div class="col-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalStock">
+                        Gráfico de productos
+                    </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalStock" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Garficos</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="fs-4 text-center">Cantidad de existencias por productos</p>
-                                        <canvas id="stockProducts"></canvas>
-                                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalStock" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Garficos</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="fs-4 text-center">Cantidad de existencias por productos</p>
+                                    <canvas id="stockProducts"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="container">
                 <div class="row my-3">
                     <table class="table table-bordered">
                         <thead>
@@ -147,11 +148,11 @@
                                 <th scope="col">Precio</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Stock</th>
-                                <th scope="col">Estado</th>
+                                <!-- <th scope="col">Estado</th> -->
                                 <th scope="col">Imagen</th>
                                 <th scope="col">Actualizar</th>
                                 <th scope="col">Eliminar</th>
-                                <th scope="col">Graficos</th>
+                                <!-- <th scope="col">Graficos</th> -->
                                 <th scope="col">Reportes</th>
                             </tr>
                         </thead>
@@ -210,9 +211,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <%= data.status %>
                                     </td>
                                     <td>
                                         <button class="btn btn-primary"> <a href="/images/<%= data.image[0] %>"
@@ -328,13 +326,12 @@
                                         </div>
                                     </td>
 
-                                    <td>
+                                    <!-- <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#exampleModalCategorie">
                                             Graficos
                                         </button>
 
-                                        <!-- Modal -->
                                         <div class="modal fade" id="exampleModalCategorie" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -352,9 +349,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
+                                    </td> -->
                                     <td>
-                                        <a class="btn btn-warning text-light" href="/report/categories/<% data.product %>" target="_blank">Reporte</a>
+                                        <a class="btn btn-warning text-light"
+                                            href="/report/categories/<% data.product %>" target="_blank">Reporte</a>
                                     </td>
 
                                 </tr>
@@ -362,6 +360,8 @@
                         <% }) %>
                     </table>
                 </div>
+            </div>
+
             </div>
             <% } %>
 

@@ -1,5 +1,6 @@
 const DETAILS = require('../models/details')
 const PRODUCTS = require('../models/products')
+const AXIOS = require('axios')
 
 exports.createDetail = (req, res) => {
     if (!req.body.product || !req.body.amount || !req.body.price || !req.body.order) {
