@@ -1,10 +1,14 @@
 const VALIDATE_PASSWORD = document.getElementById('form_p')
 
+//evento para enviar los datos a la API
 VALIDATE_PASSWORD.addEventListener('submit', function (e) {
+    //evitamos que recargue el formulario
     e.preventDefault()
 
+    //declaramos las variables
     let password, newPassword, code
 
+    //le asignamos valor a las variables
     password = document.getElementById('password').value
     newPassword = document.getElementById('password_confirm').value
     code = document.getElementById('code').value
@@ -20,7 +24,9 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(data => {
+        //utilizamos la estructura switch para capturar los diferentes mensajes que puede enviar la API
         switch (data.data) {
+            //proceso exitoso
             case true:
                 Swal.fire({
                     icon: 'success',
@@ -38,6 +44,7 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     showConfirmButton: true
                 })
                 break
+            //codigo invalido
             case 'codigo':
                 Swal.fire({
                     icon: 'error',
@@ -46,6 +53,7 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     showConfirmButton: true
                 })
                 break
+            //contraseñoa no coincide
             case 'coincidencia':
                 Swal.fire({
                     icon: 'error',
@@ -54,6 +62,7 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     showConfirmButton: true
                 })
                 break
+            //contraseña no cumple los parametros establecidos
             case 'invalido':
                 Swal.fire({
                     icon: 'error',
@@ -62,6 +71,7 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     showConfirmButton: true
                 })
                 break
+            //existen campos vacios
             case 'vacio':
                 Swal.fire({
                     icon: 'error',

@@ -248,42 +248,55 @@ exports.searchUsers = (req, res) => {
         })
 }
 
+//funcion para cambiar la contraseña
 exports.newPassword = async (req, res) => {
+    //declaramos variables que utilizaremos
     let password, newPassword, encryptedPassword, rounds, username, code
 
+    //les asignamos un valor a las varibles
     password = req.body.password
     newPassword = req.body.newPassword
     rounds = 10
     code = req.body.code
 
-    console.log( 'password:' + password)
-
+    //validamos si existe una sesion o si es recuperacion de contraseña
     if (req.session.user) {
         username = req.session.user
     } else {
         username = req.body.username
     }
 
+    //validamos que no existan campos vacios
     if (!password.trim() || !newPassword.trim() || !code.trim()) {
         res.send('vacio')
     } else {
+        //utilizamos una funcion para validar si el codigo es valido (ctrl + click en codeValidation para ver el codigo)
         let codeValidation = await VALIDATION.codeValidation(username, code)
 
+        //si la funcion retorna true procedemos sino enviamos que ocurrio un error
         if (codeValidation == true) {
             if (password != newPassword) {
+                //si las contraseñas no coinciden enviamos un error
                 res.send('coincidencia')
             } else {
+                //utilizamos una funcion para validar si la contraseña es valida (ctrl + click en passwordValidation para ver el codigo)
                 let passwordValidation = await VALIDATION.passwordValidation(newPassword)
 
+                //si la validacion retorna null es que no hay problema
                 if (!passwordValidation) {
+                    //encriptamos la contraseña utilizando 10 saltos
                     encryptedPassword = await BCRYPT.hashSync(newPassword, rounds)
                     try {
+                        //guardamos los datos en la base
                         await USERS.updateOne({ user: username }, { password: encryptedPassword })
+                        //enviamos confirmacion
                         res.send(true)
                     } catch (error) {
+                        //si ocurrio un error se envia un error
                         res.send(false)
                     }
                 } else {
+                    //error si la contraseña no es valida
                     res.send('invalido')
                 }
             }
