@@ -33,6 +33,9 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Proceso Completado',
                     text: 'Se ha cambiado la contraseña exitosamente',
                     showConfirmButton: true
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/cuenta'
                 })
                 break
             case false:
@@ -42,6 +45,9 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Error en la base de datos try',
                     showConfirmButton: true
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/cuenta'
                 })
                 break
             //codigo invalido
@@ -51,6 +57,9 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Codigo invalido',
                     showConfirmButton: true
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/cuenta'
                 })
                 break
             //contraseñoa no coincide
@@ -60,6 +69,9 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Las contraseñas no coinciden',
                     showConfirmButton: true
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/cuenta'
                 })
                 break
             //contraseña no cumple los parametros establecidos
@@ -69,6 +81,9 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'La contraseña no cumple con los parametros de seguridad',
                     showConfirmButton: true
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/cuenta'
                 })
                 break
             //existen campos vacios
@@ -78,8 +93,22 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'No se permiten campos vacios',
                     showConfirmButton: true
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/cuenta'
                 })
                 break
+            case 'user':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Usuario Inexistente',
+                    showConfirmButton: true
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/cuenta'
+                })
+                break;
             default:
                 //error generico
                 Swal.fire({
@@ -87,6 +116,9 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Error en la base de datos 616',
                     showConfirmButton: true
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/cuenta'
                 })
                 break
         }
@@ -97,6 +129,9 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
             title: 'Oops...',
             text: err,
             showConfirmButton: true
+        }).then(() => {
+            //redirigimos a la pagina para visualizar los cambios
+            location.href = '/cuenta'
         })
     })
 

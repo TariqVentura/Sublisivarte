@@ -251,7 +251,7 @@ exports.searchUsers = (req, res) => {
 //funcion para cambiar la contraseña
 exports.newPassword = async (req, res) => {
     //declaramos variables que utilizaremos
-    let password, newPassword, encryptedPassword, rounds, username, code
+    let password, newPassword, encryptedPassword, rounds, username, code, user, email
 
     //les asignamos un valor a las varibles
     password = req.body.password
@@ -263,7 +263,17 @@ exports.newPassword = async (req, res) => {
     if (req.session.user) {
         username = req.session.user
     } else {
-        username = req.body.username
+        if (req.body.username) {
+            username = req.body.username
+        } else {
+            res.send('vacio')
+        }
+    }
+    
+    let userValidation = await VALIDATION.userValidation(username)
+
+    if (userValidation == false) {
+        res.send('user')
     }
 
     //validamos que no existan campos vacios
@@ -279,11 +289,15 @@ exports.newPassword = async (req, res) => {
                 //si las contraseñas no coinciden enviamos un error
                 res.send('coincidencia')
             } else {
+                console.log(newPassword)
                 //utilizamos una funcion para validar si la contraseña es valida (ctrl + click en passwordValidation para ver el codigo)
-                let passwordValidation = await VALIDATION.passwordValidation(newPassword)
+                let passwordValidation = await VALIDATION.passwordValidation(newPassword, username)
 
+                //validamos que no ingrese una clave repetida
+                let comparePassword = await VALIDATION.comparePassword(username, newPassword)
+                
                 //si la validacion retorna null es que no hay problema
-                if (!passwordValidation) {
+                if (!passwordValidation || comparePassword == true) {
                     //encriptamos la contraseña utilizando 10 saltos
                     encryptedPassword = await BCRYPT.hashSync(newPassword, rounds)
                     try {
