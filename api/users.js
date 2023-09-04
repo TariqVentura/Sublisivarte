@@ -21,10 +21,10 @@ exports.createUser = (req, res) => {
     if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document) {
         if (req.session.user) {
             AXIOS.get('http://localhost:443/api/users').then(function (response) {
-                res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
+                res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacíos", confirmation: true, icon: 'error', user: req.session })
             })
         } else {
-            res.render('account', { user: false, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error' })
+            res.render('account', { user: false, mensaje: "No se permiten campos vacíos", confirmation: true, icon: 'error' })
         }
     } else {
         const SALT_ROUNDS = 10
@@ -121,7 +121,7 @@ exports.logIn = (req, res) => {
                     } else {
                         AXIOS.get('http://localhost:443/api/images')
                             .then(function (images) {
-                                res.render('index', { resources: images.data, mensaje: "Contraseña Erronea", confirmation: true, icon: 'error', user: false })
+                                res.render('index', { resources: images.data, mensaje: "Contraseña Errónea", confirmation: true, icon: 'error', user: false })
                             })
                     }
                 })
@@ -155,7 +155,7 @@ exports.findUsers = (req, res) => {
                 console.log(user)
             })
             .catch(err => {
-                res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
+                res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la información" })
             })
     }
 }
@@ -248,7 +248,17 @@ exports.searchUsers = (req, res) => {
         })
 }
 
-//funcion para cambiar la contraseña
+/*
+*   Función asíncrona para cambiar la contraseña de un usuario.
+*   
+*   Parámetros:
+*   - req: Objeto de solicitud HTTP.
+*   - res: Objeto de respuesta HTTP.
+*   
+*   Retorno: Ninguno.
+*/
+
+//Función para cambiar la contraseña
 exports.newPassword = async (req, res) => {
     //declaramos variables que utilizaremos
     let password, newPassword, encryptedPassword, rounds, username, code, user, email
@@ -457,5 +467,3 @@ exports.countUsers = (req, res) => {
         res.status(404).send(err)
     })
 }
-
-

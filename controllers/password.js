@@ -55,7 +55,7 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Codigo invalido',
+                    text: 'Código inválido',
                     showConfirmButton: true
                 }).then(() => {
                     //redirigimos a la pagina para visualizar los cambios
@@ -79,7 +79,7 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'La contraseña no cumple con los parametros de seguridad',
+                    text: 'La contraseña no cumple con los parámetros de seguridad',
                     showConfirmButton: true
                 }).then(() => {
                     //redirigimos a la pagina para visualizar los cambios
@@ -91,7 +91,7 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'No se permiten campos vacios',
+                    text: 'No se permiten campos vacíos',
                     showConfirmButton: true
                 }).then(() => {
                     //redirigimos a la pagina para visualizar los cambios
