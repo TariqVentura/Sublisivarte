@@ -21,13 +21,13 @@ const SESSION = require('express-session')
  */
 const APP = EXPRESS()
 
-//cors config
+
 const corsOptions = {
     origin: 'http://localhost:443', //dominio permitido 
     methods: 'GET,POST', // Métodos HTTP permitidos
     credentials: true, // Habilita el uso de credenciales (cookies, autenticación)
     optionsSuccessStatus: 204, // Código de respuesta para solicitudes OPTIONS exitosas
-}
+  }
 
 //utilizamos CORS (Cross-Origin Resource Sharing)
 APP.use(CORS(corsOptions))
