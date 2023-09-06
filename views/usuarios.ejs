@@ -30,7 +30,7 @@
 						aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
-								<form action="/api/users" method="post">
+								<form id="form-user">
 									<div class="modal-header">
 										<h1 class="modal-title fs-5" id="exampleModalLabel">Crear usuario</h1>
 										<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -40,12 +40,12 @@
 										<div class="row">
 											<div class="col-md-6">
 												<label for="" class="form-label">Nombre:</label>
-												<input type="text" class="form-control" name="name" id="" required />
+												<input type="text" class="form-control" name="name" id="name" required />
 											</div>
 											<div class="col-md-5">
 												<label for="" class="form-label">Apellido</label>
 												<div class="input-group input-group-col-md-3">
-													<input type="text" class="form-control" id=""
+													<input type="text" class="form-control" id="lastname"
 														aria-describedby="addon-wrapping" required name="lastname" />
 												</div>
 											</div>
@@ -54,7 +54,7 @@
 										<div class="row">
 											<div class="col-md-6">
 												<label for="" class="form-label">Correo:</label>
-												<input type="text" class="form-control" name="email" id="" required />
+												<input type="text" class="form-control" name="email" id="email" required />
 											</div>
 											<div class="col-md-5">
 												<label for="username" class="form-label">Usuario</label>
@@ -76,23 +76,23 @@
 											</div>
 											<div class="col-md-6">
 												<label for="" class="form-label">Documento:</label>
-												<input type="text" class="form-control" name="document" id=""
+												<input type="text" class="form-control" name="document" id="document"
 													required />
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-5">
-												<label for="" class="form-label">Rol</label>
-												<select class="form-select" id="inputGroupSelect01" name="role"
-													required>
+												<label for="role" class="form-label">Rol</label>
+												<select class="form-select" id="role" name="role"
+													required itemid="role">
 													<option>admin</option>
 													<option>cliente</option>
 												</select>
 											</div>
 											<div class="col-md-6">
-												<label for="" class="form-label">Estado</label>
-												<select class="form-select" id="inputGroupSelect01" name="status"
-													required>
+												<label for="status" class="form-label">Estado</label>
+												<select class="form-select" id="status" name="status"
+													required >
 													<option>activo</option>
 													<option>inactivo</option>
 													<option>baneado</option>

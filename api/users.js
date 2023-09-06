@@ -16,81 +16,93 @@ const VALIDATION = require('../helpers/validations/users')
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
  * Haciendo uso ddel metodo SAVE de mongoose se guardan los datos en el servidor de Atlas
  */
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
     //validamos los campos para que no esten vacios
     if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document) {
-        if (req.session.user) {
-            AXIOS.get('http://localhost:443/api/users').then(function (response) {
-                res.render('usuarios', { users: response.data, mensaje: "No se permiten campos vacíos", confirmation: true, icon: 'error', user: req.session })
-            })
-        } else {
-            res.render('account', { user: false, mensaje: "No se permiten campos vacíos", confirmation: true, icon: 'error' })
-        }
+        res.send('empty')
+        return
     } else {
-        const SALT_ROUNDS = 10
-        const ENCRYPTED_PASSWORD = req.body.password
+        let name, lastname, email, user, password, document, role, newDocument
 
-        BCRYPT.genSalt(SALT_ROUNDS, function (err, salt) {
-            BCRYPT.hash(ENCRYPTED_PASSWORD, salt, function (err, hash) {
-                console.log(req.session.user)
-                if (req.session.user) {
-                    const USER = new USERS({
-                        name: req.body.name,
-                        lastname: req.body.lastname,
-                        email: req.body.email,
-                        user: req.body.user,
-                        password: hash,
-                        document: req.body.document,
-                        role: req.body.role
-                    })
+        name = req.body.name
+        lastname = req.body.lastname
+        email = req.body.email
+        user = req.body.user
+        document = req.body.document
+        password = req.body.password
 
-                    USER
-                        .save(USER)
-                        .then(data => {
-                            if (!data) {
-                                res.status(404).send('Ocurrio un error al crear el usuario')
-                            } else {
-                                AXIOS.get('http://localhost:443/api/users')
-                                    .then(function (response) {
-                                        res.render('usuarios', { users: response.data, mensaje: "Usuario Creado", confirmation: true, icon: 'success', user: req.session })
-                                    })
-                            }
-                        })
-                        .catch(err => {
-                            res.send(err)
-                        })
+        if (!name.trim() || !lastname.trim() || !email.trim() || !user.trim() || !document.trim() || !password.trim()) {
+            res.send('empty')
+            return
+        }
 
-                } else {
-                    const USER = new USERS({
-                        name: req.body.name,
-                        lastname: req.body.lastname,
-                        email: req.body.email,
-                        user: req.body.user,
-                        password: hash,
-                        document: req.body.document,
-                    })
+        console.log(user + ' ' + email)
 
-                    USER
-                        .save(USER)
-                        .then(data => {
-                            if (!data) {
-                                res.status(404).send('Ocurrio un error al crear el usuario')
-                            } else {
-                                req.session.authenticated = true,
-                                    req.session.user = req.body.user,
-                                    req.session.role = 'cliente'
-                                req.session.status = 'activo'
-                                req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-                                console.log(req.session)
-                                res.redirect('/')
-                            }
-                        })
-                        .catch(err => {
-                            res.send(err)
-                        })
-                }
+        const USER_VALIDATION = await VALIDATION.userValidation(user)
+
+        if (USER_VALIDATION == true) {
+            res.send('user')
+            return
+        }
+
+        const EMAIL_VALIDATION = await VALIDATION.uniqueEmail(email)
+
+        if (EMAIL_VALIDATION == false) {
+            res.send('email')
+            return
+        }
+
+        const PASSWORD_VALIDATION = await VALIDATION.newPasswordValidation(password, user, email)
+
+        if (PASSWORD_VALIDATION) {
+            res.send('invalid')
+            return
+        }
+
+        const SALT_ROUNDS = await BCRYPT.genSaltSync(10)
+        const ENCRYPTED_PASSWORD = password
+
+        const HASH = await BCRYPT.hashSync(ENCRYPTED_PASSWORD, SALT_ROUNDS)
+
+        if (req.session.user) {
+            if (req.body.role) {
+                role = req.body.role
+            } else {
+                role = ''
+            }
+
+            if (!role.trim()) {
+                res.send('empty')
+            }
+
+            newDocument = new USERS({
+                name: name,
+                lastname: lastname,
+                email: email,
+                user: user,
+                password: HASH,
+                document: document,
+                role: role
             })
-        })
+
+        } else {
+            newDocument = new USERS({
+                name: req.body.name,
+                lastname: req.body.lastname,
+                email: req.body.email,
+                user: req.body.user,
+                password: HASH,
+                document: req.body.document,
+            })
+        }
+
+        const DATA = await newDocument.save()
+
+        if (DATA) {
+            res.send(true)
+        } else {
+            res.send(false)
+        }
     }
 }
 
@@ -273,14 +285,14 @@ exports.newPassword = async (req, res) => {
     if (req.session.user) {
         username = req.session.user
     } else {
-        if (req.body.username) {
-            username = req.body.username
+        if (req.body.user) {
+            username = req.body.user
         } else {
             res.send('vacio')
             return
         }
     }
-    
+
     //validamos que sea un usuario existente
     let userValidation = await VALIDATION.userValidation(username)
 
@@ -310,7 +322,7 @@ exports.newPassword = async (req, res) => {
 
                 //validamos que no ingrese una clave repetida
                 let comparePassword = await VALIDATION.comparePassword(username, newPassword)
-                
+
                 //si la validacion retorna null es que no hay problema
                 if (!passwordValidation || comparePassword == true) {
                     //encriptamos la contraseña utilizando 10 saltos

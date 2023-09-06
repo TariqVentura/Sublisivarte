@@ -61,6 +61,9 @@ exports.passwordValidation = async (control, user) => {
 exports.userValidation = async (username) => {
     //buscamos datos en la base y los guardamos en un arreglo
     const DATA = await USER.find({ user: username }).exec()
+
+    console.log(DATA)
+
     //si el arreglo tiene datos enviamos true sino mandamos false 
     if (DATA.length) {
         return true
@@ -115,4 +118,31 @@ exports.codeAuthentication = async (username) => {
             return true
         }
     }
+}
+
+exports.uniqueEmail = async (email) => {
+    const DATA = await USER.find({ email: email }).exec()
+    
+    console.log(DATA)
+
+    if (!DATA.length) {
+        return true
+    } else {
+        return false
+    }
+}
+
+exports.newPasswordValidation = async (control, user, email) => {
+    //separamos para obtener el correo sin el dominio
+    let value = email.split('@')
+    // Esta expresión regular verifica si la contraseña cumple con los requisitos
+    const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?!.*\s).{8,}$/
+    // Estos son los nombres de usuario que no se permiten en la contraseña
+    const FORBIDDEN_USERNAMES = ['usuario', 'nombreusuario', 'admin', 'administrador', '12345678', user, value[0]]
+    // Esta variable verifica si la contraseña contiene un nombre de usuario no permitido
+    const FORBIDDEN = FORBIDDEN_USERNAMES.some(username => control.toLowerCase().includes(username.toLowerCase()))
+    // Esta variable verifica si la contraseña cumple con la expresión regular
+    const VALID = PASSWORD_REGEX.test(control)
+    // Si la contraseña es válida y no contiene un nombre de usuario no permitido, devuelve null de lo contrario, devuelve un objeto con un mensaje de error
+    return VALID && !FORBIDDEN ? null : { 'Contraseña inválida': { value: control } }
 }
