@@ -261,7 +261,7 @@ exports.searchUsers = (req, res) => {
 //Función para cambiar la contraseña
 exports.newPassword = async (req, res) => {
     //declaramos variables que utilizaremos
-    let password, newPassword, encryptedPassword, rounds, username, code, user, email
+    let password, newPassword, encryptedPassword, rounds, username, code
 
     //les asignamos un valor a las varibles
     password = req.body.password

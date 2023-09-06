@@ -86,3 +86,13 @@ exports.comparePassword = async (username, password) => {
         return false
     }
 }
+
+exports.emailValidation = async (email, username) => {
+    const DATA = await USER.find( { user: username }, { email: email } ).exec()
+
+    if (!DATA) {
+        return false
+    } else {
+        return true
+    }
+}

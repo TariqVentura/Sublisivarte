@@ -6,13 +6,38 @@ const MAIL = require('../config/email')
 const CODE = require('../models/code')
 const FECHA = require('node-datetime')
 const BCRYPT = require('bcrypt')
+const VALIDATION = require('../helpers/validations/password')
 
 //funcion para enviar correo de recuperacion de contraseña a clientes
-exports.newPasswordEmail = (req, res) => {
-    //validamos si existe una sesión y de existir validamos que sea la misma a la que se le quiere cambiar la contraseña
-    if (req.session.user && req.session.user != req.body.user) {
-        res.send('Solo puedes generar codigo para tu usuario')
+exports.newPasswordEmail = async (req, res) => {
+    let username, email
+
+    if (req.session.user && req.body.email) {
+        username = req.session.user
+        email = req.body.email
+    } else if (req.body.user && req.body.email) {
+        username = req.body.user
+        email = req.body.email
     } else {
+        res.send('empty')
+    }
+
+    //validamos si existe una sesión y de existir validamos que sea la misma a la que se le quiere cambiar la contraseña
+    if (req.session.user && req.session.user != username) {
+        res.send('user')
+    } else {
+        let userValidation = await VALIDATION.userValidation(req.body.user) 
+
+        if (userValidation == false) {
+            res.send('user')
+        }
+
+        let emailValidation = await VALIDATION.emailValidation(email, username)
+
+        if (emailValidation == false) {
+            res.send('user')
+        }
+
         //creamos un arreglo con los caracteres que tendra el codigo
         let array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         let result = ''
@@ -51,7 +76,7 @@ exports.newPasswordEmail = (req, res) => {
                         let info = MAIL.sendMail({
                             //utilizamos variables de entorno para dar el correo con el que enviaremos el mensaje
                             from: `Sublisivarte <${process.env.EMAIL}>`,
-                            to: req.body.email,
+                            to: email,
                             subject: "Cambio de contraseña",
                             html: `<!DOCTYPE html>
                             <html lang="en">
@@ -100,9 +125,10 @@ exports.newPasswordEmail = (req, res) => {
                             </html>
                             `
                         })
+                        res.send(true)
                     }
                 }).catch(err => {
-                    res.send(err)
+                    console.log(err)
                 })
             })
         })

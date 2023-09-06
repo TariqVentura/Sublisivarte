@@ -7,66 +7,87 @@
                         <a href="/" class="fs-6">Inicio</a>
                     </div>
                     <div class="col-2  d-flex justify-content-end">
-                        <% if(user == false ) { %>
+                        <% if(user==false ) { %>
+                            <%- include('mailPassword') %>
                             <%- include('login') %>
-                        <% } else { %>
-                            <% if(user.role == 'admin'){ %>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle user-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <a href="" class="fs-6"> <%= user.user %> </a>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/administracion">Administracion</a></li>
-                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/cuenta">Cuenta</a></li>
-                                      <li><hr class="dropdown-divider mx-0 fw-light fs-6"></li>
-                                      <li><a class="dropdown-item mx-0 fw-light fs-6" href="/logOut/users">Cerrar Sesion</a></li>
-                                    </ul>
-                                </div>
-                            <% } else { %>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle user-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <a href="" class="fs-6"> <%= user.user %> </a>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item mx-0 fw-light fs-6" href="/cuenta">Cuenta</a></li>
-                                        <li><hr class="dropdown-divider mx-0 fw-light fs-6"></li>
-                                        <li><a class="dropdown-item mx-0 fw-light fs-6" href="/logOut/users">Cerrar Sesion</a></li>
-                                    </ul>
-                                </div>
-                            <% } %>
-                        <% } %>
+                                <% } else { %>
+                                    <% if(user.role=='admin' ){ %>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle user-menu" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <a href="" class="fs-6">
+                                                    <%= user.user %>
+                                                </a>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item mx-0 fw-light fs-6"
+                                                        href="/administracion">Administracion</a></li>
+                                                <li><a class="dropdown-item mx-0 fw-light fs-6"
+                                                        href="/cuenta">Cuenta</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider mx-0 fw-light fs-6">
+                                                </li>
+                                                <li><a class="dropdown-item mx-0 fw-light fs-6"
+                                                        href="/logOut/users">Cerrar Sesion</a></li>
+                                            </ul>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle user-menu"
+                                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <a href="" class="fs-6">
+                                                        <%= user.user %>
+                                                    </a>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item mx-0 fw-light fs-6"
+                                                            href="/cuenta">Cuenta</a></li>
+                                                    <li>
+                                                        <hr class="dropdown-divider mx-0 fw-light fs-6">
+                                                    </li>
+                                                    <li><a class="dropdown-item mx-0 fw-light fs-6"
+                                                            href="/logOut/users">Cerrar Sesion</a></li>
+                                                </ul>
+                                            </div>
+                                            <% } %>
+                                                <% } %>
                     </div>
                 </nav>
             </header>
         </div>
     </div>
-</div>             
+</div>
 <div class="container py-2">
-    <div class="row py-3 d-flex justify-content-between">       
+    <div class="row py-3 d-flex justify-content-between">
         <div class="col">
             <nav class="navbar">
                 <div class="container">
-                    <button class="navbar-toggler d-flex flex-row align-items-center border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler d-flex flex-row align-items-center border-0" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent"
+                        aria-controls="navbarToggleExternalContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         <p class="fs-5 mx-2 mb-1">Comprar</p>
                     </button>
                 </div>
-            </nav>    
-        </div>   
+            </nav>
+        </div>
         <div class="col d-flex justify-content-end align-items-center">
-            <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png"
-                    alt="search--v1" onclick="viewsProducts()" />
-                <input class="form-control w-50 border-0" list="datalistOptions" id="searchViewProduct"
-                    placeholder="buscar producto..." type="text" name="busqueda">
+            <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png" alt="search--v1"
+                onclick="viewsProducts()" />
+            <input class="form-control w-50 border-0" list="datalistOptions" id="searchViewProduct"
+                placeholder="buscar producto..." type="text" name="busqueda">
             <datalist id="datalistOptions">
                 <option value="camisas">
             </datalist>
-            <% if(user != false ) { %>
-                <% if(user.role == 'admin'){ %>
-                <% } else { %>
-                    <a href="/carrito"><img width="50" height="50" src="https://img.icons8.com/windows/50/737373/shopping-cart.png" alt="shopping-cart"/></a>
-                <% } %>
-            <% } %>
+            <% if(user !=false ) { %>
+                <% if(user.role=='admin' ){ %>
+                    <% } else { %>
+                        <a href="/carrito"><img width="50" height="50"
+                                src="https://img.icons8.com/windows/50/737373/shopping-cart.png"
+                                alt="shopping-cart" /></a>
+                        <% } %>
+                            <% } %>
         </div>
     </div>
 </div>
@@ -80,14 +101,20 @@
                 <ul class="list-group">
                     <div class="row">
                         <div class="col-6">
-                            <li class="list-group-item border-0"><a href="/productos/textil" class="text-dark">Textiles</a></li>
-                            <li class="list-group-item border-0"><a href="/productos/superficies planas" class="text-dark">Accesorios</a></li>
-                            <li class="list-group-item border-0"><a href="/productos/ceramica" class="text-dark">Ceramica</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/textil"
+                                    class="text-dark">Textiles</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/superficies planas"
+                                    class="text-dark">Accesorios</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/ceramica"
+                                    class="text-dark">Ceramica</a></li>
                         </div>
                         <div class="col-6">
-                            <li class="list-group-item border-0"><a href="/productos/aluminio" class="text-dark">Aluminio</a></li>
-                            <li class="list-group-item border-0"><a href="/productos/vidrio" class="text-dark">Vidrio</a></li>
-                            <li class="list-group-item border-0"><a href="/productos/papeleriaw" class="text-dark">Papeleria</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/aluminio"
+                                    class="text-dark">Aluminio</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/vidrio"
+                                    class="text-dark">Vidrio</a></li>
+                            <li class="list-group-item border-0"><a href="/productos/papeleriaw"
+                                    class="text-dark">Papeleria</a></li>
                         </div>
                     </div>
                 </ul>
@@ -98,4 +125,3 @@
         </div>
     </div>
 </div>
-
