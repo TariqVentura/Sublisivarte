@@ -98,42 +98,34 @@ exports.newPasswordEmail = async (req, res) => {
                                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                                 <link rel="stylesheet" href="../resources/css/dashbard.css">
                             </head>
-
+                            
                             <body style="background-color: #ffffff;">
-                                <div style="position: absolute; top: 15%; left: 40%;">
-                                    <form style="height: 600px; width: 480px; background-color: #000000; border-radius: 5%;" action="">
+                                <div style="position: absolute; top: 20%; left: 40%;">
+                                    <div style="height: 284px; width: 350px; background-color: #000000; border-radius: 5%;">
                                         <div>
-                                            <h1 style="display:inline-block; color: #4280EF; padding-left: 3%;">¿Has olvidado tu <br> contraseña?</h1>
-                                            <img src="http://localhost:443/images/LOG23-01.png"
-                                                style=" display:inline-block; margin-left: 10%; height: 10%; width: 20%;"
-                                                alt="">
+                                            <h2 style=" color: #4280EF; padding-left: 3%;">¿Has olvidado tu <br> contraseña?
+                                                </h2>
                                         </div>
-                                        <div style="margin-top: 20px;">
-                                            <h3 style=" color: #ffffff; padding-top: 3%; padding-left: 3%;">Si usted no ha realizado ninguna
-                                                peticion de cambio <br> de contraseña unicamente ignore el correo.</h4>
-                                            <h3 style=" color: #ffffff; padding-top: 7%; padding-left: 3%;">${result}:</h3>
+                                        <div>
+                                            <h5 style=" color: #ffffff;padding-left: 3%;">Si usted no ha realizado ninguna
+                                                peticion de cambio de contraseña puede bloquear su cuenta
+                                            <br> Codigo de recuperación:</h5>
                                         </div>
-                                        <div style="text-align: center; margin-top: 20px;">
-                                            <input style="margin-top: 2%; margin-left: 2%; height: 45px; width: 50px;" type="text">
-                                            <input style="margin-top: 2%; margin-left: 2%; height: 45px; width: 50px;" type="text">
-                                            <input style="margin-top: 2%; margin-left: 2%; height: 45px; width: 50px;" type="text">
-                                            <h1 style="display: inline-block; color: #ffffff; margin-left: 3%;">-</h3>
-                                            <input style="margin-top: 2%; margin-left: 3%; height: 45px; width: 50px;" type="text">
-                                            <input style="margin-top: 2%; margin-left: 3%; height: 45px; width: 50px;" type="text">
-                                            <input style="margin-top: 2%; margin-left: 3%; height: 45px; width: 50px;" type="text">
+                                        <div style="text-align: center;">
+                                            <input style="margin: auto; height: 30px; width: 250px;" type="text">
                                         </div>
                                         <div style="text-align: center; margin-top: 20px;">
-                                            <button type="button" style="cursor: pointer; background-color: #4280EF; border-radius: 5px; margin-top: 5%; margin-left: 3%; height: 50px; width: 400px; font-size: large; border: none;">Cambiar
-                                                contraseña</button>
+                                            <button type="button"
+                                                style=" color: #ffffff; background-color: #4280EF; border-radius: 5px; height: 30px; width: 250px; border: none;">Cambiar contraseña</button>
                                         </div>
-                                        <footer style="position: fixed; bottom: 22%; width: 25%;background-color: #4280EF;padding: 20px; text-align: center; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
-                                            <p>Copyright © 2023 Sublisivarte</p>
-                                            <p>Contacto: sublisivarte@email.com</p>
+                                        <footer
+                                            style="position: fixed-bottom; height: 13%; width: 100%; background-color: #4280EF; text-align: center; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                                            <h5 style="color: #ffffff;">Copyright © 2023 Sublisivarte <br>Contacto: sublisivarte@email.com</h5>
                                         </footer>
-                                    </form>
+                                    </div>
                                 </div>
                             </body>
-
+                            
                             </html>
                             `
                         })
