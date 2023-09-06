@@ -1,39 +1,39 @@
 <!-- formulario nueva cuenta -->
 <div class="container my-3">
-    <form action="/api/users" method="POST" autocomplete="off">
+    <form autocomplete="off" id="form-user">
         <div class="row">
             <div class="col-10">
                 <div class="row py-2">
                     <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label ">Nombres</label>
-                        <input type="text" class="form-control " id="exampleFormControlInput1"
+                        <label for="name" class="form-label ">Nombres</label>
+                        <input type="text" class="form-control " id="name"
                             placeholder="" required name="name">
                     </div>
                     <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label ">Apellidos</label>
-                        <input type="text" class="form-control " id="exampleFormControlInput1"
+                        <label for="lastname" class="form-label ">Apellidos</label>
+                        <input type="text" class="form-control " id="lastname"
                             placeholder="" required name="lastname">
                     </div>
                     <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label ">Usuario</label>
-                        <input type="text" class="form-control " id="exampleFormControlInput1"
+                        <label for="username" class="form-label ">Usuario</label>
+                        <input type="text" class="form-control " id="username"
                             placeholder="" required name="user">
                     </div>
                 </div>
                 <div class="row py-2">
                     <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label">Correo</label>
-                        <input type="email" class="form-control " id="exampleFormControlInput1"
+                        <label for="email" class="form-label">Correo</label>
+                        <input type="email" class="form-control " id="email"
                             placeholder="" required name="email">
                     </div>
                     <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label">Documento</label>
-                        <input type="text" class="form-control " id="exampleFormControlInput1"
+                        <label for="documento" class="form-label">Documento</label>
+                        <input type="text" class="form-control " id="documento"
                             placeholder="" required name="document">
                     </div>
                     <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label">Clave</label>
-                        <input type="password" class="form-control " id="exampleFormControlInput1"
+                        <label for="password" class="form-label">Clave</label>
+                        <input type="password" class="form-control " id="password"
                             placeholder="" required name="password">
                     </div>
                 </div>
@@ -59,3 +59,5 @@
         </div>
     </form>
 </div>
+
+<script src="/newUser.js"></script>

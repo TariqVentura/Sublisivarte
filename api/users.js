@@ -31,12 +31,12 @@ exports.createUser = async (req, res) => {
         document = req.body.document
         password = req.body.password
 
+        console.log(name + ' ' + lastname + ' ' + email + ' ' + user + ' ' + document + ' ' + password)
+
         if (!name.trim() || !lastname.trim() || !email.trim() || !user.trim() || !document.trim() || !password.trim()) {
             res.send('empty')
             return
         }
-
-        console.log(user + ' ' + email)
 
         const USER_VALIDATION = await VALIDATION.userValidation(user)
 
@@ -65,6 +65,7 @@ exports.createUser = async (req, res) => {
         const HASH = await BCRYPT.hashSync(ENCRYPTED_PASSWORD, SALT_ROUNDS)
 
         if (req.session.user) {
+            console.log('session')
             if (req.body.role) {
                 role = req.body.role
             } else {
@@ -86,6 +87,7 @@ exports.createUser = async (req, res) => {
             })
 
         } else {
+            console.log('no session')
             newDocument = new USERS({
                 name: req.body.name,
                 lastname: req.body.lastname,
@@ -121,13 +123,12 @@ exports.logIn = (req, res) => {
                         if (req.session.authenticated) {
                             res.json(req.session)
                         } else {
-                            req.session.authenticated = true,
-                                req.session.user = USER,
-                                req.session.role = data.role
+                            req.session.authenticated = true
+                            req.session.user = USER
+                            req.session.role = data.role
                             req.session.status = data.status
                             req.session.email = data.email
                             req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-                            console.log(req.session)
                             res.redirect('/')
                         }
                     } else {
