@@ -20,7 +20,17 @@ const SESSION = require('express-session')
  * express es un framework que ayuda con el manejo de las APIs utilizado en NodeJS 
  */
 const APP = EXPRESS()
-APP.use(CORS())
+
+
+const corsOptions = {
+    origin: 'http://localhost:443', //dominio permitido 
+    methods: 'GET,POST', // Métodos HTTP permitidos
+    credentials: true, // Habilita el uso de credenciales (cookies, autenticación)
+    optionsSuccessStatus: 204, // Código de respuesta para solicitudes OPTIONS exitosas
+  }
+
+//utilizamos CORS (Cross-Origin Resource Sharing)
+APP.use(CORS(corsOptions))
 
 //creamos nuestro servidor mediante el protocolo HTTP
 const SERVER = HTTP.createServer(APP)
@@ -53,7 +63,7 @@ APP.use(SESSION({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 5* 60 * 1000 }
+    cookie: { maxAge: 5 * 60 * 1000 }
 }))
 
 //declaramos el middleware de morgan que ayuda con los request de loggeo a la aplicacion

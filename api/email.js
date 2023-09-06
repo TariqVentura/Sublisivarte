@@ -10,16 +10,20 @@ const VALIDATION = require('../helpers/validations/password')
 
 //funcion para enviar correo de recuperacion de contraseña a clientes
 exports.newPasswordEmail = async (req, res) => {
+    //declaramos variables 
     let username, email
 
+    //validamos si exite una sesion
     if (req.session.user && req.body.email) {
         username = req.session.user
         email = req.body.email
     } else {
+        //sino hay una sesion validamos que se no existan campos vacios en el formulario
         if (req.body.user && req.body.email) {
             username = req.body.user
             email = req.body.email
         } else {
+            //si hay campos vacios enviamos una alerta
             res.send('empty')
             return
         }
@@ -30,6 +34,7 @@ exports.newPasswordEmail = async (req, res) => {
         res.send('user')
         return
     } else {
+        //validamos que sea un usuario valido
         let userValidation = await VALIDATION.userValidation(req.body.user)
 
         if (userValidation == false) {
@@ -37,6 +42,7 @@ exports.newPasswordEmail = async (req, res) => {
             return
         }
 
+        //validamos que sea el correo del usuario al que se le pide la restauración
         let emailValidation = await VALIDATION.emailValidation(email, username)
 
         if (emailValidation == false) {
@@ -131,10 +137,12 @@ exports.newPasswordEmail = async (req, res) => {
                             </html>
                             `
                         })
+                        //enviamos mensaje que se envio el correo
                         res.send(true)
                     }
                 }).catch(err => {
-                    console.log(err)
+                    //enviamos mensaje que no se envio el correo
+                    res.send(false)
                 })
             })
         })

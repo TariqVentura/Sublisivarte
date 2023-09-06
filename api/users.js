@@ -101,7 +101,7 @@ exports.logIn = (req, res) => {
             if (!data) {
                 AXIOS.get('http://localhost:443/api/images')
                     .then(function (images) {
-                        res.render('index', { resources: images.data, mensaje: "Usuario Inexistente  ", confirmation: true, icon: 'error', user: false })
+                        res.render('index', { resources: images.data, mensaje: "Usuario o contraseña erroena", confirmation: true, icon: 'error', user: false })
                     })
             } else {
                 BCRYPT.compare(req.body.password, data.password, function (err, result) {
@@ -121,7 +121,7 @@ exports.logIn = (req, res) => {
                     } else {
                         AXIOS.get('http://localhost:443/api/images')
                             .then(function (images) {
-                                res.render('index', { resources: images.data, mensaje: "Contraseña Errónea", confirmation: true, icon: 'error', user: false })
+                                res.render('index', { resources: images.data, mensaje: "Usuario o contraseña erroena", confirmation: true, icon: 'error', user: false })
                             })
                     }
                 })
@@ -281,6 +281,7 @@ exports.newPassword = async (req, res) => {
         }
     }
     
+    //validamos que sea un usuario existente
     let userValidation = await VALIDATION.userValidation(username)
 
     if (userValidation == false) {

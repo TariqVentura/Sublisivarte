@@ -1,13 +1,18 @@
+//mandamos a llamar al formulario
 CODE_FORM = document.getElementById('code-form')
 
 CODE_FORM.addEventListener('submit', (e) => {
+    //evitamos que se envie el formulario
     e.preventDefault()
 
+    //declaramos varibles
     let user, email
 
+    //le asignamos valor a las variables
     user = document.getElementById('user').value
     email = document.getElementById('email').value
 
+    //utilizamos axios para enviar la peticion a la API utilizando el metodo POST
     axios.post('http://localhost:443/email/password', {
         user: user,
         email: email
@@ -17,7 +22,9 @@ CODE_FORM.addEventListener('submit', (e) => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(data => {
+        //utilizamos switch para validar las diferentes respuestas de la API
         switch (data.data) {
+            //se envio el correo
             case true:
                 Swal.fire({
                     icon: 'success',
@@ -29,6 +36,7 @@ CODE_FORM.addEventListener('submit', (e) => {
                     location.href = '/'
                 })
                 break
+            //error de base
             case false:
                 Swal.fire({
                     icon: 'error',
@@ -37,6 +45,7 @@ CODE_FORM.addEventListener('submit', (e) => {
                     showConfirmButton: true
                 })
                 break
+            //campos vacios
             case 'empty':
                 Swal.fire({
                     icon: 'error',
@@ -45,6 +54,7 @@ CODE_FORM.addEventListener('submit', (e) => {
                     showConfirmButton: true
                 })
                 break
+            //usuario o correo invalido
             case 'user':
                 Swal.fire({
                     icon: 'error',

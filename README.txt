@@ -11,6 +11,10 @@ Estandares de JavaScript
 
 Top 10 OWASP
 
+A01:2021 – Broken Access Control 
+    - Utilizacion de CORS en la aplicación ./app.js ln 25 - 33 
+      CORS es un mecanismo de seguridad implementado en los navegadores web que controla las solicitudes HTTP entre dominios diferentes para evitar ataques de seguridad como solicitudes cruzadas (cross-site request forgery) y solicitudes cruzadas de origen (cross-site scripting).
+
 A07 Fallas de identificacion
     -
 
