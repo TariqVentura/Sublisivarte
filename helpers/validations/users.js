@@ -40,7 +40,7 @@ exports.codeValidation = async (username, code) => {
 //funcion para validar la contraseña segun parametros de seguridad
 exports.passwordValidation = async (control, user) => {
     //capturamos los datos del usuario en un objeto
-    const DATA = await USER.find( { user: user } ).exec()
+    const DATA = await USER.find({ user: user }).exec()
     //obtenemos el correo del usuario
     let mail = DATA[0].email
     //separamos para obtener el correo sin el dominio
@@ -60,7 +60,7 @@ exports.passwordValidation = async (control, user) => {
 //funcion para validar la existencia de un usuario
 exports.userValidation = async (username) => {
     //buscamos datos en la base y los guardamos en un arreglo
-    const DATA = await USER.find( { user: username } ).exec()
+    const DATA = await USER.find({ user: username }).exec()
     //si el arreglo tiene datos enviamos true sino mandamos false 
     if (DATA.length) {
         return true
@@ -72,7 +72,7 @@ exports.userValidation = async (username) => {
 //funcion para comparar contraseñas repetidas
 exports.comparePassword = async (username, password) => {
     //buscamos datos en la base y los guardamos en un arreglo
-    const DATA = await USER.find( { user: username } ).exec()
+    const DATA = await USER.find({ user: username }).exec()
     //sino hay datos en la base del usuario retornamos false
     if (!DATA.length) {
         return false
@@ -88,11 +88,31 @@ exports.comparePassword = async (username, password) => {
 }
 
 exports.emailValidation = async (email, username) => {
-    const DATA = await USER.find( { user: username, email: email } ).exec()
+    const DATA = await USER.find({ user: username, email: email }).exec()
     console.log(DATA)
     if (!DATA.length) {
         return false
     } else {
         return true
+    }
+}
+
+exports.codeAuthentication = async (username) => {
+    const DATA = await CODE.find({ user: username, status: 'activo' }).exec()
+
+    if (!DATA.length) {
+        return true
+    } else {
+        let newDate = FECHA.create()
+        let createCode = Number(DATA[0].date.substring(11, 13)) * 60 + Number(DATA[0].date.substring(14, 16))
+        let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
+        let date = insertCode - createCode
+        console.log(date)
+        if (date <= 15 &&  newDate.format('Y-m-d') == DATA[0].date.substring(0, 10)) {
+            return false
+        } else {
+            await CODE.findByIdAndUpdate(DATA[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
+            return true
+        }
     }
 }
