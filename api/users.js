@@ -277,6 +277,7 @@ exports.newPassword = async (req, res) => {
             username = req.body.username
         } else {
             res.send('vacio')
+            return
         }
     }
     
@@ -284,11 +285,13 @@ exports.newPassword = async (req, res) => {
 
     if (userValidation == false) {
         res.send('user')
+        return
     }
 
     //validamos que no existan campos vacios
     if (!password.trim() || !newPassword.trim() || !code.trim()) {
         res.send('vacio')
+        return
     } else {
         //utilizamos una funcion para validar si el codigo es valido (ctrl + click en codeValidation para ver el codigo)
         let codeValidation = await VALIDATION.codeValidation(username, code)
@@ -298,6 +301,7 @@ exports.newPassword = async (req, res) => {
             if (password != newPassword) {
                 //si las contraseñas no coinciden enviamos un error
                 res.send('coincidencia')
+                return
             } else {
                 console.log(newPassword)
                 //utilizamos una funcion para validar si la contraseña es valida (ctrl + click en passwordValidation para ver el codigo)
@@ -322,10 +326,12 @@ exports.newPassword = async (req, res) => {
                 } else {
                     //error si la contraseña no es valida
                     res.send('invalido')
+                    return
                 }
             }
         } else {
             res.send('codigo')
+            return
         }
     }
 }

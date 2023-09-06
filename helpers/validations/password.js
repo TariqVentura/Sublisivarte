@@ -88,9 +88,9 @@ exports.comparePassword = async (username, password) => {
 }
 
 exports.emailValidation = async (email, username) => {
-    const DATA = await USER.find( { user: username }, { email: email } ).exec()
-
-    if (!DATA) {
+    const DATA = await USER.find( { user: username, email: email } ).exec()
+    console.log(DATA)
+    if (!DATA.length) {
         return false
     } else {
         return true

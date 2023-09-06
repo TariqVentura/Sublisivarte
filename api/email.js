@@ -15,27 +15,33 @@ exports.newPasswordEmail = async (req, res) => {
     if (req.session.user && req.body.email) {
         username = req.session.user
         email = req.body.email
-    } else if (req.body.user && req.body.email) {
-        username = req.body.user
-        email = req.body.email
     } else {
-        res.send('empty')
+        if (req.body.user && req.body.email) {
+            username = req.body.user
+            email = req.body.email
+        } else {
+            res.send('empty')
+            return
+        }
     }
 
     //validamos si existe una sesión y de existir validamos que sea la misma a la que se le quiere cambiar la contraseña
     if (req.session.user && req.session.user != username) {
         res.send('user')
+        return
     } else {
-        let userValidation = await VALIDATION.userValidation(req.body.user) 
+        let userValidation = await VALIDATION.userValidation(req.body.user)
 
         if (userValidation == false) {
             res.send('user')
+            return
         }
 
         let emailValidation = await VALIDATION.emailValidation(email, username)
 
         if (emailValidation == false) {
             res.send('user')
+            return
         }
 
         //creamos un arreglo con los caracteres que tendra el codigo
