@@ -10,7 +10,7 @@ const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
-const VALIDATION = require('../helpers/validations/users')
+const VALIDATION = require('../helpers/validations/password')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida

@@ -63,15 +63,6 @@ CODE_FORM.addEventListener('submit', (e) => {
                     showConfirmButton: true
                 })
                 break
-            //usuario o correo invalido
-            case 'code':
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Usted ya posee un codigo de recuperacion activo',
-                    showConfirmButton: true
-                })
-                break
         }
     })
 })
