@@ -6,7 +6,7 @@ const MAIL = require('../config/email')
 const CODE = require('../models/code')
 const FECHA = require('node-datetime')
 const BCRYPT = require('bcrypt')
-const VALIDATION = require('../helpers/validations/password')
+const VALIDATION = require('../helpers/validations/users')
 
 //funcion para enviar correo de recuperacion de contraseña a clientes
 exports.newPasswordEmail = async (req, res) => {
