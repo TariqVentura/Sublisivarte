@@ -1,3 +1,4 @@
+//se declaran las dependencias que se utilizaran
 const CODE = require('../../models/code')
 const FECHA = require('node-datetime')
 const BCRYPT = require('bcrypt')
@@ -87,9 +88,12 @@ exports.comparePassword = async (username, password) => {
     }
 }
 
+//funcion para validar que el correo pertenezca a un usuario
 exports.emailValidation = async (email, username) => {
+    //buscamos en la base al usuario con el correo que se envio
     const DATA = await USER.find( { user: username, email: email } ).exec()
-    console.log(DATA)
+    
+    //sino hay datos es que el correo no coincide con el usuario y enviamos false
     if (!DATA.length) {
         return false
     } else {
@@ -97,31 +101,44 @@ exports.emailValidation = async (email, username) => {
     }
 }
 
+//funcion para validar el codigo de seguridad
 exports.codeAuthentication = async (username) => {
+    //guardamos en una constante datos para validar el codigo
     const DATA = await CODE.find({ user: username, status: 'activo' }).exec()
 
+    //sino hay datos entonces puede crear un codigo
     if (!DATA.length) {
         return true
     } else {
+        //declaramos una fecha de node-datetime
         let newDate = FECHA.create()
+
+        //obtenemos la cantidad de minutos que hay en la hora en que se creo el codigo
         let createCode = Number(DATA[0].date.substring(11, 13)) * 60 + Number(DATA[0].date.substring(14, 16))
+        
+        //obtenemos la cantidad de minutos que hay en la hora en que se envio el codigo
         let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
+        
+        //calculamos la diferencia de minutos que hay entre el momento que se creo el codigo y el momento en que se envio 
         let date = insertCode - createCode
-        console.log(date)
+        
+        //si el tiempo en que se envio es menor o igual a 15 minutos entonces ya tiene un codigo activo y no puede generar otro
         if (date <= 15 &&  newDate.format('Y-m-d') == DATA[0].date.substring(0, 10)) {
             return false
         } else {
+            //si el tiempo es mayor a 15 minutos entonces desactivamos el codigo y le permitimos crear uno nuevo
             await CODE.findByIdAndUpdate(DATA[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
             return true
         }
     }
 }
 
+//funcion para validar que el correo sea unico
 exports.uniqueEmail = async (email) => {
+    //almacenamos en una constante las coincidencias de usuarios con el correo enviaso
     const DATA = await USER.find({ email: email }).exec()
-    
-    console.log(DATA)
 
+    //sino hay datos es porque el correo no ha sido utilizado y es valido
     if (!DATA.length) {
         return true
     } else {
