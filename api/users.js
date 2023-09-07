@@ -1,3 +1,4 @@
+require('dotenv').config()
 /**
  * Se declaran las constantes para mandar a llamar al controlador y las dependencias de node
  */
@@ -11,16 +12,18 @@ const FS = require('fs')
 const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
 const VALIDATION = require('../helpers/validations/users')
+const JWT = require('jsonwebtoken')
+const TOKEN_VALIDATION = require('../helpers/validations/token')
 
 //funcion para crear un usuario
 exports.createUser = async (req, res) => {
     //validamos los campos para que no esten vacios
-    if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document) {
+    if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document || !req.body.confirm) {
         res.send('empty')
         return
     } else {
         //declaramos variables
-        let name, lastname, email, user, password, document, role, newDocument
+        let name, lastname, email, user, password, document, role, newDocument, confirm
 
         //le asignamos un valor a las variables
         name = req.body.name
@@ -29,10 +32,16 @@ exports.createUser = async (req, res) => {
         user = req.body.user
         document = req.body.document
         password = req.body.password
+        confirm = req.body.confirm
 
         //validamos que no existan campos vacios
-        if (!name.trim() || !lastname.trim() || !email.trim() || !user.trim() || !document.trim() || !password.trim()) {
+        if (!name.trim() || !lastname.trim() || !email.trim() || !user.trim() || !document.trim() || !password.trim() || !confirm.trim()) {
             res.send('empty')
+            return
+        }
+
+        if (confirm.trim() != password.trim()) {
+            res.send('coincidencia')
             return
         }
 
@@ -69,7 +78,7 @@ exports.createUser = async (req, res) => {
 
         //validamos si es un usuario credo desde el sitio publico o privado
         if (req.session.user && req.session.role == 'admin') {
-            
+
             //validamos que el campo de rol no este vacio
             if (req.body.role) {
                 role = req.body.role
@@ -79,6 +88,7 @@ exports.createUser = async (req, res) => {
 
             if (!role.trim()) {
                 res.send('empty')
+                return
             }
 
             //creamos un objeto con los datos del nuevo usuario
@@ -145,20 +155,34 @@ exports.logIn = async (req, res) => {
     //verificamos que no haya una sesion
     if (req.session.authenticated) {
         res.send('session')
+        return
     } else {
         //almaenamos los datos del usuario en una varible
         let data = await USERS.find({ user: USER }).exec()
 
-        //llenamos los datos de la sesion con los datos del usuario
-        req.session.authenticated = true
-        req.session.user = USER
-        req.session.role = data[0].role
-        req.session.status = data[0].status
-        req.session.email = data[0].email
-        req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+        const INFO = {
+            user: USER,
+            rol: data[0].role
+        }
 
-        //enviamos la respuesta
-        res.send(true)
+        JWT.sign({ INFO }, process.env.TOKEN, { expiresIn: '1h' }, (err, token) => {
+            if (err) {
+                res.send(false)
+                return
+            } else {
+                req.session.token = token
+                //llenamos los datos de la sesion con los datos del usuario
+                req.session.authenticated = true
+                req.session.user = USER
+                req.session.role = data[0].role
+                req.session.status = data[0].status
+                req.session.email = data[0].email
+                req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+
+                //enviamos la respuesta
+                res.send(true)
+            }
+        })
     }
 }
 
@@ -168,8 +192,9 @@ exports.logOut = (req, res) => {
 }
 
 exports.findUsers = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (req.usuario.INFO.rol != 'admin') {
         res.redirect('/error404')
+        return
     }
     if (req.params.id) {
         const id = req.query.id
@@ -188,7 +213,6 @@ exports.findUsers = (req, res) => {
         USERS.find()
             .then(user => {
                 res.send(user)
-                console.log(user)
             })
             .catch(err => {
                 res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la información" })
@@ -197,8 +221,9 @@ exports.findUsers = (req, res) => {
 }
 
 exports.updateUsers = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     console.log(req.body.id)
     const id = req.body.id
@@ -219,8 +244,9 @@ exports.updateUsers = (req, res) => {
 }
 
 exports.bannUser = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     const ID = req.params.id
     const VALUE = { status: 'baneado' }
@@ -243,8 +269,9 @@ exports.bannUser = (req, res) => {
 }
 
 exports.deleteUsers = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     if (req.session.user != req.params.user) {
         const VALUE = { user: req.params.user }
@@ -268,8 +295,9 @@ exports.deleteUsers = (req, res) => {
 }
 
 exports.searchUsers = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     const key = req.params.key
     USERS.find(
@@ -386,8 +414,9 @@ exports.newPassword = async (req, res) => {
 }
 
 exports.statusUser = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     const PARAM = { user: req.params.id }
     const VALUE = { status: 'inactivo' }
@@ -405,8 +434,9 @@ exports.statusUser = (req, res) => {
 }
 
 exports.getUser = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user) {
         res.redirect('/error404')
+        return
     }
     const KEY = req.params.key
 
@@ -430,6 +460,7 @@ exports.getUser = (req, res) => {
 exports.modifyUser = (req, res) => {
     if (!req.session.user) {
         res.redirect('/error404')
+        return
     }
     if (!req.body.name || !req.body.lastname || !req.body.email) {
         AXIOS.get('http://localhost:443/api/images')
@@ -459,8 +490,9 @@ exports.modifyUser = (req, res) => {
 }
 
 exports.getUserReport = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     //creamos constante de FILE_NAME y HTML como parametros para la dependencia
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')

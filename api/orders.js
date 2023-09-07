@@ -9,8 +9,9 @@ const OPTIONS_2 = require('../helpers/format/order')
 
 
 exports.createOrder = (req, res) => {
-    if (!req.session.user) {
+    if (!req.usuario) {
         res.redirect('/images/Error 404.png')
+        return
     } else {
         if (!req.body.name) {
             res.status(404).send('no se permiten campos vacios')
@@ -43,8 +44,9 @@ exports.createOrder = (req, res) => {
 }
 
 exports.finishOrder = (req, res) => {
-    if (!req.session.user) {
+    if (!req.usuario) {
         res.redirect('/images/Error 404.png')
+        return
     } else {
         const ID = req.params.id
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
@@ -68,8 +70,9 @@ exports.finishOrder = (req, res) => {
 }
 
 exports.cancelOrder = (req, res) => {
-    if (!req.session.user) {
+    if (!req.usuario) {
         res.redirect('/images/Error 404.png')
+        return
     } else {
         const ID = req.params.id
         const value = { status: 'cancelado' }
@@ -95,8 +98,9 @@ exports.cancelOrder = (req, res) => {
 }
 
 exports.getOrders = (req, res) => {
-    if (!req.session.user) {
+    if (!req.usuario || req.usuario.INFO.rol != 'admin') {
         res.redirect('/error404')
+        return
     }
     if (req.params.key) {
         const KEY = req.params.key
@@ -130,6 +134,7 @@ exports.getOrders = (req, res) => {
 exports.cancelOrder = (req, res) => {
     if (!req.session.user) {
         res.redirect('/error404')
+        return
     }
     const ID = req.params.id
     const VALUE = { status: 'cancelado' }
@@ -157,6 +162,7 @@ exports.cancelOrder = (req, res) => {
 exports.getInvoice = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     //obetner la plantilla de la carpeta helpers/templates
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/invoice.html'), 'utf-8')
@@ -256,6 +262,7 @@ exports.countOrdersDate = (req, res) => {
 exports.getReportDetail = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/detail.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_PRODUCTOS_' + req.params.key + '.pdf'
@@ -312,6 +319,7 @@ exports.dateOrders = (req, res) => {
 exports.reportOrders = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/order.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_ORDENES.pdf'

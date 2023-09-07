@@ -78,6 +78,14 @@ FORM_USER.addEventListener('submit', (e) => {
                     text: 'Este correo esta en uso'
                 })
                 break
+            case 'coincidencia':
+                //campos vacios
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Las contraseñas no coinciden'
+                })
+                break
             default:
                 break
         }

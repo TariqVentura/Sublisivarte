@@ -8,9 +8,9 @@ FORM_USER.addEventListener('submit', (e) => {
     name = document.getElementById('name').value
     lastname = document.getElementById('lastname').value
     email = document.getElementById('mail').value
-    user = document.getElementById('username').value
+    user = document.getElementById('username-account').value
     doc = document.getElementById('documento').value
-    password = document.getElementById('password').value
+    password = document.getElementById('password-account').value
 
     axios.post('http://localhost:443/api/users', {
         name: name,
@@ -74,6 +74,14 @@ FORM_USER.addEventListener('submit', (e) => {
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Este correo esta en uso'
+                })
+                break
+            case 'coincidencia':
+                //campos vacios
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Las contraseñas no coinciden'
                 })
                 break
             default:

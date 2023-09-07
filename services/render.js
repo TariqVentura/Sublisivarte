@@ -1,6 +1,5 @@
 const AXIOS = require('axios')
-const COMMENTS = require('../models/comments')
-let session
+let session, token
 
 exports.error = (req, res) => {
     AXIOS.get('http://localhost:443/api/images')
@@ -127,9 +126,25 @@ exports.cuenta = (req, res) => {
 }
 
 exports.usuarios = (req, res) => {
-    AXIOS.get('http://localhost:443/api/users')
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+    
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/users', CONFIG)
         .then(function (response) {
-            res.render('usuarios', { users: response.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
+            if (response.data == false) {
+                res.redirect('/error404')
+            } else {
+                res.render('usuarios', { users: response.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
+            }
         })
         .catch(err => {
             res.send('No se pudieron cargar los usuarios')
@@ -280,14 +295,20 @@ exports.searchCategorie = (req, res) => {
 }
 
 exports.orders = (req, res) => {
-    if (req.session.user) {
-        session = req.session
+    if (req.session.token) {
+        token = req.session.token
     } else {
-        session = false
+        token = null
     }
-    AXIOS.get('http://localhost:443/api/orders')
+    
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    AXIOS.get('http://localhost:443/api/orders', CONFIG)
         .then(function (orders) {
-            res.render('orders', { orders: orders.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+            res.render('orders', { orders: orders.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
         })
         .catch(err => {
             res.send('No se pudieron cargar las Categorias')

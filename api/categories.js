@@ -195,4 +195,6 @@ exports.getReport = (req, res) => {
     })
 }
 
-
+exports.changePassword90 = (req, res) =>{
+    
+}
