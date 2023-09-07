@@ -1,5 +1,4 @@
 const AXIOS = require('axios')
-const COMMENTS = require('../models/comments')
 let session
 
 exports.error = (req, res) => {
@@ -127,9 +126,26 @@ exports.cuenta = (req, res) => {
 }
 
 exports.usuarios = (req, res) => {
-    AXIOS.get('http://localhost:443/api/users')
+    let token 
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+    
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/users', CONFIG)
         .then(function (response) {
-            res.render('usuarios', { users: response.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
+            if (response.data == false) {
+                res.redirect('/error404')
+            } else {
+                res.render('usuarios', { users: response.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
+            }
         })
         .catch(err => {
             res.send('No se pudieron cargar los usuarios')

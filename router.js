@@ -1,8 +1,10 @@
+require('dotenv').config()
+
 /**
  * Se declaran las constantes de las dependencias de node y de los controladores
  * Las constantes se escriben en mayusculas y en casa de ser dos palabras se utiliza el guion bajo (_) como separado
  */
-const EXPRESS = require('express') 
+const EXPRESS = require('express')
 const ROUTER = EXPRESS.Router()
 const RENDER = require('./services/render')
 const USERS = require('./api/users')
@@ -14,6 +16,25 @@ const PRODUCTS = require('./api/products')
 const COMMENTS = require('./api/comments')
 const RECORD = require('./api/record')
 const EMAIL = require('./api/email')
+const JWT = require('jsonwebtoken')
+
+
+function tokenValidation (req, res, next) {
+    const TOKEN = req.header('Authorization')
+
+    if (!TOKEN) {
+        return res.status(401).json({ mensaje: 'Acceso no autorizado' })
+    }
+
+    JWT.verify(TOKEN.replace('Bearer ', ''), process.env.TOKEN, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ mensaje: 'Token Invalido' })
+        } else {
+            req.usuario = decoded
+            next()
+        }
+    })
+}
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
@@ -27,12 +48,12 @@ ROUTER.get('/products', RENDER.products)
 ROUTER.get('/categories', RENDER.categories)
 ROUTER.get('/carrito', RENDER.carrito)
 ROUTER.get('/cuenta', RENDER.cuenta)
-ROUTER.get('/usuarios', RENDER.usuarios) 
+ROUTER.get('/usuarios', RENDER.usuarios)
 ROUTER.get('/carrito/:id/:status', RENDER.details1)
 ROUTER.get('/producto/:id', RENDER.producto)
 ROUTER.get('/administracion', RENDER.administracion)
 ROUTER.get('/categorias', RENDER.categorias)
-ROUTER.get('/comentarios', RENDER.comments )
+ROUTER.get('/comentarios', RENDER.comments)
 ROUTER.get('/products/:key', RENDER.searchProduct)
 ROUTER.get('/comments/:key', RENDER.searchComments)
 ROUTER.get('/users/:key', RENDER.searchUser)
@@ -50,9 +71,9 @@ ROUTER.get('/api/images', IMAGES.getImages)
 
 //API users
 ROUTER.post('/api/users', USERS.createUser)
-ROUTER.get('/api/users', USERS.findUsers)
+ROUTER.get('/api/users', tokenValidation, USERS.findUsers)
 ROUTER.post('/update/users', USERS.updateUsers)
-ROUTER.get('/delete/users/:user',USERS.deleteUsers)
+ROUTER.get('/delete/users/:user', USERS.deleteUsers)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
 ROUTER.get('/api/users/:key', USERS.searchUsers)
@@ -73,7 +94,7 @@ ROUTER.get('/status/comment/:id/:status', COMMENTS.commentStatus)
 ROUTER.get('/api/count/comments/:key', COMMENTS.countCommentsProduct)
 
 //API orders
-ROUTER.post('/api/orders', ORDERS.createOrder)
+ROUTER.post('/api/orders', tokenValidation, ORDERS.createOrder)
 ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
 ROUTER.get('/api/orders/:key', ORDERS.getOrders)
 ROUTER.get('/api/orders', ORDERS.getOrders)
@@ -96,9 +117,9 @@ ROUTER.get('/api/details/:id', DETAILS.getDetails)
 ROUTER.get('/report/detail/:key/:client', DETAILS.getReportDetail)
 
 //API products
-ROUTER.post('/api/products', PRODUCTS.createProduct )
-ROUTER.get('/api/products', PRODUCTS.findProduct )
-ROUTER.get('/api/products/:id', PRODUCTS.findProduct )
+ROUTER.post('/api/products', PRODUCTS.createProduct)
+ROUTER.get('/api/products', PRODUCTS.findProduct)
+ROUTER.get('/api/products/:id', PRODUCTS.findProduct)
 ROUTER.post('/update/products/', PRODUCTS.updateProduct)
 ROUTER.get('/delete/products/:id', PRODUCTS.deleteProducts)
 ROUTER.get('/api/view/products/:key', PRODUCTS.searchProduct)
@@ -113,7 +134,7 @@ ROUTER.get('/categorieTop/api/products/:key', PRODUCTS.countPriceProducts)
 //API categories
 ROUTER.post('/api/categories', CATEGORIES.createCategorie)
 ROUTER.get('/api/categories', CATEGORIES.findCategorie)
-ROUTER.post('/update/categories' , CATEGORIES.updateCategorie)
+ROUTER.post('/update/categories', CATEGORIES.updateCategorie)
 ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
 ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
 ROUTER.get('/api/categories/:key', CATEGORIES.searchCategories)
