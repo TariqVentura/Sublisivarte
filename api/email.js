@@ -119,7 +119,7 @@ exports.newPasswordEmail = async (req, res) => {
                                             <br> Codigo de recuperación:</h5>
                                         </div>
                                         <div style="text-align: center;">
-                                            <input style="margin: auto; height: 30px; width: 250px;" type="text">
+                                            <input style="margin: auto; height: 30px; width: 250px;" type="text" value="${result}">
                                         </div>
                                         <div style="text-align: center; margin-top: 20px;">
                                             <button type="button"

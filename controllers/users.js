@@ -63,7 +63,7 @@ FORM_USER.addEventListener('submit', (e) => {
                 })
                 break
             case 'user':
-                //campos vacios
+                //usuario invalido
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
