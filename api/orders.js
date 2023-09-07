@@ -9,7 +9,7 @@ const OPTIONS_2 = require('../helpers/format/order')
 
 
 exports.createOrder = (req, res) => {
-    if (!req.session.user) {
+    if (!req.usuario) {
         res.redirect('/images/Error 404.png')
         return
     } else {
@@ -44,7 +44,7 @@ exports.createOrder = (req, res) => {
 }
 
 exports.finishOrder = (req, res) => {
-    if (!req.session.user) {
+    if (!req.usuario) {
         res.redirect('/images/Error 404.png')
         return
     } else {
@@ -70,7 +70,7 @@ exports.finishOrder = (req, res) => {
 }
 
 exports.cancelOrder = (req, res) => {
-    if (!req.session.user) {
+    if (!req.usuario) {
         res.redirect('/images/Error 404.png')
         return
     } else {
@@ -98,7 +98,7 @@ exports.cancelOrder = (req, res) => {
 }
 
 exports.getOrders = (req, res) => {
-    if (!req.session.user) {
+    if (!req.usuario || req.usuario.INFO.rol != 'admin') {
         res.redirect('/error404')
         return
     }

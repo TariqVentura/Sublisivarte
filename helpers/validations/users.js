@@ -161,18 +161,18 @@ exports.newPasswordValidation = async (control, user, email) => {
     return VALID && !FORBIDDEN ? null : { 'Contraseña inválida': { value: control } }
 }
 
-let intentosFallidos = 0
-let cuentaBloqueada = false
-let tiempoBloqueo = 24 * 60 * 60 * 1000
+exports.validarContrasena = (contrasena) => {
+    let intentosFallidos = 0
+    let cuentaBloqueada = false
+    let tiempoBloqueo = 24 * 60 * 60 * 1000
 
-function validarContrasena(contrasena) {
     // Verifica si la contraseña ingresada es correcta
     if (contrasena === "Contraseña correcta") {
         // Inicia sesión de forma exitosa
     } else {
         //Incrementa el número de intentos fallidos de inicio de sesión
         intentosFallidos++
-        if (intentosFallidos >= 3) {      
+        if (intentosFallidos >= 3) {
             cuentaBloqueada = true
             //Se establece un temporizador para desbloquear la cuenta del usuario
             setTimeout(() => {
