@@ -4,6 +4,9 @@ const PRODUCTS = require('../models/products')
 const FECHA = new Date()
 
 exports.newRecord = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     if (!req.body.id || !req.body.stock || !req.body.prevStock || !req.body.product) {
         AXIOS.get('http://localhost:443/api/products')
             .then(function (response) {
@@ -88,6 +91,9 @@ exports.newRecord = (req, res) => {
 }
 
 exports.getRecord = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     RECORD.find({ product: req.params.key }).then(data => {
         if (!data) {
             res.send('producto no encontrado')

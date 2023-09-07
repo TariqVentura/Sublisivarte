@@ -95,6 +95,9 @@ exports.cancelOrder = (req, res) => {
 }
 
 exports.getOrders = (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/error404')
+    }
     if (req.params.key) {
         const KEY = req.params.key
         ORDERS.find({ $or: [{ client: { $regex: KEY } }, { status: { $regex: KEY } }, { name: { $regex: KEY } }] })
@@ -125,6 +128,9 @@ exports.getOrders = (req, res) => {
 }
 
 exports.cancelOrder = (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/error404')
+    }
     const ID = req.params.id
     const VALUE = { status: 'cancelado' }
 
@@ -149,6 +155,9 @@ exports.cancelOrder = (req, res) => {
 
 
 exports.getInvoice = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin') {
+        res.redirect('/error404')
+    }
     //obetner la plantilla de la carpeta helpers/templates
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/invoice.html'), 'utf-8')
     //req.params.key es el id de la orden que se manda en la url 
@@ -242,9 +251,12 @@ exports.countOrdersDate = (req, res) => {
     })
 }
 
- 
+
 
 exports.getReportDetail = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin') {
+        res.redirect('/error404')
+    }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/detail.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_PRODUCTOS_' + req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/details/').then(function (detail) {
@@ -277,11 +289,11 @@ exports.getReportDetail = (req, res) => {
 
 exports.dateOrders = (req, res) => {
     const FECHA = req.params.key
-ORDERS.aggregate().match({
-    "$or": [
-        { date: { $regex: FECHA } }
-    ]
-}).group({
+    ORDERS.aggregate().match({
+        "$or": [
+            { date: { $regex: FECHA } }
+        ]
+    }).group({
         //Agrupamos las ordenes por estado y contamos cuantos ordene tiene cada estado
         _id: "$status",
         count: { $count: {} }
@@ -298,6 +310,9 @@ ORDERS.aggregate().match({
 
 
 exports.reportOrders = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/order.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_ORDENES.pdf'
     AXIOS.get('http://localhost:443/api/orders/').then(function (order) {
@@ -310,9 +325,9 @@ exports.reportOrders = (req, res) => {
                 finalizado.push(filter)
             } else if (i.status == 'en proceso') {
                 enProceso.push(filter)
-            } 
+            }
         })
-        
+
         const DATA = {
             user: req.session.user,
             finalizado: finalizado,

@@ -73,6 +73,9 @@ exports.findComments = (req, res) => {
 }
 
 exports.deleteComments = (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/error404')
+    }
     const id = req.params.id
     COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
         .then(data => {

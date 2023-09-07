@@ -21,6 +21,7 @@ const EMAIL = require('./api/email')
  * la informacion
  */
 ROUTER.get('/', RENDER.index)
+ROUTER.get('/error404', RENDER.error)
 ROUTER.get('/account', RENDER.newAccount)
 ROUTER.get('/products', RENDER.products)
 ROUTER.get('/categories', RENDER.categories)
