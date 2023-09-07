@@ -116,31 +116,43 @@ exports.createUser = async (req, res) => {
 }
 
 exports.logIn = async (req, res) => {
+    if (!req.body.user && !req.body.password) {
+        res.send('empty')
+        return
+    }
+
     const USER = req.body.user
+    const PASSWORD = req.body.password
 
-    let data = await USERS.findOne({ user: USER }).exec()
+    if (!USER.trim() || !PASSWORD.trim()) {
+        res.send('empty')
+        return
+    }
 
-    if (data) {
-        let password = req.body.password
-        let compare = await BCRYPT.compareSync(password, data.password)
+    console.log(PASSWORD + ' ' + USER)
 
-        if (compare == true) {
-            if (req.session.authenticated) {
-                res.send('session')
-            } else {
-                req.session.authenticated = true
-                req.session.user = USER
-                req.session.role = data.role
-                req.session.status = data.status
-                req.session.email = data.email
-                req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-                res.send(true)
-            }
-        } else {
-            res.send(false)
-        }
-    } else {
+    const COMPARE = await VALIDATION.comparePassword(USER, PASSWORD)
+
+    console.log(COMPARE)
+
+    if (COMPARE == false) {
         res.send(false)
+        return
+    }
+
+    if (req.session.authenticated) {
+        res.send('session')
+    } else {
+        let data = await USERS.find({ user: USER }).exec()
+
+        req.session.authenticated = true
+        req.session.user = USER
+        req.session.role = data[0].role
+        req.session.status = data[0].status
+        req.session.email = data[0].email
+        req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+
+        res.send(true)
     }
 }
 

@@ -15,12 +15,12 @@ LOGIN.addEventListener('submit', (e) => {
         }
     })
 
-    let user = document.getElementById('user').value
+    let user = document.getElementById('username').value
     let password = document.getElementById('password').value
 
     axios.post('http://localhost:443/logIn/users', {
         user: user,
-        passowrd: password
+        password: password
     }, {
         //definimos que utlizaremos body url encoded
         headers: {
@@ -29,10 +29,12 @@ LOGIN.addEventListener('submit', (e) => {
     }).then(data => {
         switch (data.data) {
             case true:
-                Toast.fire({
+                Swal.fire({
                     icon: 'success',
-                    title: 'Signed in successfully'
+                    title: 'Inicio de sesión exitoso',
+                    text: 'Acceso permtiido'
                 }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
                     location.href = '/'
                 })
                 break;
@@ -48,6 +50,12 @@ LOGIN.addEventListener('submit', (e) => {
                 Toast.fire({
                     icon: 'error',
                     title: 'Ya existe una sesión activo'
+                })
+                break;
+            case 'empty':
+                Toast.fire({
+                    icon: 'error',
+                    title: 'No se permiten campos vacios'
                 })
                 break;
         }
