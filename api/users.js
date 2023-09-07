@@ -116,35 +116,39 @@ exports.createUser = async (req, res) => {
 }
 
 exports.logIn = async (req, res) => {
+    //validamos que no existan campos vacios
     if (!req.body.user && !req.body.password) {
         res.send('empty')
         return
     }
 
+    //obtenemos los datos del formulario
     const USER = req.body.user
     const PASSWORD = req.body.password
 
+    //validamos datos 
     if (!USER.trim() || !PASSWORD.trim()) {
         res.send('empty')
         return
     }
 
-    console.log(PASSWORD + ' ' + USER)
-
+    //verificamos que la contraseña y el usuario coincidan
     const COMPARE = await VALIDATION.comparePassword(USER, PASSWORD)
 
-    console.log(COMPARE)
-
+    //si no coinciden mandamos error
     if (COMPARE == false) {
         res.send(false)
         return
     }
 
+    //verificamos que no haya una sesion
     if (req.session.authenticated) {
         res.send('session')
     } else {
+        //almaenamos los datos del usuario en una varible
         let data = await USERS.find({ user: USER }).exec()
 
+        //llenamos los datos de la sesion con los datos del usuario
         req.session.authenticated = true
         req.session.user = USER
         req.session.role = data[0].role
@@ -152,6 +156,7 @@ exports.logIn = async (req, res) => {
         req.session.email = data[0].email
         req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
 
+        //enviamos la respuesta
         res.send(true)
     }
 }
