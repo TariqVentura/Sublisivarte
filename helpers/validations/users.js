@@ -185,3 +185,10 @@ exports.validarContrasena = (contrasena) => {
         }
     }
 }
+
+exports.changePassword90 = async (user) => {
+    let data = await USER.find({ user: username }).exec()
+    let newDate = FECHA.create()
+    let userDate = data[0].updatedAt
+
+}
