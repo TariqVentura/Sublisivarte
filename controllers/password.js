@@ -45,9 +45,6 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Error en la base de datos try',
                     showConfirmButton: true
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/cuenta'
                 })
                 break
             //codigo invalido
@@ -57,9 +54,6 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Código inválido',
                     showConfirmButton: true
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/cuenta'
                 })
                 break
             //contraseñoa no coincide
@@ -69,9 +63,6 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Las contraseñas no coinciden',
                     showConfirmButton: true
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/cuenta'
                 })
                 break
             //contraseña no cumple los parametros establecidos
@@ -81,9 +72,6 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'La contraseña no cumple con los parámetros de seguridad',
                     showConfirmButton: true
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/cuenta'
                 })
                 break
             //existen campos vacios
@@ -93,9 +81,6 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'No se permiten campos vacíos',
                     showConfirmButton: true
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/cuenta'
                 })
                 break
             case 'user':
@@ -104,9 +89,6 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Usuario Inexistente',
                     showConfirmButton: true
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/cuenta'
                 })
                 break;
             default:
@@ -116,9 +98,6 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
                     title: 'Oops...',
                     text: 'Error en la base de datos 616',
                     showConfirmButton: true
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/cuenta'
                 })
                 break
         }
@@ -129,9 +108,6 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
             title: 'Oops...',
             text: err,
             showConfirmButton: true
-        }).then(() => {
-            //redirigimos a la pagina para visualizar los cambios
-            location.href = '/cuenta'
         })
     })
 
