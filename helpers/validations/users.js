@@ -41,7 +41,7 @@ exports.codeValidation = async (username, code) => {
 //funcion para validar la contraseña segun parametros de seguridad
 exports.passwordValidation = async (control, user) => {
     //capturamos los datos del usuario en un objeto
-    const DATA = await USER.find( { user: user } ).exec()
+    const DATA = await USER.find({ user: user }).exec()
     //obtenemos el correo del usuario
     let mail = DATA[0].email
     //separamos para obtener el correo sin el dominio
@@ -73,7 +73,7 @@ exports.userValidation = async (username) => {
 //funcion para comparar contraseñas repetidas
 exports.comparePassword = async (username, password) => {
     //buscamos datos en la base y los guardamos en un arreglo
-    const DATA = await USER.find( { user: username } ).exec()
+    const DATA = await USER.find({ user: username }).exec()
     console.log(DATA)
     //sino hay datos en la base del usuario retornamos false
     if (!DATA.length) {
@@ -89,8 +89,8 @@ exports.comparePassword = async (username, password) => {
 //funcion para validar que el correo pertenezca a un usuario
 exports.emailValidation = async (email, username) => {
     //buscamos en la base al usuario con el correo que se envio
-    const DATA = await USER.find( { user: username, email: email } ).exec()
-    
+    const DATA = await USER.find({ user: username, email: email }).exec()
+
     //sino hay datos es que el correo no coincide con el usuario y enviamos false
     if (!DATA.length) {
         return false
@@ -113,17 +113,17 @@ exports.codeAuthentication = async (username) => {
 
         //obtenemos la cantidad de minutos que hay en la hora en que se creo el codigo
         let createCode = Number(DATA[0].date.substring(11, 13)) * 60 + Number(DATA[0].date.substring(14, 16))
-        
+
         //obtenemos la cantidad de minutos que hay en la hora en que se envio el codigo
         let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
-        
+
         //calculamos la diferencia de minutos que hay entre el momento que se creo el codigo y el momento en que se envio 
         let date = insertCode - createCode
 
         console.log(DATA[0].date.substring(0, 10) + ' ' + newDate.format('Y-m-d'))
-        
+
         //si el tiempo en que se envio es menor o igual a 15 minutos entonces ya tiene un codigo activo y no puede generar otro
-        if (date <= 15 &&  newDate.format('Y-m-d') == DATA[0].date.substring(0, 10)) {
+        if (date <= 15 && newDate.format('Y-m-d') == DATA[0].date.substring(0, 10)) {
             return false
         } else {
             //si el tiempo es mayor a 15 minutos entonces desactivamos el codigo y le permitimos crear uno nuevo
@@ -159,4 +159,29 @@ exports.newPasswordValidation = async (control, user, email) => {
     const VALID = PASSWORD_REGEX.test(control)
     // Si la contraseña es válida y no contiene un nombre de usuario no permitido, devuelve null de lo contrario, devuelve un objeto con un mensaje de error
     return VALID && !FORBIDDEN ? null : { 'Contraseña inválida': { value: control } }
+}
+
+let intentosFallidos = 0
+let cuentaBloqueada = false
+let tiempoBloqueo = 24 * 60 * 60 * 1000
+
+function validarContrasena(contrasena) {
+    // Verifica si la contraseña ingresada es correcta
+    if (contrasena === "Contraseña correcta") {
+        // Inicia sesión de forma exitosa
+    } else {
+        //Incrementa el número de intentos fallidos de inicio de sesión
+        intentosFallidos++
+        if (intentosFallidos >= 3) {      
+            cuentaBloqueada = true
+            //Se establece un temporizador para desbloquear la cuenta del usuario
+            setTimeout(() => {
+                cuentaBloqueada = false;
+                intentosFallidos = 0;
+            }, tiempoBloqueo);
+            alert("Su cuenta ha sido bloqueada debido a varios intentos fallidos de inicio de sesión. Por favor, espere 24 horas o contacte al soporte técnico para recuperar el acceso a su cuenta.");
+        } else {
+            alert("Contraseña incorrecta. Por favor, inténtelo de nuevo.");
+        }
+    }
 }
