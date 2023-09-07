@@ -14,7 +14,6 @@ const PRODUCTS = require('./api/products')
 const COMMENTS = require('./api/comments')
 const RECORD = require('./api/record')
 const EMAIL = require('./api/email')
-const ATTEMPS = require('./api/attempt')
 
 /**
  * Se ocupa el metodo get para que al momento de que se envie a 
