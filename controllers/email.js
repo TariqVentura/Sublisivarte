@@ -63,6 +63,15 @@ CODE_FORM.addEventListener('submit', (e) => {
                     showConfirmButton: true
                 })
                 break
+            //codigo invalido
+            case 'code':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Usted ya posee un codigo activo',
+                    showConfirmButton: true
+                })
+                break
         }
     })
 })

@@ -121,6 +121,8 @@ exports.codeAuthentication = async (username) => {
         
         //calculamos la diferencia de minutos que hay entre el momento que se creo el codigo y el momento en que se envio 
         let date = insertCode - createCode
+
+        console.log(DATA[0].date.substring(0, 10) + ' ' + newDate.format('Y-m-d'))
         
         //si el tiempo en que se envio es menor o igual a 15 minutos entonces ya tiene un codigo activo y no puede generar otro
         if (date <= 15 &&  newDate.format('Y-m-d') == DATA[0].date.substring(0, 10)) {
