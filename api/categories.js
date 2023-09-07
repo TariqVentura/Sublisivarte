@@ -7,6 +7,10 @@ const FS = require('fs')
 const OPTIONS = require('../helpers/format/report')
 
 exports.createCategorie = async (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
+
     let category
     if (req.body.categorie) {
         category = req.body.categorie
@@ -60,6 +64,9 @@ exports.findCategorie = (req, res) => {
 }
 
 exports.updateCategorie = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     console.log(req.body.id)
     const id = req.body.id
     CATEGORIES.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
@@ -82,6 +89,9 @@ exports.updateCategorie = (req, res) => {
 }
 
 exports.deleteCategorie = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const id = req.params.key
     CATEGORIES.findByIdAndDelete(id, req.body, { useFindAndModify: false })
         .then(data => {
@@ -103,6 +113,9 @@ exports.deleteCategorie = (req, res) => {
 }
 
 exports.categorieStatus = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const STATUS = req.params.status
     const ID = req.params.id
     const VALUE = { status: STATUS }
@@ -149,6 +162,9 @@ exports.searchCategories = (req, res) => {
 }
 
 exports.getReport = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/report.html'), 'utf-8')
     const FILE_NAME = req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/view/products/' + req.params.key).then(function (product) {

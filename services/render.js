@@ -2,6 +2,13 @@ const AXIOS = require('axios')
 const COMMENTS = require('../models/comments')
 let session
 
+exports.error = (req, res) => {
+    AXIOS.get('http://localhost:443/api/images')
+        .then(function (images) {
+            res.render('include/error', { user: false, resources: images.data, mensaje: ". ", confirmation: false, icon: " ." })
+        })
+}
+
 exports.index = (req, res) => {
     if (req.session.user) {
         session = req.session

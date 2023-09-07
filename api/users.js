@@ -68,7 +68,8 @@ exports.createUser = async (req, res) => {
         const HASH = await BCRYPT.hashSync(ENCRYPTED_PASSWORD, SALT_ROUNDS)
 
         //validamos si es un usuario credo desde el sitio publico o privado
-        if (req.session.user) {
+        if (req.session.user && req.session.role == 'admin') {
+            
             //validamos que el campo de rol no este vacio
             if (req.body.role) {
                 role = req.body.role
@@ -115,38 +116,50 @@ exports.createUser = async (req, res) => {
     }
 }
 
-exports.logIn = (req, res) => {
+exports.logIn = async (req, res) => {
+    //validamos que no existan campos vacios
+    if (!req.body.user && !req.body.password) {
+        res.send('empty')
+        return
+    }
+
+    //obtenemos los datos del formulario
     const USER = req.body.user
-    USERS.findOne({ user: USER })
-        .then(data => {
-            if (!data) {
-                AXIOS.get('http://localhost:443/api/images')
-                    .then(function (images) {
-                        res.render('index', { resources: images.data, mensaje: "Usuario o contraseña erroena", confirmation: true, icon: 'error', user: false })
-                    })
-            } else {
-                BCRYPT.compare(req.body.password, data.password, function (err, result) {
-                    if (result) {
-                        if (req.session.authenticated) {
-                            res.json(req.session)
-                        } else {
-                            req.session.authenticated = true
-                            req.session.user = USER
-                            req.session.role = data.role
-                            req.session.status = data.status
-                            req.session.email = data.email
-                            req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-                            res.redirect('/')
-                        }
-                    } else {
-                        AXIOS.get('http://localhost:443/api/images')
-                            .then(function (images) {
-                                res.render('index', { resources: images.data, mensaje: "Usuario o contraseña erroena", confirmation: true, icon: 'error', user: false })
-                            })
-                    }
-                })
-            }
-        })
+    const PASSWORD = req.body.password
+
+    //validamos datos 
+    if (!USER.trim() || !PASSWORD.trim()) {
+        res.send('empty')
+        return
+    }
+
+    //verificamos que la contraseña y el usuario coincidan
+    const COMPARE = await VALIDATION.comparePassword(USER, PASSWORD)
+
+    //si no coinciden mandamos error
+    if (COMPARE == false) {
+        res.send(false)
+        return
+    }
+
+    //verificamos que no haya una sesion
+    if (req.session.authenticated) {
+        res.send('session')
+    } else {
+        //almaenamos los datos del usuario en una varible
+        let data = await USERS.find({ user: USER }).exec()
+
+        //llenamos los datos de la sesion con los datos del usuario
+        req.session.authenticated = true
+        req.session.user = USER
+        req.session.role = data[0].role
+        req.session.status = data[0].status
+        req.session.email = data[0].email
+        req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+
+        //enviamos la respuesta
+        res.send(true)
+    }
 }
 
 exports.logOut = (req, res) => {
@@ -155,6 +168,9 @@ exports.logOut = (req, res) => {
 }
 
 exports.findUsers = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     if (req.params.id) {
         const id = req.query.id
         USERS.findById(id)
@@ -181,6 +197,9 @@ exports.findUsers = (req, res) => {
 }
 
 exports.updateUsers = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     console.log(req.body.id)
     const id = req.body.id
     USERS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
@@ -200,6 +219,9 @@ exports.updateUsers = (req, res) => {
 }
 
 exports.bannUser = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const ID = req.params.id
     const VALUE = { status: 'baneado' }
 
@@ -221,6 +243,9 @@ exports.bannUser = (req, res) => {
 }
 
 exports.deleteUsers = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     if (req.session.user != req.params.user) {
         const VALUE = { user: req.params.user }
         USERS.deleteOne(VALUE)
@@ -243,6 +268,9 @@ exports.deleteUsers = (req, res) => {
 }
 
 exports.searchUsers = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const key = req.params.key
     USERS.find(
         {
@@ -358,6 +386,9 @@ exports.newPassword = async (req, res) => {
 }
 
 exports.statusUser = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const PARAM = { user: req.params.id }
     const VALUE = { status: 'inactivo' }
 
@@ -374,6 +405,9 @@ exports.statusUser = (req, res) => {
 }
 
 exports.getUser = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const KEY = req.params.key
 
     USERS.find({
@@ -394,6 +428,9 @@ exports.getUser = (req, res) => {
 }
 
 exports.modifyUser = (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/error404')
+    }
     if (!req.body.name || !req.body.lastname || !req.body.email) {
         AXIOS.get('http://localhost:443/api/images')
             .then(function (images) {
@@ -422,6 +459,9 @@ exports.modifyUser = (req, res) => {
 }
 
 exports.getUserReport = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     //creamos constante de FILE_NAME y HTML como parametros para la dependencia
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_USUARIOS_' + req.params.key + '.pdf'

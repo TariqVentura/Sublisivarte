@@ -15,6 +15,9 @@ const OPTIONS2 = require('../helpers/format/stock')
  * Haciendo uso ddel metodo SAVE de mongoose se guardan los datos en el servidor de Atlas
  */
 exports.createProduct = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     if (!req.body.product || !req.body.price || !req.body.categorie || !req.body.image || !req.body.stock) {
         AXIOS.get('http://localhost:443/api/products')
             .then(function (response) {
@@ -79,6 +82,9 @@ exports.findProduct = (req, res) => {
 }
 
 exports.updateProduct = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     if (!req.body.product || !req.body.price || req.body.price < 0 || !req.body.categorie || !req.body.image) {
         AXIOS.get('http://localhost:443/api/products')
             .then(function (response) {
@@ -108,6 +114,9 @@ exports.updateProduct = (req, res) => {
 }
 
 exports.deleteProducts = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const id = req.params.id
     PRODUCTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
         .then(data => {
@@ -185,6 +194,9 @@ exports.countProducts = (req, res) => {
 
 
 exports.getStockReport = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/stock.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/record/' + req.params.key).then(function (stock) {
@@ -234,6 +246,9 @@ exports.countStockProducts = (req, res) => {
 }
 
 exports.reportProducts = (req, res) => {
+    if (!req.session.user || req.session.role != 'admin' ) {
+        res.redirect('/error404')
+    }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/productos.html'), 'utf-8')
     const FILE_NAME2 = 'REPORTE_DE_PRODUCTOS.pdf'
     AXIOS.get('http://localhost:443/api/products/').then(function (products) {
