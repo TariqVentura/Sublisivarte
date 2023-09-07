@@ -12,18 +12,17 @@ const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
 const VALIDATION = require('../helpers/validations/users')
 
-/**
- * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
- * Haciendo uso ddel metodo SAVE de mongoose se guardan los datos en el servidor de Atlas
- */
+//funcion para crear un usuario
 exports.createUser = async (req, res) => {
     //validamos los campos para que no esten vacios
     if (!req.body.user || !req.body.name || !req.body.lastname || !req.body.email || !req.body.password || !req.body.document) {
         res.send('empty')
         return
     } else {
+        //declaramos variables
         let name, lastname, email, user, password, document, role, newDocument
 
+        //le asignamos un valor a las variables
         name = req.body.name
         lastname = req.body.lastname
         email = req.body.email
@@ -31,13 +30,13 @@ exports.createUser = async (req, res) => {
         document = req.body.document
         password = req.body.password
 
-        console.log(name + ' ' + lastname + ' ' + email + ' ' + user + ' ' + document + ' ' + password)
-
+        //validamos que no existan campos vacios
         if (!name.trim() || !lastname.trim() || !email.trim() || !user.trim() || !document.trim() || !password.trim()) {
             res.send('empty')
             return
         }
 
+        //validamos que no sea un usuario repetido
         const USER_VALIDATION = await VALIDATION.userValidation(user)
 
         if (USER_VALIDATION == true) {
@@ -45,6 +44,7 @@ exports.createUser = async (req, res) => {
             return
         }
 
+        //validamos que no sea un correo repetido
         const EMAIL_VALIDATION = await VALIDATION.uniqueEmail(email)
 
         if (EMAIL_VALIDATION == false) {
@@ -52,6 +52,7 @@ exports.createUser = async (req, res) => {
             return
         }
 
+        //validamos que la contraseña sea valida
         const PASSWORD_VALIDATION = await VALIDATION.newPasswordValidation(password, user, email)
 
         if (PASSWORD_VALIDATION) {
@@ -59,13 +60,16 @@ exports.createUser = async (req, res) => {
             return
         }
 
+        //generamos los saltos del hash en 10 que son los que recomienda OWASP
         const SALT_ROUNDS = await BCRYPT.genSaltSync(10)
         const ENCRYPTED_PASSWORD = password
 
+        //hasheamos la contraseña con bcrypt y la guardamos en una constante
         const HASH = await BCRYPT.hashSync(ENCRYPTED_PASSWORD, SALT_ROUNDS)
 
+        //validamos si es un usuario credo desde el sitio publico o privado
         if (req.session.user) {
-            console.log('session')
+            //validamos que el campo de rol no este vacio
             if (req.body.role) {
                 role = req.body.role
             } else {
@@ -76,6 +80,7 @@ exports.createUser = async (req, res) => {
                 res.send('empty')
             }
 
+            //creamos un objeto con los datos del nuevo usuario
             newDocument = new USERS({
                 name: name,
                 lastname: lastname,
@@ -87,7 +92,7 @@ exports.createUser = async (req, res) => {
             })
 
         } else {
-            console.log('no session')
+            //creamos un objeto con los datos del nuevo usuario
             newDocument = new USERS({
                 name: req.body.name,
                 lastname: req.body.lastname,
@@ -98,8 +103,10 @@ exports.createUser = async (req, res) => {
             })
         }
 
+        //utilizamos el metodo save de mongoose para guardar los datos en la base
         const DATA = await newDocument.save()
 
+        //enviamos una respuesta segun se haya completado el proceso
         if (DATA) {
             res.send(true)
         } else {
