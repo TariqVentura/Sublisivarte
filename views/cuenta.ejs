@@ -3,41 +3,6 @@
 <% } else { %>
     <div class="container">
         <div class="row my-3">
-            <div class="col-6 border-end">
-                <p class="fs-4">Informacion De Usuario</p>
-                <form action="/api/modifyUser" method="post">
-                    <% data.forEach((data) => { %>
-                        <div class="row d-flex flex-row my-3">
-                            <div class="col">
-                                <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                                <input type="text" class="form-control w-75" id="exampleFormControlInput1" name="name" value="<%= data.name %>">
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput2" class="form-label">Apellido</label>
-                                <input type="text" class="form-control w-75" id="exampleFormControlInput2" name="lastname" value="<%= data.lastname %>">
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row my-3">
-                            <div class="col">
-                                <label for="exampleFormControlInput3" class="form-label">Correo</label>
-                                <input type="email" class="form-control w-75" id="exampleFormControlInput3" name="email" value="<%= data.email %>">
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput4" class="form-label">Documento</label>
-                                <input type="text" class="form-control w-75" id="exampleFormControlInput4" name="document" value="<%= data.document %>" disabled>                                
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row my-3 hidden">
-                            <div class="col">
-                                <input type="text" class="form-control w-75" id="exampleFormControlInput5" name="user" value="<%= data.user %>" hidden>
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row my-3 justify-content-center">
-                            <button type="submit" class="btn btn-success w-50 mt-3">Guardar cambios</button>
-                        </div>
-                    <% }) %>
-                </form>
-            </div>
             <div class="col-6 d-flex align-items-center flex-column">
                 <p class="fs-4">Acciones</p>
                 <!-- Button trigger modal -->

@@ -79,6 +79,7 @@ exports.createUser = async (req, res) => {
 
             if (!role.trim()) {
                 res.send('empty')
+                return
             }
 
             //creamos un objeto con los datos del nuevo usuario
@@ -145,6 +146,7 @@ exports.logIn = async (req, res) => {
     //verificamos que no haya una sesion
     if (req.session.authenticated) {
         res.send('session')
+        return
     } else {
         //almaenamos los datos del usuario en una varible
         let data = await USERS.find({ user: USER }).exec()
@@ -170,6 +172,7 @@ exports.logOut = (req, res) => {
 exports.findUsers = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     if (req.params.id) {
         const id = req.query.id
@@ -199,6 +202,7 @@ exports.findUsers = (req, res) => {
 exports.updateUsers = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     console.log(req.body.id)
     const id = req.body.id
@@ -221,6 +225,7 @@ exports.updateUsers = (req, res) => {
 exports.bannUser = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const ID = req.params.id
     const VALUE = { status: 'baneado' }
@@ -245,6 +250,7 @@ exports.bannUser = (req, res) => {
 exports.deleteUsers = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     if (req.session.user != req.params.user) {
         const VALUE = { user: req.params.user }
@@ -270,6 +276,7 @@ exports.deleteUsers = (req, res) => {
 exports.searchUsers = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const key = req.params.key
     USERS.find(
@@ -388,6 +395,7 @@ exports.newPassword = async (req, res) => {
 exports.statusUser = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const PARAM = { user: req.params.id }
     const VALUE = { status: 'inactivo' }
@@ -405,8 +413,9 @@ exports.statusUser = (req, res) => {
 }
 
 exports.getUser = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user) {
         res.redirect('/error404')
+        return
     }
     const KEY = req.params.key
 
@@ -430,6 +439,7 @@ exports.getUser = (req, res) => {
 exports.modifyUser = (req, res) => {
     if (!req.session.user) {
         res.redirect('/error404')
+        return
     }
     if (!req.body.name || !req.body.lastname || !req.body.email) {
         AXIOS.get('http://localhost:443/api/images')
@@ -461,6 +471,7 @@ exports.modifyUser = (req, res) => {
 exports.getUserReport = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     //creamos constante de FILE_NAME y HTML como parametros para la dependencia
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')

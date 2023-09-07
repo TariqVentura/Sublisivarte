@@ -6,6 +6,7 @@ const FECHA = new Date()
 exports.newRecord = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     if (!req.body.id || !req.body.stock || !req.body.prevStock || !req.body.product) {
         AXIOS.get('http://localhost:443/api/products')
@@ -93,6 +94,7 @@ exports.newRecord = (req, res) => {
 exports.getRecord = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     RECORD.find({ product: req.params.key }).then(data => {
         if (!data) {

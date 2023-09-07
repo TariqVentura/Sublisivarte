@@ -17,6 +17,7 @@ const OPTIONS2 = require('../helpers/format/stock')
 exports.createProduct = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     if (!req.body.product || !req.body.price || !req.body.categorie || !req.body.image || !req.body.stock) {
         AXIOS.get('http://localhost:443/api/products')
@@ -84,6 +85,7 @@ exports.findProduct = (req, res) => {
 exports.updateProduct = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     if (!req.body.product || !req.body.price || req.body.price < 0 || !req.body.categorie || !req.body.image) {
         AXIOS.get('http://localhost:443/api/products')
@@ -116,6 +118,7 @@ exports.updateProduct = (req, res) => {
 exports.deleteProducts = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const id = req.params.id
     PRODUCTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
@@ -196,6 +199,7 @@ exports.countProducts = (req, res) => {
 exports.getStockReport = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/stock.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
@@ -248,6 +252,7 @@ exports.countStockProducts = (req, res) => {
 exports.reportProducts = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/productos.html'), 'utf-8')
     const FILE_NAME2 = 'REPORTE_DE_PRODUCTOS.pdf'
