@@ -115,38 +115,33 @@ exports.createUser = async (req, res) => {
     }
 }
 
-exports.logIn = (req, res) => {
+exports.logIn = async (req, res) => {
     const USER = req.body.user
-    USERS.findOne({ user: USER })
-        .then(data => {
-            if (!data) {
-                AXIOS.get('http://localhost:443/api/images')
-                    .then(function (images) {
-                        res.render('index', { resources: images.data, mensaje: "Usuario o contraseña erroena", confirmation: true, icon: 'error', user: false })
-                    })
+
+    let data = await USERS.findOne({ user: USER }).exec()
+
+    if (data) {
+        let password = req.body.password
+        let compare = await BCRYPT.compareSync(password, data.password)
+
+        if (compare == true) {
+            if (req.session.authenticated) {
+                res.send('session')
             } else {
-                BCRYPT.compare(req.body.password, data.password, function (err, result) {
-                    if (result) {
-                        if (req.session.authenticated) {
-                            res.json(req.session)
-                        } else {
-                            req.session.authenticated = true
-                            req.session.user = USER
-                            req.session.role = data.role
-                            req.session.status = data.status
-                            req.session.email = data.email
-                            req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-                            res.redirect('/')
-                        }
-                    } else {
-                        AXIOS.get('http://localhost:443/api/images')
-                            .then(function (images) {
-                                res.render('index', { resources: images.data, mensaje: "Usuario o contraseña erroena", confirmation: true, icon: 'error', user: false })
-                            })
-                    }
-                })
+                req.session.authenticated = true
+                req.session.user = USER
+                req.session.role = data.role
+                req.session.status = data.status
+                req.session.email = data.email
+                req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+                res.send(true)
             }
-        })
+        } else {
+            res.send(false)
+        }
+    } else {
+        res.send(false)
+    }
 }
 
 exports.logOut = (req, res) => {

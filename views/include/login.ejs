@@ -8,15 +8,15 @@
             </span>
             <div class="form-box login">
                 <h2>Login</h2>
-                <form action="/login/users" method="post" autocomplete="off">
+                <form autocomplete="off" id="login">
                     <div class="imput-box">
                         <span class="icon"><ion-icon name="user"></ion-icon></span>
-                        <input type="text" required name="user">
+                        <input type="text" required name="user" id="user">
                         <label for="">Usuario</label>
                     </div>
                     <div class="imput-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input type="password" name="password" required>
+                        <input type="password" name="password" required id="password">
                         <label for="">Contraseña</label>
                     </div>
                     <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
@@ -30,4 +30,6 @@
     </div>
 </div>
 
-<script src="/controllers/users.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/login.js"></script>
