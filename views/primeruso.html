@@ -12,7 +12,7 @@
 <body class="bg-body-tertiary bg-dark">
     <div class="container">
         <main>
-            <div class="py-5 text-center">
+            <div class="text-center">
                 <img class="d-block mx-auto mb-1" src="../resources/images/LOG23-02.png" alt="" width="250"
                     height="230">
                 <h2>Registrate</h2>
@@ -23,55 +23,54 @@
                 <form class="needs-validation" novalidate="">
                     <div class="row g-3">
                         <div class="col-sm-6">
-                            <label for="firstName" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
-                            <div class="invalid-feedback">
-                                Valid first name is required.
-                            </div>
+                            <label for="" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
                         </div>
 
                         <div class="col-sm-6">
-                            <label for="lastName" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
-                            <div class="invalid-feedback">
-                                Valid last name is required.
-                            </div>
+                            <label for="" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" name="lastname" id="lastname" required>
                         </div>
 
                         <div class="col-12">
-                            <label for="username" class="form-label">Usuario</label>
+                            <label for="" class="form-label">Usuario</label>
                             <div class="input-group has-validation">
-                                <input type="text" class="form-control" id="username" placeholder="Usuario" required="">
-                                <div class="invalid-feedback">
-                                    Your username is required.
-                                </div>
+                                <input type="text" class="form-control" id="username" name="user" required>
                             </div>
                         </div>
 
                         <div class="col-12">
                             <label for="email" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com">
                         </div>
 
                         <div class="col-12">
-                            <label for="address" class="form-label">Contraseña</label>
-                            <input type="text" class="form-control" id="address" required="">
+                            <label for="number" class="form-label">DUI</label>
+                            <input type="number" class="form-control" id="email" placeholder="111111-1">
                         </div>
 
                         <div class="col-12">
-                            <label for="address2" class="form-label">Confirmar contraseña</label>
-                            <input type="text" class="form-control" id="address2">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="address" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="password" class="form-label">Confirmar contraseña</label>
+                            <input type="password" class="form-control" id="address2">
                         </div>
 
                         <div class="col-12 visually-hidden">
-                            <label for="address2" class="form-label">Rol</label>
+                            <label for="admin" class="form-label">Rol</label>
                             <input type="text" class="form-control" value="admin" id="address2" readonly>
+                        </div>
+                        <div class="col12">
+                            <button class="w-25 btn btn-primary btn-sm" type="reset">Vaciar campos</button>
                         </div>
                     </div>
 
                     <hr class="my-4">
 
-                    <button class="w-100 btn btn-primary btn-lg" type="submit">Registrar</button>
+                    <button class="w-100 btn btn-primary btn-sm" type="submit">Registrar</button>
                 </form>
             </div>
     </div>
