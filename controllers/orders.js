@@ -192,15 +192,9 @@ BUSCAR_FECHA.addEventListener('submit', function (e) {
     }
 })
 
-const CANCEL_BUTTON = document.getElementById('cancel-order')
-
-CANCEL_BUTTON.addEventListener('submit', (e) => {
-    e.preventDefault()
-
-
-})
-
+//funcion para cancelar una orden
 function cancelOrder(_id) {
+    //mensaje de confirmacion
     Swal.fire({
         title: '¿Esta seguro que desea cancelar esta orden?',
         text: "Número de orden: " + _id,
@@ -212,12 +206,14 @@ function cancelOrder(_id) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
+            //usamos axios para enviar la peticion a la API
             axios.get('http://localhost:443/cancel/orders/' + _id, {
                 //enviamos el token
                 headers: {
                     'Authorization': localStorage.getItem('token')
                 }
             }).then(data => {
+                //switch valida la respuesta de la API
                 switch (data.data) {
                     case true:
                         Swal.fire({

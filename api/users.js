@@ -40,9 +40,7 @@ exports.createUser = async (req, res) => {
             return
         }
 
-        console.log(user + ' ' + email)
-        console.log(confirm.trim() + ' ' + password.trim())
-
+        //validamos que coincidan las contraseñas del formulario
         if (confirm.trim() != password.trim()) {
             res.send('coincidencia')
             return
@@ -131,6 +129,7 @@ exports.createUser = async (req, res) => {
     }
 }
 
+//funcion de login 
 exports.logIn = async (req, res) => {
     //validamos que no existan campos vacios
     if (!req.body.user && !req.body.password) {
@@ -168,21 +167,25 @@ exports.logIn = async (req, res) => {
         //almaenamos los datos del usuario en una varible
         let data = await USERS.find({ user: USER }).exec()
 
+        //generamos los saltos para encriptar los datos
         const SALT_ROUNDS = await BCRYPT.genSaltSync(10)
 
+        //encriptamos el usuario
         const ENCRYPTED_USER = await BCRYPT.hashSync(USER, SALT_ROUNDS)
 
+        //obtenemos el rol del usuario
         const NEW_ROL = data[0].role
 
-        console.log(NEW_ROL[0])
-
+        //encriptamos el rol
         const ENCRYPTED_ROL = await BCRYPT.hashSync(NEW_ROL[0], SALT_ROUNDS)
 
+        //creamos un ovjeto con la informacion del usuario
         const INFO = {
             user: ENCRYPTED_USER,
             rol: ENCRYPTED_ROL
         }
 
+        //firmamos el token utilizando variables de entorno
         JWT.sign({ INFO }, process.env.TOKEN, { expiresIn: '1h' }, (err, token) => {
             if (err) {
                 res.send(false)
@@ -206,15 +209,12 @@ exports.logIn = async (req, res) => {
 }
 
 exports.logOut = (req, res) => {
+    //destruimos la sesion
     req.session.destroy()
     return res.redirect('/')
 }
 
 exports.findUsers = (req, res) => {
-    if (req.usuario.INFO.rol != 'admin') {
-        res.redirect('/error404')
-        return
-    }
     if (req.params.id) {
         const id = req.query.id
         USERS.findById(id)
@@ -514,14 +514,17 @@ exports.getUserReport = (req, res) => {
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_USUARIOS_' + req.params.key + '.pdf'
 
+    //creamos una vartiable token
     let token
 
+    //obtenemos los datos del token y validamos si existe
     if (req.session.token) {
         token = req.session.token
     } else {
         token = null
     }
 
+    //creamos un objeto para definir los headers de la peticion de axios donde enviaremos el token
     const CONFIG = {
         headers: {
             'Authorization': `Bearer ${token}`

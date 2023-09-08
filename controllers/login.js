@@ -1,8 +1,12 @@
+//obetenemos el formulario
 const LOGIN = document.getElementById('login')
 
+//escuchamos el evento submit
 LOGIN.addEventListener('submit', (e) => {
+    //evitamos que se recargue el formulario
     e.preventDefault()
 
+    //creamos un Toas de SweetAlerts
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -15,9 +19,11 @@ LOGIN.addEventListener('submit', (e) => {
         }
     })
 
+    //obtenemos los datos del formulario
     let user = document.getElementById('username').value
     let password = document.getElementById('password').value
 
+    //utilizamos axios para enviar la peticion a la API
     axios.post('http://localhost:443/logIn/users', {
         user: user,
         password: password
@@ -27,6 +33,7 @@ LOGIN.addEventListener('submit', (e) => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(data => {
+        //validamos con un switch las respuestas de la API
         switch (data.data) {
             case false:
                 Toast.fire({

@@ -1,10 +1,15 @@
+//obtenemos el formualrio
 const FORM_USER = document.getElementById('form-user')
 
+//escuchamos evento submit
 FORM_USER.addEventListener('submit', (e) => {
+    //evitamos que se recargue el formulario
     e.preventDefault()
 
+    //declaramos variables
     let name, lastname, email, user, doc, role, password
 
+    //capturamos datos
     name = document.getElementById('name').value
     lastname = document.getElementById('lastname').value
     email = document.getElementById('email').value
@@ -14,6 +19,7 @@ FORM_USER.addEventListener('submit', (e) => {
     password = document.getElementById('password').value
     confirm = document.getElementById('confirm').value
 
+    //enviamos la peticion con axios
     axios.post('http://localhost:443/api/users', {
         name: name,
         lastname: lastname,
@@ -29,6 +35,7 @@ FORM_USER.addEventListener('submit', (e) => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(data => {
+        //utilizamos switch para validar la respuesta de la API
         switch (data.data) {
             case true:
                 Swal.fire({

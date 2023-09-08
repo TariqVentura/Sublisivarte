@@ -1,4 +1,6 @@
+//funcion para eliminar un producto del pedido
 function deleteDetail(product, amount, id) {
+    //mensaje de confirmacion
     Swal.fire({
         title: 'Confirmación',
         text: "¿Esta seguro que desea eliminar el producto " + product + "?",
@@ -10,12 +12,14 @@ function deleteDetail(product, amount, id) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
+            //utilizamos axios para enviar la peticion
             axios.get('http://localhost:443/delete/details/' + product + "/" + amount + "/" + id, {
                 //enviamos el token
                 headers: {
                     'Authorization': localStorage.getItem('token')
                 }
             }).then(data => {
+                //validamos la respueta de la API utilizando axios
                 switch (data.data) {
                     case true:
                         Swal.fire({

@@ -1,10 +1,15 @@
+//obtenemos el formulario
 const SEND_ORDER = document.getElementById('enviar-orden')
 
+//escuchamos el evento submit
 SEND_ORDER.addEventListener('submit', (e) => {
+    //evitamos que se recargue el formulario
     e.preventDefault()
 
+    //declaramos las variables que utilizaremos
     let amount, image, color, size, stock, id, price, product, order
 
+    //le asignamos un valor a las variables
     amount = document.getElementById('amount').value
     image = document.getElementById('image').value
     color = document.getElementById('color').value
@@ -15,16 +20,7 @@ SEND_ORDER.addEventListener('submit', (e) => {
     product = document.getElementById('product').value
     order = document.getElementById('order').value
 
-    console.log(amount +
-        image+
-        color+
-        size+
-        stock+
-        id+
-        price+
-        product+
-        order)
-
+    //utilizamos axios para realizar la peticion
     axios.post('http://localhost:443/api/details', {
         amount: amount,
         image: image,
@@ -36,12 +32,13 @@ SEND_ORDER.addEventListener('submit', (e) => {
         product: product,
         order: order
     }, {
-        //definimos que utlizaremos body url encoded
+        //definimos que utlizaremos body url encoded y enviamos el token
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': localStorage.getItem('token')
         }
     }).then(data => {
+        //utlizamos un switch para validar las respuestas de la API
         switch (data.data) {
             case true:
                 Swal.fire({

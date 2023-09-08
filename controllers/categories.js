@@ -15,7 +15,7 @@ NEW_CATEGORY.addEventListener('submit', async (e) => {
         categorie: category,
         status: status
     }, {
-        //definimos que utlizaremos body url encoded
+        //definimos que utlizaremos body url encoded y enviamos el token 
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': localStorage.getItem('token')
@@ -55,7 +55,9 @@ NEW_CATEGORY.addEventListener('submit', async (e) => {
     })
 })
 
+//funcion para eliminar una categoria
 function deleteCategory(_id) {
+    //mensaje de confirmacion
     Swal.fire({
         title: 'Esta seguro?',
         text: "Esta acción no es reversible",
@@ -67,12 +69,14 @@ function deleteCategory(_id) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
+            //utilizamos axios para enviar la peticion
             axios.get('http://localhost:443/delete/categorie/' + _id, {
                 //enviamos el token
                 headers: {
                     'Authorization': localStorage.getItem('token')
                 }
             }).then(data => {
+                //validamos con un switch las respuestas de la API
                 switch (data.data) {
                     case true:
                         Swal.fire({
@@ -98,7 +102,9 @@ function deleteCategory(_id) {
     })
 }
 
+//funcion para cambiar estado de categoria
 function changeStatus(_id, status) {
+    //mensaje de confirmacion
     Swal.fire({
         title: 'Esta seguro?',
         text: "Desea cambiar el estado de esta categoria a " + status,
@@ -110,12 +116,14 @@ function changeStatus(_id, status) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
+            //utilizamos axios para ejecutar la peticion
             axios.get('http://localhost:443/status/categorie/' + _id + '/' + status, {
                 //enviamos el token
                 headers: {
                     'Authorization': localStorage.getItem('token')
                 }
             }).then(data => {
+                //utilizamos switch para validar las respuestas de la API
                 switch (data.data) {
                     case true:
                         Swal.fire({

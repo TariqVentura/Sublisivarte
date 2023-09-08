@@ -1,25 +1,26 @@
+//obtenemos el formulario
 const FORM_USER = document.getElementById('form-user')
 
+//escuchamos el evento submit
 FORM_USER.addEventListener('submit', (e) => {
+    //evitamos que se recargue le formulario
     e.preventDefault()
 
+    //declaramos las varibales a utilizar
     let name, lastname, email, user, doc, password
 
+    //asignamos valores
     name = document.getElementById('name').value
     lastname = document.getElementById('lastname').value
     email = document.getElementById('mail').value
-<<<<<<< HEAD
     user = document.getElementById('user-login').value
     doc = document.getElementById('documento').value
     password = document.getElementById('password-login').value
-
-    window.alert(user + ' ' + password + ' ' + name)
-=======
     user = document.getElementById('username-account').value
     doc = document.getElementById('documento').value
     password = document.getElementById('password-account').value
->>>>>>> 7457165afe3c2ce43d432a7a6122c24c5e83d754
 
+    //axios envia la peticion a la API
     axios.post('http://localhost:443/api/users', {
         name: name,
         lastname: lastname,
@@ -33,6 +34,7 @@ FORM_USER.addEventListener('submit', (e) => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(data => {
+        //switch valida la respuesta de la API
         switch (data.data) {
             case true:
                 Swal.fire({

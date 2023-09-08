@@ -1,21 +1,25 @@
+//obtenemos el formulario
 const NEW_LIST = document.getElementById('new-list')
 
+//escuchamos el evento submit
 NEW_LIST.addEventListener('submit', (e) => {
+    //evitamos que se recargue el formulario
     e.preventDefault()
 
+    //otenemos el valor de name 
     let name = document.getElementById('list-name').value
-    
-    console.log(name)
 
+    //utilizamos axios para hacer la peticion a la API
     axios.post('http://localhost:443/api/orders', {
         name: name
     }, {
-        //definimos que utlizaremos body url encoded
+        //definimos que utlizaremos body url encoded y enviamos el token
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': localStorage.getItem('token')
         }
     }).then(data => {
+        //utilizamos switch para validar las respuestas de la API
         switch (data.data) {
             case true:
                 Swal.fire({

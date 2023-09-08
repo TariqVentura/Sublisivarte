@@ -18,19 +18,24 @@ const RECORD = require('./api/record')
 const EMAIL = require('./api/email')
 const JWT = require('jsonwebtoken')
 
-
+//funcion para validar el token de sesion
 function tokenValidation (req, res, next) {
+    //obtenemos el token
     const TOKEN = req.header('Authorization')
 
+    //sino hay token enviamos error
     if (!TOKEN) {
         return res.status(401).json({ mensaje: 'Acceso no autorizado' })
     }
 
+    //verificamos el token usando la variable de entorno
     JWT.verify(TOKEN.replace('Bearer ', ''), process.env.TOKEN, (err, decoded) => {
         if (err) {
             return res.status(401).json({ mensaje: 'Token Invalido' })
         } else {
+            //guardamos los datos del token para poder usarlos despues
             req.usuario = decoded
+            //le decimos que contiue con el codigo
             next()
         }
     })
