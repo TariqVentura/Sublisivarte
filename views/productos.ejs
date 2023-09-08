@@ -12,110 +12,104 @@
                     </nav>
                 </div>
                 <div class="row d-flex align-items-center justify-content-between my-3">
-                    <div class="col-4 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
+                    <div class="col-3 my-2 mx-0 d-flex flex-row align-items-center border-bottom">
                         <img width="30" height="30" src="https://img.icons8.com/ios/30/search--v1.png" alt="search--v1"
-                            onclick="seacrhProduct()" />
+                            onclick="searchOrders()" />
                         <input class="form-control w-100 border-0" list="datalistOptions" id="seacrhProduct"
                             placeholder="buscar producto..." type="text" name="busqueda">
                     </div>
-                    <div class="col-3 d-flex justify-content-end">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                            Añadir un producto
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Producto</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <form action="/api/products" method="post">
-                                        <div class="modal-body">
-                                            <div class="row my-3">
-                                                <div class="col-8 d-flex flex-row align-items-center">
-                                                    <label for="" class="form-label me-2">Producto: </label>
-                                                    <input type="text" class="form-control" name="product" id=""
-                                                        required>
-                                                </div>
-                                                <div class="col-4 d-flex flex-row align-items-center">
-                                                    <label for="" class="form-label me-2">Precio: </label>
-                                                    <input type="number" class="form-control" name="price" id=""
-                                                        required min="1" step="0.01">
-                                                </div>
-                                            </div>
-                                            <div class="row my-3">
-                                                <div class="col-8 d-flex flex-row align-items-center">
-                                                    <label for="" class="form-label me-2">Categoria: </label>
-                                                    <select class="form-select" id="inputGroupSelect01" name="categorie"
-                                                        required>
-                                                        <% categories.forEach((data)=> { %>
-                                                            <% if(data.status=='active' ) { %>
-                                                                <option value="<%= data.categorie %>">
-                                                                    <%= data.categorie %>
-                                                                </option>
-                                                                <% } %>
-                                                                    <% }) %>
-                                                    </select>
-                                                </div>
-                                                <div class="col-4 d-flex flex-row align-items-center">
-                                                    <label for="" class="form-label me-2">Stock: </label>
-                                                    <input type="number" class="form-control" name="stock" id=""
-                                                        required min="1" step="1">
-                                                </div>
-                                            </div>
-                                            <div class="row my-3">
-                                                <div class="col d-flex flex-row align-items-center">
-                                                    <label for="" class="form-label me-2">Imagen: </label>
-                                                    <input type="file" class="form-control" id="inputGroupFile01"
-                                                        name="image" multiple="multiple">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Crear</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalCategorie">
-                            Categorias
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCategorie" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Garficos</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="fs-4 text-center">Cantidad de productos por categorías (Activas)</p>
-                                        <canvas id="categorieProducts"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-3">
+                <div class="col-8 d-flex justify-content-start">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Añadir un producto
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Producto</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="/api/products" method="post">
+                                    <div class="modal-body">
+                                        <div class="row my-3">
+                                            <div class="col-8 d-flex flex-row align-items-center">
+                                                <label for="" class="form-label me-2">Producto: </label>
+                                                <input type="text" class="form-control" name="product" id="" required>
+                                            </div>
+                                            <div class="col-4 d-flex flex-row align-items-center">
+                                                <label for="" class="form-label me-2">Precio: </label>
+                                                <input type="number" class="form-control" name="price" id="" required
+                                                    min="1" step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="row my-3">
+                                            <div class="col-8 d-flex flex-row align-items-center">
+                                                <label for="" class="form-label me-2">Categoria: </label>
+                                                <select class="form-select" id="inputGroupSelect01" name="categorie"
+                                                    required>
+                                                    <% categories.forEach((data)=> { %>
+                                                        <% if(data.status=='active' ) { %>
+                                                            <option value="<%= data.categorie %>">
+                                                                <%= data.categorie %>
+                                                            </option>
+                                                            <% } %>
+                                                                <% }) %>
+                                                </select>
+                                            </div>
+                                            <div class="col-4 d-flex flex-row align-items-center">
+                                                <label for="" class="form-label me-2">Stock: </label>
+                                                <input type="number" class="form-control" name="stock" id="" required
+                                                    min="1" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="row my-3">
+                                            <div class="col d-flex flex-row align-items-center">
+                                                <label for="" class="form-label me-2">Imagen: </label>
+                                                <input type="file" class="form-control" id="inputGroupFile01"
+                                                    name="image" multiple="multiple">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Crear</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalCategorie">
+                        Categorias
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCategorie" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Gráficos</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="fs-4 text-center">Cantidad de productos por categorías (Activas)</p>
+                                    <canvas id="categorieProducts"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
                         data-bs-target="#exampleModalStock">
                         Gráfico de productos
                     </button>
@@ -126,168 +120,54 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Garficos</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Gráficos</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="fs-4 text-center">Cantidad de existencias por productos</p>
+                                    <p class="fs-4 text-center">Top 5 de existencias por productos</p>
                                     <canvas id="stockProducts"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-8 d-flex justify-content-start">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Añadir un producto
-                </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="/api/products" method="post">
-                                <div class="modal-body">
-                                    <div class="row my-3">
-                                        <div class="col-8 d-flex flex-row align-items-center">
-                                            <label for="" class="form-label me-2">Producto: </label>
-                                            <input type="text" class="form-control" name="product" id="" required>
-                                        </div>
-                                        <div class="col-4 d-flex flex-row align-items-center">
-                                            <label for="" class="form-label me-2">Precio: </label>
-                                            <input type="number" class="form-control" name="price" id="" required
-                                                min="1" step="0.01">
-                                        </div>
-                                    </div>
-                                    <div class="row my-3">
-                                        <div class="col-8 d-flex flex-row align-items-center">
-                                            <label for="" class="form-label me-2">Categoria: </label>
-                                            <select class="form-select" id="inputGroupSelect01" name="categorie"
-                                                required>
-                                                <% categories.forEach((data)=> { %>
-                                                    <% if(data.status=='active' ) { %>
-                                                        <option value="<%= data.categorie %>">
-                                                            <%= data.categorie %>
-                                                        </option>
-                                                        <% } %>
-                                                            <% }) %>
-                                            </select>
-                                        </div>
-                                        <div class="col-4 d-flex flex-row align-items-center">
-                                            <label for="" class="form-label me-2">Stock: </label>
-                                            <input type="number" class="form-control" name="stock" id="" required
-                                                min="1" step="1">
-                                        </div>
-                                    </div>
-                                    <div class="row my-3">
-                                        <div class="col d-flex flex-row align-items-center">
-                                            <label for="" class="form-label me-2">Imagen: </label>
-                                            <input type="file" class="form-control" id="inputGroupFile01" name="image"
-                                                multiple="multiple">
-                                        </div>
+                    <!-- Button trigger modal Top productos(precio) -->
+                    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
+                        data-bs-target="#exampleTopProducts">
+                        Top productos por precio
+                    </button>
+
+                    <!--Modal de productos con mayor precio por categoría-->
+                    <div class="modal fade" id="exampleTopProducts" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                        Top 3 productos con mayor precio por categoría
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="row my-3">
+                                    <div class="">
+                                        <form id="btn-buscap" class="col-10 d-flex flex-row align-items-center ms-4">
+                                            <label for="" class="form-label me-2">Categoría: </label>
+                                            <input type="text" class="form-control" id="producto-categoria" required>
+                                            <button type="submit" class="btn btn-primary ms-3">Buscar</button>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Crear</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
-                    data-bs-target="#exampleModalCategorie">
-                    Categorias
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalCategorie" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Gráficos</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="fs-4 text-center">Cantidad de productos por categorías (Activas)</p>
-                                <canvas id="categorieProducts"></canvas>
+                                <div id="canvas-container"></div>
                             </div>
                         </div>
                     </div>
+
+                    <button type="button" class="btn btn-primary ms-3">
+                        <a href="/report/products" target="_blank" class="text-dark">Reporte</a>
+                    </button>
                 </div>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
-                    data-bs-target="#exampleModalStock">
-                    Gráfico de productos
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalStock" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Gráficos</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="fs-4 text-center">Top 5 de existencias por productos</p>
-                                <canvas id="stockProducts"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Button trigger modal Top productos(precio) -->
-                <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
-                    data-bs-target="#exampleTopProducts">
-                    Top productos por precio
-                </button>
-
-                <!--Modal de productos con mayor precio por categoría-->
-                <div class="modal fade" id="exampleTopProducts" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                    Top 3 productos con mayor precio por categoría
-                                </h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="row my-3">
-                                <div class="">
-                                    <form id="btn-buscap" class="col-10 d-flex flex-row align-items-center ms-4">
-                                        <label for="" class="form-label me-2">Categoría: </label>
-                                        <input type="text" class="form-control" id="producto-categoria" required>
-                                        <button type="submit" class="btn btn-primary ms-3">Buscar</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div id="canvas-container"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-primary ms-3">
-                    <a href="/report/products" target="_blank" class="text-dark">Reporte</a>
-                </button>
-            </div>
             </div>
             <div class="container">
                 <div class="row my-3">
