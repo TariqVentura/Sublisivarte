@@ -3,6 +3,7 @@ require('dotenv').config()
  * Se declaran las constantes para mandar a llamar al controlador y las dependencias de node
  */
 const USERS = require('../models/users')
+const ATTEMPS = require('../models/attemps')
 const AXIOS = require('axios')
 const BCRYPT = require('bcrypt')
 const FECHA = new Date()
@@ -155,6 +156,17 @@ exports.logIn = async (req, res) => {
     if (COMPARE == false) {
         res.send(false)
         return
+    }
+
+    //Verificamos que el usuario no tenga intentos fallidos
+    const ATTEMPT_USER = await ATTEMPS.findOne({ user: USER })
+
+    if (ATTEMPT_USER) {
+        // Si tiene intentos fallidos, verificamos si la cuenta está bloqueada
+        if (ATTEMPT_USER.intentosFallidos >= 3 && ATTEMPT_USER.cuentaBloqueada) {
+            res.send('Cuenta bloqueada');
+            return;
+        }
     }
 
     //verificamos que no haya una sesion
