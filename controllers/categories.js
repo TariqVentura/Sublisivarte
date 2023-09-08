@@ -97,3 +97,46 @@ function deleteCategory(_id) {
         }
     })
 }
+
+function changeStatus(_id, status) {
+    Swal.fire({
+        title: 'Esta seguro?',
+        text: "Desea cambiar el estado de esta categoria a " + status,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.get('http://localhost:443/status/categorie/' + _id + '/' + status, {
+                //enviamos el token
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then(data => {
+                switch (data.data) {
+                    case true:
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proceso completado',
+                            text: 'Se ha cambiado el estado de el pedido exitosamente'
+                        }).then(() => {
+                            location.href = '/categorias'
+                        })
+                        break;
+                    case false:
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error en la base de datos'
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            })
+        }
+    })
+}

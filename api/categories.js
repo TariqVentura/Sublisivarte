@@ -82,19 +82,13 @@ exports.categorieStatus = (req, res) => {
     CATEGORIES.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
         .then(data => {
             if (!data) {
-                res.send('error')
+                res.send(false)
             } else {
-                AXIOS.get('http://localhost:443/api/categories')
-                    .then(function (categorie) {
-                        res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "estado cambiado", confirmation: true, icon: "success" })
-                    })
-                    .catch(err => {
-                        res.send('No se puede acceder a las categorias')
-                    })
+                res.send(true)
             }
         })
         .catch(err => {
-            res.send(err)
+            res.send(false)
         })
 }
 
@@ -123,6 +117,7 @@ exports.searchCategories = (req, res) => {
 exports.getReport = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/report.html'), 'utf-8')
     const FILE_NAME = req.params.key + '.pdf'

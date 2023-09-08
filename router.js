@@ -134,7 +134,7 @@ ROUTER.get('/categorieTop/api/products/:key', PRODUCTS.countPriceProducts)
 ROUTER.post('/api/categories', tokenValidation, CATEGORIES.createCategorie)
 ROUTER.get('/api/categories', CATEGORIES.findCategorie)
 ROUTER.get('/delete/categorie/:key', tokenValidation, CATEGORIES.deleteCategorie)
-ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
+ROUTER.get('/status/categorie/:id/:status', tokenValidation, CATEGORIES.categorieStatus)
 ROUTER.get('/api/categories/:key', CATEGORIES.searchCategories)
 ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
 
