@@ -13,7 +13,7 @@ const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
 const VALIDATION = require('../helpers/validations/users')
 const JWT = require('jsonwebtoken')
-const TOKEN_VALIDATION = require('../helpers/validations/token')
+const LOCAL_STORAGE = require('node-localstorage').LocalStorage
 
 //funcion para crear un usuario
 exports.createUser = async (req, res) => {
@@ -183,9 +183,10 @@ exports.logIn = async (req, res) => {
                 req.session.status = data[0].status
                 req.session.email = data[0].email
                 req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-
                 //enviamos la respuesta
-                res.send(true)
+                res.send(token)
+
+                
             }
         })
     }

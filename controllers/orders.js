@@ -195,5 +195,6 @@ BUSCAR_FECHA.addEventListener('submit', function (e) {
 const CANCEL_BUTTON = document.getElementById('cancel-order')
 
 CANCEL_BUTTON.addEventListener('click', () => {
-    axios.get('http://localhost:443/cancel/orders/')
+    let cookie = document.cookie
+    window.alert(cookie)
 })
