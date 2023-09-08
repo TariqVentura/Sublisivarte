@@ -194,6 +194,51 @@ BUSCAR_FECHA.addEventListener('submit', function (e) {
 
 const CANCEL_BUTTON = document.getElementById('cancel-order')
 
-CANCEL_BUTTON.addEventListener('click', () => {
-    axios.get('http://localhost:443/cancel/orders/')
+CANCEL_BUTTON.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+
 })
+
+function cancelOrder(_id) {
+    Swal.fire({
+        title: '¿Esta seguro que desea cancelar esta orden?',
+        text: "Número de orden: " + _id,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.get('http://localhost:443/cancel/orders/' + _id, {
+                //enviamos el token
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then(data => {
+                switch (data.data) {
+                    case true:
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proceso completado',
+                            text: 'Se ha cancelado el pedido exitosamente'
+                        }).then(() => {
+                            location.href = '/pedidos'
+                        })
+                        break;
+                    case false:
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error en la base de datos'
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            })
+        }
+    })
+}

@@ -13,7 +13,6 @@ const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
 const VALIDATION = require('../helpers/validations/users')
 const JWT = require('jsonwebtoken')
-const TOKEN_VALIDATION = require('../helpers/validations/token')
 
 //funcion para crear un usuario
 exports.createUser = async (req, res) => {
@@ -155,6 +154,9 @@ exports.logIn = async (req, res) => {
     if (COMPARE == false) {
         res.send(false)
         return
+    } else if(COMPARE == 'inactivo') {
+        res.send('inactivo')
+        return
     }
 
     //verificamos que no haya una sesion
@@ -183,9 +185,10 @@ exports.logIn = async (req, res) => {
                 req.session.status = data[0].status
                 req.session.email = data[0].email
                 req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-
                 //enviamos la respuesta
-                res.send(true)
+                res.send(token)
+
+
             }
         })
     }
@@ -499,7 +502,7 @@ exports.getUserReport = (req, res) => {
     //creamos constante de FILE_NAME y HTML como parametros para la dependencia
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_USUARIOS_' + req.params.key + '.pdf'
-    
+
     let token
 
     if (req.session.token) {
@@ -513,7 +516,7 @@ exports.getUserReport = (req, res) => {
             'Authorization': `Bearer ${token}`
         }
     }
-    
+
     //ocupamos el axios para obtener los datos de la api
     AXIOS.get('http://localhost:443/api/users/' + req.params.key, CONFIG).then(function (detail) {
         //declaramos arreglos vacios y un objeto donde guardaremos los datos de la api

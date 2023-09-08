@@ -3,6 +3,8 @@ const CODE = require('../../models/code')
 const FECHA = require('node-datetime')
 const BCRYPT = require('bcrypt')
 const USER = require('../../models/users')
+const ATTEMPS = require('../../models/attemps')
+
 
 //funcion para validar codigo de recuperacion de contraseña
 exports.codeValidation = async (username, code) => {
@@ -81,9 +83,33 @@ exports.comparePassword = async (username, password) => {
     }
     //comparamos los datos de la base con los del usuario
     let compare = await BCRYPT.compareSync(password, DATA[0].password)
-    console.log(compare)
     //si hay coincidencia enviamos true sino enviamos false
-    return compare
+    if (compare == false) {
+        let attemps, newAttemp, user
+        const DATA = await ATTEMPS.findOne({ user: username }).exec()
+        console.log('intentos: ' + DATA)
+        if (!DATA) {
+            attemps = 1
+            const NUMBER = new ATTEMPS({
+                user: username,
+                attempt: attemps
+            })
+
+            newAttemp = await NUMBER.save()
+        } else {
+            console.log(DATA.attempt)
+            attemps = Number(DATA.attempt) + 1
+            newAttemp = await ATTEMPS.updateOne({ user: username }, { attempt: attemps }).exec()
+            if (attemps >= 3) {
+                user = await USER.updateOne({ user: username }, { status: 'inactivo' })
+                return 'inactivo'
+            }
+        }
+        return compare
+    } else {
+        return compare
+    }
+
 }
 
 //funcion para validar que el correo pertenezca a un usuario
@@ -159,31 +185,6 @@ exports.newPasswordValidation = async (control, user, email) => {
     const VALID = PASSWORD_REGEX.test(control)
     // Si la contraseña es válida y no contiene un nombre de usuario no permitido, devuelve null de lo contrario, devuelve un objeto con un mensaje de error
     return VALID && !FORBIDDEN ? null : { 'Contraseña inválida': { value: control } }
-}
-
-exports.validarContrasena = (contrasena) => {
-    let intentosFallidos = 0
-    let cuentaBloqueada = false
-    let tiempoBloqueo = 24 * 60 * 60 * 1000
-
-    // Verifica si la contraseña ingresada es correcta
-    if (contrasena === "Contraseña correcta") {
-        // Inicia sesión de forma exitosa
-    } else {
-        //Incrementa el número de intentos fallidos de inicio de sesión
-        intentosFallidos++
-        if (intentosFallidos >= 3) {
-            cuentaBloqueada = true
-            //Se establece un temporizador para desbloquear la cuenta del usuario
-            setTimeout(() => {
-                cuentaBloqueada = false;
-                intentosFallidos = 0;
-            }, tiempoBloqueo);
-            alert("Su cuenta ha sido bloqueada debido a varios intentos fallidos de inicio de sesión. Por favor, espere 24 horas o contacte al soporte técnico para recuperar el acceso a su cuenta.");
-        } else {
-            alert("Contraseña incorrecta. Por favor, inténtelo de nuevo.");
-        }
-    }
 }
 
 exports.changePassword90 = async (user) => {

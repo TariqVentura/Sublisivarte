@@ -131,11 +131,10 @@ ROUTER.get('/categorieTop/api/products/:key', PRODUCTS.countPriceProducts)
 
 
 //API categories
-ROUTER.post('/api/categories', CATEGORIES.createCategorie)
+ROUTER.post('/api/categories', tokenValidation, CATEGORIES.createCategorie)
 ROUTER.get('/api/categories', CATEGORIES.findCategorie)
-ROUTER.post('/update/categories', CATEGORIES.updateCategorie)
-ROUTER.get('/delete/categorie/:key', CATEGORIES.deleteCategorie)
-ROUTER.get('/status/categorie/:id/:status', CATEGORIES.categorieStatus)
+ROUTER.get('/delete/categorie/:key', tokenValidation, CATEGORIES.deleteCategorie)
+ROUTER.get('/status/categorie/:id/:status', tokenValidation, CATEGORIES.categorieStatus)
 ROUTER.get('/api/categories/:key', CATEGORIES.searchCategories)
 ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
 

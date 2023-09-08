@@ -13,7 +13,7 @@ exports.createCategorie = async (req, res) => {
     } else {
         category = ''
     }
-    console.log(category)
+
     if (!category.trim()) {
         console.log('error campos vacios')
         res.send(false)
@@ -59,46 +59,18 @@ exports.findCategorie = (req, res) => {
     }
 }
 
-exports.updateCategorie = (req, res) => {
-    console.log(req.body.id)
-    const id = req.body.id
-    CATEGORIES.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-        .then(data => {
-            if (!data) {
-                res.status(404).send({ message: "No se encontro el usuario" })
-            } else {
-                AXIOS.get('http://localhost:443/api/categories')
-                    .then(function (categorie) {
-                        res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "Categoria actualizada", confirmation: true, icon: "success" })
-                    })
-                    .catch(err => {
-                        res.send('No se puede acceder a las categorias')
-                    })
-            }
-        })
-        .catch(err => {
-            res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
-        })
-}
-
 exports.deleteCategorie = (req, res) => {
     const id = req.params.key
     CATEGORIES.findByIdAndDelete(id, req.body, { useFindAndModify: false })
         .then(data => {
             if (!data) {
-                res.send('error')
+                res.send(false)
             } else {
-                AXIOS.get('http://localhost:443/api/categories')
-                    .then(function (categorie) {
-                        res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "Categoria eliminada", confirmation: true, icon: "success" })
-                    })
-                    .catch(err => {
-                        res.send('No se puede acceder a las categorias')
-                    })
+                res.send(true)
             }
         })
         .catch(err => {
-            res.send(err)
+            res.send(false)
         })
 }
 
@@ -110,19 +82,13 @@ exports.categorieStatus = (req, res) => {
     CATEGORIES.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
         .then(data => {
             if (!data) {
-                res.send('error')
+                res.send(false)
             } else {
-                AXIOS.get('http://localhost:443/api/categories')
-                    .then(function (categorie) {
-                        res.render('categorias', { categories: categorie.data, user: req.session, mensaje: "estado cambiado", confirmation: true, icon: "success" })
-                    })
-                    .catch(err => {
-                        res.send('No se puede acceder a las categorias')
-                    })
+                res.send(true)
             }
         })
         .catch(err => {
-            res.send(err)
+            res.send(false)
         })
 }
 
@@ -151,6 +117,7 @@ exports.searchCategories = (req, res) => {
 exports.getReport = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
+        return
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/report.html'), 'utf-8')
     const FILE_NAME = req.params.key + '.pdf'

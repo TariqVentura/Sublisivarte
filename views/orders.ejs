@@ -1,4 +1,4 @@
-<% if(user==false || user.role != 'admin'){ %>
+<% if(user==false || user.role !='admin' ){ %>
     <%- include('include/error') %>
         <% } else { %>
             <div class="container">
@@ -76,10 +76,11 @@
                     </div>
 
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
                         Pedidos por cliente
                     </button>
-                    
+
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
@@ -93,9 +94,9 @@
                                 <div class="row my-3">
                                     <div class="col-10 d-flex flex-row align-items-center ms-4">
                                         <form id="btn-buscar">
-                                        <label for="text" class="form-label me-2">Cliente: </label>
-                                        <input type="text" id="cliente-pedido" required>
-                                        <button type="submit" class="btn btn-primary ms-3">Buscar</button>
+                                            <label for="text" class="form-label me-2">Cliente: </label>
+                                            <input type="text" id="cliente-pedido" required>
+                                            <button type="submit" class="btn btn-primary ms-3">Buscar</button>
                                         </form>
                                     </div>
                                 </div>
@@ -103,7 +104,8 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary ms-3"><a href="/report/orders" class="btn-primary" target="_blank">Pedidos Generales</a></button>
+                    <button type="button" class="btn btn-primary ms-3"><a href="/report/orders" class="btn-primary"
+                            target="_blank">Pedidos Generales</a></button>
                 </div>
 
                 <div class="row my-3">
@@ -137,11 +139,12 @@
 
                                         <!-- <button class="btn btn-info"><a href="/pedidos/detalles/<%= data._id %>"
                                                 class="text-light">Detalles</a></button> -->
-                                        <a class="btn btn-primary text-light" href="report/detail/<%= data._id %>/<%= data.client %>"
-                                            target="_blank">Reporte</a>                                       
+                                        <a class="btn btn-primary text-light"
+                                            href="report/detail/<%= data._id %>/<%= data.client %>"
+                                            target="_blank">Reporte</a>
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger" id="cancel-order">Cancelar Pedido</button>
+                                        <button class="btn btn-danger" onclick="cancelOrder('<%= data._id %>')">Cancelar Pedido</button>
                                     </td>
                                 </tr>
                         </tbody>

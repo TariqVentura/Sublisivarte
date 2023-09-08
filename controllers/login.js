@@ -28,36 +28,43 @@ LOGIN.addEventListener('submit', (e) => {
         }
     }).then(data => {
         switch (data.data) {
-            case true:
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Inicio de sesión exitoso',
-                    text: 'Acceso permtiido'
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/'
-                })
-                break;
-
             case false:
                 Toast.fire({
                     icon: 'error',
                     title: 'Contraseña o usuario incorrectos'
                 })
-                break;
+                break
 
             case 'session':
                 Toast.fire({
                     icon: 'error',
                     title: 'Ya existe una sesión activo'
                 })
-                break;
+                break
             case 'empty':
                 Toast.fire({
                     icon: 'error',
                     title: 'No se permiten campos vacios'
                 })
-                break;
+                break
+            case 'inactivo':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Su cuenta ha sido desactivo por sobrepasar el numero de intentos permitidos'
+                })
+                break
+            default:
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Inicio de sesión exitoso',
+                    text: 'Acceso permtiido'
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    localStorage.setItem('token', data.data)
+                    location.href = '/'
+                })
+                break
         }
     })
 })
