@@ -118,7 +118,20 @@ exports.cuenta = (req, res) => {
     } else {
         session = false
     }
-    AXIOS.get('http://localhost:443/api/get/users/' + req.session.user)
+
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+    
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/get/users/' + req.session.user, CONFIG)
         .then(function (info) {
             console.log(info.data)
             res.render('cuenta', { user: session, data: info.data })

@@ -1,4 +1,4 @@
-<% if(user==false || user.role != 'admin'){ %>
+<% if(user==false || user.role !='admin' ){ %>
 	<%- include('include/error') %>
 		<% } else { %>
 			<div class="container">
@@ -40,7 +40,8 @@
 										<div class="row">
 											<div class="col-md-6">
 												<label for="" class="form-label">Nombre:</label>
-												<input type="text" class="form-control" name="name" id="name" required />
+												<input type="text" class="form-control" name="name" id="name"
+													required />
 											</div>
 											<div class="col-md-5">
 												<label for="" class="form-label">Apellido</label>
@@ -54,7 +55,8 @@
 										<div class="row">
 											<div class="col-md-6">
 												<label for="" class="form-label">Correo:</label>
-												<input type="text" class="form-control" name="email" id="email" required />
+												<input type="text" class="form-control" name="email" id="email"
+													required />
 											</div>
 											<div class="col-md-5">
 												<label for="username" class="form-label">Usuario</label>
@@ -74,6 +76,14 @@
 														autocomplete="off" />
 												</div>
 											</div>
+											<div class="col-md-5">
+												<label for="password" class="form-label">Confirmar:</label>
+												<div class="input-group input-group-col-md-3">
+													<input type="password" class="form-control bg-secondary"
+														id="confirm" placeholder="" required name="confirm"
+														autocomplete="off" />
+												</div>
+											</div>
 											<div class="col-md-6">
 												<label for="" class="form-label">Documento:</label>
 												<input type="text" class="form-control" name="document" id="document"
@@ -83,16 +93,15 @@
 										<div class="row">
 											<div class="col-md-5">
 												<label for="role" class="form-label">Rol</label>
-												<select class="form-select" id="role" name="role"
-													required itemid="role">
+												<select class="form-select" id="role" name="role" required
+													itemid="role">
 													<option>admin</option>
 													<option>cliente</option>
 												</select>
 											</div>
 											<div class="col-md-6">
 												<label for="status" class="form-label">Estado</label>
-												<select class="form-select" id="status" name="status"
-													required >
+												<select class="form-select" id="status" name="status" required>
 													<option>activo</option>
 													<option>inactivo</option>
 													<option>baneado</option>

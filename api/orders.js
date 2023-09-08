@@ -44,7 +44,7 @@ exports.createOrder = (req, res) => {
 }
 
 exports.finishOrder = (req, res) => {
-    if (!req.usuario) {
+    if (!req.session.token) {
         res.redirect('/images/Error 404.png')
         return
     } else {
@@ -70,31 +70,20 @@ exports.finishOrder = (req, res) => {
 }
 
 exports.cancelOrder = (req, res) => {
-    if (!req.usuario) {
-        res.redirect('/images/Error 404.png')
-        return
-    } else {
-        const ID = req.params.id
-        const value = { status: 'cancelado' }
+    const ID = req.params.id
+    const value = { status: 'cancelado' }
 
-        ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
-            .then(data => {
-                if (!data) {
-                    res.send('err')
-                } else {
-                    AXIOS.get('http://localhost:443/api/orders')
-                        .then(function (orders) {
-                            res.render('orders', { orders: orders.data, user: req.session, mensaje: "Orden cancelada", confirmation: true, icon: "success" })
-                        })
-                        .catch(err => {
-                            res.send('No se pudieron cargar las Categorias')
-                        })
-                }
-            })
-            .catch(err => {
-                res.send(err)
-            })
-    }
+    ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
+        .then(data => {
+            if (!data) {
+                res.send(false)
+            } else {
+                res.send(true)
+            }
+        })
+        .catch(err => {
+            res.send(false)
+        })
 }
 
 exports.getOrders = (req, res) => {
@@ -130,34 +119,6 @@ exports.getOrders = (req, res) => {
     }
 
 }
-
-exports.cancelOrder = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/error404')
-        return
-    }
-    const ID = req.params.id
-    const VALUE = { status: 'cancelado' }
-
-    ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
-        .then(data => {
-            if (!data) {
-                res.send('err')
-            } else {
-                AXIOS.get('http://localhost:443/api/orders')
-                    .then(function (orders) {
-                        res.render('orders', { orders: orders.data, user: req.session, mensaje: "Pedido Cancelado", confirmation: true, icon: "success" })
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
-}
-
 
 exports.getInvoice = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
@@ -317,7 +278,7 @@ exports.dateOrders = (req, res) => {
 
 
 exports.reportOrders = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
         return
     }

@@ -34,11 +34,14 @@ exports.createUser = async (req, res) => {
         password = req.body.password
         confirm = req.body.confirm
 
+
         //validamos que no existan campos vacios
         if (!name.trim() || !lastname.trim() || !email.trim() || !user.trim() || !document.trim() || !password.trim() || !confirm.trim()) {
             res.send('empty')
             return
         }
+
+        console.log(confirm.trim() + ' ' + password.trim())
 
         if (confirm.trim() != password.trim()) {
             res.send('coincidencia')
@@ -85,6 +88,8 @@ exports.createUser = async (req, res) => {
             } else {
                 role = ''
             }
+
+            console.log('role')
 
             if (!role.trim()) {
                 res.send('empty')
@@ -295,7 +300,7 @@ exports.deleteUsers = (req, res) => {
 }
 
 exports.searchUsers = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin') {
+    if (req.usuario.INFO.rol != 'admin') {
         res.redirect('/error404')
         return
     }
@@ -434,10 +439,11 @@ exports.statusUser = (req, res) => {
 }
 
 exports.getUser = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/error404')
+    if (req.usuario.INFO.user != req.session.user) {
+        res.send('No puedes modificar datos de otro usuario')
         return
     }
+
     const KEY = req.params.key
 
     USERS.find({
@@ -458,10 +464,6 @@ exports.getUser = (req, res) => {
 }
 
 exports.modifyUser = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/error404')
-        return
-    }
     if (!req.body.name || !req.body.lastname || !req.body.email) {
         AXIOS.get('http://localhost:443/api/images')
             .then(function (images) {
@@ -497,8 +499,23 @@ exports.getUserReport = (req, res) => {
     //creamos constante de FILE_NAME y HTML como parametros para la dependencia
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_USUARIOS_' + req.params.key + '.pdf'
+    
+    let token
+
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    
     //ocupamos el axios para obtener los datos de la api
-    AXIOS.get('http://localhost:443/api/users/' + req.params.key).then(function (detail) {
+    AXIOS.get('http://localhost:443/api/users/' + req.params.key, CONFIG).then(function (detail) {
         //declaramos arreglos vacios y un objeto donde guardaremos los datos de la api
         let obj = detail.data, active = [], inactive = [], banned = []
 
