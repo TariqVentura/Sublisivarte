@@ -17,7 +17,8 @@ NEW_CATEGORY.addEventListener('submit', async (e) => {
     }, {
         //definimos que utlizaremos body url encoded
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': localStorage.getItem('token')
         }
     }).then(data => {
         //validamos si los datos son validos y si se han ingresado en la based para luego mostrar la alerta correspondiente
@@ -30,7 +31,7 @@ NEW_CATEGORY.addEventListener('submit', async (e) => {
                 //redirigimos a la pagina para visualizar los cambios
                 location.href = '/categorias'
             })
-            
+
         } else if (data.data == true) {
             Swal.fire({
                 icon: 'error',
@@ -53,3 +54,46 @@ NEW_CATEGORY.addEventListener('submit', async (e) => {
         })
     })
 })
+
+function deleteCategory(_id) {
+    Swal.fire({
+        title: 'Esta seguro?',
+        text: "Esta acción no es reversible",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.get('http://localhost:443/delete/categorie/' + _id, {
+                //enviamos el token
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then(data => {
+                switch (data.data) {
+                    case true:
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proceso completado',
+                            text: 'Se ha cancelado el pedido exitosamente'
+                        }).then(() => {
+                            location.href = '/categorias'
+                        })
+                        break;
+                    case false:
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error en la base de datos'
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            })
+        }
+    })
+}

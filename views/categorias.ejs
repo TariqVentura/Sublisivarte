@@ -94,8 +94,7 @@
                                                 <% } %>
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger text-light"><a class="text-light"
-                                                href="/delete/categorie/<%= data._id %>">Eliminar</a></button>
+                                        <button class="btn btn-danger text-light" onclick="deleteCategory('<%= data._id %>')">Eliminar</button>
                                     </td>
                                     <td>
                                         <a class="btn btn-primary" href="/report/categories/<%= data.categorie %>"

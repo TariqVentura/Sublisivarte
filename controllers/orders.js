@@ -201,31 +201,44 @@ CANCEL_BUTTON.addEventListener('submit', (e) => {
 })
 
 function cancelOrder(_id) {
-    axios.get('http://localhost:443/cancel/orders/' + _id, {
-        //enviamos el token
-        headers: {
-            'Authorization': localStorage.getItem('token')
-        }
-    }).then(data => {
-        switch (data.data) {
-            case true:
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Proceso completado',
-                    text: 'Se ha cancelado el pedido exitosamente'
-                }).then(() => {
-                    location.href = '/pedidos'
-                })
-                break;
-            case false:
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Error en la base de datos'
-                })
-                break;
-            default:
-                break;
+    Swal.fire({
+        title: '¿Esta seguro que desea cancelar esta orden?',
+        text: "Número de orden: " + _id,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.get('http://localhost:443/cancel/orders/' + _id, {
+                //enviamos el token
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then(data => {
+                switch (data.data) {
+                    case true:
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proceso completado',
+                            text: 'Se ha cancelado el pedido exitosamente'
+                        }).then(() => {
+                            location.href = '/pedidos'
+                        })
+                        break;
+                    case false:
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error en la base de datos'
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            })
         }
     })
 }
