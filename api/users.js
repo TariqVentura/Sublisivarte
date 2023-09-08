@@ -36,8 +36,11 @@ exports.createUser = async (req, res) => {
             return
         }
 
+        console.log(user + ' ' + email)
+
         //validamos que no sea un usuario repetido
         const USER_VALIDATION = await VALIDATION.userValidation(user)
+        
 
         if (USER_VALIDATION == true) {
             res.send('user')
@@ -180,7 +183,7 @@ exports.findUsers = (req, res) => {
                 } else {
                     res.send(data)
                 }
-            })
+            }) 
             .catch(err => {
                 res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
             })

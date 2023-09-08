@@ -62,6 +62,7 @@ exports.passwordValidation = async (control, user) => {
 exports.userValidation = async (username) => {
     //buscamos datos en la base y los guardamos en un arreglo
     const DATA = await USER.find({ user: username }).exec()
+    console.log(DATA)
     //si el arreglo tiene datos enviamos true sino mandamos false 
     if (DATA.length) {
         return true
