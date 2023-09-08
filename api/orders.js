@@ -8,38 +8,37 @@ const OPTIONS = require('../helpers/format/invoice')
 const OPTIONS_2 = require('../helpers/format/order')
 
 
-exports.createOrder = (req, res) => {
-    if (!req.usuario) {
-        res.redirect('/images/Error 404.png')
+exports.createOrder =  async (req, res) => {
+    let name 
+    if (!req.body.name) {
+        res.send('empty')
         return
+    }
+
+    name = req.body.name
+
+    if (!name.trim()) {
+        res.send('empty')
+        return
+    }
+
+    //convertimos la fecha a formato ISO
+    let newDate = FECHA.toISOString()
+
+    const ORDER = new ORDERS({
+        name: req.body.name,
+        client: req.session.user,
+        //le asignamos la fecha con formato ISO a date pero unicamente los primeros 10 caracteres
+        date: newDate.substring(0, 10),
+        status: "en proceso"
+    })
+
+    const SAVE = await ORDER.save()
+
+    if (SAVE) {
+        res.send(true)
     } else {
-        if (!req.body.name) {
-            res.status(404).send('no se permiten campos vacios')
-        } else {
-            //convertimos la fecha a formato ISO
-            let newDate = FECHA.toISOString()
-
-            const ORDER = new ORDERS({
-                name: req.body.name,
-                client: req.body.user,
-                //le asignamos la fecha con formato ISO a date pero unicamente los primeros 10 caracteres
-                date: newDate.substring(0, 10),
-                status: "en proceso"
-            })
-
-            ORDER
-                .save(ORDER)
-                .then(data => {
-                    if (!data) {
-                        res.status(404).send('error')
-                    } else {
-                        res.redirect('/carrito')
-                    }
-                })
-                .catch(err => {
-                    res.send(err)
-                })
-        }
+        res.send(false)
     }
 }
 
@@ -87,10 +86,6 @@ exports.cancelOrder = (req, res) => {
 }
 
 exports.getOrders = (req, res) => {
-    if (!req.usuario || req.usuario.INFO.rol != 'admin') {
-        res.redirect('/error404')
-        return
-    }
     if (req.params.key) {
         const KEY = req.params.key
         ORDERS.find({ $or: [{ client: { $regex: KEY } }, { status: { $regex: KEY } }, { name: { $regex: KEY } }] })

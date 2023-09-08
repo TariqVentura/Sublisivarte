@@ -46,11 +46,23 @@ exports.products = (req, res) => {
 }
 
 exports.producto = (req, res) => {
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
     if (req.session.user) {
         session = req.session
+
         AXIOS.get('http://localhost:443/api/products/' + req.params.id)
             .then(function (product) {
-                AXIOS.get('http://localhost:443/api/orders/' + req.session.user)
+                AXIOS.get('http://localhost:443/api/orders/' + req.session.user, CONFIG)
                     .then(function (order) {
                         console.log(order.data)
                         res.render('producto', { products: product.data, user: session, orders: order.data })
@@ -86,9 +98,20 @@ exports.categories = (req, res) => {
 }
 
 exports.carrito = (req, res) => {
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+    
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
     if (req.session.user) {
         session = req.session
-        AXIOS.get('http://localhost:443/api/orders/' + req.session.user)
+        AXIOS.get('http://localhost:443/api/orders/' + req.session.user, CONFIG)
             .then(function (order) {
                 res.render('carrito', { user: session, orders: order.data })
             })
@@ -124,7 +147,7 @@ exports.cuenta = (req, res) => {
     } else {
         token = null
     }
-    
+
     const CONFIG = {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -144,7 +167,7 @@ exports.usuarios = (req, res) => {
     } else {
         token = null
     }
-    
+
     const CONFIG = {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -313,7 +336,7 @@ exports.orders = (req, res) => {
     } else {
         token = null
     }
-    
+
     const CONFIG = {
         headers: {
             'Authorization': `Bearer ${token}`
