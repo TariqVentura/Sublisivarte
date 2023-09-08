@@ -8,43 +8,44 @@ const OPTIONS = require('../helpers/format/invoice')
 const OPTIONS_2 = require('../helpers/format/order')
 
 
-exports.createOrder = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/images/Error 404.png')
+exports.createOrder =  async (req, res) => {
+    let name 
+    if (!req.body.name) {
+        res.send('empty')
+        return
+    }
+
+    name = req.body.name
+
+    if (!name.trim()) {
+        res.send('empty')
+        return
+    }
+
+    //convertimos la fecha a formato ISO
+    let newDate = FECHA.toISOString()
+
+    const ORDER = new ORDERS({
+        name: req.body.name,
+        client: req.session.user,
+        //le asignamos la fecha con formato ISO a date pero unicamente los primeros 10 caracteres
+        date: newDate.substring(0, 10),
+        status: "en proceso"
+    })
+
+    const SAVE = await ORDER.save()
+
+    if (SAVE) {
+        res.send(true)
     } else {
-        if (!req.body.name) {
-            res.status(404).send('no se permiten campos vacios')
-        } else {
-            //convertimos la fecha a formato ISO
-            let newDate = FECHA.toISOString()
-
-            const ORDER = new ORDERS({
-                name: req.body.name,
-                client: req.body.user,
-                //le asignamos la fecha con formato ISO a date pero unicamente los primeros 10 caracteres
-                date: newDate.substring(0, 10),
-                status: "en proceso"
-            })
-
-            ORDER
-                .save(ORDER)
-                .then(data => {
-                    if (!data) {
-                        res.status(404).send('error')
-                    } else {
-                        res.redirect('/carrito')
-                    }
-                })
-                .catch(err => {
-                    res.send(err)
-                })
-        }
+        res.send(false)
     }
 }
 
 exports.finishOrder = (req, res) => {
-    if (!req.session.user) {
+    if (!req.session.token) {
         res.redirect('/images/Error 404.png')
+        return
     } else {
         const ID = req.params.id
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
@@ -68,36 +69,23 @@ exports.finishOrder = (req, res) => {
 }
 
 exports.cancelOrder = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/images/Error 404.png')
-    } else {
-        const ID = req.params.id
-        const value = { status: 'cancelado' }
+    const ID = req.params.id
+    const value = { status: 'cancelado' }
 
-        ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
-            .then(data => {
-                if (!data) {
-                    res.send('err')
-                } else {
-                    AXIOS.get('http://localhost:443/api/orders')
-                        .then(function (orders) {
-                            res.render('orders', { orders: orders.data, user: req.session, mensaje: "Orden cancelada", confirmation: true, icon: "success" })
-                        })
-                        .catch(err => {
-                            res.send('No se pudieron cargar las Categorias')
-                        })
-                }
-            })
-            .catch(err => {
-                res.send(err)
-            })
-    }
+    ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
+        .then(data => {
+            if (!data) {
+                res.send(false)
+            } else {
+                res.send(true)
+            }
+        })
+        .catch(err => {
+            res.send(false)
+        })
 }
 
 exports.getOrders = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/error404')
-    }
     if (req.params.key) {
         const KEY = req.params.key
         ORDERS.find({ $or: [{ client: { $regex: KEY } }, { status: { $regex: KEY } }, { name: { $regex: KEY } }] })
@@ -127,36 +115,10 @@ exports.getOrders = (req, res) => {
 
 }
 
-exports.cancelOrder = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/error404')
-    }
-    const ID = req.params.id
-    const VALUE = { status: 'cancelado' }
-
-    ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
-        .then(data => {
-            if (!data) {
-                res.send('err')
-            } else {
-                AXIOS.get('http://localhost:443/api/orders')
-                    .then(function (orders) {
-                        res.render('orders', { orders: orders.data, user: req.session, mensaje: "Pedido Cancelado", confirmation: true, icon: "success" })
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
-}
-
-
 exports.getInvoice = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     //obetner la plantilla de la carpeta helpers/templates
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/invoice.html'), 'utf-8')
@@ -256,6 +218,7 @@ exports.countOrdersDate = (req, res) => {
 exports.getReportDetail = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/detail.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_PRODUCTOS_' + req.params.key + '.pdf'
@@ -310,8 +273,9 @@ exports.dateOrders = (req, res) => {
 
 
 exports.reportOrders = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
+        return
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/order.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_ORDENES.pdf'

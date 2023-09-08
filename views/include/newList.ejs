@@ -18,17 +18,12 @@
                         </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="/api/orders" method="post">
+                    <form id="new-list">
                         <div class="modal-body">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Nombre: </span>
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-default" name="name">
-                            </div>
-                            <div class="input-group mb-3" hidden>
-                                <span class="input-group-text" id="inputGroup-sizing-default">Nombre: </span>
-                                <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-default" name="user" value="<%= user.user %>">
+                                    aria-describedby="inputGroup-sizing-default" name="name" id="list-name">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -41,3 +36,6 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/lists.js"></script>

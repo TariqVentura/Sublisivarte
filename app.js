@@ -59,7 +59,7 @@ CONNECTION()
  * Le definimos un tiempo de vida a la session
  */
 APP.use(SESSION({
-    key: process.env.SECRET,
+    key: process.env.USER,
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,

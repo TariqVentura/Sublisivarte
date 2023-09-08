@@ -3,30 +3,26 @@ const FORM_USER = document.getElementById('form-user')
 FORM_USER.addEventListener('submit', (e) => {
     e.preventDefault()
 
-    let name, lastname, email, user, doc, password
+    let name, lastname, email, user, doc, password, confirm, role
 
     name = document.getElementById('name').value
     lastname = document.getElementById('lastname').value
     email = document.getElementById('mail').value
-<<<<<<< HEAD
-    user = document.getElementById('user-login').value
-    doc = document.getElementById('documento').value
-    password = document.getElementById('password-login').value
-
-    window.alert(user + ' ' + password + ' ' + name)
-=======
     user = document.getElementById('username-account').value
     doc = document.getElementById('documento').value
     password = document.getElementById('password-account').value
->>>>>>> 7457165afe3c2ce43d432a7a6122c24c5e83d754
+    confirm = document.getElementById('confirm').value
+    role = document.getElementById('role').value
 
     axios.post('http://localhost:443/api/users', {
         name: name,
         lastname: lastname,
         email: email,
         user: user,
+        document: doc,
         password: password,
-        document: doc
+        confirm: confirm,
+        role: role
     }, {
         //definimos que utlizaremos body url encoded
         headers: {

@@ -75,6 +75,7 @@ exports.findComments = (req, res) => {
 exports.deleteComments = (req, res) => {
     if (!req.session.user) {
         res.redirect('/error404')
+        return
     }
     const id = req.params.id
     COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
@@ -124,14 +125,14 @@ exports.serchComments = (req, res) => {
         })
 }
 
-exports.commentStatus = (req, res) => {
-    const STATUS = req.params.status
-    const ID = req.params.id
-    const VALUE = { status: STATUS }
-    COMMENTS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
-        .then
+// exports.commentStatus = (req, res) => {
+//     const STATUS = req.params.status
+//     const ID = req.params.id
+//     const VALUE = { status: STATUS }
+//     COMMENTS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
+//         .then
 
-}
+// }
 
 exports.countCommentsProduct = (req, res) => {
     //Hacemos uso de una funcion de agregacion y obtenemos las ordenes de la tienda

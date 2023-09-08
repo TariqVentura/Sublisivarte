@@ -12,6 +12,7 @@ FORM_USER.addEventListener('submit', (e) => {
     doc = document.getElementById('document').value
     role = document.getElementById('role').value
     password = document.getElementById('password').value
+    confirm = document.getElementById('confirm').value
 
     axios.post('http://localhost:443/api/users', {
         name: name,
@@ -20,7 +21,8 @@ FORM_USER.addEventListener('submit', (e) => {
         user: user,
         password: password,
         document: doc,
-        role: role
+        role: role,
+        confirm: confirm
     }, {
         //definimos que utlizaremos body url encoded
         headers: {
@@ -76,6 +78,14 @@ FORM_USER.addEventListener('submit', (e) => {
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Este correo esta en uso'
+                })
+                break
+            case 'coincidencia':
+                //campos vacios
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Las contraseñas no coinciden'
                 })
                 break
             default:

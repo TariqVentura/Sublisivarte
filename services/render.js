@@ -1,6 +1,5 @@
 const AXIOS = require('axios')
-const COMMENTS = require('../models/comments')
-let session
+let session, token
 
 exports.error = (req, res) => {
     AXIOS.get('http://localhost:443/api/images')
@@ -47,11 +46,23 @@ exports.products = (req, res) => {
 }
 
 exports.producto = (req, res) => {
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
     if (req.session.user) {
         session = req.session
+
         AXIOS.get('http://localhost:443/api/products/' + req.params.id)
             .then(function (product) {
-                AXIOS.get('http://localhost:443/api/orders/' + req.session.user)
+                AXIOS.get('http://localhost:443/api/orders/' + req.session.user, CONFIG)
                     .then(function (order) {
                         console.log(order.data)
                         res.render('producto', { products: product.data, user: session, orders: order.data })
@@ -87,9 +98,20 @@ exports.categories = (req, res) => {
 }
 
 exports.carrito = (req, res) => {
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+    
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
     if (req.session.user) {
         session = req.session
-        AXIOS.get('http://localhost:443/api/orders/' + req.session.user)
+        AXIOS.get('http://localhost:443/api/orders/' + req.session.user, CONFIG)
             .then(function (order) {
                 res.render('carrito', { user: session, orders: order.data })
             })
@@ -119,7 +141,20 @@ exports.cuenta = (req, res) => {
     } else {
         session = false
     }
-    AXIOS.get('http://localhost:443/api/get/users/' + req.session.user)
+
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/get/users/' + req.session.user, CONFIG)
         .then(function (info) {
             console.log(info.data)
             res.render('cuenta', { user: session, data: info.data })
@@ -127,9 +162,25 @@ exports.cuenta = (req, res) => {
 }
 
 exports.usuarios = (req, res) => {
-    AXIOS.get('http://localhost:443/api/users')
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        token = null
+    }
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/users', CONFIG)
         .then(function (response) {
-            res.render('usuarios', { users: response.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
+            if (response.data == false) {
+                res.redirect('/error404')
+            } else {
+                res.render('usuarios', { users: response.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
+            }
         })
         .catch(err => {
             res.send('No se pudieron cargar los usuarios')
@@ -280,14 +331,20 @@ exports.searchCategorie = (req, res) => {
 }
 
 exports.orders = (req, res) => {
-    if (req.session.user) {
-        session = req.session
+    if (req.session.token) {
+        token = req.session.token
     } else {
-        session = false
+        token = null
     }
-    AXIOS.get('http://localhost:443/api/orders')
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    AXIOS.get('http://localhost:443/api/orders', CONFIG)
         .then(function (orders) {
-            res.render('orders', { orders: orders.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+            res.render('orders', { orders: orders.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
         })
         .catch(err => {
             res.send('No se pudieron cargar las Categorias')

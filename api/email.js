@@ -50,8 +50,10 @@ exports.newPasswordEmail = async (req, res) => {
             return
         }
 
+        //validamos que el usuario no tenga un codigo activo
         let codeAuthentication = await VALIDATION.codeAuthentication(username)
 
+        //si tiene un codigo activo le enviamos una alerta
         if (codeAuthentication == false) {
             res.send('code')
             return
