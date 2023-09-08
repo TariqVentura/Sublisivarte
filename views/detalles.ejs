@@ -9,9 +9,9 @@
                     <th scope="col">Total</th>
                     <% if(status=='en proceso' ){ %>
                         <th scope="col">Eliminar</th>
-                    <% } else if (status=='finalizado' ){ %>
-                        <th scope="col">Comentar</th>
-                    <%}%>
+                        <% } else if (status=='finalizado' ){ %>
+                            <th scope="col">Comentar</th>
+                            <%}%>
                 </tr>
             </thead>
             <tbody>
@@ -31,41 +31,7 @@
                         </td>
                         <td>
                             <% if(status=='en proceso' ){ %>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop<%= data._id %>delete">
-                                    Eliminar producto
-                                </button>
-
-                                <!-- Modal -->
-                                <form action="" method="post">
-                                    <div class="modal fade text-dark" id="staticBackdrop<%= data._id %>delete"
-                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Eliminar
-                                                        pedido
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ¿Esta seguro que desea eliminar el producto <%= data.product %> (<%=
-                                                            data.amount %>)?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Cancelar</button>
-                                                    <button class="btn btn-danger"><a
-                                                            href="/delete/details/<%= data.product %>/<%= data.amount %>/<%= data._id %>"
-                                                            class="text-light text-decoration-none">Eliminar</a></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                <button class="btn btn-danger" onclick="deleteDetail('<%= data.product %>', '<%= data.amount %>', '<%= data._id %>')">Eliminar</button>
                                 <% }else if (status=='finalizado' ){ %>
                                     <form action="/api/comments" method="post">
                                         <!-- Button trigger modal -->
@@ -88,13 +54,13 @@
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <label for="customRange2" class="form-label">Calificacion</label>
+                                                        <label for="customRange2"
+                                                            class="form-label">Calificacion</label>
                                                         <input type="range" class="form-range" min="0" max="10"
                                                             id="customRange2" value="0" name="review">
                                                         <textarea name="comment" id="" cols="60" rows="5"></textarea>
-                                                        <input type="text" name="client" value="<%= user.user %>" >
-                                                        <input type="text" name="product" value="<%= data.product %>"
-                                                            >
+                                                        <input type="text" name="client" value="<%= user.user %>">
+                                                        <input type="text" name="product" value="<%= data.product %>">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -114,7 +80,11 @@
     </div>
     <div class="row w-25 my-3 ">
         <% if(status=='en proceso' ){ %>
-            <button class="btn btn-success w-50" type="submit"><a href="/finish/orders/<%= order %>" class="text-light">Comprar</a></button>
-        <% } %>
+            <button class="btn btn-success w-50" type="submit"><a href="/finish/orders/<%= order %>"
+                    class="text-light">Comprar</a></button>
+            <% } %>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/detalles.js"></script>

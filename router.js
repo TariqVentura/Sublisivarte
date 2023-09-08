@@ -81,7 +81,7 @@ ROUTER.post('/api/newPassword/', USERS.newPassword)
 ROUTER.get('/bann/users/:id', USERS.bannUser)
 ROUTER.get('/status/user/:id', USERS.statusUser)
 ROUTER.get('/api/get/users/:key', tokenValidation, USERS.getUser)
-ROUTER.post('/api/modifyUser', USERS.modifyUser)
+// ROUTER.post('/api/modifyUser', USERS.modifyUser)
 ROUTER.get('/report/user/:key', USERS.getUserReport)
 ROUTER.get('/api/count/users', USERS.countUsers)
 
@@ -109,8 +109,8 @@ ROUTER.get('/api/count/ordersMonth/:key', ORDERS.countOrdersDate)
 
 
 //API details
-ROUTER.post('/api/details', DETAILS.createDetail)
-ROUTER.get('/delete/details/:key/:stock/:id', DETAILS.cancelDetail)
+ROUTER.post('/api/details', tokenValidation, DETAILS.createDetail)
+ROUTER.get('/delete/details/:key/:stock/:id', tokenValidation, DETAILS.cancelDetail)
 ROUTER.get('/api/details/:id', DETAILS.getDetails)
 ROUTER.get('/report/detail/:key/:client', DETAILS.getReportDetail)
 

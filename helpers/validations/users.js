@@ -77,13 +77,13 @@ exports.userValidation = async (username) => {
 exports.comparePassword = async (username, password) => {
     //buscamos datos en la base y los guardamos en un arreglo
     const DATA = await USER.find({ user: username }).exec()
-    console.log(DATA)
     //sino hay datos en la base del usuario retornamos false
     if (!DATA.length) {
         return false
     }
     //comparamos los datos de la base con los del usuario
     let compare = await BCRYPT.compareSync(password, DATA[0].password)
+    console.log(compare)
     //si hay coincidencia enviamos true sino enviamos false
     if (compare == false) {
         let attemps, newAttemp, user
@@ -108,7 +108,7 @@ exports.comparePassword = async (username, password) => {
         }
         return compare
     } else {
-        return compare
+        return true
     }
 
 }

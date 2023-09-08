@@ -6,7 +6,7 @@
             Añadir a <%= data.name %>
         </button>
         <% if( products.status=='No Stock' ){ %>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="exampleModal<%= data._id %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= data._id %>"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -30,7 +30,7 @@
                 <div class="modal fade" id="exampleModal<%= data._id %>" tabindex="-1"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                        <form id="enviar-orden" action="/api/details" method="post">
+                        <form id="enviar-orden">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -50,7 +50,7 @@
                                         <div class="col-9">
                                             <label for="imagen" class="form-label">Imagenes:
                                             </label>
-                                            <input class="form-control" type="file" id="imagen" multiple name="image" required>
+                                            <input class="form-control" type="file" id="image" multiple name="image" required>
                                         </div>
                                     </div>
                                     <div class="row my-3 mx-2 d-flex align-items-center">

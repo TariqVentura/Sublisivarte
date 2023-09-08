@@ -7,22 +7,26 @@ const PATH = require('path')
 const FS = require('fs')
 const OPTIONS2 = require('../helpers/format/detail')
 
-exports.createDetail = (req, res) => {
+exports.createDetail = async (req, res) => {
+    console.log(req.body.product + req.body.amount + req.body.price + req.body.order)
     if (!req.body.product || !req.body.amount || !req.body.price || !req.body.order) {
-        AXIOS.get('http://localhost:443/api/products')
-            .then(function (response) {
-                AXIOS.get('http://localhost:443/api/categories')
-                    .then(function (categorie) {
-                        res.render('productos', { products: response.data, categories: categorie.data, user: session, mensaje: "No se permiten campos vacios", confirmation: true, icon: "success" })
-                    })
-                    .catch(err => {
-                        res.send('hola')
-                    })
-            })
-            .catch(err => {
-                res.send('No se puedieron cargar los productos')
-            })
+        res.sedn('empty')
+        return
     } else {
+        let product, price, amount, order
+
+        product = req.body.product
+        price = req.body.price
+        amount = req.body.amount
+        order = req.body.order
+
+        console.log(product + price + amount + order)
+
+        if (!product.trim() || !price.trim() || !amount.trim() || !order.trim()) {
+            res.send('empty')
+            return
+        }
+
         let orderDetail = { "color": req.body.color, "talla": req.body.size, "image": req.body.image }
 
         let total = Number(req.body.price) * Number(req.body.amount)
@@ -30,94 +34,97 @@ exports.createDetail = (req, res) => {
         let math = Number(req.body.stock) - Number(req.body.amount)
 
         const DETAIL = new DETAILS({
-            product: req.body.product,
-            price: req.body.price,
-            amount: req.body.amount,
+            product: product,
+            price: price,
+            amount: amount,
             total: total.toFixed(2),
-            order: req.body.order,
+            order: order,
             description: JSON.stringify(orderDetail)
         })
 
         if (math > 0) {
-            DETAIL.save(DETAIL).then(data => {
-                if (!data) {
-                    res.status(404).send('error')
+
+            const SAVE = await DETAIL.save()
+
+            console.log(SAVE)
+
+            if (!SAVE) {
+                res.send(false)
+            } else {
+                let id, value
+                id = req.body.id
+                value = { stock: math }
+
+                const STOCK = await PRODUCTS.findByIdAndUpdate(id, value, { useFindAndModify: false }).exec()
+
+                console.log(STOCK)
+
+                if (!STOCK) {
+                    res.send(false)
                 } else {
-                    let id, value
-                    id = req.body.id
-                    value = { stock: math }
-                    PRODUCTS.findByIdAndUpdate(id, value, { useFindAndModify: false })
-                        .then(product => {
-                            if (!product) {
-                                res.status(404).send('no se permiten campos vacios')
-                            } else {
-                                res.redirect('/carrito')
-                            }
-                        })
+                    res.send(true)
                 }
-            })
+            }
         } else if (math == 0) {
-            DETAIL.save(DETAIL).then(data => {
-                if (!data) {
-                    res.status(404).send('error')
+            const SAVE = await DETAIL.save()
+
+            console.log(SAVE)
+
+            if (!SAVE) {
+                res.send(false)
+            } else {
+                let id, value
+                id = req.body.id
+                console.log(id)
+                value = { stock: math, status: 'No Stock' }
+
+                const STOCK = await PRODUCTS.findByIdAndUpdate(id, value, { useFindAndModify: false }).exec()
+
+                console.log(STOCK)
+
+
+                if (!STOCK) {
+                    res.send(false)
                 } else {
-                    let id, value
-                    id = req.body.id
-                    value = { stock: math, status: 'No Stock' }
-                    PRODUCTS.findByIdAndUpdate(id, value, { useFindAndModify: false })
-                        .then(product => {
-                            if (!product) {
-                                res.status(404).send('no se permiten campos vacios')
-                            } else {
-                                res.redirect('/carrito')
-                            }
-                        })
+                    res.send(true)
                 }
-            })
+            }
         } else {
-            res.send('Stock insuficiente')
+            res.send('stock')
         }
-
-
-
-
     }
 }
 
-exports.cancelDetail = (req, res) => {
+exports.cancelDetail = async (req, res) => {
     const key = req.params.key
     const stock = req.params.stock
     const ID = req.params.id
 
-    DETAILS.findByIdAndDelete(ID, req.body, { useFindAndModify: true })
-        .then(data => {
-            if (!data) {
-                res.status(404).send('error')
-            } else {
-                PRODUCTS.findOne({ product: key })
-                    .then(data => {
-                        if (!data) {
-                            res.status(404).send('no datos')
-                        } else {
-                            let value = { stock: Number(data.stock) + Number(stock) }
-                            PRODUCTS.findByIdAndUpdate(data.id, value, { useFindAndModify: false })
-                                .then(result => {
-                                    if (!result) {
-                                        res.send('error')
-                                    } else {
-                                        res.send('OK')
-                                    }
-                                })
-                                .catch(err => {
-                                    res.send(err)
-                                })
-                        }
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
-            }
-        })
+    const STOCK = await PRODUCTS.findOne({ product: key }).exec()
+
+    if (!STOCK) {
+        res.send(false)
+        return
+    }
+
+    const DATA = await DETAILS.findByIdAndDelete(ID, req.body, { useFindAndModify: false }).exec()
+
+    if (!DATA) {
+        res.send(false)
+        return
+    } else {
+        let value = { stock: Number(STOCK.stock) + Number(stock) }
+
+        const VALUE = await PRODUCTS.findByIdAndUpdate(STOCK.id, value, { useFindAndModify: false }).exec()
+
+        if (VALUE) {
+            res.send(true)
+            return 
+        } else {
+            res.send(false)
+            return
+        }
+    }
 }
 
 exports.getDetails = (req, res) => {
@@ -137,10 +144,10 @@ exports.getDetails = (req, res) => {
 }
 
 exports.getReportDetail = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
     }
-    
+
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/detail.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_PRODUCTOS_' + req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/details/' + req.params.key).then(function (detail) {

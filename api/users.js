@@ -150,7 +150,7 @@ exports.logIn = async (req, res) => {
 
     //verificamos que la contraseña y el usuario coincidan
     const COMPARE = await VALIDATION.comparePassword(USER, PASSWORD)
-
+    console.log(COMPARE)
     //si no coinciden mandamos error
     if (COMPARE == false) {
         res.send(false)
