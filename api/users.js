@@ -3,7 +3,6 @@ require('dotenv').config()
  * Se declaran las constantes para mandar a llamar al controlador y las dependencias de node
  */
 const USERS = require('../models/users')
-const ATTEMPS = require('../models/attemps')
 const AXIOS = require('axios')
 const BCRYPT = require('bcrypt')
 const FECHA = new Date()
@@ -14,7 +13,6 @@ const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
 const VALIDATION = require('../helpers/validations/users')
 const JWT = require('jsonwebtoken')
-const LOCAL_STORAGE = require('node-localstorage').LocalStorage
 
 //funcion para crear un usuario
 exports.createUser = async (req, res) => {
@@ -156,17 +154,9 @@ exports.logIn = async (req, res) => {
     if (COMPARE == false) {
         res.send(false)
         return
-    }
-
-    //Verificamos que el usuario no tenga intentos fallidos
-    const ATTEMPT_USER = await ATTEMPS.findOne({ user: USER })
-
-    if (ATTEMPT_USER) {
-        // Si tiene intentos fallidos, verificamos si la cuenta está bloqueada
-        if (ATTEMPT_USER.intentosFallidos >= 3 && ATTEMPT_USER.cuentaBloqueada) {
-            res.send('Cuenta bloqueada');
-            return;
-        }
+    } else if(COMPARE == 'inactivo') {
+        res.send('inactivo')
+        return
     }
 
     //verificamos que no haya una sesion
@@ -198,7 +188,7 @@ exports.logIn = async (req, res) => {
                 //enviamos la respuesta
                 res.send(token)
 
-                
+
             }
         })
     }
@@ -512,7 +502,7 @@ exports.getUserReport = (req, res) => {
     //creamos constante de FILE_NAME y HTML como parametros para la dependencia
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/users.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_USUARIOS_' + req.params.key + '.pdf'
-    
+
     let token
 
     if (req.session.token) {
@@ -526,7 +516,7 @@ exports.getUserReport = (req, res) => {
             'Authorization': `Bearer ${token}`
         }
     }
-    
+
     //ocupamos el axios para obtener los datos de la api
     AXIOS.get('http://localhost:443/api/users/' + req.params.key, CONFIG).then(function (detail) {
         //declaramos arreglos vacios y un objeto donde guardaremos los datos de la api

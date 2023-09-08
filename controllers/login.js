@@ -47,6 +47,13 @@ LOGIN.addEventListener('submit', (e) => {
                     title: 'No se permiten campos vacios'
                 })
                 break
+            case 'inactivo':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Su cuenta ha sido desactivo por sobrepasar el numero de intentos permitidos'
+                })
+                break
             default:
                 Swal.fire({
                     icon: 'success',
