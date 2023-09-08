@@ -168,9 +168,19 @@ exports.logIn = async (req, res) => {
         //almaenamos los datos del usuario en una varible
         let data = await USERS.find({ user: USER }).exec()
 
+        const SALT_ROUNDS = await BCRYPT.genSaltSync(10)
+
+        const ENCRYPTED_USER = await BCRYPT.hashSync(USER, SALT_ROUNDS)
+
+        const NEW_ROL = data[0].role
+
+        console.log(NEW_ROL[0])
+
+        const ENCRYPTED_ROL = await BCRYPT.hashSync(NEW_ROL[0], SALT_ROUNDS)
+
         const INFO = {
-            user: USER,
-            rol: data[0].role
+            user: ENCRYPTED_USER,
+            rol: ENCRYPTED_ROL
         }
 
         JWT.sign({ INFO }, process.env.TOKEN, { expiresIn: '1h' }, (err, token) => {
