@@ -149,13 +149,19 @@ exports.logIn = async (req, res) => {
 
     //verificamos que la contraseña y el usuario coincidan
     const COMPARE = await VALIDATION.comparePassword(USER, PASSWORD)
-    console.log(COMPARE)
     //si no coinciden mandamos error
     if (COMPARE == false) {
         res.send(false)
         return
     } else if(COMPARE == 'inactivo') {
         res.send('inactivo')
+        return
+    }
+
+    const CHANGE_PASSWORD = await VALIDATION.changePassword(USER)
+
+    if (CHANGE_PASSWORD && CHANGE_PASSWORD != false) {
+        res.send('expired' + CHANGE_PASSWORD)
         return
     }
 

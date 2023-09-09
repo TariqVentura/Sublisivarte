@@ -61,6 +61,9 @@ LOGIN.addEventListener('submit', (e) => {
                     text: 'Su cuenta ha sido desactivo por sobrepasar el numero de intentos permitidos'
                 })
                 break
+            case 'expired':
+                
+                break
             default:
                 Swal.fire({
                     icon: 'success',

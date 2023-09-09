@@ -188,9 +188,49 @@ exports.newPasswordValidation = async (control, user, email) => {
     return VALID && !FORBIDDEN ? null : { 'Contraseña inválida': { value: control } }
 }
 
-exports.changePassword90 = async (user) => {
-    let data = await USER.find({ user: username }).exec()
-    let newDate = FECHA.create()
-    let userDate = data[0].updatedAt
+exports.changePassword = async (user) => {
+    const DATA = await USER.findOne({ user: user }).exec()
+    const USER_FORMAT = String(DATA.updatedAt).split(" ")
+    const NEW_FORMAT = USER_FORMAT.slice(0, 4).join(" ")
+    const DATE_FORMAT = FECHA.create()
+    const NEW_DATE = DATE_FORMAT.format('Y-m-d').toString()
+    console.log(new Date(NEW_DATE + 'T00:00:00-0600') + ' ' + new Date(NEW_FORMAT))
+    const DATE_DIFFERENCE = new Date(NEW_DATE + 'T00:00:00-0600') - new Date(NEW_FORMAT)
+    const DAYS_DIFFERENCE = Math.floor(DATE_DIFFERENCE / (1000 * 60 * 60 * 24))
+    if (DAYS_DIFFERENCE >= 3) {
+        const codeAuthentication = this.codeAuthentication(user)
+        //creamos un arreglo con los caracteres que tendra el codigo
+        let array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        let result = ''
+        //iniciamos la dependencia para obtener la fecha
+        let date = FECHA.create()
 
+        //utilizamos un for para concatenar 7 valores del arreglo
+        for (let index = 0; index < 7; index++) {
+            //utilizamos una ecuacion para elejir posciciones del arreglo de forma aleatoria
+            result += array[Math.floor(array.length * (Math.random()))]
+        }
+
+        //definimos las rondas de salto a 10 segun la documentacion de OWASP
+        const SALT_ROUNDS = await BCRYPT.genSaltSync(10)
+        //enviamos el string que vamos a encriptar
+        const ENCRYPTED_STRING = await BCRYPT.hashSync(result, SALT_ROUNDS)
+
+        const CODES = new CODE({
+            code: ENCRYPTED_STRING,
+            user: user,
+            date: date.format('Y-m-d H:M:S')
+        })
+
+        const SAVE = CODES.save()
+        
+        if (SAVE) {
+            return result
+        } else {
+            return false
+        }
+
+    } else {
+        return null
+    }
 }

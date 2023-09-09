@@ -105,7 +105,6 @@ ROUTER.get('/api/orders', tokenValidation, ORDERS.getOrders)
 ROUTER.get('/cancel/orders/:id', ORDERS.cancelOrder)
 ROUTER.get('/report/invoice/:key', ORDERS.getInvoice)
 ROUTER.get('/report/orders', ORDERS.reportOrders)
-
 ROUTER.get('report/detail/:key', ORDERS.getReportDetail)
 ROUTER.get('/api/count/date/:key', ORDERS.dateOrders)
 ROUTER.get('/api/count/orders', ORDERS.countOrders)
