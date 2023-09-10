@@ -161,21 +161,25 @@ exports.logIn = async (req, res) => {
         return
     }
 
+    //obtenemos el valor de retorno de la funcion changePassword
     const CHANGE_PASSWORD = await VALIDATION.changePassword(USER)
 
+    //si retorna code es porque existe un proceso de recuperacion de contraseña pendiente
     if (CHANGE_PASSWORD == 'code') {
-        console.log('pass2 ' + CHANGE_PASSWORD)
         res.send('code')
         return
+    //si retorna un dato y este no es falso es porque debe cambiar la contraseña porque expiro el plazo de 90 dias
     } else if (CHANGE_PASSWORD && CHANGE_PASSWORD != false) {
-        console.log('pass ' + CHANGE_PASSWORD)
+        //enviamos el codigo de cambio de contraseña
         res.send('expired' + CHANGE_PASSWORD)
         return
     }
 
+    //obtenemos la cantidad de intentos fallidos del usuario
     const GET_ATTEMPTS = await ATTEMPS.findOne({ user: USER }).exec()
 
     if (GET_ATTEMPTS) {
+        //restablecemos la cantidad de intentos del usuario para loggearse
         const RESTART_ATTEMPTS = await ATTEMPS.updateOne({ user: USER }, { attempt: 0 }, { useFindAndModify: false }).exec()
     }
 

@@ -1,23 +1,31 @@
 function seacrhProduct() {
-    location.href = 'http://localhost:443/products/' + document.getElementById('seacrhProduct').value 
+    let product = document.getElementById('seacrhProduct').value 
+    location.href = 'http://localhost:443/products/' + product
 }
 
 function searchComment() {
-    location.href = 'http://localhost:443/comments/' + document.getElementById('seacrhComment').value 
+    let comment = document.getElementById('seacrhComment').value 
+    location.href = 'http://localhost:443/comments/' + comment
 }
 
 function searchUser() {
-    location.href = 'http://localhost:443/users/' + document.getElementById('seacrhUser').value 
+    let user = document.getElementById('seacrhUser').value 
+    location.href = 'http://localhost:443/users/' + user
 }
+    
 
 function viewsProducts() {
-    location.href = 'http://localhost:443/views/products/' + document.getElementById('searchViewProduct').value
+    let product = document.getElementById('searchViewProduct').value
+    location.href = 'http://localhost:443/views/products/' + product
 }
 
 function searchCategorie() {
-    location.href = 'http://localhost:443/categories/' + document.getElementById('searchCategorie').value
+    let category = document.getElementById('searchCategorie').value
+    location.href = 'http://localhost:443/categories/' + category
 }
+    
 
 function searchOrders() {
-    location.href = 'http://localhost:443/views/pedidos/' + document.getElementById('seacrhOrder').value
+    let order = document.getElementById('seacrhOrder').value
+    location.href = 'http://localhost:443/views/pedidos/' + order
 }

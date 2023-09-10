@@ -86,27 +86,37 @@ exports.comparePassword = async (username, password) => {
 
     //si hay coincidencia enviamos true sino enviamos false
     if (compare == false) {
+        //declaramos variables a utilizar
         let attemps, newAttemp, user
+        //guardamos los intentos del usuario en una variable
         const DATA = await ATTEMPS.findOne({ user: username }).exec()
         if (!DATA) {
+            //sino hay atentos le asignamos el valor a 1
             attemps = 1
+            //creamos un objeto con los datos que necesita el documento
             const NUMBER = new ATTEMPS({
                 user: username,
                 attempt: attemps
             })
 
+            //guardamos el documento
             newAttemp = await NUMBER.save()
         } else {
-            console.log(DATA.attempt)
+            //si hay datos le sumamos 1 a la cantidad de intentos
             attemps = Number(DATA.attempt) + 1
+            //actualizamos el documento con la nueva data
             newAttemp = await ATTEMPS.updateOne({ user: username }, { attempt: attemps }).exec()
+            //si la cantidad de intestos es mayor o igual a 3 se bloquea el usuario
             if (attemps >= 3) {
+                //enviamos la respuesta  a la API para que la devuelva al cliente
                 user = await USER.updateOne({ user: username }, { status: 'inactivo' })
                 return 'inactivo'
             }
         }
+        //retornamos falso 
         return compare
     } else {
+        //retornamos verdadero ya que la clave coincide
         return true
     }
 
@@ -188,18 +198,26 @@ exports.newPasswordValidation = async (control, user, email) => {
 }
 
 exports.changePassword = async (user) => {
+    //obtenemos datos del usuario
     const DATA = await USER.findOne({ user: user }).exec()
+    //capturamos la fecha y la convertimos a String
     const USER_FORMAT = String(DATA.updatedAt).split(" ")
+    //modificamos el formato para adecuarlo a tipo Date
     const NEW_FORMAT = USER_FORMAT.slice(0, 4).join(" ")
+    //obtenemos la fecha de hoy
     const DATE_FORMAT = FECHA.create()
+    //le damos formato a la fecha de hoy
     const NEW_DATE = DATE_FORMAT.format('Y-m-d').toString()
+    //calculamos la diferencia de fechas
     const DATE_DIFFERENCE = new Date(NEW_DATE + 'T00:00:00-0600') - new Date(NEW_FORMAT)
+    //calculamos la diferencia de dias
     const DAYS_DIFFERENCE = Math.floor(DATE_DIFFERENCE / (1000 * 60 * 60 * 24))
-    if (DAYS_DIFFERENCE >= 3) {
+    //si la fierencia de dias es mayor que 90 obligamos un cambio de contraseña
+    if (DAYS_DIFFERENCE >= 90) {
+        //validamos que no tenga un proceso de actualizacion de contraseña pendiente
         const codeAuthentication = await this.codeAuthentication(user)
 
-        console.log('code: ' + codeAuthentication)
-
+        //enviamos error en caso que tenga un proceso de actualizacion de contraseña pendiente
         if (codeAuthentication == false) {
             return 'code'
         }
@@ -221,23 +239,26 @@ exports.changePassword = async (user) => {
         //enviamos el string que vamos a encriptar
         const ENCRYPTED_STRING = await BCRYPT.hashSync(result, SALT_ROUNDS)
 
+        //creamos un objeto con los datos que guardaremos
         const CODES = new CODE({
             code: ENCRYPTED_STRING,
             user: user,
             date: date.format('Y-m-d H:M:S')
         })
 
+        //guardamos el documento
         const SAVE = CODES.save()
-
-        console.log('result_' + result)
         
+        //validamos que se haya ejecutado el proceso
         if (SAVE) {
+            //retornamos el codigo para enviarlo al cliente
             return result
         } else {
             return false
         }
 
     } else {
+        //retornamos null en caso que no haya pasado el tiempo
         return null
     }
 }
