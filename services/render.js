@@ -5,6 +5,8 @@ exports.error = (req, res) => {
     AXIOS.get('http://localhost:443/api/images')
         .then(function (images) {
             res.render('include/error', { user: false, resources: images.data, mensaje: ". ", confirmation: false, icon: " ." })
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -17,6 +19,8 @@ exports.index = (req, res) => {
     AXIOS.get('http://localhost:443/api/images')
         .then(function (images) {
             res.render('index', { user: session, resources: images.data, mensaje: ". ", confirmation: false, icon: " ." })
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -39,38 +43,29 @@ exports.products = (req, res) => {
                 .catch(err => {
                     res.send('hola')
                 })
-        })
-        .catch(err => {
-            res.send('No se puedieron cargar los productos')
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
 exports.producto = (req, res) => {
-    if (req.session.token) {
-        token = req.session.token
-    } else {
-        res.redirect('/error404')
-        return
-    }
-
-    const CONFIG = {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }
-    if (req.session.user) {
+    if (req.session.user && req.session.token) {
         session = req.session
-
+        token = req.session.token
+        const CONFIG = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
         AXIOS.get('http://localhost:443/api/products/' + req.params.id)
             .then(function (product) {
                 AXIOS.get('http://localhost:443/api/orders/' + req.session.user, CONFIG)
                     .then(function (order) {
-                        console.log(order.data)
                         res.render('producto', { products: product.data, user: session, orders: order.data })
                     })
             })
             .catch(err => {
-                res.send(err)
+                res.send('pagina no encontrada')
             })
     } else {
         session = false
@@ -79,7 +74,7 @@ exports.producto = (req, res) => {
                 res.render('producto', { products: product.data, user: session, orders: null })
             })
             .catch(err => {
-                res.send(err)
+                res.send('pagina no encontrada')
             })
     }
 
@@ -94,7 +89,9 @@ exports.categories = (req, res) => {
     AXIOS.get('http://localhost:443/api/categories')
         .then(function (categorie) {
             res.render('categories', { categorie: categorie.data, user: session })
-        })
+        }.catch(err => {
+            res.send('pagina no encontrada')
+        }))
 
 }
 
@@ -116,6 +113,8 @@ exports.carrito = (req, res) => {
         AXIOS.get('http://localhost:443/api/orders/' + req.session.user, CONFIG)
             .then(function (order) {
                 res.render('carrito', { user: session, orders: order.data })
+            }).catch(err => {
+                res.send('pagina no encontrada')
             })
     } else {
         session = false
@@ -130,6 +129,8 @@ exports.details1 = (req, res) => {
             .then(function (detail) {
                 console.log(req.params.status)
                 res.render('detalles', { user: session, details: detail.data, status: req.params.status, order: req.params.id })
+            }).catch(err => {
+                res.send('pagina no encontrada')
             })
     } else {
         session = false
@@ -161,6 +162,8 @@ exports.cuenta = (req, res) => {
         .then(function (info) {
             console.log(info.data)
             res.render('cuenta', { user: session, data: info.data })
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -187,7 +190,7 @@ exports.usuarios = (req, res) => {
             }
         })
         .catch(err => {
-            res.send('No se pudieron cargar los usuarios')
+            res.send('Pagina no encontrada')
         })
 }
 
@@ -211,7 +214,7 @@ exports.categorias = (req, res) => {
             res.render('categorias', { categories: categorie.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
         })
         .catch(err => {
-            res.send('No se puede acceder a las categorias')
+            res.send('Pagina no encontrada')
         })
 }
 
@@ -229,7 +232,7 @@ exports.comments = (req, res) => {
                 })
         })
         .catch(err => {
-            res.send('No se puede acceder a  los comentarios')
+            res.send('pagina no encontrada')
         })
     // res.render('comentarios', {user: session})
 }
@@ -246,7 +249,11 @@ exports.searchComments = (req, res) => {
                 .then(function (product) {
                     console.log(comments.data)
                     res.render('comentarios', { comments: comments.data, products: product.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+                }).catch(err => {
+                    res.send('pagina no encontrada')
                 })
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -259,6 +266,8 @@ exports.searchUser = (req, res) => {
     AXIOS.get('http://localhost:443/api/users' + '/' + req.params.key)
         .then(function (user) {
             res.render('usuarios', { users: user.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -275,11 +284,11 @@ exports.searchProduct = (req, res) => {
                     res.render('productos', { products: response.data, categories: categorie.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
                 })
                 .catch(err => {
-                    res.send('hola')
+                    res.send('error de conexion')
                 })
         })
         .catch(err => {
-            res.send('No se puedieron cargar los productos')
+            res.send('pagina no encontrada')
         })
 }
 
@@ -292,6 +301,8 @@ exports.viewProducts = (req, res) => {
     AXIOS.get('http://localhost:443/categorie/api/products/' + req.params.key)
         .then(function (products) {
             res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ." })
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -304,6 +315,8 @@ exports.newViewProducts = (req, res) => {
     AXIOS.get('http://localhost:443/api/view/products/' + req.params.key)
         .then(function (products) {
             res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ." })
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -316,6 +329,8 @@ exports.allProducts = (req, res) => {
     AXIOS.get('http://localhost:443/api/products')
         .then(function (products) {
             res.render('viewPorducts', { user: session, products: products.data, mensaje: ". ", confirmation: false, icon: " ." })
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -330,7 +345,7 @@ exports.searchCategorie = (req, res) => {
             res.render('categorias', { categories: categorie.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
         })
         .catch(err => {
-            res.send('No se pudieron cargar las Categorias')
+            res.send('pagina no encontrada')
         })
 }
 
@@ -352,7 +367,7 @@ exports.orders = (req, res) => {
             res.render('orders', { orders: orders.data, user: req.session, mensaje: ". ", confirmation: false, icon: " ." })
         })
         .catch(err => {
-            res.send('No se pudieron cargar las Categorias')
+            res.send('pagina no encontrada')
         })
 }
 
@@ -365,9 +380,8 @@ exports.details = (req, res) => {
     AXIOS.get('http://localhost:443/api/details/' + req.params.id)
         .then(function (details) {
             res.render('details', { details: details.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
-        })
-        .catch(err => {
-            res.send('No se pudieron cargar las Categorias')
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
 
@@ -380,8 +394,7 @@ exports.ordersSearch = (req, res) => {
     AXIOS.get('http://localhost:443/api/orders/' + req.params.key)
         .then(function (orders) {
             res.render('orders', { orders: orders.data, user: session, mensaje: ". ", confirmation: false, icon: " ." })
-        })
-        .catch(err => {
-            res.send('No se pudieron cargar las Categorias')
+        }).catch(err => {
+            res.send('pagina no encontrada')
         })
 }
