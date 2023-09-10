@@ -13,6 +13,11 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
     newPassword = document.getElementById('password_confirm').value
     code = document.getElementById('code').value
 
+    changePassword(code, password, newPassword)
+
+})
+
+function changePassword(code, password, newPassword) {
     //utilizamos la libreria de axios para enviar los datos a la api
     axios.post('http://localhost:443/api/newPassword/', {
         code: code,
@@ -110,5 +115,4 @@ VALIDATE_PASSWORD.addEventListener('submit', function (e) {
             showConfirmButton: true
         })
     })
-
-})
+}

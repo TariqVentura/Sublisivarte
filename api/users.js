@@ -13,6 +13,8 @@ const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
 const VALIDATION = require('../helpers/validations/users')
 const JWT = require('jsonwebtoken')
+const ATTEMPS = require('../models/attemps')
+
 
 //funcion para crear un usuario
 exports.createUser = async (req, res) => {
@@ -47,7 +49,7 @@ exports.createUser = async (req, res) => {
         }
         //validamos que no sea un usuario repetido
         const USER_VALIDATION = await VALIDATION.userValidation(user)
-        
+
 
         if (USER_VALIDATION == true) {
             res.send('user')
@@ -149,20 +151,32 @@ exports.logIn = async (req, res) => {
 
     //verificamos que la contraseña y el usuario coincidan
     const COMPARE = await VALIDATION.comparePassword(USER, PASSWORD)
+    console.log(COMPARE)
     //si no coinciden mandamos error
     if (COMPARE == false) {
         res.send(false)
         return
-    } else if(COMPARE == 'inactivo') {
+    } else if (COMPARE == 'inactivo') {
         res.send('inactivo')
         return
     }
 
     const CHANGE_PASSWORD = await VALIDATION.changePassword(USER)
 
-    if (CHANGE_PASSWORD && CHANGE_PASSWORD != false) {
+    if (CHANGE_PASSWORD == 'code') {
+        console.log('pass2 ' + CHANGE_PASSWORD)
+        res.send('code')
+        return
+    } else if (CHANGE_PASSWORD && CHANGE_PASSWORD != false) {
+        console.log('pass ' + CHANGE_PASSWORD)
         res.send('expired' + CHANGE_PASSWORD)
         return
+    }
+
+    const GET_ATTEMPTS = await ATTEMPS.findOne({ user: USER }).exec()
+
+    if (GET_ATTEMPTS) {
+        const RESTART_ATTEMPTS = await ATTEMPS.updateOne({ user: USER }, { attempt: 0 }, { useFindAndModify: false }).exec()
     }
 
     //verificamos que no haya una sesion
@@ -230,7 +244,7 @@ exports.findUsers = (req, res) => {
                 } else {
                     res.send(data)
                 }
-            }) 
+            })
             .catch(err => {
                 res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
             })

@@ -49,7 +49,8 @@ exports.producto = (req, res) => {
     if (req.session.token) {
         token = req.session.token
     } else {
-        token = null
+        res.redirect('/error404')
+        return
     }
 
     const CONFIG = {
@@ -101,9 +102,10 @@ exports.carrito = (req, res) => {
     if (req.session.token) {
         token = req.session.token
     } else {
-        token = null
+        res.redirect('/error404')
+        return
     }
-    
+
     const CONFIG = {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -145,7 +147,8 @@ exports.cuenta = (req, res) => {
     if (req.session.token) {
         token = req.session.token
     } else {
-        token = null
+        res.redirect('/error404')
+        return
     }
 
     const CONFIG = {
@@ -165,7 +168,8 @@ exports.usuarios = (req, res) => {
     if (req.session.token) {
         token = req.session.token
     } else {
-        token = null
+        res.redirect('/error404')
+        return
     }
 
     const CONFIG = {
@@ -334,7 +338,8 @@ exports.orders = (req, res) => {
     if (req.session.token) {
         token = req.session.token
     } else {
-        token = null
+        res.redirect('/error404')
+        return
     }
 
     const CONFIG = {

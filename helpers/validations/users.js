@@ -83,12 +83,11 @@ exports.comparePassword = async (username, password) => {
     }
     //comparamos los datos de la base con los del usuario
     let compare = await BCRYPT.compareSync(password, DATA[0].password)
-    console.log(compare)
+
     //si hay coincidencia enviamos true sino enviamos false
     if (compare == false) {
         let attemps, newAttemp, user
         const DATA = await ATTEMPS.findOne({ user: username }).exec()
-        console.log('intentos: ' + DATA)
         if (!DATA) {
             attemps = 1
             const NUMBER = new ATTEMPS({
@@ -130,7 +129,7 @@ exports.emailValidation = async (email, username) => {
 exports.codeAuthentication = async (username) => {
     //guardamos en una constante datos para validar el codigo
     const DATA = await CODE.find({ user: username, status: 'activo' }).exec()
-
+    
     //sino hay datos entonces puede crear un codigo
     if (!DATA.length) {
         return true
@@ -194,11 +193,17 @@ exports.changePassword = async (user) => {
     const NEW_FORMAT = USER_FORMAT.slice(0, 4).join(" ")
     const DATE_FORMAT = FECHA.create()
     const NEW_DATE = DATE_FORMAT.format('Y-m-d').toString()
-    console.log(new Date(NEW_DATE + 'T00:00:00-0600') + ' ' + new Date(NEW_FORMAT))
     const DATE_DIFFERENCE = new Date(NEW_DATE + 'T00:00:00-0600') - new Date(NEW_FORMAT)
     const DAYS_DIFFERENCE = Math.floor(DATE_DIFFERENCE / (1000 * 60 * 60 * 24))
     if (DAYS_DIFFERENCE >= 3) {
-        const codeAuthentication = this.codeAuthentication(user)
+        const codeAuthentication = await this.codeAuthentication(user)
+
+        console.log('code: ' + codeAuthentication)
+
+        if (codeAuthentication == false) {
+            return 'code'
+        }
+
         //creamos un arreglo con los caracteres que tendra el codigo
         let array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         let result = ''
@@ -223,6 +228,8 @@ exports.changePassword = async (user) => {
         })
 
         const SAVE = CODES.save()
+
+        console.log('result_' + result)
         
         if (SAVE) {
             return result
