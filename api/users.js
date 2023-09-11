@@ -232,15 +232,20 @@ exports.logIn = async (req, res) => {
     }
 }
 
+//Función para cerrar sesión
 exports.logOut = (req, res) => {
     //destruimos la sesion
     req.session.destroy()
     return res.redirect('/')
 }
 
+//Función para buscar usuarios
 exports.findUsers = (req, res) => {
+    // Comprueba si se proporcionó un parámetro "id" en la solicitud.
     if (req.params.id) {
+        //Obtiene el valor del parámetro
         const id = req.query.id
+        //Busca el usuario por su ID
         USERS.findById(id)
             .then(data => {
                 if (!data) {
@@ -253,6 +258,7 @@ exports.findUsers = (req, res) => {
                 res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
             })
     } else {
+        // Si no se proporciona un parámetro "id" en la solicitud, realiza una búsqueda de todos los usuarios
         USERS.find()
             .then(user => {
                 res.send(user)
@@ -263,15 +269,20 @@ exports.findUsers = (req, res) => {
     }
 }
 
+//Función para actualizar usuarios
 exports.updateUsers = (req, res) => {
+    // Comprueba si no hay un usuario en la sesión o si el rol del usuario no es 'admin'.
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
         return
     }
     console.log(req.body.id)
+    //Obtiene el valor del parámetro 
     const id = req.body.id
+    //Actualiza al usuario por su id
     USERS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
+            // Comprueba si se encontró un usuario con el ID proporcionado.
             if (!data) {
                 res.status(404).send({ message: "No se encontro el usuario" })
             } else {
@@ -286,6 +297,7 @@ exports.updateUsers = (req, res) => {
         })
 }
 
+//Función para banear al usuario
 exports.bannUser = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
@@ -311,6 +323,7 @@ exports.bannUser = (req, res) => {
 
 }
 
+//Función para eliminar/desactivar usuarios
 exports.deleteUsers = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
@@ -337,6 +350,7 @@ exports.deleteUsers = (req, res) => {
     }
 }
 
+//Función para buscar usuarios
 exports.searchUsers = (req, res) => {
     if (req.usuario.INFO.rol != 'admin') {
         res.redirect('/error404')
