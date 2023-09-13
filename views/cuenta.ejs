@@ -23,11 +23,11 @@
                         </div>
                     </div>
                 </div>
-                <% if(data.authentification=='activado' ){ %>
-                    <button class="btn btn-primary" onclick="changeAuthentification('<%= data._id %>', 'desactivado')">Desactivado</button>
-                    <%} else {%>
-                        <button class="btn btn-primary" onclick="changeAuthentification('<%= data._id %>', 'activado')">Activado</button>
-                        <% } %>
+                <% if(data[0].authentification=='desactivado' || !data[0].authentification ){ %>
+                    <button class="btn btn-primary" onclick="changeAuthentification('<%= data[0]._id %>', 'activado')">Activar</data.authentification></button>
+                <%} else {%>
+                    <button class="btn btn-primary" onclick="changeAuthentification('<%= data[0]._id %>', 'desactivado')">Desactivar</button>
+                <% } %>
                 <button class="btn btn-danger w-50 my-2"><a href="/status/user/<%= user.user %>" class="text-light">Desactivar cuenta</a></button>
             </div>
         </div>
@@ -35,5 +35,5 @@
                 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script src="/alerts.js"></script>
-                <script src="/users.js"></script>
+                <script src="/cuenta.js"></script>
 <% } %>

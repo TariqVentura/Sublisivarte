@@ -520,11 +520,6 @@ exports.statusUser = (req, res) => {
 }
 
 exports.getUser = (req, res) => {
-    if (req.usuario.INFO.user != req.session.user) {
-        res.send('No puedes modificar datos de otro usuario')
-        return
-    }
-
     const KEY = req.params.key
 
     USERS.find({
@@ -536,6 +531,7 @@ exports.getUser = (req, res) => {
             if (!data) {
                 res.send('error')
             } else {
+                console.log('data: ' + data)
                 res.send(data)
             }
         })
@@ -672,7 +668,7 @@ exports.userAuthentification = (req, res) => {
     const AUTHENTIFICATION = req.params.authentification
     const ID = req.params.id
     const VALUE = { authentification: AUTHENTIFICATION }
-    console.log(AUTHENTIFICATION)
+    console.log(AUTHENTIFICATION + ' ' + ID + ' ' + VALUE)
     USERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
         .then(data => {
             if (!data) {

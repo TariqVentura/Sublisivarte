@@ -169,13 +169,9 @@ exports.cuenta = (req, res) => {
         }
     }
 
-    AXIOS.get('http://localhost:443/api/get/users/' + req.session.user, CONFIG)
-        .then(function (info) {
-            console.log(info.data)
-            res.render('cuenta', { user: session, data: info.data, count: count })
-        }).catch(err => {
-            res.send('pagina no encontrada')
-        })
+    AXIOS.get('http://localhost:443/api/get/users/' + req.session.user, CONFIG).then((info) => {
+        res.render('cuenta', { user: session, data: info.data, count: count })
+    })
 }
 
 exports.usuarios = (req, res) => {
