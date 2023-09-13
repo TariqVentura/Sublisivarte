@@ -92,9 +92,9 @@ ROUTER.get('/api/count/users', USERS.countUsers)
 ROUTER.get('/authentification/user/:id/:authentification', tokenValidation, USERS.userAuthentification)
 
 //API comments
-ROUTER.post('/api/comments', COMMENTS.createComment)
+ROUTER.post('/api/comments', tokenValidation, COMMENTS.createComment)
 ROUTER.get('/api/comments', COMMENTS.findComments)
-ROUTER.get('/delete/comments/:id', COMMENTS.deleteComments)
+ROUTER.get('/delete/comments/:id', tokenValidation, COMMENTS.deleteComments)
 ROUTER.get('/api/comments/:key', COMMENTS.serchComments)
 ROUTER.get('/api/count/comments/:key', COMMENTS.countCommentsProduct)
 

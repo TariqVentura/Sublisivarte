@@ -2,30 +2,47 @@ const COMMENTS = require('../models/comments')
 const AXIOS = require('axios')
 
 exports.createComment = async (req, res) => {
+    //validacion de datos vacios
     if (!req.body.comment || !req.body.review || !req.body.product || !req.body.client) {
         return res.send('empty')
     } else {
+        //declaracion de variables
         let comment, review, product, client
 
+        //obtener datos de la peticion
         comment = req.body.comment
-        review = req.body.review
+        review = Number(req.body.review)
         product = req.body.product
         client = req.body.client
 
-        if (!comment.trim() || !review.trim() || !product.trim() || !client.trim()) {
+        //manejar longitud del comentario
+        if (comment.length > 250) {
+            return res.send('length')
+        }
+
+        //validar la puntuacion minima y maxima
+        if (review > 10 || review < 0) {
+            return res.send('max')
+        }
+
+        //validar campos vacios
+        if (!comment.trim() || !product.trim() || !client.trim()) {
             return res.send('empty')
         }
 
+        //creamos objeto con datos de la peticion
         const COMMENT = new COMMENTS({
-            comment: req.body.comment,
-            review: Number(req.body.review),
-            product: req.body.product,
-            client: req.body.client
+            comment: comment,
+            review: review,
+            product: product,
+            client: client
 
         })
 
+        //guardamos el documento
         const SAVE = await COMMENT.save()
 
+        //validamos que el documento se guarde
         if (SAVE) {
             return res.send(true)
         } else {
@@ -65,35 +82,25 @@ exports.findComments = (req, res) => {
     }
 }
 
-exports.deleteComments = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/error404')
-        return
+//funcion para eliminar comentarios
+exports.deleteComments = async (req, res) => {
+    //obtenemos el id del producto desde la URL
+    if (!req.params.id) {
+        return res.send('empty')
     }
-    const id = req.params.id
-    COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
-        .then(data => {
-            if (!data) {
-                res.status(404).send({ message: 'Producto no encontrado' })
-            } else {
-                AXIOS.get('http://localhost:443/api/comments')
-                    .then(function (response) {
-                        AXIOS.get('http://localhost:443/api/products')
-                            .then(function (productos) {
-                                res.render('comentarios', { comments: response.data, products: productos.data, user: req.session, mensaje: "Comentario Eliminado", confirmation: true, icon: 'success' })
-                            })
-                            .catch(err => {
-                                res.send(err)
-                            })
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
+
+    //guardamos el id en una varibale
+    let id = req.params.id
+
+    //eliminamos el comentario
+    const DELETE = await COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false }).exec()
+    
+    //validamos que se haya completado el proceso
+    if (!DELETE) {
+        return  res.send(false)
+    } else {
+        return res.send(true)
+    }
 }
 
 exports.serchComments = (req, res) => {
