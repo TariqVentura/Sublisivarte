@@ -217,7 +217,7 @@ exports.changePassword = async (user) => {
     //calculamos la diferencia de dias
     const DAYS_DIFFERENCE = Math.floor(DATE_DIFFERENCE / (1000 * 60 * 60 * 24))
     //si la fierencia de dias es mayor que 90 obligamos un cambio de contraseña
-    if (DAYS_DIFFERENCE >= 0) {
+    if (DAYS_DIFFERENCE >= 90) {
         //validamos que no tenga un proceso de actualizacion de contraseña pendiente
         const codeAuthentication = await this.codeAuthentication(user)
 

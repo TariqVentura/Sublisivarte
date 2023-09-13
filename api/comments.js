@@ -8,17 +8,25 @@ exports.createComment = async (req, res) => {
         let comment, review, product, client
 
         comment = req.body.comment
-        review = req.body.review
+        review = Number(req.body.review)
         product = req.body.product
         client = req.body.client
 
-        if (!comment.trim() || !review.trim() || !product.trim() || !client.trim()) {
+        if (comment.length > 250) {
+            return res.send('length')
+        }
+
+        if (review > 10 || review < 0) {
+            return res.send('max')
+        }
+
+        if (!comment.trim() || !product.trim() || !client.trim()) {
             return res.send('empty')
         }
 
         const COMMENT = new COMMENTS({
             comment: req.body.comment,
-            review: Number(req.body.review),
+            review: review,
             product: req.body.product,
             client: req.body.client
 
