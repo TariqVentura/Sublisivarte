@@ -2,38 +2,47 @@ const COMMENTS = require('../models/comments')
 const AXIOS = require('axios')
 
 exports.createComment = async (req, res) => {
+    //validacion de datos vacios
     if (!req.body.comment || !req.body.review || !req.body.product || !req.body.client) {
         return res.send('empty')
     } else {
+        //declaracion de variables
         let comment, review, product, client
 
+        //obtener datos de la peticion
         comment = req.body.comment
         review = Number(req.body.review)
         product = req.body.product
         client = req.body.client
 
+        //manejar longitud del comentario
         if (comment.length > 250) {
             return res.send('length')
         }
 
+        //validar la puntuacion minima y maxima
         if (review > 10 || review < 0) {
             return res.send('max')
         }
 
+        //validar campos vacios
         if (!comment.trim() || !product.trim() || !client.trim()) {
             return res.send('empty')
         }
 
+        //creamos objeto con datos de la peticion
         const COMMENT = new COMMENTS({
-            comment: req.body.comment,
+            comment: comment,
             review: review,
-            product: req.body.product,
-            client: req.body.client
+            product: product,
+            client: client
 
         })
 
+        //guardamos el documento
         const SAVE = await COMMENT.save()
 
+        //validamos que el documento se guarde
         if (SAVE) {
             return res.send(true)
         } else {
@@ -73,14 +82,20 @@ exports.findComments = (req, res) => {
     }
 }
 
+//funcion para eliminar comentarios
 exports.deleteComments = async (req, res) => {
+    //obtenemos el id del producto desde la URL
     if (!req.params.id) {
         return res.send('empty')
     }
 
+    //guardamos el id en una varibale
     let id = req.params.id
 
+    //eliminamos el comentario
     const DELETE = await COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false }).exec()
+    
+    //validamos que se haya completado el proceso
     if (!DELETE) {
         return  res.send(false)
     } else {

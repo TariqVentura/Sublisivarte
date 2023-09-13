@@ -75,6 +75,7 @@ BUSCAR_COMENTARIO.addEventListener('click', function () {
 })
 
 function confirmDelete (_id) {
+    //validamos que el usuario este seguro para eliminar el comentario
     Swal.fire({
         title: 'Esta seguro?',
         text: "Desea cambiar el estado de esta categoria a " + status,
@@ -93,14 +94,16 @@ function confirmDelete (_id) {
 }
 
 function deleteComments (_id) {
-    console.log(_id)
+    //utilizamos axios para 
     axios.get('http://localhost:443/delete/comments/' + _id, {
         //definimos que utlizaremos body url encoded y enviamos el token 
         headers: {
             'Authorization': localStorage.getItem('token')
         }
     }).then((data) => {
+        //obtenemos la respuesta de la API
         switch (data.data) {
+            //revisamos con un switch la respuesta de la API para enviar una respuesta adecuada
             case true:
                 Swal.fire({
                     icon: 'success',
