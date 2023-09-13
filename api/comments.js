@@ -73,35 +73,19 @@ exports.findComments = (req, res) => {
     }
 }
 
-exports.deleteComments = (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/error404')
-        return
+exports.deleteComments = async (req, res) => {
+    if (!req.params.id) {
+        return res.send('empty')
     }
-    const id = req.params.id
-    COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
-        .then(data => {
-            if (!data) {
-                res.status(404).send({ message: 'Producto no encontrado' })
-            } else {
-                AXIOS.get('http://localhost:443/api/comments')
-                    .then(function (response) {
-                        AXIOS.get('http://localhost:443/api/products')
-                            .then(function (productos) {
-                                res.render('comentarios', { comments: response.data, products: productos.data, user: req.session, mensaje: "Comentario Eliminado", confirmation: true, icon: 'success' })
-                            })
-                            .catch(err => {
-                                res.send(err)
-                            })
-                    })
-                    .catch(err => {
-                        res.send(err)
-                    })
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
+
+    let id = req.params.id
+
+    const DELETE = await COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false }).exec()
+    if (!DELETE) {
+        return  res.send(false)
+    } else {
+        return res.send(true)
+    }
 }
 
 exports.serchComments = (req, res) => {

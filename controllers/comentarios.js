@@ -1,3 +1,4 @@
+
 const BUSCAR_COMENTARIO = document.getElementById('btn-buscar')
 
 BUSCAR_COMENTARIO.addEventListener('click', function () {
@@ -72,3 +73,57 @@ BUSCAR_COMENTARIO.addEventListener('click', function () {
         })
     }
 })
+
+function confirmDelete (_id) {
+    Swal.fire({
+        title: 'Esta seguro?',
+        text: "Desea cambiar el estado de esta categoria a " + status,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            //utilizamos axios para ejecutar la peticion
+            deleteComments(_id)
+        }
+    })
+}
+
+function deleteComments (_id) {
+    console.log(_id)
+    axios.get('http://localhost:443/delete/comments/' + _id, {
+        //definimos que utlizaremos body url encoded y enviamos el token 
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        }
+    }).then((data) => {
+        switch (data.data) {
+            case true:
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Proceso completado',
+                    text: 'Se ha eliminado el comentario exitosamente'
+                }).then(() => {
+                    location.href = '/comentarios'
+                })
+                break
+            case false:
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ooops...',
+                    text: 'Error en la base datos'
+                })
+                break
+            case 'empty':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ooops...',
+                    text: 'No se permiten campos vacios'
+                })
+                break
+        }
+    })
+}
