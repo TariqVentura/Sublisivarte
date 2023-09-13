@@ -667,3 +667,21 @@ exports.countUsers = (req, res) => {
         res.status(404).send(err)
     })
 }
+
+exports.userAuthentification = (req, res) => { 
+    const AUTHENTIFICATION = req.params.authentification
+    const ID = req.params.id
+    const VALUE = { authentification: AUTHENTIFICATION }
+    console.log(AUTHENTIFICATION)
+    USERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.send(false)
+            } else {
+                res.send(true)
+            }
+        })
+        .catch(err => {
+            res.send(false)
+        })
+}

@@ -45,6 +45,10 @@ let userSchema = new MONGOOSE.Schema(
             type: String,
             unique: true,
             require: true
+        },
+        authentification: {
+            type: ["activado", "desactivado"],
+            require: true,
         }
     },
     {

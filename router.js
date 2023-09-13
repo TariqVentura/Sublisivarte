@@ -89,6 +89,7 @@ ROUTER.get('/api/get/users/:key', tokenValidation, USERS.getUser)
 // ROUTER.post('/api/modifyUser', USERS.modifyUser)
 ROUTER.get('/report/user/:key', USERS.getUserReport)
 ROUTER.get('/api/count/users', USERS.countUsers)
+ROUTER.get('/authentification/user/:id/:authentification', tokenValidation, USERS.userAuthentification)
 
 //API comments
 ROUTER.post('/api/comments', COMMENTS.createComment)
