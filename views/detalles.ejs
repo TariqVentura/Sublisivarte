@@ -33,7 +33,7 @@
                             <% if(status=='en proceso' ){ %>
                                 <button class="btn btn-danger" onclick="deleteDetail('<%= data.product %>', '<%= data.amount %>', '<%= data._id %>')">Eliminar</button>
                                 <% }else if (status=='finalizado' ){ %>
-                                    <form action="/api/comments" method="post">
+                                    <form id="form-comment">
                                         <!-- Button trigger modal -->
                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                             data-bs-target="#staticBackdrop<%= data._id %>comment">
@@ -57,10 +57,10 @@
                                                         <label for="customRange2"
                                                             class="form-label">Calificacion</label>
                                                         <input type="range" class="form-range" min="0" max="10"
-                                                            id="customRange2" value="0" name="review">
-                                                        <textarea name="comment" id="" cols="60" rows="5"></textarea>
-                                                        <input type="text" name="client" value="<%= user.user %>">
-                                                        <input type="text" name="product" value="<%= data.product %>">
+                                                            id="revire" value="0" name="review" >
+                                                        <textarea name="comment" id="comment" cols="60" rows="5"></textarea>
+                                                        <input type="text" name="client" id="client" value="<%= user.user %>">
+                                                        <input type="text" name="product" id="product" value="<%= data.product %>">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"

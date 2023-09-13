@@ -108,15 +108,41 @@ exports.createUser = async (req, res) => {
             })
 
         } else {
-            //creamos un objeto con los datos del nuevo usuario
-            newDocument = new USERS({
+            const COUNT = await USERS.count().exec()
+
+            if (COUNT > 0) {
+                //creamos un objeto con los datos del nuevo usuario
+                newDocument = new USERS({
+                name: req.body.name,
+                lastname: req.body.lastname,
+                email: req.body.email,
+                user: req.body.user,
+                password: HASH,
+                document: req.body.document
+                })
+            } else {
+                //validamos que el campo de rol no este vacio
+                if (req.body.role) {
+                    role = req.body.role
+                } else {
+                    role = ''
+                }
+
+                if (!role.trim()) {
+                    res.send('empty')
+                    return
+                }
+                //creamos un objeto con los datos del nuevo usuario
+                newDocument = new USERS({
                 name: req.body.name,
                 lastname: req.body.lastname,
                 email: req.body.email,
                 user: req.body.user,
                 password: HASH,
                 document: req.body.document,
-            })
+                role: role
+                })
+            }            
         }
 
         //utilizamos el metodo save de mongoose para guardar los datos en la base
@@ -441,11 +467,14 @@ exports.newPassword = async (req, res) => {
                 //utilizamos una funcion para validar si la contraseña es valida (ctrl + click en passwordValidation para ver el codigo)
                 let passwordValidation = await VALIDATION.passwordValidation(newPassword, username)
 
-                //validamos que no ingrese una clave repetida
-                let comparePassword = await VALIDATION.comparePassword(username, newPassword)
+                console.log('pv ' + passwordValidation)
+
+                if (passwordValidation == 'true') {
+                    return res.send('repetido')
+                }
 
                 //si la validacion retorna null es que no hay problema
-                if (!passwordValidation || comparePassword == true) {
+                if (!passwordValidation) {
                     //encriptamos la contraseña utilizando 10 saltos
                     encryptedPassword = await BCRYPT.hashSync(newPassword, rounds)
                     try {

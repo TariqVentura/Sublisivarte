@@ -95,7 +95,15 @@ function changePassword(code, password, newPassword) {
                     text: 'Usuario Inexistente',
                     showConfirmButton: true
                 })
-                break;
+                break
+            case 'repetido':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No se puede utilizar una contraseña antigua',
+                    showConfirmButton: true
+                })
+                break
             default:
                 //error generico
                 Swal.fire({

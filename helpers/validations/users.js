@@ -48,6 +48,10 @@ exports.passwordValidation = async (control, user) => {
     let mail = DATA[0].email
     //separamos para obtener el correo sin el dominio
     let value = mail.split('@')
+    let compare = await BCRYPT.compareSync(control, DATA[0].password)
+    if (compare == true) {
+        return 'true'
+    }
     // Esta expresión regular verifica si la contraseña cumple con los requisitos
     const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?!.*\s).{8,}$/
     // Estos son los nombres de usuario que no se permiten en la contraseña
@@ -213,7 +217,7 @@ exports.changePassword = async (user) => {
     //calculamos la diferencia de dias
     const DAYS_DIFFERENCE = Math.floor(DATE_DIFFERENCE / (1000 * 60 * 60 * 24))
     //si la fierencia de dias es mayor que 90 obligamos un cambio de contraseña
-    if (DAYS_DIFFERENCE >= 90) {
+    if (DAYS_DIFFERENCE >= 0) {
         //validamos que no tenga un proceso de actualizacion de contraseña pendiente
         const codeAuthentication = await this.codeAuthentication(user)
 

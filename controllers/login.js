@@ -213,7 +213,17 @@ function changePassword(code, password, newPassword, user) {
                 }).then(() => {
                     getPasswordChange(code, user)
                 })
-                break;
+                break
+            case 'repetido':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No se puede utilizar una contraseña antigua',
+                    showConfirmButton: true
+                }).then(() => {
+                    getPasswordChange(code, user)
+                })
+                break
             default:
                 //error generico
                 Swal.fire({

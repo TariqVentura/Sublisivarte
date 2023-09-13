@@ -43,7 +43,8 @@ let userSchema = new MONGOOSE.Schema(
         },
         document: {
             type: String,
-            unique: true
+            unique: true,
+            require: true
         }
     },
     {

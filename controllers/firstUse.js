@@ -14,6 +14,8 @@ FORM_USER.addEventListener('submit', (e) => {
     confirm = document.getElementById('confirm').value
     role = document.getElementById('role').value
 
+    console.log(name + ' ' + lastname+ ' ' + email+ ' ' + user+ ' ' + doc+ ' ' + password+ ' ' + confirm+ ' ' + role)
+
     axios.post('http://localhost:443/api/users', {
         name: name,
         lastname: lastname,

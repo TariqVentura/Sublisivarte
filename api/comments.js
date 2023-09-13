@@ -1,16 +1,21 @@
 const COMMENTS = require('../models/comments')
 const AXIOS = require('axios')
 
-exports.createComment = (req, res) => {
+exports.createComment = async (req, res) => {
     if (!req.body.comment || !req.body.review || !req.body.product || !req.body.client) {
-        AXIOS.get('http://localhost:443/api/comments')
-        .then(function (response) {
-            AXIOS.get('http://localhost:443/api/products')
-                .then(function (productos) {
-                    res.render('comentarios', { comments: response.data, products: productos.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
-                })
-        })
+        return res.send('empty')
     } else {
+        let comment, review, product, client
+
+        comment = req.body.comment
+        review = req.body.review
+        product = req.body.product
+        client = req.body.client
+
+        if (!comment.trim() || !review.trim() || !product.trim() || !client.trim()) {
+            return res.send('empty')
+        }
+
         const COMMENT = new COMMENTS({
             comment: req.body.comment,
             review: Number(req.body.review),
@@ -18,26 +23,14 @@ exports.createComment = (req, res) => {
             client: req.body.client
 
         })
-        COMMENT
-            .save(COMMENT)
-            .then(data => {
-                if (!data) {
-                    res.status(404).send({ message: `Ocurrio un error al intentar subir los datos` })
-                } else {
-                    AXIOS.get('http://localhost:443/api/comments')
-                        .then(function (response) {
-                            AXIOS.get('http://localhost:443/api/products')
-                                .then(function (productos) {
-                                    res.render('comentarios', { comments: response.data, products: productos.data, mensaje: "Comentario Creado", confirmation: true, icon: 'success', user: req.session })
-                                })
-                        })
-                }
-            })
-            .catch(err => {
-                res.status(500).send({
-                    message: err.message || "Ocurrio un error al intentar ingresar el comentario"
-                })
-            })
+
+        const SAVE = await COMMENT.save()
+
+        if (SAVE) {
+            return res.send(true)
+        } else {
+            return res.send(false)
+        }
     }
 }
 
