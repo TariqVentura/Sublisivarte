@@ -89,8 +89,6 @@ exports.createUser = async (req, res) => {
                 role = ''
             }
 
-            console.log('role')
-
             if (!role.trim()) {
                 res.send('empty')
                 return
@@ -262,7 +260,7 @@ exports.logIn = async (req, res) => {
 exports.logOut = (req, res) => {
     //destruimos la sesion
     req.session.destroy()
-    return res.redirect('/')
+    return res.send('logout')
 }
 
 //Función para buscar usuarios

@@ -10,47 +10,56 @@
                         <% if(user==false ) { %>
                             <%- include('mailPassword') %>
                             <%- include('login') %>
-                                <% } else { %>
-                                    <% if(user.role=='admin' ){ %>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle user-menu" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                <a href="" class="fs-6">
-                                                    <%= user.user %>
+                        <% } else { %>
+                            <% if(user.role=='admin' ){ %>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle user-menu" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a href="" class="fs-6">
+                                        <%= user.user %>
+                                    </a>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item mx-0 fw-light fs-6"
+                                            href="/administracion">Administracion</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item mx-0 fw-light fs-6"
+                                            href="/cuenta">Cuenta</a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider mx-0 fw-light fs-6">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item mx-0 fw-light fs-6" onclick="logOut()">Cerrar Sesion</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <% } else { %>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle user-menu"
+                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a href="" class="fs-6">
+                                        <%= user.user %>
+                                    </a>
+                                    </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="dropdown-item mx-0 fw-light fs-6"
+                                                href="/cuenta">Cuenta
                                                 </a>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item mx-0 fw-light fs-6"
-                                                        href="/administracion">Administracion</a></li>
-                                                <li><a class="dropdown-item mx-0 fw-light fs-6"
-                                                        href="/cuenta">Cuenta</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider mx-0 fw-light fs-6">
-                                                </li>
-                                                <li><a class="dropdown-item mx-0 fw-light fs-6"
-                                                        href="/logOut/users">Cerrar Sesion</a></li>
-                                            </ul>
-                                        </div>
-                                        <% } else { %>
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle user-menu"
-                                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <a href="" class="fs-6">
-                                                        <%= user.user %>
-                                                    </a>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item mx-0 fw-light fs-6"
-                                                            href="/cuenta">Cuenta</a></li>
-                                                    <li>
-                                                        <hr class="dropdown-divider mx-0 fw-light fs-6">
-                                                    </li>
-                                                    <li><a class="dropdown-item mx-0 fw-light fs-6"
-                                                            href="/logOut/users">Cerrar Sesion</a></li>
-                                                </ul>
-                                            </div>
-                                            <% } %>
-                                                <% } %>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider mx-0 fw-light fs-6">
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item mx-0 fw-light fs-6" onclick="logOut()">Cerrar Sesion</a>
+                                            </li>
+                                        </ul>
+                                </div>
+                            <% } %>
+                        <% } %>
                     </div>
                 </nav>
             </header>
@@ -125,3 +134,7 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/login.js"></script>

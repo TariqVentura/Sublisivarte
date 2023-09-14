@@ -1,4 +1,6 @@
+//funcion para obtener datos del usuario
 function getUser() {
+    //utilizamos sweetalwert para recoger los datos del usuario
     Swal.fire({
         title: 'Ingresa tus datos',
         html:
@@ -24,6 +26,7 @@ function getUser() {
     })
 }
 
+//funcion para enviar codigo de rerstauracion de contraseña
 function sendCode(user, email) {
     //utilizamos axios para enviar la peticion a la API utilizando el metodo POST
     axios.post('http://localhost:443/email/password', {
@@ -96,7 +99,9 @@ function sendCode(user, email) {
     })
 }
 
+//funcion para capturar datos de usuario
 function getPasswordRecup() {
+    //utilizamos sweetalert para obtener los datos del cliente
     Swal.fire({
         title: 'Ingresa una contraseña nueva',
         html:
@@ -109,25 +114,31 @@ function getPasswordRecup() {
             '<label style="padding: 3%;" for="input2">Confirmar: </label>' +
             '<input type="password" id="input2" required></br>',
         focusConfirm: false,
+        //asignamos los datos
         preConfirm: () => {
             const USER = Swal.getPopup().querySelector('#user-change').value
             const CODE = Swal.getPopup().querySelector('#code-change').value
             const PASSWORD = Swal.getPopup().querySelector('#input2').value
             const CONFIRM = Swal.getPopup().querySelector('#input2').value
 
+            //validamos campos vacios
             if (!USER || !PASSWORD || !CONFIRM || !CODE) {
                 Swal.showValidationMessage('No se permtien campos vacios')
             }
 
+            //retornamos los datos en un json
             return { user: USER, code: CODE, password: PASSWORD, confirm: CONFIRM }
         }
     }).then((result) => {
+        //validamos que tengamos la respuesta
         if (result.isConfirmed) {
+            //ejecutamos la funcion para cambiar la contraseña
             this.newPassword(result.value.code, result.value.password, result.value.confirm, result.value.user)
         }
     })
 }
 
+//funcion para cambiar la contraseña
 function newPassword(code, password, newPassword, user) {
     //utilizamos la libreria de axios para enviar los datos a la api
     axios.post('http://localhost:443/api/newPassword/', {
@@ -163,6 +174,7 @@ function newPassword(code, password, newPassword, user) {
                     text: 'Error en la base de datos try',
                     showConfirmButton: true
                 }).then(() => {
+                    //volvemos al formulario
                     this.getPasswordRecup()
                 })
                 break
@@ -174,6 +186,7 @@ function newPassword(code, password, newPassword, user) {
                     text: 'Código inválido',
                     showConfirmButton: true
                 }).then(() => {
+                    //volvemos al formulario
                     this.getPasswordRecup()
                 })
                 break
@@ -185,6 +198,7 @@ function newPassword(code, password, newPassword, user) {
                     text: 'Las contraseñas no coinciden',
                     showConfirmButton: true
                 }).then(() => {
+                    //volvemos al formulario
                     this.getPasswordRecup()
                 })
                 break
@@ -196,6 +210,7 @@ function newPassword(code, password, newPassword, user) {
                     text: 'La contraseña no cumple con los parámetros de seguridad',
                     showConfirmButton: true
                 }).then(() => {
+                    //volvemos al formulario
                     this.getPasswordRecup()
                 })
                 break
@@ -207,6 +222,7 @@ function newPassword(code, password, newPassword, user) {
                     text: 'No se permiten campos vacíos',
                     showConfirmButton: true
                 }).then(() => {
+                    //volvemos al formulario
                     this.getPasswordRecup()
                 })
                 break
@@ -217,6 +233,7 @@ function newPassword(code, password, newPassword, user) {
                     text: 'Usuario Inexistente',
                     showConfirmButton: true
                 }).then(() => {
+                    //volvemos al formulario
                     this.getPasswordRecup()
                 })
                 break
@@ -227,6 +244,7 @@ function newPassword(code, password, newPassword, user) {
                     text: 'No se puede utilizar una contraseña antigua',
                     showConfirmButton: true
                 }).then(() => {
+                    //volvemos al formulario
                     this.getPasswordRecup()
                 })
                 break
@@ -238,6 +256,7 @@ function newPassword(code, password, newPassword, user) {
                     text: 'Error en la base de datos 616',
                     showConfirmButton: true
                 }).then(() => {
+                    //volvemos al formulario
                     this.getPasswordRecup()
                 })
                 break
@@ -250,6 +269,7 @@ function newPassword(code, password, newPassword, user) {
             text: 'Error en la conexion',
             showConfirmButton: true
         }).then(() => {
+            //volvemos al formulario
             this.getPasswordRecup()
         })
     })

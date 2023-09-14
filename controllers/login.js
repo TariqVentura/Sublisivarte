@@ -246,3 +246,26 @@ function changePassword(code, password, newPassword, user) {
         })
     })
 }
+
+function logOut () {
+    axios.get('http://localhost:443/logOut/users').then((data) => {
+        if (data) {
+            localStorage.clear()
+            Swal.fire({
+                icon: 'success',
+                title: 'Proceso completado',
+                text: 'Se ha cerrado la sesión',
+                showConfirmButton: true
+            }).then(() => {
+                location.href = '/'
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ocurrio un error inesperado',
+                showConfirmButton: true
+            })
+        }
+    })
+}
