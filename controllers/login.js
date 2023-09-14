@@ -41,8 +41,6 @@ LOGIN.addEventListener('submit', (e) => {
             response = 'expired'
         }
 
-        console.log('client: ' + response)
-
         //validamos con un switch las respuestas de la API
         switch (response) {
             case false:

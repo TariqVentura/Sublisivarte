@@ -125,7 +125,7 @@ exports.newPasswordEmail = async (req, res) => {
                                         </div>
                                         <div style="text-align: center; margin-top: 20px;">
                                             <button type="button"
-                                                style=" color: #ffffff; background-color: #4280EF; border-radius: 5px; height: 30px; width: 250px; border: none;">Cambiar contraseña</button>
+                                                style=" color: #ffffff; background-color: #4280EF; border-radius: 5px; height: 30px; width: 250px; border: none;"><a href="" style="text-decoration: none;">Cambiar contraseña</a></button>
                                         </div>
                                         <footer
                                             style="position: fixed-bottom; height: 13%; width: 100%; background-color: #4280EF; text-align: center; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
