@@ -1,5 +1,7 @@
 const AXIOS = require('axios')
 const USER = require('../models/users')
+const CODE = require('../models/code')
+const FECHA = require('node-datetime')
 let session, token, count = 1
 
 exports.error = (req, res) => {
@@ -17,7 +19,7 @@ exports.index = async (req, res) => {
     } else {
         session = false
     }
-    
+
 
     const COUNT = await USER.count().exec()
 
@@ -29,14 +31,14 @@ exports.index = async (req, res) => {
 
     AXIOS.get('http://localhost:443/api/images')
         .then(function (images) {
-            res.render('index', { user: session, resources: images.data, mensaje: ". ", confirmation: false, icon: " .", count: count})
+            res.render('index', { user: session, resources: images.data, mensaje: ". ", confirmation: false, icon: " .", count: count })
         }).catch(err => {
             res.send('pagina no encontrada')
         })
 }
 
 exports.newAccount = (req, res) => {
-    res.render('account', { user: false, count: count})
+    res.render('account', { user: false, count: count })
 }
 
 exports.products = (req, res) => {
@@ -149,7 +151,7 @@ exports.details1 = (req, res) => {
     }
 }
 
-exports.cuenta = (req, res) => {
+exports.cuenta = async (req, res) => {
     if (req.session.user) {
         session = req.session
     } else {
@@ -169,8 +171,29 @@ exports.cuenta = (req, res) => {
         }
     }
 
+    let code
+    let obj = await CODE.find({ user: req.session.user, status: 'activo' }).exec()
+
+    if (!obj.length) {
+        code = false
+    } else {
+        let newDate = FECHA.create()
+        let createCode = Number(obj[0].date.substring(11, 13)) * 60 + Number(obj[0].date.substring(14, 16))
+        let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
+        let date = insertCode - createCode
+        if (obj[0].status == 'inactivo') {
+            code =  false
+        } else if (date <= 15 && newDate.format('Y-m-d') == obj[0].date.substring(0, 10)) {
+            code =  true
+        } else {
+            //en caso de haber expirado cambiamos el estado a inactivo
+            await CODE.findByIdAndUpdate(obj[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
+            code =  false
+        }
+    }
+
     AXIOS.get('http://localhost:443/api/get/users/' + req.session.user, CONFIG).then((info) => {
-        res.render('cuenta', { user: session, data: info.data, count: count })
+        res.render('cuenta', { user: session, data: info.data, count: count, code: code })
     })
 }
 

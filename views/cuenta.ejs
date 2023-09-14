@@ -5,11 +5,17 @@
         <div class="row my-3">
             <div class="col-6 d-flex align-items-center flex-column">
                 <p class="fs-4">Acciones</p>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-info w-50 my-2 text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Cambiar contraseña
-                </button>
-    
+                <% if (code == false) { %>
+                    <!-- Button trigger modal -->
+                    <button type="button" onclick="sendEmail('<%= data[0].user %>', '<%= data[0].email %>')" class="btn btn-info w-50 my-2 text-light">
+                        Cambiar contraseña
+                    </button>
+                <% } else { %>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info w-50 my-2 text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Cambiar contraseña
+                    </button>
+                <% } %>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">

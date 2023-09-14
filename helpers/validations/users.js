@@ -26,7 +26,6 @@ exports.codeValidation = async (username, code) => {
             let createCode = Number(obj[0].date.substring(11, 13)) * 60 + Number(obj[0].date.substring(14, 16))
             let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
             let date = insertCode - createCode
-            console.log(obj[0].date.substring(0, 10))
             if (obj[0].status == 'inactivo') {
                 return false
             } else if (date <= 15 && newDate.format('Y-m-d') == obj[0].date.substring(0, 10)) {
