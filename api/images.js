@@ -1,22 +1,27 @@
 const IMAGES = require('../models/images')
 
-exports.saveImages = (req, res) => {
+exports.saveImages = async (req, res) => {
     if (!req.body.image) {
-        res.send('no se permiten campos vacios')
+        return res.send('empty')
     } else {
+        
+        const NEW_IMAGE = String(req.body.image).substring("C:/fakepath/".length)
+
+        if (NEW_IMAGE.includes('.png') == false && NEW_IMAGE.includes('.jpg') == false && NEW_IMAGE.includes('.jpeg') == false) {
+            return res.send('format')
+        }
+
         const IMAGE = new IMAGES({
-            image: req.body.image
+            image: NEW_IMAGE
         })
 
-        IMAGE
-            .save(IMAGE)
-            .then(data => {
-                if (!data) {
-                    res.send('error')
-                } else {
-                    res.redirect('/')
-                }
-            })
+        const SAVE = await IMAGE.save()
+
+        if (SAVE) {
+            return res.send(true)
+        } else {
+            return res.send(false)
+        }
     }
 }
 

@@ -10,7 +10,7 @@
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
-                            <form action="/api/images" method="post">
+                            <form id="form-image">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Subir imagen</h1>
@@ -20,7 +20,7 @@
                                     <div class="modal-body">
                                         <div class="input-group flex-nowrap">
                                             <input type="file" class="form-control" aria-describedby="addon-wrapping"
-                                                name="image" required>
+                                                name="image" id="image" required>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                <% } %>
+            <% } %>
                     <div class="carousel-principal">
                         <div class="wrapper-carousel">
                             <i id="left" class="fa-solid fa-angle-left"></i>
@@ -103,8 +103,12 @@
         </main>
     </div>      
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <input type="text" value="<%= confirmation %>" id="confirmation" hidden>
 <input type="text" value="<%= mensaje %>" id="mensaje" hidden>
 <input type="text" value="<%= icon %>" id="icon" hidden>
 <script src="/index.js"></script>
+<script src="/images.js"></script>
 <script src="/alerts.js"></script>

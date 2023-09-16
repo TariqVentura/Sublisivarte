@@ -14,46 +14,44 @@ const OPTIONS2 = require('../helpers/format/stock')
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
  * Haciendo uso ddel metodo SAVE de mongoose se guardan los datos en el servidor de Atlas
  */
-exports.createProduct = (req, res) => {
+exports.createProduct = async (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
         return
     }
+
     if (!req.body.product || !req.body.price || !req.body.categorie || !req.body.image || !req.body.stock) {
-        AXIOS.get('http://localhost:443/api/products')
-            .then(function (response) {
-                AXIOS.get('http://localhost:443/api/categories')
-                    .then(function (categorie) {
-                        res.render('productos', { products: response.data, categories: categorie.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'erro', user: req.session })
-                    })
-            })
+        return res.send('empty')
     } else {
+        const PRODUCT_NAME = req.body.product
+        const PRICE = req.body.price
+        const CATEGORY = req.body.categorie
+        const NEW_IMAGE = String(req.body.image).substring("C:/fakepath/".length)
+        const STOCK = req.body.stock
+
+        if (!PRODUCT_NAME || !PRICE || !CATEGORY || !NEW_IMAGE || !STOCK) {
+            return res.send('empty')
+        }
+
+        if (NEW_IMAGE.includes('.png') == false && NEW_IMAGE.includes('.jpg') == false && NEW_IMAGE.includes('.jpeg') == false) {
+            return res.send('format')
+        }
         const PRODUCT = new PRODUCTS({
-            product: req.body.product,
-            price: req.body.price,
-            categorie: req.body.categorie,
-            image: req.body.image,
-            stock: req.body.stock,
+            product: PRODUCT_NAME,
+            price: PRICE,
+            categorie: CATEGORY,
+            image: NEW_IMAGE,
+            stock: STOCK,
             status: 'activo'
         })
-        PRODUCT
-            .save(PRODUCT)
-            .then(data => {
-                if (!data) {
-                    res.status(404).send('Ocurrio un error al crear el Producto')
-                } else {
-                    AXIOS.get('http://localhost:443/api/products')
-                        .then(function (response) {
-                            AXIOS.get('http://localhost:443/api/categories')
-                                .then(function (categorie) {
-                                    res.render('productos', { products: response.data, categories: categorie.data, mensaje: "Producto Ingresado", confirmation: true, icon: 'success', user: req.session })
-                                })
-                        })
-                }
-            })
-            .catch(err => {
-                res.send(err)
-            })
+
+        const SAVE = await PRODUCT.save()
+        
+        if (SAVE) {
+            res.send(true)
+        } else {
+            res.send(false)
+        }
     }
 }
 

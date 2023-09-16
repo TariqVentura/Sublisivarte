@@ -71,7 +71,7 @@ ROUTER.get('/views/pedidos/:key', RENDER.ordersSearch)
 ROUTER.get('/pedidos/detalles/:id', RENDER.details)
 
 //API images
-ROUTER.post('/api/images', IMAGES.saveImages)
+ROUTER.post('/api/images', tokenValidation, IMAGES.saveImages)
 ROUTER.get('/api/images', IMAGES.getImages)
 
 //API users

@@ -4,7 +4,14 @@ const CODE = require('../models/code')
 const FECHA = require('node-datetime')
 let session, token, count = 1
 
-exports.error = (req, res) => {
+exports.error = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
     AXIOS.get('http://localhost:443/api/images')
         .then(function (images) {
             res.render('include/error', { user: false, resources: images.data, mensaje: ". ", confirmation: false, icon: " .", count: count })
@@ -37,11 +44,27 @@ exports.index = async (req, res) => {
         })
 }
 
-exports.newAccount = (req, res) => {
+exports.newAccount = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     res.render('account', { user: false, count: count })
 }
 
-exports.products = (req, res) => {
+exports.products = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -61,7 +84,15 @@ exports.products = (req, res) => {
         })
 }
 
-exports.producto = (req, res) => {
+exports.producto = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user && req.session.token) {
         session = req.session
         token = req.session.token
@@ -93,12 +124,21 @@ exports.producto = (req, res) => {
 
 }
 
-exports.categories = (req, res) => {
+exports.categories = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
         session = false
     }
+
     AXIOS.get('http://localhost:443/api/categories')
         .then(function (categorie) {
             res.render('categories', { categorie: categorie.data, user: session, count: count })
@@ -108,7 +148,15 @@ exports.categories = (req, res) => {
 
 }
 
-exports.carrito = (req, res) => {
+exports.carrito = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.token) {
         token = req.session.token
     } else {
@@ -135,7 +183,15 @@ exports.carrito = (req, res) => {
     }
 }
 
-exports.details1 = (req, res) => {
+exports.details1 = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
         AXIOS.get('http://localhost:443/api/details/' + req.params.id)
@@ -197,7 +253,15 @@ exports.cuenta = async (req, res) => {
     })
 }
 
-exports.usuarios = (req, res) => {
+exports.usuarios = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.token) {
         token = req.session.token
     } else {
@@ -224,7 +288,15 @@ exports.usuarios = (req, res) => {
         })
 }
 
-exports.administracion = (req, res) => {
+exports.administracion = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -233,7 +305,15 @@ exports.administracion = (req, res) => {
     res.render('administracion', { user: session, count: count })
 }
 
-exports.categorias = (req, res) => {
+exports.categorias = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -248,7 +328,15 @@ exports.categorias = (req, res) => {
         })
 }
 
-exports.comments = (req, res) => {
+exports.comments = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -267,7 +355,15 @@ exports.comments = (req, res) => {
     // res.render('comentarios', {user: session})
 }
 
-exports.searchComments = (req, res) => {
+exports.searchComments = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -287,7 +383,15 @@ exports.searchComments = (req, res) => {
         })
 }
 
-exports.searchUser = (req, res) => {
+exports.searchUser = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -301,7 +405,15 @@ exports.searchUser = (req, res) => {
         })
 }
 
-exports.searchProduct = (req, res) => {
+exports.searchProduct = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -322,7 +434,15 @@ exports.searchProduct = (req, res) => {
         })
 }
 
-exports.viewProducts = (req, res) => {
+exports.viewProducts = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -336,7 +456,15 @@ exports.viewProducts = (req, res) => {
         })
 }
 
-exports.newViewProducts = (req, res) => {
+exports.newViewProducts = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+    
     if (req.session.user) {
         session = req.session
     } else {
@@ -350,7 +478,15 @@ exports.newViewProducts = (req, res) => {
         })
 }
 
-exports.allProducts = (req, res) => {
+exports.allProducts = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -364,7 +500,15 @@ exports.allProducts = (req, res) => {
         })
 }
 
-exports.searchCategorie = (req, res) => {
+exports.searchCategorie = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -379,7 +523,15 @@ exports.searchCategorie = (req, res) => {
         })
 }
 
-exports.orders = (req, res) => {
+exports.orders = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.token) {
         token = req.session.token
     } else {
@@ -401,7 +553,15 @@ exports.orders = (req, res) => {
         })
 }
 
-exports.details = (req, res) => {
+exports.details = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -415,7 +575,15 @@ exports.details = (req, res) => {
         })
 }
 
-exports.ordersSearch = (req, res) => {
+exports.ordersSearch = async (req, res) => {
+    const COUNT = await USER.count().exec()
+
+    if (COUNT > 0) {
+        count = COUNT
+    } else {
+        count = 0
+    }
+
     if (req.session.user) {
         session = req.session
     } else {

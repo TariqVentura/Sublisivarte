@@ -8,7 +8,6 @@ const FS = require('fs')
 const OPTIONS2 = require('../helpers/format/detail')
 
 exports.createDetail = async (req, res) => {
-    console.log(req.body.product + req.body.amount + req.body.price + req.body.order)
     if (!req.body.product || !req.body.amount || !req.body.price || !req.body.order) {
         res.sedn('empty')
         return

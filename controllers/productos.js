@@ -125,3 +125,5 @@ BUSCAR_CATEGORIA.addEventListener('submit', function (e) {
         })
     }
 })
+
+func

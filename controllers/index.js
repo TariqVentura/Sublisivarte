@@ -26,33 +26,6 @@ arrowIcon.forEach(icon => {
     })
 })
 
-const wrapper = document.querySelector('.wrapper')
-const loginLink = document.querySelector('.login-link')
-const registerLink = document.querySelector('.register-link')
-const btnPopup = document.querySelector('.btnLogin-popup')
-const iconClose = document.querySelector('.icon-close')
-
-
-/** al escuchar el evento click añade la clase active */
-registerLink.addEventListener('click', () => {
-    wrapper.classList.add('active')
-})
-
-/** al escuchar el evento click remueve la clase active */
-loginLink.addEventListener('click', () => {
-    wrapper.classList.remove('active')
-})
-
-/** al escuchar el evento click añade la clase active */
-btnPopup.addEventListener('click', () => {
-    wrapper.classList.add('active-popup')
-})
-
-/** al escuchar el evento click remueve la clase active */
-iconClose.addEventListener('click', () => {
-    wrapper.classList.remove('active-popup')
-})
-
 /* al detectar movimiento de scroll centra la imagen en el carousel */
 const autoSlide = () => {
     if (carousel.scrollLeft == (carousel.scrollWidth - carousel.clientWidth)) return
@@ -108,3 +81,4 @@ carousel.addEventListener('touchend', dragStop)
 
 const HEADER = document.querySelector('header')
 const LOGINBTN = document.querySelector('btn')
+
