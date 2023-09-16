@@ -35,23 +35,23 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <form action="/api/products" method="post">
+                                <form id="form-product">
                                     <div class="modal-body">
                                         <div class="row my-3">
                                             <div class="col-8 d-flex flex-row align-items-center">
                                                 <label for="" class="form-label me-2">Producto: </label>
-                                                <input type="text" class="form-control" name="product" id="" required>
+                                                <input type="text" class="form-control" name="product" id="product" required>
                                             </div>
                                             <div class="col-4 d-flex flex-row align-items-center">
                                                 <label for="" class="form-label me-2">Precio: </label>
-                                                <input type="number" class="form-control" name="price" id="" required
+                                                <input type="number" class="form-control" name="price" id="price" required
                                                     min="1" step="0.01">
                                             </div>
                                         </div>
                                         <div class="row my-3">
                                             <div class="col-8 d-flex flex-row align-items-center">
-                                                <label for="" class="form-label me-2">Categoria: </label>
-                                                <select class="form-select" id="inputGroupSelect01" name="categorie"
+                                                <label for="categorie" class="form-label me-2">Categoria: </label>
+                                                <select class="form-select" id="categorie" name="categorie"
                                                     required>
                                                     <% categories.forEach((data)=> { %>
                                                         <% if(data.status=='active' ) { %>
@@ -63,15 +63,15 @@
                                                 </select>
                                             </div>
                                             <div class="col-4 d-flex flex-row align-items-center">
-                                                <label for="" class="form-label me-2">Stock: </label>
-                                                <input type="number" class="form-control" name="stock" id="" required
+                                                <label for="stock" class="form-label me-2">Stock: </label>
+                                                <input type="number" class="form-control" name="stock" id="stock" required
                                                     min="1" step="1">
                                             </div>
                                         </div>
                                         <div class="row my-3">
                                             <div class="col d-flex flex-row align-items-center">
-                                                <label for="" class="form-label me-2">Imagen: </label>
-                                                <input type="file" class="form-control" id="inputGroupFile01"
+                                                <label for="image" class="form-label me-2">Imagen: </label>
+                                                <input type="file" class="form-control" id="image"
                                                     name="image" multiple="multiple">
                                             </div>
                                         </div>
@@ -268,21 +268,21 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
-                                                    <form action="/update/products/" method="post">
+                                                    <form id="update-product">
                                                         <div class="modal-body">
                                                             <div class="row my-3">
                                                                 <div class="col-8 d-flex flex-row align-items-center">
                                                                     <label for="" class="form-label me-2">Producto:
                                                                     </label>
                                                                     <input type="text" class="form-control"
-                                                                        name="product" id="" required
+                                                                        name="product" id="product-update" required
                                                                         value="<%= data.product %>">
                                                                 </div>
                                                                 <div class="col-4 d-flex flex-row align-items-center">
                                                                     <label for="" class="form-label me-2">Precio:
                                                                     </label>
                                                                     <input type="number" class="form-control"
-                                                                        name="price" id="" required min="1" step="0.01"
+                                                                        name="price" id="price-update" required min="1" step="0.01"
                                                                         value="<%= data.price %>">
                                                                 </div>
                                                             </div>
@@ -290,29 +290,34 @@
                                                                 <div class="col-8 d-flex flex-row align-items-center">
                                                                     <label for="" class="form-label me-2">Categoria:
                                                                     </label>
-                                                                    <select class="form-select" id="inputGroupSelect01"
+                                                                    <select class="form-select" id="categorie-update"
                                                                         name="categorie" required>
                                                                         <option value="<%= data.categorie %>" selected>
                                                                             <%= data.categorie %>
                                                                         </option>
-                                                                        <% categories.forEach((data)=> { %>
-                                                                            <% if(data.status=='activo' ) { %>
-                                                                                <option value="<%= data.categorie %>">
-                                                                                    <%= data.categorie %>
-                                                                                </option>
-                                                                                <% } %>
-                                                                                    <% }) %>
+                                                                        <% categories.forEach((cate)=> { %>
+                                                                            <option value="<%= data.categorie %>">
+                                                                                <%= cate.categorie %>
+                                                                            </option>
+                                                                        <% }) %>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <select class="form-select" id="status-update"
+                                                                        name="status" required>
+                                                                        <option value="<%= data.status %>" selected>
+                                                                            <%= data.status %>
+                                                                        </option>
+                                                                        <option value="activo">Activo</option>
+                                                                        <option value="inactivo">Inactivo</option>
+                                                                        <option value="No Stock">No Stock</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="row my-3">
                                                                 <div class="col d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Imagen:
-                                                                    </label>
-                                                                    <input type="file" class="form-control"
-                                                                        id="inputGroupFile01" name="image" multiple>
                                                                     <input type="text" value="<%= data._id %>" name="id"
-                                                                        hidden>
+                                                                        id="id-product" hidden>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -359,34 +364,9 @@
                                             </div>
                                         </div>
                                     </td>
-
-                                    <!-- <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalCategorie">
-                                            Graficos
-                                        </button>
-
-                                        <div class="modal fade" id="exampleModalCategorie" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Graficos
-                                                        </h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p class="fs-4 text-center">Cantidad de pedidos por estado</p>
-                                                        <canvas id="statusOrder"></canvas>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td> -->
                                     <td>
                                         <a class="btn btn-warning text-light"
-                                            href="/report/categories/<% data.product %>" target="_blank">Reporte</a>
+                                            href="/report/categories/<%= data.product %>" target="_blank">Reporte</a>
                                     </td>
 
                                 </tr>

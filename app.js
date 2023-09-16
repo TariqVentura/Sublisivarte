@@ -13,6 +13,7 @@ const BODY_PARSER = require('body-parser')
 const PATH = require('path')
 const HTTP = require('http')
 const SESSION = require('express-session')
+const VALIDATION = require('./helpers/validations/token')
 
 /**
  * Se inicia la constante APP utilizando cors 
@@ -27,7 +28,7 @@ const corsOptions = {
     methods: 'GET,POST', // Métodos HTTP permitidos
     credentials: true, // Habilita el uso de credenciales (cookies, autenticación)
     optionsSuccessStatus: 204, // Código de respuesta para solicitudes OPTIONS exitosas
-  }
+}
 
 //utilizamos CORS (Cross-Origin Resource Sharing)
 APP.use(CORS(corsOptions))

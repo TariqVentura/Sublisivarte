@@ -16,8 +16,7 @@ const OPTIONS2 = require('../helpers/format/stock')
  */
 exports.createProduct = async (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
-        res.redirect('/error404')
-        return
+        return res.redirect('/error404')
     }
 
     if (!req.body.product || !req.body.price || !req.body.categorie || !req.body.image || !req.body.stock) {
@@ -29,13 +28,28 @@ exports.createProduct = async (req, res) => {
         const NEW_IMAGE = String(req.body.image).substring("C:/fakepath/".length)
         const STOCK = req.body.stock
 
-        if (!PRODUCT_NAME || !PRICE || !CATEGORY || !NEW_IMAGE || !STOCK) {
+        if (!PRODUCT_NAME.trim() || !PRICE.trim() || !CATEGORY.trim() || !NEW_IMAGE.trim() || !STOCK.trim()) {
             return res.send('empty')
         }
 
         if (NEW_IMAGE.includes('.png') == false && NEW_IMAGE.includes('.jpg') == false && NEW_IMAGE.includes('.jpeg') == false) {
             return res.send('format')
         }
+
+        if (PRICE <= 0) {
+            return res.send('price')
+        }
+
+        if (STOCK < 0) {
+            return res.send('stock')
+        }
+
+        const COMPARE = await PRODUCTS.findOne({ product: PRODUCT_NAME }).exec()
+
+        if (COMPARE) {
+            return res.send('compare')
+        }
+
         const PRODUCT = new PRODUCTS({
             product: PRODUCT_NAME,
             price: PRICE,
@@ -80,37 +94,51 @@ exports.findProduct = (req, res) => {
     }
 }
 
-exports.updateProduct = (req, res) => {
+exports.updateProduct = async (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
         res.redirect('/error404')
         return
     }
-    if (!req.body.product || !req.body.price || req.body.price < 0 || !req.body.categorie || !req.body.image) {
-        AXIOS.get('http://localhost:443/api/products')
-            .then(function (response) {
-                AXIOS.get('http://localhost:443/api/categories')
-                    .then(function (categorie) {
-                        res.render('productos', { products: response.data, categories: categorie.data, mensaje: "No se permiten campos vacios", confirmation: true, icon: 'error', user: req.session })
-                    })
-            })
+    if (!req.body.product || !req.body.price || !req.body.categorie || !req.body.status || !req.body.id) {
+        return res.send('empty')
     } else {
-        const id = req.body.id
-        PRODUCTS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-            .then(data => {
-                if (!data) {
-                    res.status(404).send({ message: "No se encontro el producto" })
-                } else {
-                    AXIOS.get('http://localhost:443/api/products')
-                        .then(function (response) {
-                            AXIOS.get('http://localhost:443/api/categories')
-                                .then(function (categorie) {
-                                    res.render('productos', { products: response.data, categories: categorie.data, mensaje: "Producto Actualizado", confirmation: true, icon: 'success', user: req.session })
-                                })
-                        })
-                }
-            })
-    }
+        const PRODUCT_NAME = req.body.product
+        const PRICE = req.body.price
+        const CATEGORY = req.body.categorie
+        const STATUS = req.body.status
+        const ID = req.body.id
 
+        console.log(PRODUCT_NAME + ' ' + PRICE + ' ' + CATEGORY + ' ' + STATUS)
+
+        if (!PRODUCT_NAME.trim() || !PRICE.trim() || !CATEGORY.trim() || !STATUS.trim()) {
+            return res.send('empty')
+        }
+
+        if (PRICE <= 0) {
+            return res.send('price')
+        }
+
+        const COMPARE = await PRODUCTS.findOne({ product: PRODUCT_NAME }).exec()
+
+        if (COMPARE) {
+            return res.send('compare')
+        }
+
+        const VALUE = {
+            product: PRODUCT_NAME,
+            price: PRICE,
+            categorie: CATEGORY,
+            status: STATUS
+        }
+
+        const UPDATE = await PRODUCTS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false }).exec()
+        
+        if (UPDATE) {
+            return res.send(true)
+        } else {
+            return res.send(false)
+        }
+    }
 }
 
 exports.deleteProducts = (req, res) => {
@@ -196,9 +224,11 @@ exports.countProducts = (req, res) => {
 
 exports.getStockReport = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {
-        res.redirect('/error404')
-        return
+        console.log(req.session.user)
+        return res.redirect('/error404')
+        
     }
+
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/stock.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
     AXIOS.get('http://localhost:443/api/record/' + req.params.key).then(function (stock) {

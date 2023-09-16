@@ -70,6 +70,7 @@ exports.products = async (req, res) => {
     } else {
         session = false
     }
+    
     AXIOS.get('http://localhost:443/api/products')
         .then(function (response) {
             AXIOS.get('http://localhost:443/api/categories')

@@ -10,7 +10,8 @@ const MONGOOSE = require('mongoose')
 let productSchema = new MONGOOSE.Schema({
     product: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     },
     price: {
         type: Number,

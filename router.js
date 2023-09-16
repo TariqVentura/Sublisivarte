@@ -77,7 +77,7 @@ ROUTER.get('/api/images', IMAGES.getImages)
 //API users
 ROUTER.post('/api/users', USERS.createUser)
 ROUTER.get('/api/users', tokenValidation, USERS.findUsers)
-ROUTER.post('/update/users', USERS.updateUsers)
+ROUTER.post('/update/users', tokenValidation, USERS.updateUsers)
 ROUTER.get('/delete/users/:user', USERS.deleteUsers)
 ROUTER.post('/logIn/users', USERS.logIn)
 ROUTER.get('/logOut/users', USERS.logOut)
@@ -120,7 +120,7 @@ ROUTER.get('/api/details/:id', DETAILS.getDetails)
 ROUTER.get('/report/detail/:key/:client', DETAILS.getReportDetail)
 
 //API products
-ROUTER.post('/api/products', PRODUCTS.createProduct)
+ROUTER.post('/api/products', tokenValidation, PRODUCTS.createProduct)
 ROUTER.get('/api/products', PRODUCTS.findProduct)
 ROUTER.get('/api/products/:id', PRODUCTS.findProduct)
 ROUTER.post('/update/products/', PRODUCTS.updateProduct)

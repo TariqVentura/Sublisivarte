@@ -126,4 +126,148 @@ BUSCAR_CATEGORIA.addEventListener('submit', function (e) {
     }
 })
 
-func
+const FORM_PRODUCT = document.getElementById('form-product')
+
+FORM_PRODUCT.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const PRODUCT = document.getElementById('product').value
+    const PRICE = document.getElementById('price').value
+    const CATEGORY = document.getElementById('categorie').value
+    const STOCK = document.getElementById('stock').value
+    const IMAGE = document.getElementById('image').value
+
+    axios.post('http://localhost:443/api/products', {
+        product: PRODUCT,
+        price: PRICE,
+        categorie: CATEGORY,
+        image: IMAGE,
+        stock: STOCK
+    }, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': localStorage.getItem('token')
+        }
+    }).then((data) => {
+        switch (data.data) {
+            case true:
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Proceso Exitoso',
+                    text: 'Se ha creado la categoria exitosamente'
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/products'
+                })
+                break
+            case false:
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error de conexion'
+                })
+                break
+            case 'empty':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No se permiten campos vacios'
+                })
+                break
+            case 'format':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'La imagen no es de un formato valido (.png, .jpg, .jpeg)'
+                })
+                break
+            case 'price':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'El precio no puede ser menor que 0'
+                })
+                break
+            case 'stock':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'El stock no puede ser menor que 0'
+                })
+                break
+            case 'compare':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No se permiten productos repetidos'
+                })
+                break
+        }
+    })
+})
+
+const UPDATE_PRODUCT = document.getElementById('update-product')
+
+UPDATE_PRODUCT.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const PRODUCT = document.getElementById('product-update').value
+    const PRICE = document.getElementById('price-update').value
+    const CATEGORY = document.getElementById('categorie-update').value
+    const STATUS = document.getElementById('status-update').value
+    const ID = document.getElementById('id-product').value
+
+    axios.post('http://localhost:443/update/products/', {
+        product: PRODUCT,
+        price: PRICE,
+        categorie: CATEGORY,
+        status: STATUS,
+        id: ID
+    }, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': localStorage.getItem('token')
+        }
+    }).then((data) => {
+        switch (data.data) {
+            case true:
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Proceso Exitoso',
+                    text: 'Se ha creado la categoria exitosamente'
+                }).then(() => {
+                    //redirigimos a la pagina para visualizar los cambios
+                    location.href = '/products'
+                })
+                break
+            case false:
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error de conexion'
+                })
+                break
+            case 'empty':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No se permiten campos vacios'
+                })
+                break
+            case 'price':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'El precio no puede ser menor que 0'
+                })
+                break
+            case 'compare':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No se permiten productos repetidos'
+                })
+                break
+        }
+    })
+})
