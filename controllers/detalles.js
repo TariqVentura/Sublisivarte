@@ -45,6 +45,51 @@ function deleteDetail(product, amount, id) {
     })
 }
 
+function finishOrder(_id) {
+    Swal.fire({
+        title: 'Confirmación',
+        text: "¿Esta seguro que desea realizar la compra?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            //utilizamos axios para enviar la peticion
+            axios.get('http://localhost:443/finish/orders/' + _id, {
+                //enviamos el token
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then(data => {
+                //validamos la respueta de la API utilizando axios
+                switch (data.data) {
+                    case true:
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proceso completado',
+                            text: 'Se ha realizado la compra exitosamente'
+                        }).then(() => {
+                            location.href = '/carrito'
+                        })
+                        break
+                    case false:
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error en la base de datos'
+                        })
+                        break
+                    default:
+                        break
+                }
+            })
+        }
+    })
+}
+
 const FORM_COMMENT = document.getElementById('form-comment')
 
 FORM_COMMENT.addEventListener('submit', (e) => {

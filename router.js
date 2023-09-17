@@ -100,7 +100,7 @@ ROUTER.get('/api/count/comments/:key', COMMENTS.countCommentsProduct)
 
 //API orders
 ROUTER.post('/api/orders', tokenValidation, ORDERS.createOrder)
-ROUTER.get('/finish/orders/:id', ORDERS.finishOrder)
+ROUTER.get('/finish/orders/:id', tokenValidation, ORDERS.finishOrder)
 ROUTER.get('/api/orders/:key', tokenValidation, ORDERS.getOrders)
 ROUTER.get('/api/orders', tokenValidation, ORDERS.getOrders)
 ROUTER.get('/cancel/orders/:id', ORDERS.cancelOrder)

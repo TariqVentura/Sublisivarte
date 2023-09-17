@@ -143,10 +143,9 @@ exports.categories = async (req, res) => {
     AXIOS.get('http://localhost:443/api/categories')
         .then(function (categorie) {
             res.render('categories', { categorie: categorie.data, user: session, count: count })
-        }.catch(err => {
+        }).catch(err => {
             res.send('pagina no encontrada')
-        }))
-
+        })
 }
 
 exports.carrito = async (req, res) => {

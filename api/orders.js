@@ -50,16 +50,14 @@ exports.finishOrder = (req, res) => {
         const ID = req.params.id
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 
-        console.log(newDate)
-
         const VALUE = { status: 'finalizado', date: newDate }
 
         ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
             .then(data => {
                 if (!data) {
-                    res.send('err')
+                    res.send(false)
                 } else {
-                    res.send('ok')
+                    res.send(true)
                 }
             })
             .catch(err => {
@@ -116,17 +114,23 @@ exports.getOrders = (req, res) => {
 }
 
 exports.getInvoice = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin') {
+    if (!req.session.user) {
         res.redirect('/error404')
         return
     }
     //obetner la plantilla de la carpeta helpers/templates
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/invoice.html'), 'utf-8')
     //req.params.key es el id de la orden que se manda en la url 
-    const FILE_NAME = req.params.key + '.pdf'
+    const FILE_NAME = req.params.key + '.pdf' 
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${req.session.token}`
+        }
+    }
 
     //obtener la data que se necesita
-    AXIOS.get('http://localhost:443/api/details/' + req.params.key).then(function (detail) {
+    AXIOS.get('http://localhost:443/api/details/' + req.params.key, CONFIG).then(function (detail) {
         //crea un objeto para almacenar los datos que se pidieron y hacemos una variable total igualada a 0
         let obj = detail.data, total = 0
 
@@ -213,8 +217,6 @@ exports.countOrdersDate = (req, res) => {
     })
 }
 
-
-
 exports.getReportDetail = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
@@ -222,7 +224,14 @@ exports.getReportDetail = (req, res) => {
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/detail.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_PRODUCTOS_' + req.params.key + '.pdf'
-    AXIOS.get('http://localhost:443/api/details/').then(function (detail) {
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${req.session.token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/details/', CONFIG).then(function (detail) {
         let obj = detail.data
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 
@@ -279,7 +288,14 @@ exports.reportOrders = (req, res) => {
     }
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/order.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_ORDENES.pdf'
-    AXIOS.get('http://localhost:443/api/orders/').then(function (order) {
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${req.session.token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/orders/', CONFIG).then(function (order) {
         let obj = order.data, finalizado = [], enProceso = []
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 

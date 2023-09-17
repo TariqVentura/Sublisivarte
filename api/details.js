@@ -149,7 +149,14 @@ exports.getReportDetail = (req, res) => {
 
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/detail.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_PRODUCTOS_' + req.params.key + '.pdf'
-    AXIOS.get('http://localhost:443/api/details/' + req.params.key).then(function (detail) {
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${req.session.token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/details/' + req.params.key, CONFIG).then(function (detail) {
         let obj = detail.data
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 
