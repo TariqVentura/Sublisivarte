@@ -398,8 +398,28 @@ exports.searchUser = async (req, res) => {
     } else {
         session = false
     }
-    AXIOS.get('http://localhost:443/api/users' + '/' + req.params.key)
+
+    if (req.session.token) {
+        token = req.session.token
+    } else {
+        res.redirect('/error404')
+        return
+    }
+
+    console.log(token)
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    AXIOS.get('http://localhost:443/api/users/' + req.params.key, CONFIG)
         .then(function (user) {
+            console.log(user.data)
+            if (user.data == false) {
+                return res.redirect('/error404')
+            }
             res.render('usuarios', { users: user.data, user: session, mensaje: ". ", confirmation: false, icon: " .", count: count })
         }).catch(err => {
             res.send('pagina no encontrada')
@@ -545,6 +565,7 @@ exports.orders = async (req, res) => {
             'Authorization': `Bearer ${token}`
         }
     }
+
     AXIOS.get('http://localhost:443/api/orders', CONFIG)
         .then(function (orders) {
             res.render('orders', { orders: orders.data, user: req.session, mensaje: ". ", confirmation: false, icon: " .", count: count })

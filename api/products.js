@@ -142,23 +142,14 @@ exports.updateProduct = async (req, res) => {
 }
 
 exports.deleteProducts = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
-        res.redirect('/error404')
-        return
-    }
-    const id = req.params.id
-    PRODUCTS.findByIdAndDelete(id, req.body, { useFindAndModify: false })
+    const ID = req.params.id
+
+    PRODUCTS.findByIdAndDelete(ID, req.body, { useFindAndModify: false })
         .then(data => {
             if (!data) {
-                res.status(404).send({ message: 'Producto no encontrado' })
+                res.send(false)
             } else {
-                AXIOS.get('http://localhost:443/api/products')
-                    .then(function (response) {
-                        AXIOS.get('http://localhost:443/api/categories')
-                            .then(function (categorie) {
-                                res.render('productos', { products: response.data, categories: categorie.data, mensaje: "Producto Eliminado", confirmation: true, icon: 'success', user: req.session })
-                            })
-                    })
+                return res.send(true)
             }
         })
 }

@@ -300,9 +300,16 @@ exports.updateUsers = (req, res) => {
         res.redirect('/error404')
         return
     }
-    console.log(req.body.id)
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${req.session.token}`
+        }
+    }
+
     //Obtiene el valor del parámetro 
     const id = req.body.id
+
     //Actualiza al usuario por su id
     USERS.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
@@ -310,9 +317,9 @@ exports.updateUsers = (req, res) => {
             if (!data) {
                 res.status(404).send({ message: "No se encontro el usuario" })
             } else {
-                AXIOS.get('http://localhost:443/api/users')
+                AXIOS.get('http://localhost:443/api/users', CONFIG)
                     .then(function (response) {
-                        res.render('usuarios', { users: response.data, mensaje: "Usuario Actualizado", confirmation: true, icon: 'success', user: req.session })
+                        res.render('usuarios', { users: response.data, mensaje: "Usuario Actualizado", confirmation: true, icon: 'success', user: req.session, count: 1 })
                     })
             }
         })
@@ -327,6 +334,13 @@ exports.bannUser = (req, res) => {
         res.redirect('/error404')
         return
     }
+
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${req.session.token}`
+        }
+    }
+
     const ID = req.params.id
     const VALUE = { status: 'baneado' }
 
@@ -335,9 +349,9 @@ exports.bannUser = (req, res) => {
             if (!data) {
                 res.send('error')
             } else {
-                AXIOS.get('http://localhost:443/api/users')
+                AXIOS.get('http://localhost:443/api/users', CONFIG)
                     .then(function (response) {
-                        res.render('usuarios', { users: response.data, mensaje: "Usuario Baneado", confirmation: true, icon: 'success', user: req.session })
+                        res.render('usuarios', { users: response.data, mensaje: "Usuario Baneado", confirmation: true, icon: 'success', user: req.session, count: 1 })
                     })
             }
         })
@@ -354,15 +368,22 @@ exports.deleteUsers = (req, res) => {
         return
     }
     if (req.session.user != req.params.user) {
+
+        const CONFIG = {
+            headers: {
+                'Authorization': `Bearer ${req.session.token}`
+            }
+        }
+
         const VALUE = { user: req.params.user }
         USERS.deleteOne(VALUE)
             .then(data => {
                 if (!data) {
                     res.send('err')
                 } else {
-                    AXIOS.get('http://localhost:443/api/users')
+                    AXIOS.get('http://localhost:443/api/users', CONFIG)
                         .then(function (response) {
-                            res.render('usuarios', { users: response.data, mensaje: "Usuario Eliminado", confirmation: true, icon: 'success', user: req.session })
+                            res.render('usuarios', { users: response.data, mensaje: "Usuario Eliminado", confirmation: true, icon: 'success', user: req.session, count: 1 })
                         })
                 }
             })
@@ -375,12 +396,15 @@ exports.deleteUsers = (req, res) => {
 }
 
 //Función para buscar usuarios
-exports.searchUsers = (req, res) => {
-    if (req.usuario.INFO.rol != 'admin') {
-        res.redirect('/error404')
-        return
+exports.searchUsers = async (req, res) => {
+    const COMPARE = await BCRYPT.compareSync('admin', req.usuario.INFO.rol)
+
+    if (COMPARE == false) {
+        return res.send(false) 
     }
+
     const key = req.params.key
+    
     USERS.find(
         {
             "$or": [
@@ -395,13 +419,13 @@ exports.searchUsers = (req, res) => {
     )
         .then(data => {
             if (!data) {
-                res.status(404).send({ message: `Sin datos` })
+                return res.status(404).send({ message: `Sin datos` })
             } else {
-                res.send(data)
+                return res.send(data)
             }
         })
         .catch(err => {
-            res.send(err)
+            return res.send(err)
         })
 }
 
@@ -465,8 +489,6 @@ exports.newPassword = async (req, res) => {
                 //utilizamos una funcion para validar si la contraseña es valida (ctrl + click en passwordValidation para ver el codigo)
                 let passwordValidation = await VALIDATION.passwordValidation(newPassword, username)
 
-                console.log('pv ' + passwordValidation)
-
                 if (passwordValidation == 'true') {
                     return res.send('repetido')
                 }
@@ -498,10 +520,11 @@ exports.newPassword = async (req, res) => {
 }
 
 exports.statusUser = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin') {
+    if (!req.session.user) {
         res.redirect('/error404')
         return
     }
+
     const PARAM = { user: req.params.id }
     const VALUE = { status: 'inactivo' }
 

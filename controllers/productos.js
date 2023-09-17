@@ -271,3 +271,46 @@ UPDATE_PRODUCT.addEventListener('submit', (e) => {
         }
     })
 })
+
+
+function deleteProducts(_id) {
+    Swal.fire({
+        title: 'Esta seguro?',
+        text: "Esta acción no es reversible",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.get('http://localhost:443/delete/products/' + _id, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then((data) => {
+                switch (data.data) {
+                    case true:
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proceso Exitoso',
+                            text: 'Se ha eliminado el producto exitosamente'
+                        }).then(() => {
+                            //redirigimos a la pagina para visualizar los cambios
+                            location.href = '/products'
+                        })
+                        break
+                    case false:
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ooops..',
+                            text: 'No se puedo encontrar al producto'
+                        })
+                        break
+                }
+            })
+        }
+    })
+}
