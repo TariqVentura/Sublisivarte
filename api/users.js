@@ -12,6 +12,7 @@ const FS = require('fs')
 const OPTIONS = require('../helpers/format/users')
 const OPTIONS_CLIENTS = require('../helpers/format/clients')
 const VALIDATION = require('../helpers/validations/users')
+const VALIDATION_REPORT = require('../helpers/validations/reports')
 const JWT = require('jsonwebtoken')
 const ATTEMPS = require('../models/attemps')
 
@@ -111,12 +112,12 @@ exports.createUser = async (req, res) => {
             if (COUNT > 0) {
                 //creamos un objeto con los datos del nuevo usuario
                 newDocument = new USERS({
-                name: req.body.name,
-                lastname: req.body.lastname,
-                email: req.body.email,
-                user: req.body.user,
-                password: HASH,
-                document: req.body.document
+                    name: req.body.name,
+                    lastname: req.body.lastname,
+                    email: req.body.email,
+                    user: req.body.user,
+                    password: HASH,
+                    document: req.body.document
                 })
             } else {
                 //validamos que el campo de rol no este vacio
@@ -132,15 +133,15 @@ exports.createUser = async (req, res) => {
                 }
                 //creamos un objeto con los datos del nuevo usuario
                 newDocument = new USERS({
-                name: req.body.name,
-                lastname: req.body.lastname,
-                email: req.body.email,
-                user: req.body.user,
-                password: HASH,
-                document: req.body.document,
-                role: role
+                    name: req.body.name,
+                    lastname: req.body.lastname,
+                    email: req.body.email,
+                    user: req.body.user,
+                    password: HASH,
+                    document: req.body.document,
+                    role: role
                 })
-            }            
+            }
         }
 
         //utilizamos el metodo save de mongoose para guardar los datos en la base
@@ -194,7 +195,7 @@ exports.logIn = async (req, res) => {
     if (CHANGE_PASSWORD == 'code') {
         res.send('code')
         return
-    //si retorna un dato y este no es falso es porque debe cambiar la contraseña porque expiro el plazo de 90 dias
+        //si retorna un dato y este no es falso es porque debe cambiar la contraseña porque expiro el plazo de 90 dias
     } else if (CHANGE_PASSWORD && CHANGE_PASSWORD != false) {
         //enviamos el codigo de cambio de contraseña
         res.send('expired' + CHANGE_PASSWORD)
@@ -403,11 +404,11 @@ exports.searchUsers = async (req, res) => {
     const COMPARE = await BCRYPT.compareSync('admin', req.usuario.INFO.rol)
 
     if (COMPARE == false) {
-        return res.send(false) 
+        return res.send(false)
     }
 
     const key = req.params.key
-    
+
     USERS.find(
         {
             "$or": [
@@ -661,16 +662,19 @@ exports.getUserReport = (req, res) => {
         if (req.params.key == 'admin') {
             PDF.create(DOCUMENT, OPTIONS).then(p => {
                 res.redirect('/' + FILE_NAME)
-                VALIDATION.deleteFile("./docs/" + FILE_NAME)
+                console.log(FILE_NAME)
+                //eliminamos el reporte del servidor
+                VALIDATION_REPORT.deleteFile("./docs/" + FILE_NAME)
             }).catch(err => {
-                res.send(err)
+                res.send('error')
             })
         } else {
             PDF.create(DOCUMENT, OPTIONS_CLIENTS).then(p => {
                 res.redirect('/' + FILE_NAME)
-                VALIDATION.deleteFile("./docs/" + FILE_NAME)
+                //eliminamos el reporte del servidor
+                VALIDATION_REPORT.deleteFile("./docs/" + FILE_NAME)
             }).catch(err => {
-                res.send(err)
+                res.send('error')
             })
         }
     })
@@ -690,7 +694,7 @@ exports.countUsers = (req, res) => {
     })
 }
 
-exports.userAuthentification = (req, res) => { 
+exports.userAuthentification = (req, res) => {
     const AUTHENTIFICATION = req.params.authentification
     const ID = req.params.id
     const VALUE = { authentification: AUTHENTIFICATION }
