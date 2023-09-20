@@ -45,8 +45,6 @@ exports.createDetail = async (req, res) => {
 
             const SAVE = await DETAIL.save()
 
-            console.log(SAVE)
-
             if (!SAVE) {
                 res.send(false)
             } else {

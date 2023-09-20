@@ -26,4 +26,4 @@ No incluya o implemente en su software credenciales por defecto, particularmente
 Asegúrese de cifrar todos los datos sensibles en reposo (almacenamiento).0A2
 
 
-Arreglar segunda lista en añadir productos, stock productos y actualizacion en productos
+Arreglar stock productos y actualizacion en productos

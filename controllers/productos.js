@@ -206,71 +206,95 @@ FORM_PRODUCT.addEventListener('submit', (e) => {
     })
 })
 
-const UPDATE_PRODUCT = document.getElementById('update-product')
+function updateProduct(product, price, category, status, id) {
+    Swal.fire({
+        title: 'Crea tu pedido',
+        html:
+            '<label for="product-update">Producto: </label>' +
+            `<input type="text" class="form-control" id="product-update" required value="${product}"></br>` +
+            '<label for="price-update">Precio: </label>' +
+            `<input type="number" class="form-control" id="price-update" required min="1" step="0.01" value="${price}"` +
+            '<label for="status-update">Estado: </label>' +
+            `<select class="form-select" id="status-update" aria-label="Default select example" required>
+                <option value="${status}">${status}</option>
+                <option value="activo">activo</option>
+                <option value="inactivo">inactivo</option>
+                <option value="No Stock">No Stock</option>
+            </select>`
+        ,
+        focusConfirm: false,
+        preConfirm: () => {
 
-UPDATE_PRODUCT.addEventListener('submit', (e) => {
-    e.preventDefault()
+            const PRODUCT = document.getElementById('product-update').value
+            const PRICE = document.getElementById('price-update').value
+            const CATEGORY = category
+            const STATUS = document.getElementById('status-update').value
+            const ID = id
 
-    const PRODUCT = document.getElementById('product-update').value
-    const PRICE = document.getElementById('price-update').value
-    const CATEGORY = document.getElementById('categorie-update').value
-    const STATUS = document.getElementById('status-update').value
-    const ID = document.getElementById('id-product').value
+            if (!PRODUCT || !PRICE || !CATEGORY || !STATUS || !ID) {
+                Swal.showValidationMessage('No se permiten campos vacios')
+            }
 
-    axios.post('http://localhost:443/update/products/', {
-        product: PRODUCT,
-        price: PRICE,
-        categorie: CATEGORY,
-        status: STATUS,
-        id: ID
-    }, {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': localStorage.getItem('token')
+            return { product: PRODUCT, price: PRICE, category: CATEGORY, status: STATUS, id: ID }
         }
-    }).then((data) => {
-        switch (data.data) {
-            case true:
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Proceso Exitoso',
-                    text: 'Se ha creado la categoria exitosamente'
-                }).then(() => {
-                    //redirigimos a la pagina para visualizar los cambios
-                    location.href = '/products'
-                })
-                break
-            case false:
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Error de conexion'
-                })
-                break
-            case 'empty':
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No se permiten campos vacios'
-                })
-                break
-            case 'price':
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'El precio no puede ser menor que 0'
-                })
-                break
-            case 'compare':
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No se permiten productos repetidos'
-                })
-                break
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.post('http://localhost:443/update/products/', {
+                product: result.value.product,
+                price: result.value.price,
+                categorie: result.value.category,
+                status: result.value.status,
+                id: result.value.id
+            }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then((data) => {
+                switch (data.data) {
+                    case true:
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proceso Exitoso',
+                            text: 'Se ha creado la categoria exitosamente'
+                        }).then(() => {
+                            //redirigimos a la pagina para visualizar los cambios
+                            location.href = '/products'
+                        })
+                        break
+                    case false:
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error de conexion'
+                        })
+                        break
+                    case 'empty':
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'No se permiten campos vacios'
+                        })
+                        break
+                    case 'price':
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'El precio no puede ser menor que 0'
+                        })
+                        break
+                    case 'compare':
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'No se permiten productos repetidos'
+                        })
+                        break
+                }
+            })
         }
     })
-})
+}
 
 
 function deleteProducts(_id) {

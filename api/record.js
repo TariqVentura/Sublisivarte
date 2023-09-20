@@ -13,7 +13,7 @@ exports.newRecord = (req, res) => {
             .then(function (response) {
                 AXIOS.get('http://localhost:443/api/categories')
                     .then(function (categorie) {
-                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "No se permiten campos vacios", confirmation: true, icon: "error" })
+                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "No se permiten campos vacios", confirmation: true, icon: "error", count: 1 })
                     })
                     .catch(err => {
                         res.send('hola')
@@ -49,7 +49,7 @@ exports.newRecord = (req, res) => {
                                             .then(function (response) {
                                                 AXIOS.get('http://localhost:443/api/categories')
                                                     .then(function (categorie) {
-                                                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "Se ha actualizado el stock", confirmation: true, icon: "success" })
+                                                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "Se ha actualizado el stock", confirmation: true, icon: "success", count: 1 })
                                                     })
                                                     .catch(err => {
                                                         res.send('hola')
@@ -69,7 +69,7 @@ exports.newRecord = (req, res) => {
                                             .then(function (response) {
                                                 AXIOS.get('http://localhost:443/api/categories')
                                                     .then(function (categorie) {
-                                                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "Se ha actualizado el stock", confirmation: true, icon: "success" })
+                                                        res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "Se ha actualizado el stock", confirmation: true, icon: "success", count: 1 })
                                                     })
                                                     .catch(err => {
                                                         res.send('hola')
@@ -92,10 +92,6 @@ exports.newRecord = (req, res) => {
 }
 
 exports.getRecord = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
-        res.redirect('/error404')
-        return
-    }
     RECORD.find({ product: req.params.key }).then(data => {
         if (!data) {
             res.send('producto no encontrado')

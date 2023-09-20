@@ -95,10 +95,6 @@ exports.findProduct = (req, res) => {
 }
 
 exports.updateProduct = async (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
-        res.redirect('/error404')
-        return
-    }
     if (!req.body.product || !req.body.price || !req.body.categorie || !req.body.status || !req.body.id) {
         return res.send('empty')
     } else {
@@ -220,9 +216,15 @@ exports.getStockReport = (req, res) => {
         
     }
 
+    const CONFIG = {
+        headers: {
+            'Authorization': `Bearer ${req.session.token}`
+        }
+    }
+
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/stock.html'), 'utf-8')
     const FILE_NAME = 'REPORTE_DE_STOCK' + req.params.key + '.pdf'
-    AXIOS.get('http://localhost:443/api/record/' + req.params.key).then(function (stock) {
+    AXIOS.get('http://localhost:443/api/record/' + req.params.key, CONFIG).then(function (stock) {
 
         let obj = stock.data
 

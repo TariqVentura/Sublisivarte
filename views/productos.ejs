@@ -1,6 +1,9 @@
 <% if(user==false || user.role !='admin' ){ %>
     <%- include('include/error') %>
         <% } else { %>
+            <% categories.forEach((cate)=> { %>
+                <input type="text" value="<%= cate.categorie %>" class="category-name" hidden>
+            <% }) %>
             <div class="container">
                 <div class="row my-3">
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
@@ -251,86 +254,7 @@
                                                 class="text-dark" target="_blank">Ver imagen</a></button>
                                     </td>
                                     <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalUpdate<%= data._id %>">
-                                            Actualizar
-                                        </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModalUpdate<%= data._id %>" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar
-                                                            Producto</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <form id="update-product">
-                                                        <div class="modal-body">
-                                                            <div class="row my-3">
-                                                                <div class="col-8 d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Producto:
-                                                                    </label>
-                                                                    <input type="text" class="form-control"
-                                                                        name="product" id="product-update" required
-                                                                        value="<%= data.product %>">
-                                                                </div>
-                                                                <div class="col-4 d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Precio:
-                                                                    </label>
-                                                                    <input type="number" class="form-control"
-                                                                        name="price" id="price-update" required min="1" step="0.01"
-                                                                        value="<%= data.price %>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="row my-3">
-                                                                <div class="col-8 d-flex flex-row align-items-center">
-                                                                    <label for="" class="form-label me-2">Categoria:
-                                                                    </label>
-                                                                    <select class="form-select" id="categorie-update"
-                                                                        name="categorie" required>
-                                                                        <option value="<%= data.categorie %>" selected>
-                                                                            <%= data.categorie %>
-                                                                        </option>
-                                                                        <% categories.forEach((cate)=> { %>
-                                                                            <option value="<%= data.categorie %>">
-                                                                                <%= cate.categorie %>
-                                                                            </option>
-                                                                        <% }) %>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <select class="form-select" id="status-update"
-                                                                        name="status" required>
-                                                                        <option value="<%= data.status %>" selected>
-                                                                            <%= data.status %>
-                                                                        </option>
-                                                                        <option value="activo">Activo</option>
-                                                                        <option value="inactivo">Inactivo</option>
-                                                                        <option value="No Stock">No Stock</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row my-3">
-                                                                <div class="col d-flex flex-row align-items-center">
-                                                                    <input type="text" value="<%= data._id %>" name="id"
-                                                                        id="id-product" hidden>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cerrar</button>
-                                                            <button type="submit"
-                                                                class="btn btn-primary">Actualizar</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <button class="btn btn-warning" onclick="updateProduct('<%= data.product %>', '<%= data.price %>', '<%= data.categorie %>', '<%= data.status %>', '<%= data._id %>')"> Actualizar </button>
                                     </td>
                                     <td>
                                         <button class="btn btn-danger" onclick="deleteProducts('<%= data._id %>')">Eliminar</button>

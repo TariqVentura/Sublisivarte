@@ -144,7 +144,7 @@ ROUTER.get('/report/categories/:key', CATEGORIES.getReport)
 
 //API record
 ROUTER.post('/api/record', RECORD.newRecord)
-ROUTER.get('/api/record/:key', RECORD.getRecord)
+ROUTER.get('/api/record/:key', tokenValidation,  RECORD.getRecord)
 
 //API email
 ROUTER.post('/email/password', EMAIL.newPasswordEmail)
