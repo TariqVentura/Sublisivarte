@@ -5,6 +5,7 @@ const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/report')
+const VALIDATION = require('../helpers/validations/reports')
 
 exports.createCategorie = async (req, res) => {
     let category
@@ -143,6 +144,7 @@ exports.getReport = (req, res) => {
         PDF.create(DOCUMENT, OPTIONS).then(p => {
             //redirecciona al documento creado
             res.redirect('/' + FILE_NAME)
+            VALIDATION.deleteFile("./docs/" + FILE_NAME)
         }).catch(err => {
             res.send(err)
         })

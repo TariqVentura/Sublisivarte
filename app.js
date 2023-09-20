@@ -14,6 +14,7 @@ const PATH = require('path')
 const HTTP = require('http')
 const SESSION = require('express-session')
 const VALIDATION = require('./helpers/validations/token')
+const FS = require('fs')
 
 /**
  * Se inicia la constante APP utilizando cors 
@@ -82,6 +83,8 @@ APP.use(EXPRESS.static(__dirname + '/controllers'))
 APP.use(EXPRESS.static(__dirname + '/resources'))
 APP.use(EXPRESS.static(__dirname + '/docs'))
 APP.use(EXPRESS.static(__dirname + '/helpers'))
+
+console.log(__dirname + '/docs')
 
 //nos permite manejar los resultados de los request de la pagina
 APP.use(EXPRESS.urlencoded({ extended: true }))

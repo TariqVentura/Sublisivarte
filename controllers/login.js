@@ -70,6 +70,7 @@ LOGIN.addEventListener('submit', (e) => {
                     title: 'Oops...',
                     text: 'Su cuenta ha sido desactivo por sobrepasar el numero de intentos permitidos'
                 }).then(() => {
+                    //enviamos un codigo de recuperacion de contraseña
                     sendCode(user, String(data.data).substring('inactivo'.length))
                 })
                 break
