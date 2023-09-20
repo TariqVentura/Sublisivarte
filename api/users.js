@@ -173,15 +173,17 @@ exports.logIn = async (req, res) => {
         return
     }
 
+    //almaenamos los datos del usuario en una varible
+    let data = await USERS.find({ user: USER }).exec()
+
     //verificamos que la contraseña y el usuario coincidan
     const COMPARE = await VALIDATION.comparePassword(USER, PASSWORD)
-    console.log(COMPARE)
     //si no coinciden mandamos error
     if (COMPARE == false) {
         res.send(false)
         return
     } else if (COMPARE == 'inactivo') {
-        res.send('inactivo')
+        res.send('inactivo' + data[0].email)
         return
     }
 
@@ -207,14 +209,15 @@ exports.logIn = async (req, res) => {
         const RESTART_ATTEMPTS = await ATTEMPS.updateOne({ user: USER }, { attempt: 0 }, { useFindAndModify: false }).exec()
     }
 
+    if (data[0].status == 'inactivo') {
+        return res.send('inactivo' + data[0].email)
+    }
+
     //verificamos que no haya una sesion
     if (req.session.authenticated) {
         res.send('session')
         return
     } else {
-        //almaenamos los datos del usuario en una varible
-        let data = await USERS.find({ user: USER }).exec()
-
         //generamos los saltos para encriptar los datos
         const SALT_ROUNDS = await BCRYPT.genSaltSync(10)
 
@@ -499,7 +502,7 @@ exports.newPassword = async (req, res) => {
                     encryptedPassword = await BCRYPT.hashSync(newPassword, rounds)
                     try {
                         //guardamos los datos en la base
-                        await USERS.updateOne({ user: username }, { password: encryptedPassword })
+                        await USERS.updateOne({ user: username, password: encryptedPassword, status: 'activo' })
                         //enviamos confirmacion
                         res.send(true)
                     } catch (error) {

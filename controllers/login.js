@@ -39,6 +39,8 @@ LOGIN.addEventListener('submit', (e) => {
 
         if (String(response).includes('expired')) {
             response = 'expired'
+        } else if (String(response).includes('inactivo')) {
+            response = 'inactivo'
         }
 
         //validamos con un switch las respuestas de la API
@@ -67,6 +69,8 @@ LOGIN.addEventListener('submit', (e) => {
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Su cuenta ha sido desactivo por sobrepasar el numero de intentos permitidos'
+                }).then(() => {
+                    sendCode(user, String(data.data).substring('inactivo'.length))
                 })
                 break
             case 'expired':
@@ -247,7 +251,7 @@ function changePassword(code, password, newPassword, user) {
     })
 }
 
-function logOut () {
+function logOut() {
     axios.get('http://localhost:443/logOut/users').then((data) => {
         if (data) {
             localStorage.clear()
