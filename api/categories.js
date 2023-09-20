@@ -37,7 +37,7 @@ exports.createCategorie = async (req, res) => {
             await CATEGORIE.save()
             return res.send(true)
         } catch (error) {
-            res.send('repetido')   
+            res.send('repetido')
         }
     }
 }
@@ -94,7 +94,7 @@ exports.deleteCategorie = (req, res) => {
 }
 
 //cambio de estado
-exports.categorieStatus = (req, res) => { 
+exports.categorieStatus = (req, res) => {
     //obtenemos el estado y el id de la categoria
     const STATUS = req.params.status
     const ID = req.params.id
@@ -117,37 +117,43 @@ exports.categorieStatus = (req, res) => {
 }
 
 exports.searchCategories = (req, res) => {
-    const key = req.params.key
+    const KEY = req.params.key // Se obtiene el valor del parámetro 'key' de la solicitud.
+
     CATEGORIES.find(
         {
             "$or": [
-                { categorie: { $regex: key } },
-                { status: { $regex: key } }
+                { categorie: { $regex: KEY } }, // Busca categorías que coincidan con 'KEY' (búsqueda de texto parcial).
+                { status: { $regex: KEY } }     // Busca categorías que coincidan con 'KEY' en el campo 'status'.
             ]
         }
-    )
-        .then(data => {
-            if (!data) {
-                res.status(404).send({ message: `Sin datos` })
-            } else {
-                res.send(data)
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
+    ).then(data => {
+        if (!data) {
+            res.status(404).send({ message: `Sin datos` }) // Si no se encontraron datos, responde con un mensaje de error 404.
+        } else {
+            res.send(data) // Si se encontraron datos, responde con los datos encontrados.
+        }
+    }).catch(err => {
+        res.send('err') // Si ocurre un error durante la búsqueda, responde con 'err'.
+    })
 }
 
+//funcion para generar reporte
 exports.getReport = (req, res) => {
-    if (!req.session.user || req.session.role != 'admin' ) {
+    //validamos la sesion y el rol
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
         return
     }
+    //declaramos la plantilla y el nombre del archivo
     const HMTL = FS.readFileSync(PATH.join(__dirname, '../helpers/templates/report.html'), 'utf-8')
     const FILE_NAME = req.params.key + '.pdf'
+    //obtenemos datso de la API
     AXIOS.get('http://localhost:443/api/view/products/' + req.params.key).then(function (product) {
+        //alamcenamos los datos de la API
         let obj = product.data
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
+
+        //creamos un objeto con los datos para el reporte 
         const DATA = {
             category: req.params.key,
             user: req.session.user,
@@ -155,6 +161,9 @@ exports.getReport = (req, res) => {
             newDate: newDate,
             product: req.params.key
         }
+
+
+        //creamos un objeto con la configuracion del reporte
         const DOCUMENT = {
             html: HMTL,
             data: {

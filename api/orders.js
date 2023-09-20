@@ -9,110 +9,125 @@ const OPTIONS_2 = require('../helpers/format/order')
 const VALIDATION = require('../helpers/validations/reports')
 
 
-exports.createOrder =  async (req, res) => {
-    let name 
+exports.createOrder = async (req, res) => {
+    let name
+
+    // Verifica si el campo 'name' no está presente en la solicitud.
     if (!req.body.name) {
-        res.send('empty')
+        res.send('empty') // Si falta el campo 'name', responde con 'empty' y sale de la función.
         return
     }
 
-    name = req.body.name
+    name = req.body.name // Asigna el valor del campo 'name' de la solicitud a la variable 'name'.
 
+    // Verifica si 'name' contiene solo espacios en blanco o está vacío después de quitar los espacios en blanco.
     if (!name.trim()) {
-        res.send('empty')
+        res.send('empty') // Si 'name' está vacío o contiene solo espacios en blanco, responde con 'empty' y sale de la función.
         return
     }
 
-    //convertimos la fecha a formato ISO
+    // Convierte la fecha actual a formato ISO.
     let newDate = FECHA.toISOString()
 
+    // Crea una nueva instancia de la orden ('ORDERS') con los datos proporcionados.
     const ORDER = new ORDERS({
         name: req.body.name,
         client: req.session.user,
-        //le asignamos la fecha con formato ISO a date pero unicamente los primeros 10 caracteres
+        // Asigna la fecha actual en formato ISO (solo los primeros 10 caracteres) al campo 'date'.
         date: newDate.substring(0, 10),
         status: "en proceso"
     })
 
+    // Guarda la orden en la base de datos.
     const SAVE = await ORDER.save()
 
     if (SAVE) {
-        res.send(true)
+        res.send(true) // Si se guarda la orden correctamente, responde con 'true'.
     } else {
-        res.send(false)
+        res.send(false) // Si no se puede guardar la orden, responde con 'false'.
     }
 }
 
+
 exports.finishOrder = (req, res) => {
+    // Verifica si no hay un token de sesión. Si no hay sesión activa, redirige a una página de error.
     if (!req.session.token) {
-        res.redirect('/images/Error 404.png')
+        res.redirect('/images/Error 404.png') // Redirige a la página de error "Error 404.png" y sale de la función.
         return
     } else {
-        const ID = req.params.id
+        const ID = req.params.id // Obtiene el valor del parámetro 'id' de la URL.
         let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
 
-        const VALUE = { status: 'finalizado', date: newDate }
+        const VALUE = { status: 'finalizado', date: newDate } // Define un objeto 'VALUE' con el nuevo estado y fecha.
 
+        // Actualiza la orden ('ORDERS') con el ID proporcionado utilizando el objeto 'VALUE'.
         ORDERS.findByIdAndUpdate(ID, VALUE, { useFindAndModify: true })
             .then(data => {
                 if (!data) {
-                    res.send(false)
+                    res.send(false) // Si no se encuentra la orden, responde con 'false'.
                 } else {
-                    res.send(true)
+                    res.send(true) // Si se actualiza la orden correctamente, responde con 'true'.
                 }
             })
             .catch(err => {
-                res.send(err)
+                res.send(err) // Si ocurre un error durante la actualización, responde con el objeto de error.
             })
     }
 }
 
-exports.cancelOrder = (req, res) => {
-    const ID = req.params.id
-    const value = { status: 'cancelado' }
 
+exports.cancelOrder = (req, res) => {
+    const ID = req.params.id // Obtiene el valor del parámetro 'id' de la URL.
+    const value = { status: 'cancelado' } // Define un objeto 'value' con el nuevo estado 'cancelado'.
+
+    // Actualiza la orden ('ORDERS') con el ID proporcionado utilizando el objeto 'value'.
     ORDERS.findByIdAndUpdate(ID, value, { useFindAndModify: true })
         .then(data => {
             if (!data) {
-                res.send(false)
+                res.send(false) // Si no se encuentra la orden, responde con 'false'.
             } else {
-                res.send(true)
+                res.send(true) // Si se actualiza la orden correctamente, responde con 'true'.
             }
         })
         .catch(err => {
-            res.send(false)
+            res.send(false) // Si ocurre un error durante la actualización, responde con 'false'.
         })
 }
 
+
 exports.getOrders = (req, res) => {
+    // Verifica si se proporciona un parámetro de búsqueda 'key'.
     if (req.params.key) {
-        const KEY = req.params.key
+        const KEY = req.params.key // Obtiene el valor del parámetro 'key' de la URL.
+
+        // Utiliza el método 'find' para buscar órdenes que coincidan con 'KEY' en los campos 'client', 'status', o 'name'.
         ORDERS.find({ $or: [{ client: { $regex: KEY } }, { status: { $regex: KEY } }, { name: { $regex: KEY } }] })
             .then((data) => {
                 if (!data) {
-                    res.send('no data')
+                    res.send('no data') // Si no se encuentran datos, responde con 'no data'.
                 } else {
-                    res.send(data)
+                    res.send(data) // Si se encuentran datos, responde con los datos encontrados.
                 }
             })
             .catch(err => {
-                res.send(err)
+                res.send(err) // Si ocurre un error durante la búsqueda, responde con el objeto de error.
             })
     } else {
+        // Si no se proporciona un parámetro 'key', busca y devuelve todas las órdenes.
         ORDERS.find()
             .then(data => {
                 if (!data) {
-                    res.send('err')
+                    res.send('err') // Si no se encuentran datos, responde con 'err'.
                 } else {
-                    res.send(data)
+                    res.send(data) // Si se encuentran datos, responde con todas las órdenes.
                 }
             })
             .catch(err => {
-                res.send(err)
+                res.send(err) // Si ocurre un error durante la búsqueda, responde con el objeto de error.
             })
     }
-
 }
+
 
 exports.getInvoice = (req, res) => {
     if (!req.session.user) {

@@ -58,26 +58,27 @@ exports.createComment = async (req, res) => {
 */
 exports.findComments = (req, res) => {
     if (req.params.id) {
-        const id = req.query.id
-        COMMENTS.findById(id)
+        const ID = req.query.id // Obtiene el valor del parámetro 'id' desde la consulta de la URL.
+
+        COMMENTS.findById(ID)
             .then(data => {
                 if (!data) {
-                    res.status(404).send({ message: "No se pudo encontrar este usuario" })
+                    res.status(404).send({ message: "No se pudo encontrar este usuario" }) // Si no se encontraron datos, responde con un código de estado 404 y un mensaje de error.
                 } else {
-                    res.send(data)
+                    res.send(data) // Si se encontraron datos, responde con los datos encontrados.
                 }
             })
             .catch(err => {
-                res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
+                res.status(500).send({ message: "Ocurrió un error al intentar ejecutar el proceso" }) // Si ocurre un error durante la búsqueda, responde con un código de estado 500 y un mensaje de error genérico.
             })
     } else {
         COMMENTS.find()
             .then(user => {
-                res.send(user)
+                res.send(user) // Responde con los datos de todos los comentarios encontrados.
                 console.log(user)
             })
             .catch(err => {
-                res.status(500).send({ message: err.message || "Ocurrio un error al tratar de obtener la informacion" })
+                res.status(500).send({ message: err.message || "Ocurrió un error al tratar de obtener la información" }) // Si ocurre un error durante la búsqueda, responde con un código de estado 500 y un mensaje de error detallado.
             })
     }
 }
@@ -94,36 +95,33 @@ exports.deleteComments = async (req, res) => {
 
     //eliminamos el comentario
     const DELETE = await COMMENTS.findByIdAndDelete(id, req.body, { useFindAndModify: false }).exec()
-    
+
     //validamos que se haya completado el proceso
     if (!DELETE) {
-        return  res.send(false)
+        return res.send(false)
     } else {
         return res.send(true)
     }
 }
+exports.searchComments = (req, res) => {
+    const KEY = req.params.key // Obtiene el valor del parámetro 'key' de la solicitud.
 
-exports.serchComments = (req, res) => {
-    const key = req.params.key
-    COMMENTS.find(
-        {
-            "$or": [
-                { comment: { $regex: key } },
-                { product: { $regex: key } }
-            ]
+    COMMENTS.find({
+        "$or": [
+            { comment: { $regex: KEY } }, // Realiza una búsqueda de texto parcial en el campo 'comment' con la palabra clave 'KEY'.
+            { product: { $regex: KEY } } // Realiza una búsqueda de texto parcial en el campo 'product' con la palabra clave 'KEY'.
+        ]
+    }).then(data => {
+        if (!data) {
+            res.status(404).send({ message: `Sin datos` }) // Si no se encontraron datos, responde con un código de estado 404 y un mensaje de error.
+        } else {
+            res.send(data) // Si se encontraron datos, responde con los datos encontrados.
         }
-    )
-        .then(data => {
-            if (!data) {
-                res.status(404).send({ message: `Sin datos` })
-            } else {
-                res.send(data)
-            }
-        })
-        .catch(err => {
-            res.send(err)
-        })
+    }).catch(err => {
+        res.send(err) // Si ocurre un error durante la búsqueda, responde con el objeto de error.
+    })
 }
+
 
 // exports.commentStatus = (req, res) => {
 //     const STATUS = req.params.status
@@ -137,7 +135,7 @@ exports.serchComments = (req, res) => {
 exports.countCommentsProduct = (req, res) => {
     //Hacemos uso de una funcion de agregacion y obtenemos las ordenes de la tienda
     //Utilizamos match para filtrar los pedidos de un solo cliente
-    COMMENTS.aggregate().match({ product : req.params.key }).group({
+    COMMENTS.aggregate().match({ product: req.params.key }).group({
         //Agrupamos las ordenes por estado y contamos cuantos ordene tiene cada estado
         _id: "$status",
         count: { $count: {} }
