@@ -115,6 +115,7 @@ exports.comparePassword = async (username, password) => {
                 user = await USER.updateOne({ user: username }, { status: 'inactivo' })
                 return 'inactivo'
             }
+            //Mandar una alerta con un formulario(getUser), despues de ingresar datos, mandar el codigo
         }
         //retornamos falso 
         return compare
