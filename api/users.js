@@ -661,12 +661,14 @@ exports.getUserReport = (req, res) => {
         if (req.params.key == 'admin') {
             PDF.create(DOCUMENT, OPTIONS).then(p => {
                 res.redirect('/' + FILE_NAME)
+                VALIDATION.deleteFile("./docs/" + FILE_NAME)
             }).catch(err => {
                 res.send(err)
             })
         } else {
             PDF.create(DOCUMENT, OPTIONS_CLIENTS).then(p => {
                 res.redirect('/' + FILE_NAME)
+                VALIDATION.deleteFile("./docs/" + FILE_NAME)
             }).catch(err => {
                 res.send(err)
             })

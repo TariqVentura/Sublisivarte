@@ -6,6 +6,7 @@ const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
 const OPTIONS2 = require('../helpers/format/detail')
+const VALIDATION = require('../helpers/validations/reports')
 
 exports.createDetail = async (req, res) => {
     if (!req.body.product || !req.body.amount || !req.body.price || !req.body.order) {
@@ -177,6 +178,7 @@ exports.getReportDetail = (req, res) => {
         PDF.create(DOCUMENT, OPTIONS2).then(p => {
             //redirecciona al documento creato
             res.redirect('/' + FILE_NAME)
+            VALIDATION.deleteFile("./docs/" + FILE_NAME)
         }).catch(err => {
             res.send(err)
         })

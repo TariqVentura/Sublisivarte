@@ -2,6 +2,7 @@ const RECORD = require('../models/record')
 const AXIOS = require('axios')
 const PRODUCTS = require('../models/products')
 const FECHA = new Date()
+const VALIDATION = require('../helpers/validations/reports')
 
 exports.newRecord = (req, res) => {
     if (!req.session.user || req.session.role != 'admin' ) {

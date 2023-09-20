@@ -6,6 +6,7 @@ const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/invoice')
 const OPTIONS_2 = require('../helpers/format/order')
+const VALIDATION = require('../helpers/validations/reports')
 
 
 exports.createOrder =  async (req, res) => {
@@ -166,6 +167,7 @@ exports.getInvoice = (req, res) => {
             //ocupar metodo create y pasas parametros del documents y
             PDF.create(DOCUMENT, OPTIONS).then(p => {
                 res.redirect('/' + FILE_NAME)
+                VALIDATION.deleteFile("./docs/" + FILE_NAME)
             }).catch(err => {
                 res.send(err)
             })
@@ -253,6 +255,7 @@ exports.getReportDetail = (req, res) => {
         PDF.create(DOCUMENT, OPTIONS2).then(p => {
             //redirecciona al documento creato
             res.redirect('/' + FILE_NAME)
+            VALIDATION.deleteFile("./docs/" + FILE_NAME)
         }).catch(err => {
             res.send(err)
         })
@@ -326,6 +329,7 @@ exports.reportOrders = (req, res) => {
 
         PDF.create(DOCUMENTS, OPTIONS_2).then(p => {
             res.redirect('/' + FILE_NAME)
+            VALIDATION.deleteFile("./docs/" + FILE_NAME)
         }).catch(err => {
             res.send(err)
         })

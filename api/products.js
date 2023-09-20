@@ -9,6 +9,7 @@ const PATH = require('path')
 const FS = require('fs')
 const OPTIONS = require('../helpers/format/product')
 const OPTIONS2 = require('../helpers/format/stock')
+const VALIDATION = require('../helpers/validations/reports')
 
 /**
  * Por medio de la depencia de axios se obtiene la informacion de las API utilizando el metodo GET y se renderizan las paginas con la informacion obetnida
@@ -246,6 +247,7 @@ exports.getStockReport = (req, res) => {
 
         PDF.create(DOCUMENT, OPTIONS2).then(p => {
             res.redirect('/' + FILE_NAME)
+            VALIDATION.deleteFile("./docs/" + FILE_NAME)
         }).catch(err => {
             res.send(err)
         })
@@ -312,6 +314,7 @@ exports.reportProducts = (req, res) => {
 
         PDF.create(DOCUMENT1, OPTIONS).then(p => {
             res.redirect('/' + FILE_NAME2)
+            VALIDATION.deleteFile("./docs/" + FILE_NAME2)
         }).catch(err => {
             res.send(err)
         })

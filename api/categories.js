@@ -1,3 +1,4 @@
+//modulos y dependencias
 const CATEGORIES = require('../models/categories')
 const AXIOS = require('axios')
 const FECHA = new Date()
@@ -7,35 +8,47 @@ const FS = require('fs')
 const OPTIONS = require('../helpers/format/report')
 const VALIDATION = require('../helpers/validations/reports')
 
+//funcion asincrona para crear categoria
 exports.createCategorie = async (req, res) => {
+    //declaramos variables
     let category
+
+    //validamos campos vacios
     if (req.body.categorie) {
         category = req.body.categorie
     } else {
         category = ''
     }
 
+    //validamos espacios en blanco
     if (!category.trim()) {
         console.log('error campos vacios')
         res.send(false)
     } else {
+        //creamos objeto con datos de la categoria
         const CATEGORIE = new CATEGORIES({
             categorie: req.body.categorie.trim(),
             status: req.body.status
         })
+
+        //utilizamos un try para evitar datos repetidos
         try {
+            //guardamos los datos
             await CATEGORIE.save()
-            res.send(true)
+            return res.send(true)
         } catch (error) {
             res.send('repetido')   
         }
     }
 }
 
+//funcion para encontrar categoria
 exports.findCategorie = (req, res) => {
+    //validamos si es busqueda general o parametrizada
     if (req.query.id) {
-        const id = req.query.id
-        CATEGORIES.findById(id)
+        const ID = req.query.id
+        //retornamos datos
+        CATEGORIES.findById(ID)
             .then(data => {
                 if (!data) {
                     AXIOS.get('http://localhost:443/api/categories')
@@ -50,6 +63,7 @@ exports.findCategorie = (req, res) => {
                 res.status(500).send({ message: "Ocurrio un error al intentar ejecutar el proceso" })
             })
     } else {
+        //retornamos datos
         CATEGORIES.find()
             .then(categorie => {
                 res.send(categorie)
@@ -60,9 +74,13 @@ exports.findCategorie = (req, res) => {
     }
 }
 
+//funcion para eliminar categorias
 exports.deleteCategorie = (req, res) => {
-    const id = req.params.key
-    CATEGORIES.findByIdAndDelete(id, req.body, { useFindAndModify: false })
+    //obtenemos el id
+    const ID = req.params.key
+
+    //eliminamos la categoria
+    CATEGORIES.findByIdAndDelete(ID, req.body, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.send(false)
@@ -75,11 +93,16 @@ exports.deleteCategorie = (req, res) => {
         })
 }
 
+//cambio de estado
 exports.categorieStatus = (req, res) => { 
+    //obtenemos el estado y el id de la categoria
     const STATUS = req.params.status
     const ID = req.params.id
+
+    //creamos un objeto con los datos  
     const VALUE = { status: STATUS }
-    console.log(STATUS)
+
+    //actualizamos
     CATEGORIES.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
         .then(data => {
             if (!data) {
@@ -144,6 +167,7 @@ exports.getReport = (req, res) => {
         PDF.create(DOCUMENT, OPTIONS).then(p => {
             //redirecciona al documento creado
             res.redirect('/' + FILE_NAME)
+            //eliminamos el reporte del servidor
             VALIDATION.deleteFile("./docs/" + FILE_NAME)
         }).catch(err => {
             res.send(err)
