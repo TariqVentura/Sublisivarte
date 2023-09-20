@@ -7,18 +7,16 @@ FORM_USER.addEventListener('submit', (e) => {
     e.preventDefault()
 
     //declaramos las varibales a utilizar
-    let name, lastname, email, user, doc, password
+    let name, lastname, email, user, doc, password, confirm
 
     //asignamos valores
     name = document.getElementById('name').value
     lastname = document.getElementById('lastname').value
     email = document.getElementById('mail').value
-    user = document.getElementById('user-login').value
     doc = document.getElementById('documento').value
-    password = document.getElementById('password-login').value
     user = document.getElementById('username-account').value
-    doc = document.getElementById('documento').value
     password = document.getElementById('password-account').value
+    confirm = document.getElementById('password-account-confirm').value
 
     //axios envia la peticion a la API
     axios.post('http://localhost:443/api/users', {
@@ -27,7 +25,8 @@ FORM_USER.addEventListener('submit', (e) => {
         email: email,
         user: user,
         password: password,
-        document: doc
+        document: doc,
+        confirm: confirm
     }, {
         //definimos que utlizaremos body url encoded
         headers: {
