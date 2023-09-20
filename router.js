@@ -95,7 +95,7 @@ ROUTER.get('/api/authentification/:id/:authentification', tokenValidation, USERS
 ROUTER.post('/api/comments', tokenValidation, COMMENTS.createComment)
 ROUTER.get('/api/comments', COMMENTS.findComments)
 ROUTER.get('/delete/comments/:id', tokenValidation, COMMENTS.deleteComments)
-ROUTER.get('/api/comments/:key', COMMENTS.serchComments)
+ROUTER.get('/api/comments/:key', COMMENTS.searchComments)
 ROUTER.get('/api/count/comments/:key', COMMENTS.countCommentsProduct)
 
 //API orders
