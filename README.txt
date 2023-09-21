@@ -11,6 +11,20 @@ Estandares de JavaScript
 
 Top 10 OWASP
 
+  Ocultar y confirmar contraseña
+
+  Crifrar contraseña
+  - https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+
+  - Olvidar y restaurar contrasñea
+  https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html#forgot-password-service
+
+  - validar contraseña
+  https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+
+  - doble autenticacion
+  https://owasp.org/www-project-proactive-controls/v3/en/c6-digital-identity
+
 A01:2021 – Broken Access Control 
     - Utilizacion de CORS en la aplicación ./app.js ln 25 - 33 
       CORS es un mecanismo de seguridad implementado en los navegadores web que controla las solicitudes HTTP entre dominios diferentes para evitar ataques de seguridad como solicitudes cruzadas (cross-site request forgery) y solicitudes cruzadas de origen (cross-site scripting).

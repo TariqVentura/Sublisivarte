@@ -36,6 +36,8 @@ document.addEventListener('contextmenu', function (e) {
     e.preventDefault()
 })
 
+
+//funcion para desabilidar el auto completado de los formularios
 document.addEventListener('DOMContentLoaded', function () {
     let input = document.getElementsByTagName('input')
 
