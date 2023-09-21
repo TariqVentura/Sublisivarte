@@ -15,6 +15,8 @@ const VALIDATION = require('../helpers/validations/users')
 const VALIDATION_REPORT = require('../helpers/validations/reports')
 const JWT = require('jsonwebtoken')
 const ATTEMPS = require('../models/attemps')
+const MAIL = require('../config/email')
+const CODE = require('../models/code')
 
 
 //funcion para crear un usuario
@@ -25,7 +27,7 @@ exports.createUser = async (req, res) => {
         return
     } else {
         //declaramos variables
-        let name, lastname, email, user, password, document, role, newDocument, confirm
+        let name, lastname, email, user, password, document, role, newDocument, confirm, authentification
 
         //le asignamos un valor a las variables
         name = req.body.name
@@ -35,6 +37,7 @@ exports.createUser = async (req, res) => {
         document = req.body.document
         password = req.body.password
         confirm = req.body.confirm
+        authentification = req.body.authentification
 
 
         //validamos que no existan campos vacios
@@ -231,10 +234,95 @@ exports.logIn = async (req, res) => {
         //encriptamos el rol
         const ENCRYPTED_ROL = await BCRYPT.hashSync(NEW_ROL[0], SALT_ROUNDS)
 
-        //creamos un ovjeto con la informacion del usuario
+        //creamos un objeto con la informacion del usuario
         const INFO = {
             user: ENCRYPTED_USER,
             rol: ENCRYPTED_ROL
+        }
+
+        if (req.session.authentification == 'activado' ) {
+            //creamos un arreglo con los caracteres que tendra el codigo
+        let array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        let result = ''
+
+        //utilizamos un for para concatenar 7 valores del arreglo
+        for (let index = 0; index < 7; index++) {
+            //utilizamos una ecuacion para elejir posciciones del arreglo de forma aleatoria
+            result += array[Math.floor(array.length * (Math.random()))]
+        }
+
+        //definimos las rondas de salto a 10 segun la documentacion de OWASP
+        const SALT_ROUNDS2 = 10
+        //enviamos el string que vamos a encriptar
+        const ENCRYPTED_STRING = result
+
+        //generamos las rondas con el porametro que enviamos antes
+        BCRYPT.genSalt(SALT_ROUNDS2, function (err, salt) {
+            //encriptamos el string con la cantidad de saltos que definmos antes (10)
+            BCRYPT.hash(ENCRYPTED_STRING, salt, function (err, hash) {
+                //creamos un objeto para guardarlo en la base
+                const CODES = new CODE({
+                    code: hash,
+                    user: req.body.user
+                })
+
+                //guardamos el objeto en la base 
+                CODES.save(CODES).then(data => {
+                    //validamos que se haya guardado 
+                    if (!data) {
+                        res.send('error')
+                    } else {
+                        //enviamos el correo
+                        let info = MAIL.sendMail({
+                            //utilizamos variables de entorno para dar el correo con el que enviaremos el mensaje
+                            from: `Sublisivarte <${process.env.EMAIL}>`,
+                            to: email,
+                            subject: "Autenticacion",
+                            html: `<!DOCTYPE html>
+                            <html lang="en">
+                            
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <link rel="stylesheet" href="../resources/css/dashbard.css">
+                            </head>
+                            
+                            <body style="background-color: #ffffff;">
+                                <div style="position: absolute; top: 20%; left: 40%;">
+                                    <div style="height: 284px; width: 350px; background-color: #000000; border-radius: 5%;">
+                                        <div>
+                                            <h2 style=" color: #4280EF; padding-left: 3%;">¿Has olvidado tu <br> contraseña?
+                                                </h2>
+                                        </div>
+                                        <div>
+                                            <h5 style=" color: #ffffff;padding-left: 3%;">¿Usted ha iniciado sesión?
+                                            <br> Codigo de autentificación:</h5>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <input style="margin: auto; height: 30px; width: 250px;" type="text" value="${result}">
+                                        </div>
+                                        <footer
+                                            style="position: fixed-bottom; height: 13%; width: 100%; background-color: #4280EF; text-align: center; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                                            <h5 style="color: #ffffff;">Copyright © 2023 Sublisivarte <br>Contacto: sublisivarte@email.com</h5>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </body>
+                            
+                            </html>
+                            `
+                        })
+                        //enviamos mensaje que se envio el correo
+                        res.send(true)
+                    }
+                }).catch(err => {
+                    //enviamos mensaje que no se envio el correo
+                    res.send(false)
+                })
+            })
+        })
+        } else {
+            res.send(err.message('gg papa'))
         }
 
         //firmamos el token utilizando variables de entorno
@@ -253,8 +341,6 @@ exports.logIn = async (req, res) => {
                 req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
                 //enviamos la respuesta
                 res.send(token)
-
-
             }
         })
     }
