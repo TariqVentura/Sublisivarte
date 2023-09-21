@@ -32,4 +32,4 @@ const ATTEMPS = new MONGOOSE.model('attemps', attempsSchema)
 /**
  * Se exporta para que pueda acceder a el
  */
-module.exports = ATTEMPS;
+module.exports = ATTEMPS

@@ -41,6 +41,8 @@ LOGIN.addEventListener('submit', (e) => {
             response = 'expired'
         } else if (String(response).includes('inactivo')) {
             response = 'inactivo'
+        } else if (String(response).includes('authentification')) {
+            response = 'authentification'
         }
 
         //validamos con un switch las respuestas de la API
@@ -85,6 +87,9 @@ LOGIN.addEventListener('submit', (e) => {
                 }).then(() => {
                     location.href = '/'
                 })
+                break
+            case 'authentification':
+                codeAuthentication(user, String(data.data).substring('authentification'.length))
                 break
             default:
                 Swal.fire({
@@ -249,6 +254,58 @@ function changePassword(code, password, newPassword, user) {
         }).then(() => {
             newPassword(code, user)
         })
+    })
+}
+
+function codeAuthentication(username, token) {
+    Swal.fire({
+        title: 'Ingresa tus datos',
+        html:
+            '<label for="input2">Codigo de seguridad: </label>' +
+            '<input id="input2" type="text" class="swal2-input"> ',
+        focusConfirm: false,
+        preConfirm: () => {
+            const input2 = Swal.getPopup().querySelector('#input2').value
+
+            if (!input2) {
+                Swal.showValidationMessage('campo obligatorio')
+            }
+
+            return { input2: input2 }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.post('http://localhost:443/api/authentification', {
+                user: username,
+                code: result.value.input2
+            }, {
+                //definimos que utlizaremos body url encoded
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then((data) => {
+                if (data.data == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Inicio de sesión exitoso',
+                        text: 'Acceso permtiido'
+                    }).then(() => {
+                        //redirigimos a la pagina para visualizar los cambios
+                        localStorage.setItem('token', token)
+                        location.href = '/'
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Código inválido',
+                        showConfirmButton: true
+                    }).then(() => {
+                        codeAuthentication(username, token)
+                    })
+                }
+            })
+        }
     })
 }
 
