@@ -44,3 +44,19 @@ exports.getImages = (req, res) => {
             res.send('err') // Si ocurre un error durante la búsqueda, responde con 'err'.
         });
 }
+
+exports.deleteImages = async (req, res) => {
+    const ID = req.params.id
+
+    console.log(ID)
+
+    const DELETE_IMAGE = await IMAGES.findByIdAndDelete(ID).exec()
+
+    console.log(DELETE_IMAGE)
+
+    if (DELETE_IMAGE) {
+        return res.send(true)
+    } else {
+        return res.send(false)
+    }
+}

@@ -39,8 +39,12 @@
                             <i id="left" class="fa-solid fa-angle-left"></i>
                             <div class="carousel">
                                 <% resources.forEach((data)=> { %>
-                                    <img src="/images/<%= data.image %>" alt="" draggable="false">
-                                    <% }) %>
+                                    <% if(user.role=='admin' ){ %>
+                                        <img src="/images/<%= data.image %>" onclick="deleteImage('<%= data._id %>')" alt="" draggable="false">
+                                    <% } else { %>
+                                        <img src="/images/<%= data.image %>" alt="" draggable="false">
+                                    <% } %>  
+                                <% }) %>
                             </div>
                             <i id="rigth" class="fa-solid fa-angle-right"></i>
                         </div>
