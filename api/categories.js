@@ -116,6 +116,7 @@ exports.categorieStatus = (req, res) => {
         })
 }
 
+// Funcion para buscar categorias
 exports.searchCategories = (req, res) => {
     const KEY = req.params.key // Se obtiene el valor del parámetro 'key' de la solicitud.
 
@@ -172,7 +173,7 @@ exports.getReport = (req, res) => {
             path: "./docs/" + FILE_NAME,
             type: ""
         }
-
+        
         PDF.create(DOCUMENT, OPTIONS).then(p => {
             //redirecciona al documento creado
             res.redirect('/' + FILE_NAME)

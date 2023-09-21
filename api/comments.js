@@ -2,11 +2,11 @@ const COMMENTS = require('../models/comments')
 const AXIOS = require('axios')
 
 exports.createComment = async (req, res) => {
-    //validacion de datos vacios
+    //La función comienza con una validación de si los campos de comentario, revisión, producto y cliente están vacíos. Si alguno de estos campos está vacío, se devuelve un mensaje de error "empty" y se detiene la ejecución de la función.
     if (!req.body.comment || !req.body.review || !req.body.product || !req.body.client) {
         return res.send('empty')
     } else {
-        //declaracion de variables
+        //Si todos los campos están llenos, se declaran variables para almacenar los datos de la solicitud HTTP.
         let comment, review, product, client
 
         //obtener datos de la peticion
@@ -15,22 +15,22 @@ exports.createComment = async (req, res) => {
         product = req.body.product
         client = req.body.client
 
-        //manejar longitud del comentario
+        //Se verifica la longitud del comentario y si es mayor a 250 caracteres, se devuelve un mensaje de error "length" y se detiene la ejecución de la función.
         if (comment.length > 250) {
             return res.send('length')
         }
 
-        //validar la puntuacion minima y maxima
+        //Se valida que la revisión esté dentro del rango de 0 a 10. Si la revisión está fuera de este rango, se devuelve un mensaje de error "max" y se detiene la ejecución de la función.
         if (review > 10 || review < 0) {
             return res.send('max')
         }
 
-        //validar campos vacios
+        //Se valida que los campos de comentario, producto y cliente no estén vacíos después de eliminar los espacios en blanco. Si alguno de estos campos está vacío, se devuelve un mensaje de error "empty" y se detiene la ejecución de la función.
         if (!comment.trim() || !product.trim() || !client.trim()) {
             return res.send('empty')
         }
 
-        //creamos objeto con datos de la peticion
+        //Se crea un objeto "COMMENT" que contiene los datos de la solicitud HTTP.
         const COMMENT = new COMMENTS({
             comment: comment,
             review: review,
@@ -39,10 +39,10 @@ exports.createComment = async (req, res) => {
 
         })
 
-        //guardamos el documento
+        //Se utiliza el método "save" del modelo "COMMENTS" para guardar el objeto "COMMENT" en la base de datos. El resultado se almacena en la variable "SAVE".
         const SAVE = await COMMENT.save()
 
-        //validamos que el documento se guarde
+        //Si se guarda correctamente el objeto "COMMENT", se devuelve un valor booleano "true". De lo contrario, se devuelve un valor booleano "false".
         if (SAVE) {
             return res.send(true)
         } else {
@@ -57,11 +57,14 @@ exports.createComment = async (req, res) => {
  * datos que tienen los campos que se especifica y el parametro que se envia
 */
 exports.findComments = (req, res) => {
+    // Comprueba si se proporcionó un parámetro 'id' en la solicitud.
     if (req.params.id) {
-        const ID = req.query.id // Obtiene el valor del parámetro 'id' desde la consulta de la URL.
-
+        // Obtiene el valor del parámetro 'id' desde la consulta de la URL.
+        const ID = req.query.id 
+        // Realiza una búsqueda en una base de datos (posiblemente utilizando un modelo llamado COMMENTS) utilizando el 'ID' proporcionado.
         COMMENTS.findById(ID)
             .then(data => {
+                // Comprueba si no se encontraron datos en la búsqueda.
                 if (!data) {
                     res.status(404).send({ message: "No se pudo encontrar este usuario" }) // Si no se encontraron datos, responde con un código de estado 404 y un mensaje de error.
                 } else {
