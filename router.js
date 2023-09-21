@@ -92,6 +92,7 @@ ROUTER.get('/report/user/:key', USERS.getUserReport)
 ROUTER.get('/api/count/users', USERS.countUsers)
 ROUTER.get('/api/authentification/:id/:authentification', tokenValidation, USERS.userAuthentification)
 ROUTER.post('/api/authentification', USERS.userCode)
+ROUTER.post('/api/bulk/users', tokenValidation, USERS.bulkInsert)
 
 //API comments
 ROUTER.post('/api/comments', tokenValidation, COMMENTS.createComment)

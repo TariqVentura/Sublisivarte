@@ -17,7 +17,7 @@ exports.deleteFile = (fileName) => {
                 } else {
                     console.log('El archivo se ha eliminado correctamente.')
                 }
-            });
+            })
         }
     })
-}
+} 

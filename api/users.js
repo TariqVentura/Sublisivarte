@@ -754,3 +754,39 @@ exports.userAuthentification = (req, res) => {
             res.send(false)
         })
 }
+
+exports.bulkInsert = async (req, res) => {
+    if (!req.body.file) {
+        return res.send('empty')
+    }
+
+    const FILE_NAME = String(req.body.file).substring("C:/fakepath/".length)
+
+    if (!FILE_NAME.trim()) {
+        return res.send('empty')
+    }
+
+    if (!FILE_NAME.includes('.json')) {
+        return res.send('format')
+    }
+
+    FS.access("./data/" + FILE_NAME, FS.constants.F_OK, async (err) => {
+        if (err) {
+            return res.send('file')
+        } else {
+            const USER_DATA = FS.readFileSync("./data/" + FILE_NAME)
+
+            const USER_FORMAT = JSON.parse(USER_DATA)
+
+            const SAVE_USER = await USERS.insertMany(USER_FORMAT)
+
+            console.log(SAVE_USER)
+
+            if (SAVE_USER) {
+                return res.send(true)
+            } else {
+                return res.send(false)
+            }
+        }
+    })
+}

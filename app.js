@@ -83,8 +83,7 @@ APP.use(EXPRESS.static(__dirname + '/controllers'))
 APP.use(EXPRESS.static(__dirname + '/resources'))
 APP.use(EXPRESS.static(__dirname + '/docs'))
 APP.use(EXPRESS.static(__dirname + '/helpers'))
-
-console.log(__dirname + '/docs')
+APP.use(EXPRESS.static(__dirname + '/data'))
 
 //nos permite manejar los resultados de los request de la pagina
 APP.use(EXPRESS.urlencoded({ extended: true }))
