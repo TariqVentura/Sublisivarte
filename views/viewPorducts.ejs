@@ -1,20 +1,25 @@
-<!-- Tarjetas para mostrar los productos -->
-<div class="row">
-    <main>
-        <!-- espacio para productos -->
-        <div class="row ms-4 mb-5">
+<% if(products.length >= 1) { %>
+    <!-- Tarjetas para mostrar los productos -->
+    <div class="row">
+        <main>
             <!-- espacio para productos -->
-            <% products.forEach((product)=> { %>
-                <div class="card ms-4 mt-4 col-2" style="width: 18rem;">
-                    <img src="/images/<%= product.image[0] %>" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">
-                            <%= product.product %>
-                        </h5>
-                        <a href="/producto/<%= product._id %>" class="btn btn-primary" id="vwproduct">Ver producto</a>
+            <div class="row ms-4 mb-5">
+                <!-- espacio para productos -->
+                <% products.forEach((product)=> { %>
+                    <div class="card ms-4 mt-4 col-2" style="width: 18rem;">
+                        <img src="/images/<%= product.image[0] %>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">
+                                <%= product.product %>
+                            </h5>
+                            <a href="/producto/<%= product._id %>" class="btn btn-primary" id="vwproduct">Ver producto</a>
+                        </div>
                     </div>
-                </div>
                 <% }) %>
-        </div>
-    </main>
-</div>
+            </div>
+        </main>
+    </div>
+<% } else { %>
+    <h1 style="text-align: center; padding: 10px;">NO ENCONTRADO</h1>
+<% } %>
+

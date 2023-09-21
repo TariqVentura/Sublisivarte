@@ -73,6 +73,7 @@ ROUTER.get('/pedidos/detalles/:id', RENDER.details)
 //API images
 ROUTER.post('/api/images', tokenValidation, IMAGES.saveImages)
 ROUTER.get('/api/images', IMAGES.getImages)
+ROUTER.get('/api/delete/images/:id', tokenValidation, IMAGES.deleteImages)
 
 //API users
 ROUTER.post('/api/users', USERS.createUser)

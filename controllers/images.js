@@ -49,3 +49,44 @@ FORM_IMAGE.addEventListener('submit', (e) => {
         }
     })
 })
+
+function deleteImage(id) {
+    //mensaje de confirmacion
+    Swal.fire({
+        title: 'Confirmación',
+        text: "¿Esta seguro que desea eliminar esta imagen?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.get('http://localhost:443/api/delete/images/' + id, {
+                //definimos que utlizaremos body url encoded y enviamos el token 
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then((data) => {
+                if (data.data == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Proceso Exitoso',
+                        text: 'Se ha eliminado la imagen al carousel'
+                    }).then(() => {
+                        //redirigimos a la pagina para visualizar los cambios
+                        location.href = '/'
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Error de conexion'
+                    })
+                }
+            })
+        }
+    })
+}

@@ -115,9 +115,9 @@ exports.updateProduct = async (req, res) => {
             return res.send('price')
         }
 
-        const COMPARE = await PRODUCTS.findOne({ product: PRODUCT_NAME }).exec()
+        const COMPARE = await PRODUCTS.find({ product: PRODUCT_NAME }).exec()
 
-        if (COMPARE) {
+        if (COMPARE.length > 1) {
             return res.send('compare')
         }
 
