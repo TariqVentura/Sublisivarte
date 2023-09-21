@@ -50,9 +50,9 @@ exports.createUser = async (req, res) => {
             res.send('coincidencia')
             return
         }
+
         //validamos que no sea un usuario repetido
         const USER_VALIDATION = await VALIDATION.userValidation(user)
-
 
         if (USER_VALIDATION == true) {
             res.send('user')
@@ -149,7 +149,7 @@ exports.createUser = async (req, res) => {
         //utilizamos el metodo save de mongoose para guardar los datos en la base
         const DATA = await newDocument.save()
 
-        //enviamos una respuesta segun se haya completado el proceso
+        //enviamos una respuesta según se haya completado el proceso
         if (DATA) {
             res.send(true)
         } else {
@@ -176,7 +176,7 @@ exports.logIn = async (req, res) => {
         return
     }
 
-    //almaenamos los datos del usuario en una varible
+    //almacenamos los datos del usuario en una varible
     let data = await USERS.find({ user: USER }).exec()
 
     //verificamos que la contraseña y el usuario coincidan
@@ -525,7 +525,7 @@ exports.newPassword = async (req, res) => {
         //utilizamos una funcion para validar si el codigo es valido (ctrl + click en codeValidation para ver el codigo)
         let codeValidation = await VALIDATION.codeValidation(username, code)
 
-        //si la funcion retorna true procedemos sino enviamos que ocurrio un error
+        //si la funcion retorna true procedemos, si no enviamos que ocurrio un error
         if (codeValidation == true) {
             if (password != newPassword) {
                 //si las contraseñas no coinciden enviamos un error
@@ -566,6 +566,7 @@ exports.newPassword = async (req, res) => {
     }
 }
 
+//Función estado usuario
 exports.statusUser = (req, res) => {
     if (!req.session.user) {
         res.redirect('/error404')
@@ -587,6 +588,7 @@ exports.statusUser = (req, res) => {
 
 }
 
+//Función obtener usuario
 exports.getUser = (req, res) => {
     const KEY = req.params.key
 
@@ -608,6 +610,7 @@ exports.getUser = (req, res) => {
         })
 }
 
+//Función modificar usuario
 exports.modifyUser = (req, res) => {
     if (!req.body.name || !req.body.lastname || !req.body.email) {
         AXIOS.get('http://localhost:443/api/images')
@@ -636,6 +639,7 @@ exports.modifyUser = (req, res) => {
     }
 }
 
+//Función obtener reporte de usuarios
 exports.getUserReport = (req, res) => {
     if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
@@ -723,6 +727,7 @@ exports.getUserReport = (req, res) => {
     })
 }
 
+//Función contar usuarios
 exports.countUsers = (req, res) => {
     //Usamos un funcion de agregacion y filtramos a los usuarios que esten activos e inactivos
     USERS.aggregate().group({
@@ -737,6 +742,7 @@ exports.countUsers = (req, res) => {
     })
 }
 
+//Función autentificar usuarios
 exports.userAuthentification = (req, res) => {
     const AUTHENTIFICATION = req.params.authentification
     const ID = req.params.id
@@ -753,4 +759,40 @@ exports.userAuthentification = (req, res) => {
         .catch(err => {
             res.send(false)
         })
+}
+
+exports.bulkInsert = async (req, res) => {
+    if (!req.body.file) {
+        return res.send('empty')
+    }
+
+    const FILE_NAME = String(req.body.file).substring("C:/fakepath/".length)
+
+    if (!FILE_NAME.trim()) {
+        return res.send('empty')
+    }
+
+    if (!FILE_NAME.includes('.json')) {
+        return res.send('format')
+    }
+
+    FS.access("./data/" + FILE_NAME, FS.constants.F_OK, async (err) => {
+        if (err) {
+            return res.send('file')
+        } else {
+            const USER_DATA = FS.readFileSync("./data/" + FILE_NAME)
+
+            const USER_FORMAT = JSON.parse(USER_DATA)
+
+            const SAVE_USER = await USERS.insertMany(USER_FORMAT)
+
+            console.log(SAVE_USER)
+
+            if (SAVE_USER) {
+                return res.send(true)
+            } else {
+                return res.send(false)
+            }
+        }
+    })
 }

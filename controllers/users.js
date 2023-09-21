@@ -108,6 +108,79 @@ FORM_USER.addEventListener('submit', (e) => {
     })
 })
 
+function bulkInsert() {
+    Swal.fire({
+        title: 'Crea tu pedido',
+        html:
+            '<label for="file-user">Documento: </label>' +
+            `<input type="file" class="form-control" id="file-user" required>`
+        ,
+        focusConfirm: false,
+        preConfirm: () => {
+
+            const FILE = document.getElementById('file-user').value
+
+            if (!FILE) {
+                Swal.showValidationMessage('No se permiten campos vacios')
+            }
+
+            return { file: FILE }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.post('http://localhost:443/api/bulk/users', {
+                file: result.value.file
+            }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then((data) => {
+                switch (data.data) {
+                    case true:
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proceso Exitoso',
+                            text: 'Se han añadido los usuarios exitosamente'
+                        }).then(() => {
+                            //redirigimos a la pagina para visualizar los cambios
+                            location.href = '/usuarios'
+                        })
+                        break
+                    case false:
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error en la base de datos'
+                        })
+                        break
+                    case 'empty':
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'No se permiten campos vacios'
+                        })
+                        break
+                    case 'format':
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'El formato del archivo debe ser de tipo JSON'
+                        })
+                        break
+                    case 'file':
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Archivo no encontrado o es inaccesible'
+                        })
+                        break
+                }
+            })
+        }
+    })
+}
+
 document.addEventListener("DOMContentLoaded", (event) => {
     //Se ocupa axios para obtener la informacion de la api
     axios.get('http://localhost:443/api/count/users').then(function (users) {
