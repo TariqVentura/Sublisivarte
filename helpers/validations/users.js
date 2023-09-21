@@ -1,4 +1,4 @@
-//se declaran las dependencias que se utilizaran
+//Se declaran las dependencias que se utilizaran
 const CODE = require('../../models/code')
 const FECHA = require('node-datetime')
 const BCRYPT = require('bcrypt')
@@ -6,22 +6,22 @@ const USER = require('../../models/users')
 const ATTEMPS = require('../../models/attemps')
 
 
-//funcion para validar codigo de recuperacion de contraseña
+//Función para validar codigo de recuperacion de contraseña
 exports.codeValidation = async (username, code) => {
-    //capturamos los datos del usuario en un objeto
+    //Capturamos los datos del usuario en un objeto
     let obj = await CODE.find({ user: username, status: 'activo' }).exec()
-    //validamos si exiten datos del usuario
+    //Validamos si exiten datos del usuario
     if (!obj.length) {
         return false
     } else {
-        //comparamos el codigo ingresado por el usuario con el de la base
+        //Comparamos el codigo ingresado por el usuario con el de la base
         let compare = await BCRYPT.compareSync(code, obj[0].code)
 
-        //retornamos false en caso de no ser iguales
+        //Retornamos false en caso de no ser iguales
         if (compare == false) {
             return false
         } else {
-            //validamos el estado del codigo y si no ha expirado su tiempo limite de 15 minutos
+            //Validamos el estado del codigo y si no ha expirado su tiempo limite de 15 minutos
             let newDate = FECHA.create()
             let createCode = Number(obj[0].date.substring(11, 13)) * 60 + Number(obj[0].date.substring(14, 16))
             let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
@@ -31,7 +31,7 @@ exports.codeValidation = async (username, code) => {
             } else if (date <= 15 && newDate.format('Y-m-d') == obj[0].date.substring(0, 10)) {
                 return true
             } else {
-                //en caso de haber expirado cambiamos el estado a inactivo
+                //En caso de haber expirado cambiamos el estado a inactivo
                 await CODE.findByIdAndUpdate(obj[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
                 return false
             }
@@ -39,13 +39,13 @@ exports.codeValidation = async (username, code) => {
     }
 }
 
-//funcion para validar la contraseña segun parametros de seguridad
+//Función para validar la contraseña segun parametros de seguridad
 exports.passwordValidation = async (control, user) => {
-    //capturamos los datos del usuario en un objeto
+    //Capturamos los datos del usuario en un objeto
     const DATA = await USER.find({ user: user }).exec()
-    //obtenemos el correo del usuario
+    //Obtenemos el correo del usuario
     let mail = DATA[0].email
-    //separamos para obtener el correo sin el dominio
+    //Separamos para obtener el correo sin el dominio
     let value = mail.split('@')
     let compare = await BCRYPT.compareSync(control, DATA[0].password)
     if (compare == true) {
@@ -63,12 +63,12 @@ exports.passwordValidation = async (control, user) => {
     return VALID && !FORBIDDEN ? null : { 'Contraseña inválida': { value: control } }
 }
 
-//funcion para validar la existencia de un usuario
+//Función para validar la existencia de un usuario
 exports.userValidation = async (username) => {
-    //buscamos datos en la base y los guardamos en un arreglo
+    //Buscamos datos en la base y los guardamos en un arreglo
     const DATA = await USER.find({ user: username }).exec()
     console.log(DATA)
-    //si el arreglo tiene datos enviamos true sino mandamos false 
+    //Si el arreglo tiene datos enviamos true, si no mandamos false 
     if (DATA.length) {
         return true
     } else {
@@ -76,62 +76,62 @@ exports.userValidation = async (username) => {
     }
 }
 
-//funcion para comparar contraseñas repetidas
+//Función para comparar contraseñas repetidas
 exports.comparePassword = async (username, password) => {
-    //buscamos datos en la base y los guardamos en un arreglo
+    //Buscamos datos en la base y los guardamos en un arreglo
     const DATA = await USER.find({ user: username }).exec()
-    //sino hay datos en la base del usuario retornamos false
+    //Si no hay datos en la base del usuario retornamos false
     if (!DATA.length) {
         return false
     }
-    //comparamos los datos de la base con los del usuario
+    //Comparamos los datos de la base con los del usuario
     let compare = await BCRYPT.compareSync(password, DATA[0].password)
 
-    //si hay coincidencia enviamos true sino enviamos false
+    //Si hay coincidencia enviamos true, si no enviamos false
     if (compare == false) {
-        //declaramos variables a utilizar
+        //Declaramos variables a utilizar
         let attemps, newAttemp, user
-        //guardamos los intentos del usuario en una variable
+        //Guardamos los intentos del usuario en una variable
         const DATA = await ATTEMPS.findOne({ user: username }).exec()
         if (!DATA) {
-            //sino hay atentos le asignamos el valor a 1
+            //Si no hay intentos le asignamos el valor a 1
             attemps = 1
-            //creamos un objeto con los datos que necesita el documento
+            //Creamos un objeto con los datos que necesita el documento
             const NUMBER = new ATTEMPS({
                 user: username,
                 attempt: attemps
             })
 
-            //guardamos el documento
+            //Guardamos el documento
             newAttemp = await NUMBER.save()
         } else {
-            //si hay datos le sumamos 1 a la cantidad de intentos
+            //Si hay datos le sumamos 1 a la cantidad de intentos
             attemps = Number(DATA.attempt) + 1
-            //actualizamos el documento con la nueva data
+            //Actualizamos el documento con la nueva data
             newAttemp = await ATTEMPS.updateOne({ user: username }, { attempt: attemps }).exec()
-            //si la cantidad de intestos es mayor o igual a 3 se bloquea el usuario
+            //Si la cantidad de intentos es mayor o igual a 3 se bloquea el usuario
             if (attemps >= 3) {
-                //enviamos la respuesta  a la API para que la devuelva al cliente
+                //Enviamos la respuesta  a la API para que la devuelva al cliente
                 user = await USER.updateOne({ user: username }, { status: 'inactivo' })
                 return 'inactivo'
             }
             //Mandar una alerta con un formulario(getUser), despues de ingresar datos, mandar el codigo
         }
-        //retornamos falso 
+        //Retornamos falso 
         return compare
     } else {
-        //retornamos verdadero ya que la clave coincide
+        //Retornamos verdadero ya que la clave coincide
         return true
     }
 
 }
 
-//funcion para validar que el correo pertenezca a un usuario
+//Función para validar que el correo pertenezca a un usuario
 exports.emailValidation = async (email, username) => {
-    //buscamos en la base al usuario con el correo que se envio
+    //Buscamos en la base al usuario con el correo que se envio
     const DATA = await USER.find({ user: username, email: email }).exec()
 
-    //sino hay datos es que el correo no coincide con el usuario y enviamos false
+    //Si no hay datos, es que el correo no coincide con el usuario y enviamos false
     if (!DATA.length) {
         return false
     } else {
@@ -139,46 +139,46 @@ exports.emailValidation = async (email, username) => {
     }
 }
 
-//funcion para validar el codigo de seguridad
+//Función para validar el codigo de seguridad
 exports.codeAuthentication = async (username) => {
-    //guardamos en una constante datos para validar el codigo
+    //Guardamos en una constante datos para validar el codigo
     const DATA = await CODE.find({ user: username, status: 'activo' }).exec()
     
-    //sino hay datos entonces puede crear un codigo
+    //Si no hay datos entonces puede crear un codigo
     if (!DATA.length) {
         return true
     } else {
-        //declaramos una fecha de node-datetime
+        //Declaramos una fecha de node-datetime
         let newDate = FECHA.create()
 
-        //obtenemos la cantidad de minutos que hay en la hora en que se creo el codigo
+        //Obtenemos la cantidad de minutos que hay en la hora en que se creo el codigo
         let createCode = Number(DATA[0].date.substring(11, 13)) * 60 + Number(DATA[0].date.substring(14, 16))
 
-        //obtenemos la cantidad de minutos que hay en la hora en que se envio el codigo
+        //Obtenemos la cantidad de minutos que hay en la hora en que se envio el codigo
         let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
 
-        //calculamos la diferencia de minutos que hay entre el momento que se creo el codigo y el momento en que se envio 
+        //Calculamos la diferencia de minutos que hay entre el momento que se creo el codigo y el momento en que se envio 
         let date = insertCode - createCode
 
         console.log(DATA[0].date.substring(0, 10) + ' ' + newDate.format('Y-m-d'))
 
-        //si el tiempo en que se envio es menor o igual a 15 minutos entonces ya tiene un codigo activo y no puede generar otro
+        //Si el tiempo en que se envio es menor o igual a 15 minutos entonces ya tiene un codigo activo y no puede generar otro
         if (date <= 15 && newDate.format('Y-m-d') == DATA[0].date.substring(0, 10)) {
             return false
         } else {
-            //si el tiempo es mayor a 15 minutos entonces desactivamos el codigo y le permitimos crear uno nuevo
+            //Si el tiempo es mayor a 15 minutos entonces desactivamos el codigo y le permitimos crear uno nuevo
             await CODE.findByIdAndUpdate(DATA[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
             return true
         }
     }
 }
 
-//funcion para validar que el correo sea unico
+//Función para validar que el correo sea unico
 exports.uniqueEmail = async (email) => {
-    //almacenamos en una constante las coincidencias de usuarios con el correo enviaso
+    //Almacenamos en una constante las coincidencias de usuarios con el correo enviado
     const DATA = await USER.find({ email: email }).exec()
 
-    //sino hay datos es porque el correo no ha sido utilizado y es valido
+    //Si no hay datos es porque el correo no ha sido utilizado y es valido
     if (!DATA.length) {
         return true
     } else {
@@ -186,8 +186,9 @@ exports.uniqueEmail = async (email) => {
     }
 }
 
+//Función para cambio de contraseña
 exports.newPasswordValidation = async (control, user, email) => {
-    //separamos para obtener el correo sin el dominio
+    //Separamos para obtener el correo sin el dominio
     let value = email.split('@')
     // Esta expresión regular verifica si la contraseña cumple con los requisitos
     const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?!.*\s).{8,}$/
@@ -200,6 +201,7 @@ exports.newPasswordValidation = async (control, user, email) => {
     // Si la contraseña es válida y no contiene un nombre de usuario no permitido, devuelve null de lo contrario, devuelve un objeto con un mensaje de error
     return VALID && !FORBIDDEN ? null : { 'Contraseña inválida': { value: control } }
 }
+
 
 exports.changePassword = async (user) => {
     //obtenemos datos del usuario
