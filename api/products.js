@@ -348,3 +348,37 @@ exports.countPriceProducts = (req, res) => {
         res.status(404).send(err)
     })
 }
+
+exports.bulkInsert = (req, res) => {
+    if (!req.body.file) {
+        return res.send('empty')
+    }
+
+    const FILE_NAME = String(req.body.file).substring("C:/fakepath/".length)
+
+    if (!FILE_NAME.trim()) {
+        return res.send('empty')
+    }
+
+    if (!FILE_NAME.includes('.json')) {
+        return res.send('format')
+    }
+
+    FS.access("./data/" + FILE_NAME, FS.constants.F_OK, async (err) => {
+        if (err) {
+            return res.send('file')
+        } else {
+            const PRODUCT_DATA = FS.readFileSync("./data/" + FILE_NAME)
+
+            const PRODUCT_FORMAT = JSON.parse(PRODUCT_DATA)
+
+            const SAVE_PRODUCT = await USERS.insertMany(PRODUCT_FORMAT)
+
+            if (SAVE_PRODUCT) {
+                return res.send(true)
+            } else {
+                return res.send(false)
+            }
+        }
+    })
+}

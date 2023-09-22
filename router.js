@@ -135,7 +135,7 @@ ROUTER.get('/report/stock/:key', PRODUCTS.getStockReport)
 ROUTER.get('/report/products', PRODUCTS.reportProducts)
 ROUTER.get('/api/count/stock', PRODUCTS.countStockProducts)
 ROUTER.get('/categorieTop/api/products/:key', PRODUCTS.countPriceProducts)
-
+ROUTER.post('/api/bulk/products', tokenValidation, PRODUCTS.bulkInsert)
 
 //API categories
 ROUTER.post('/api/categories', tokenValidation, CATEGORIES.createCategorie)

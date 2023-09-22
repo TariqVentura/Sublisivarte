@@ -33,8 +33,6 @@ LOGIN.addEventListener('submit', (e) => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(data => {
-        console.log(data.data)
-
         let response = data.data
 
         if (String(response).includes('expired')) {

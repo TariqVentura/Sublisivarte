@@ -110,7 +110,7 @@ FORM_USER.addEventListener('submit', (e) => {
 
 function bulkInsert() {
     Swal.fire({
-        title: 'Crea tu pedido',
+        title: 'Ingresa tu documento tipo JSON',
         html:
             '<label for="file-user">Documento: </label>' +
             `<input type="file" class="form-control" id="file-user" required>`
