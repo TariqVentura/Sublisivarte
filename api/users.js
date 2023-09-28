@@ -788,8 +788,6 @@ exports.bulkInsert = async (req, res) => {
 
             const SAVE_USER = await USERS.insertMany(USER_FORMAT)
 
-            console.log(SAVE_USER)
-
             if (SAVE_USER) {
                 return res.send(true)
             } else {

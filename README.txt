@@ -34,7 +34,7 @@ Top 10 OWASP
 
  - Controlar intentos fallidos de autenticación(A07)
   https://owasp.org/Top10/es/A07_2021-Identification_and_Authentication_Failures/#como-se-previene
-  
+                      
   - doble autenticacion
   https://owasp.org/www-project-proactive-controls/v3/en/c6-digital-identity
 
