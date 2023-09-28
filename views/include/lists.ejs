@@ -4,7 +4,7 @@
     <div class="d-flex flex-row justify-content-bewtween"></div>
         <% orders.forEach((data)=> { %>
             <% if( data.status == 'en proceso' ){ %>
-                <button type="button" class="btn btn-warning w-50 mx-3" onclick="addOrder('<%= products.stock %>', '<%= products._id %>', '<%= products.price %>', '<%= products.product %>', '<%= data._id %>')">
+                <button type="button" class="btn btn-warning w-50 mx-3" onclick="addOrder('<%= products.stock %>', '<%= products._id %>', '<%= products.price %>', '<%= products.product %>', '<%= data._id %>', '<%= products.categorie %>')">
                     Añadir a <%= data.name %>
                 </button>
             <% } %>
