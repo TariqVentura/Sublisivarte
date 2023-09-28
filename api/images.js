@@ -45,18 +45,22 @@ exports.getImages = (req, res) => {
         });
 }
 
+//Esta línea exporta una función asíncrona llamada "deleteImages" que toma dos parámetros, una solicitud (req) y una respuesta (res).
 exports.deleteImages = async (req, res) => {
+    //Esta línea declara una constante llamada "ID" que se establece en el parámetro de identificación de la solicitud.
     const ID = req.params.id
-
+    //Esta línea imprime el valor de la constante "ID" en la consola.
     console.log(ID)
-
+    //Esta línea utiliza el método "findByIdAndDelete" para buscar y eliminar una imagen de la base de datos utilizando el ID proporcionado. La función "exec" se utiliza para ejecutar la consulta.
     const DELETE_IMAGE = await IMAGES.findByIdAndDelete(ID).exec()
-
+    //Esta línea imprime el resultado de la consulta en la consola.
     console.log(DELETE_IMAGE)
-
+    //Esta línea comprueba si se ha eliminado una imagen de la base de datos.
     if (DELETE_IMAGE) {
+        //Si se ha eliminado una imagen, esta línea devuelve una respuesta "true".
         return res.send(true)
     } else {
+        //Si no se ha eliminado una imagen, esta línea devuelve una respuesta "false".
         return res.send(false)
     }
 }
