@@ -546,24 +546,26 @@ exports.newPassword = async (req, res) => {
                     encryptedPassword = await BCRYPT.hashSync(newPassword, rounds)
                     try {
                         //guardamos los datos en la base
-                        await USERS.updateOne({ user: username, password: encryptedPassword, status: 'activo' })
-                        //enviamos confirmacion
-                        res.send(true)
-                    } catch (error) {
-                        //si ocurrio un error se envia un error
-                        res.send(false)
-                    }
-                } else {
-                    //error si la contraseña no es valida
-                    res.send('invalido')
-                    return
+                        const UPDATE_USER = await USERS.updateOne({ user: username }, { password: encryptedPassword, status: 'activo' }, { useFindAndModify: false })
+                    console.log(UPDATE_USER)
+                    //enviamos confirmacion
+                    res.send(true)
+                } catch (error) {
+                    //si ocurrio un error se envia un error
+                    console.log(error)
+                    res.send(false)
                 }
+            } else {
+                //error si la contraseña no es valida
+                res.send('invalido')
+                return
             }
-        } else {
-            res.send('codigo')
-            return
         }
+    } else {
+        res.send('codigo')
+        return
     }
+}
 }
 
 //Función estado usuario
