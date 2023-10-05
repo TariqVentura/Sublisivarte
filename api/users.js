@@ -783,12 +783,13 @@ exports.bulkInsert = async (req, res) => {
         if (err) {
             return res.send('file')
         } else {
-            const USER_DATA = FS.readFileSync("./data/" + FILE_NAME)
-
-            const USER_FORMAT = JSON.parse(USER_DATA)
-
             try {
+                const USER_DATA = FS.readFileSync("./data/" + FILE_NAME)
+
+                const USER_FORMAT = JSON.parse(USER_DATA)
+
                 const SAVE_USER = await USERS.insertMany(USER_FORMAT)
+                
                 return res.send(true)
             } catch (error) {
                 console.log(error)
@@ -796,4 +797,9 @@ exports.bulkInsert = async (req, res) => {
             }
         }
     })
+}
+
+
+validateUser = (format) => {
+
 }

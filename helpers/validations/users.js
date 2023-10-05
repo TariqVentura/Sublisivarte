@@ -29,6 +29,7 @@ exports.codeValidation = async (username, code) => {
             if (obj[0].status == 'inactivo') {
                 return false
             } else if (date <= 15 && newDate.format('Y-m-d') == obj[0].date.substring(0, 10)) {
+                await CODE.findByIdAndUpdate(obj[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
                 return true
             } else {
                 //En caso de haber expirado cambiamos el estado a inactivo

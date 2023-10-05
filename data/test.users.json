@@ -1,0 +1,115 @@
+[{
+  "name": "Ariel Alessandro",
+  "lastname": "Sandoval Moreno",
+  "email": "202100409@ricaldone.edu.sv",
+  "user": "Ariel123",
+  "password": "$2b$10$1cbCjINkFiApv6R.ezWuiurduWY1YGdSkSeOAzAdHPAYoapjswaYK",
+  "role": [
+    "admin"
+  ],
+  "status": [
+    "activo"
+  ],
+  "document": "26373-4",
+  "authentification": []
+},
+{
+  "name": "Tariq Alberto",
+  "lastname": "Ventura Arteaga",
+  "email": "20190052@ricaldone.edu.sv",
+  "user": "TariqVentura2",
+  "password": "$2b$10$/9OQ0ANLej0ytDwPaoPXaediAQ.bmVnUb01OSvYv52DWTnbJP14Mi",
+  "role": [
+    "admin"
+  ],
+  "status": [
+    "activo"
+  ],
+  "document": "72828-3",
+  "authentification": [
+    "desactivado"
+  ]
+},
+{
+  "name": "Mitchell",
+  "lastname": "Flisher",
+  "email": "tariqventura@gmail.com",
+  "user": "mflisher2",
+  "password": "$2b$10$wJ8ILlmuQL80XK2QfSdJgO02oaZ1ekAGEpRom6FvQ5H77q2U4mI4W",
+  "role": [
+    "cliente"
+  ],
+  "status": [
+    "activo"
+  ],
+  "document": "219.146.155.193",
+  "authentification": [
+    "activado"
+  ]
+},
+{
+  "name": "ashley",
+  "lastname": "cardoza",
+  "email": "20210208@ricaldone.edu.sv",
+  "user": "ashley",
+  "password": "$2b$10$Kxt333HyzKGagwFqSR6CN.r5WCWcoQe0.3dV4Oi4BgvAeejyLMxcy",
+  "role": [
+    "admin"
+  ],
+  "status": [
+    "activo"
+  ],
+  "document": "25356-8",
+  "authentification": []
+},
+{
+  "name": "Bourke",
+  "lastname": "Griffoen",
+  "email": "bgriffoen0@usgs.gov",
+  "user": "bgriffoen0",
+  "password": "$2a$04$gyBk/9f15hN0ULLyPFjacOZONoqU6iFmVn6gLnVTUseq3WEqUUsFK",
+  "role": [
+    "cliente"
+  ],
+  "status": [
+    "activo"
+  ],
+  "document": "471551347-1",
+  "authentification": [
+    "desactivado"
+  ]
+},
+{
+  "name": "Melisandra",
+  "lastname": "Itscowics",
+  "email": "mitscowics1@multiply.com",
+  "user": "mitscowics1",
+  "password": "$2a$04$1/MedmCMQ4D9UM2zeZuKQeGyzRAj9SvsEsallmAxrC6TJ8hk96K0O",
+  "role": [
+    "cliente"
+  ],
+  "status": [
+    "activo"
+  ],
+  "document": "356859525-7",
+  "authentification": [
+    "desactivado"
+  ]
+},
+{
+  "name": "Alleyn",
+  "lastname": "Elrick",
+  "email": "Elrick@ricaldone.edu.sv",
+  "user": "aelrick2",
+  "password": "$2a$04$BLo.EGCtoKE55S5z4qCuUex9Ab14EgiThAAgEQPWIhSeClP7YJlkS",
+  "role": [
+    "cliente"
+  ],
+  "status": [
+    "activo"
+  ],
+  "document": "636780409-9",
+  "authentification": [
+    "desactivado"
+  ]
+}]
