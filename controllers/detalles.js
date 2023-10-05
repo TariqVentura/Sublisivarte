@@ -45,7 +45,7 @@ function deleteDetail(product, amount, id) {
     })
 }
 
-function finishOrder(_id) {
+finishOrder = (_id) => {
     Swal.fire({
         title: 'Confirmación',
         text: "¿Esta seguro que desea realizar la compra?",

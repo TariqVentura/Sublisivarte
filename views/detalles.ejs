@@ -59,8 +59,8 @@
                                                         <input type="range" class="form-range" min="0" max="10"
                                                             id="review" value="0" name="review" >
                                                         <textarea name="comment" id="comment" cols="60" rows="5" maxlength="250"></textarea>
-                                                        <input type="text" name="client" id="client" value="<%= user.user %>">
-                                                        <input type="text" name="product" id="product" value="<%= data.product %>">
+                                                        <input type="text" hidden name="client" id="client" value="<%= user.user %>">
+                                                        <input type="text" hidden name="product" id="product" value="<%= data.product %>">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -80,9 +80,8 @@
     </div>
     <div class="row w-25 my-3 ">
         <% if(status=='en proceso' && details.length){ %>
-            <button class="btn btn-success w-50" type="submit"><a href="/finish/orders/<%= order %>"
-                    class="text-light">Comprar</a></button>
-            <% } %>
+            <button class="btn btn-success w-50" type="submit" onclick="finishOrder('<%= order %>')">Comprar</button>    
+        <% } %>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>

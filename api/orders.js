@@ -70,7 +70,7 @@ exports.finishOrder = (req, res) => {
                 }
             })
             .catch(err => {
-                res.send(err) // Si ocurre un error durante la actualización, responde con el objeto de error.
+                res.send('err') // Si ocurre un error durante la actualización, responde con el objeto de error.
             })
     }
 }

@@ -70,7 +70,7 @@ exports.products = async (req, res) => {
     } else {
         session = false
     }
-    
+
     AXIOS.get('http://localhost:443/api/products')
         .then(function (response) {
             AXIOS.get('http://localhost:443/api/categories')
@@ -238,13 +238,13 @@ exports.cuenta = async (req, res) => {
         let insertCode = Number(newDate.format('H')) * 60 + Number(newDate.format('M'))
         let date = insertCode - createCode
         if (obj[0].status == 'inactivo') {
-            code =  false
+            code = false
         } else if (date <= 15 && newDate.format('Y-m-d') == obj[0].date.substring(0, 10)) {
-            code =  true
+            code = true
         } else {
             //en caso de haber expirado cambiamos el estado a inactivo
             await CODE.findByIdAndUpdate(obj[0]._id, { status: 'inactivo' }, { useFindAndModify: false }).exec()
-            code =  false
+            code = false
         }
     }
 
@@ -484,7 +484,7 @@ exports.newViewProducts = async (req, res) => {
     } else {
         count = 0
     }
-    
+
     if (req.session.user) {
         session = req.session
     } else {
@@ -590,7 +590,13 @@ exports.details = async (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/details/' + req.params.id)
         .then(function (details) {
-            res.render('details', { details: details.data, user: session, mensaje: ". ", confirmation: false, icon: " .", count: count })
+            let data = details.data
+            let array = []
+            for (let i = 0; i < data.lengt; i++) {
+                
+                console.log(data.length)
+            }
+            res.render('details', { details: data, user: session, mensaje: ". ", confirmation: false, icon: " .", count: count })
         }).catch(err => {
             res.send('pagina no encontrada')
         })

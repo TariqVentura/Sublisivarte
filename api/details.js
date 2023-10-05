@@ -31,7 +31,7 @@ exports.createDetail = async (req, res) => {
         }
 
         // Crea un objeto orderDetail con propiedades 'color', 'talla', e 'image' obtenidas de la solicitud.
-        let orderDetail = { "color": req.body.color, "talla": req.body.size, "image": req.body.image }
+        let orderDetail = { color: req.body.color, talla: req.body.size, image: req.body.image }
 
         // Calcula el total multiplicando el precio por la cantidad y formatea el resultado con dos decimales.
         let total = Number(req.body.price) * Number(req.body.amount)

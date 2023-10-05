@@ -547,25 +547,25 @@ exports.newPassword = async (req, res) => {
                     try {
                         //guardamos los datos en la base
                         const UPDATE_USER = await USERS.updateOne({ user: username }, { password: encryptedPassword, status: 'activo' }, { useFindAndModify: false })
-                    console.log(UPDATE_USER)
-                    //enviamos confirmacion
-                    res.send(true)
-                } catch (error) {
-                    //si ocurrio un error se envia un error
-                    console.log(error)
-                    res.send(false)
+                        console.log(UPDATE_USER)
+                        //enviamos confirmacion
+                        res.send(true)
+                    } catch (error) {
+                        //si ocurrio un error se envia un error
+                        console.log(error)
+                        res.send(false)
+                    }
+                } else {
+                    //error si la contraseña no es valida
+                    res.send('invalido')
+                    return
                 }
-            } else {
-                //error si la contraseña no es valida
-                res.send('invalido')
-                return
             }
+        } else {
+            res.send('codigo')
+            return
         }
-    } else {
-        res.send('codigo')
-        return
     }
-}
 }
 
 //Función estado usuario
@@ -782,17 +782,29 @@ exports.bulkInsert = async (req, res) => {
         if (err) {
             return res.send('file')
         } else {
-            const USER_DATA = FS.readFileSync("./data/" + FILE_NAME)
+            try {
+                const USER_DATA = FS.readFileSync("./data/" + FILE_NAME)
 
-            const USER_FORMAT = JSON.parse(USER_DATA)
+                const USER_FORMAT = JSON.parse(USER_DATA)
 
-            const SAVE_USER = await USERS.insertMany(USER_FORMAT)
+                const SAVE_USER = await USERS.insertMany(USER_FORMAT)
 
-            if (SAVE_USER) {
-                return res.send(true)
-            } else {
-                return res.send(false)
+                if (SAVE_USER) {
+                    return res.send(true)
+                } else {
+                    return res.send(false)
+                }
+            } catch (error) {
+                if (error) {
+                    console.log(error)
+                    return res.send(false)
+                }
             }
         }
     })
+}
+
+
+validateUser = (format) => {
+
 }
