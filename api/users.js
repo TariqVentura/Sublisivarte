@@ -146,14 +146,16 @@ exports.createUser = async (req, res) => {
             }
         }
 
-        //utilizamos el metodo save de mongoose para guardar los datos en la base
-        const DATA = await newDocument.save()
 
-        //enviamos una respuesta según se haya completado el proceso
-        if (DATA) {
-            res.send(true)
-        } else {
-            res.send(false)
+
+        try {
+            //utilizamos el metodo save de mongoose para guardar los datos en la base
+            const DATA = await newDocument.save()
+            console(newDocument + ' ' + DATA)
+            return res.send(true)
+        } catch (error) {
+            console.log(error)
+            return res.send(false)
         }
     }
 }
@@ -546,11 +548,12 @@ exports.newPassword = async (req, res) => {
                     encryptedPassword = await BCRYPT.hashSync(newPassword, rounds)
                     try {
                         //guardamos los datos en la base
-                        await USERS.updateOne({ user: username, password: encryptedPassword, status: 'activo' })
+                        await USERS.updateOne({ user: username }, { password: encryptedPassword, status: 'activo' })
                         //enviamos confirmacion
                         res.send(true)
                     } catch (error) {
                         //si ocurrio un error se envia un error
+                        console.log(error)
                         res.send(false)
                     }
                 } else {
@@ -784,11 +787,11 @@ exports.bulkInsert = async (req, res) => {
 
             const USER_FORMAT = JSON.parse(USER_DATA)
 
-            const SAVE_USER = await USERS.insertMany(USER_FORMAT)
-
-            if (SAVE_USER) {
+            try {
+                const SAVE_USER = await USERS.insertMany(USER_FORMAT)
                 return res.send(true)
-            } else {
+            } catch (error) {
+                console.log(error)
                 return res.send(false)
             }
         }

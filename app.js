@@ -13,8 +13,6 @@ const BODY_PARSER = require('body-parser')
 const PATH = require('path')
 const HTTP = require('http')
 const SESSION = require('express-session')
-const VALIDATION = require('./helpers/validations/token')
-const FS = require('fs')
 
 /**
  * Se inicia la constante APP utilizando cors 
@@ -47,9 +45,9 @@ APP.set('views', __dirname + '/views')
 /**
  * Se le provee un puerto a la APP
  * Buscara 'PORT' en las variables de entorno y tomara ese valor
- * En caso de no encontrarlo se le dara el valor de '444' como puerto
+ * En caso de no encontrarlo se le dara el valor de '3000' como puerto
  */
-APP.set('port', process.env.PORT || 444)
+APP.set('port', process.env.PORT || 3000)
 
 //Iniciamos la conexion con la base de datos
 CONNECTION()

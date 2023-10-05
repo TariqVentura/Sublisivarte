@@ -1,32 +1,74 @@
-<div class="container">
-    <div class="row">
-        <table class="table table-stripped table-bordered my-3">
-            <thead>
-                <tr>
-                    <th scope="col">Productos</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% details.forEach((data)=> { %>
+<% if(user==false || user.role != 'admin'){ %>
+    <%- include('include/error') %>
+<% } else { %>
+    <div class="container">
+        <div class="row">
+            <table class="table table-stripped table-bordered my-3">
+                <thead>
                     <tr>
-                        <td>
-                            <%= data.product %>
-                        </td>
-                        <td>
-                            <%= data.price %>
-                        </td>
-                        <td>
-                            <%= data.amount %>
-                        </td>
-                        <td class="total">
-                            <%= data.total %>
-                        </td>
+                        <th scope="col">Productos</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Total</th>
+                        <th>detalles</th>
                     </tr>
-                    <% }) %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% for(let index = 0; index < details.length; index++){ %>
+                        <tr>
+                            <td>
+                                <%= details[index].product %>
+                            </td>
+                            <td>
+                                <%= details[index].price %>
+                            </td>
+                            <td>
+                                <%= details[index].amount %>
+                            </td>
+                            <td class="total">
+                                <%= details[index].total %>
+                            </td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%= index %>">
+                                    Launch demo modal
+                                </button>
+                                
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal<%= index %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles del pedido</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <label for="color">Color: </label>
+                                                            <input type="color" value="<%= description[index].color %>">
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="">Talla: <%= description[index].talla %></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <img src="http://localhost:443/images/<%= description[index].image %>" alt="imagen" srcset="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+<% } %>

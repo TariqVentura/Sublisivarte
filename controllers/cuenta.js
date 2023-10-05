@@ -118,6 +118,12 @@ function changeAuthentification(_id, authentification) {
                     default:
                         break;
                 }
+            }).catch(err => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err
+                })
             })
         }
     })

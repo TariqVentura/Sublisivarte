@@ -10,7 +10,7 @@ const VALIDATION = require('../helpers/validations/reports')
 
 exports.createDetail = async (req, res) => {
     // Verifica si algún campo requerido (product, amount, price, order) falta en la solicitud.
-    if (!req.body.product || !req.body.amount || !req.body.price || !req.body.order) {
+    if (!req.body.product || !req.body.amount || !req.body.price || !req.body.order || !req.body.image) {
         res.send('empty') // Si falta algún campo requerido, responde con 'empty' y sale de la función.
         return
     } else {
@@ -21,17 +21,23 @@ exports.createDetail = async (req, res) => {
         price = req.body.price
         amount = req.body.amount
         order = req.body.order
+        const NEW_IMAGE = String(req.body.image).substring("C:/fakepath/".length)
 
-        console.log(product + price + amount + order)
+       
 
         // Verifica si alguno de los campos locales está vacío o contiene solo espacios en blanco.
-        if (!product.trim() || !price.trim() || !amount.trim() || !order.trim()) {
+        if (!product.trim() || !price.trim() || !amount.trim() || !order.trim() || !NEW_IMAGE.trim()) {
             res.send('empty') // Si algún campo local está vacío o contiene solo espacios en blanco, responde con 'empty' y sale de la función.
             return
         }
 
+        //validamos formatio de imagen
+        if (NEW_IMAGE.includes('.png') == false && NEW_IMAGE.includes('.jpg') == false && NEW_IMAGE.includes('.jpeg') == false) {
+            return res.send('format')
+        }
+
         // Crea un objeto orderDetail con propiedades 'color', 'talla', e 'image' obtenidas de la solicitud.
-        let orderDetail = { "color": req.body.color, "talla": req.body.size, "image": req.body.image }
+        let orderDetail = { color: req.body.color, talla: req.body.size, image: NEW_IMAGE }
 
         // Calcula el total multiplicando el precio por la cantidad y formatea el resultado con dos decimales.
         let total = Number(req.body.price) * Number(req.body.amount)

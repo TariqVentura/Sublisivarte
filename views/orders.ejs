@@ -116,6 +116,7 @@
                                 <th scope="col">Fecha del pedido</th>
                                 <th scope="col">Cliente</th>
                                 <th scope="col">Estado del pedido</th>
+                                <th scope="col">Detalles</th>
                                 <th scope="col">Informacion</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -134,6 +135,9 @@
                                     </td>
                                     <td>
                                         <%= data.status %>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary"><a href="/pedidos/detalles/<%= data._id %>" class="text-decoration-none text-dark">Detalles</a></button>
                                     </td>
                                     <td>
 

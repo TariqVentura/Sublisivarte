@@ -80,8 +80,7 @@
     </div>
     <div class="row w-25 my-3 ">
         <% if(status=='en proceso' && details.length){ %>
-            <button class="btn btn-success w-50" type="submit"><a href="/finish/orders/<%= order %>"
-                    class="text-light">Comprar</a></button>
+            <button class="btn btn-success w-50" type="submit" onclick="finishOrder('<%= data._id %>')">Comprar</button>
             <% } %>
     </div>
 </div>

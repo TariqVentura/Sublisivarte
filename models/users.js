@@ -48,6 +48,7 @@ let userSchema = new MONGOOSE.Schema(
         },
         authentification: {
             type: ["activado", "desactivado"],
+            default: "desactivado",
             require: true,
         }
     },
