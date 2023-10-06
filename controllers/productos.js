@@ -208,7 +208,7 @@ FORM_PRODUCT.addEventListener('submit', (e) => {
 
 function updateProduct(product, price, category, status, id) {
     Swal.fire({
-        title: 'Crea tu pedido',
+        title: 'Actualizar Producto',
         html:
             '<label for="product-update">Producto: </label>' +
             `<input type="text" class="form-control" id="product-update" required value="${product}"></br>` +
