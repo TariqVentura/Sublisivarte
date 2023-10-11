@@ -12,7 +12,7 @@ let categoriesSchema = new MONGOOSE.Schema(
             unique: true
         },
         status: {
-            type: ["active", "inactive"],
+            type: ["activo", "inactivo"],
             require: true
         }
     },

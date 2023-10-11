@@ -598,7 +598,7 @@ exports.details = async (req, res) => {
                 format = JSON.parse(DATA[index].description)
                 DESCRIPTION.push(format)
             }
-            console.log(DESCRIPTION)
+            
             res.render('details', { details: DATA, user: session, mensaje: ". ", confirmation: false, icon: " .", count: count, description: DESCRIPTION })
         }).catch(err => {
             console.log(err)

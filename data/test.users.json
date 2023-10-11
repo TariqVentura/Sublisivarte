@@ -1,18 +1,4 @@
-[{
-  "name": "Ariel Alessandro",
-  "lastname": "Sandoval Moreno",
-  "email": "202100409@ricaldone.edu.sv",
-  "user": "Ariel123",
-  "password": "$2b$10$1cbCjINkFiApv6R.ezWuiurduWY1YGdSkSeOAzAdHPAYoapjswaYK",
-  "role": [
-    "admin"
-  ],
-  "status": [
-    "activo"
-  ],
-  "document": "26373-4",
-  "authentification": []
-},
+[
 {
   "name": "Tariq Alberto",
   "lastname": "Ventura Arteaga",

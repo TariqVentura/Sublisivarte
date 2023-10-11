@@ -151,7 +151,7 @@ exports.createUser = async (req, res) => {
         try {
             //utilizamos el metodo save de mongoose para guardar los datos en la base
             const DATA = await newDocument.save()
-            console(newDocument + ' ' + DATA)
+            console.log(newDocument + ' ' + DATA)
             return res.send(true)
         } catch (error) {
             console.log(error)

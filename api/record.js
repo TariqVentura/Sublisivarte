@@ -70,7 +70,7 @@ exports.newRecord = (req, res) => {
                                     }
                                 })
                             } else if (sum > 0) {
-                                PRODUCTS.findByIdAndUpdate(req.body.id, { status: 'active' }, { useFindAndModify: false }).then(status => {
+                                PRODUCTS.findByIdAndUpdate(req.body.id, { status: 'activo' }, { useFindAndModify: false }).then(status => {
                                     if (product) {
                                         AXIOS.get('http://localhost:443/api/products')
                                             .then(function (response) {
