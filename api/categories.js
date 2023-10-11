@@ -1,7 +1,7 @@
 //modulos y dependencias
 const CATEGORIES = require('../models/categories')
 const AXIOS = require('axios')
-const FECHA = new Date()
+const FECHA = require('node-datetime')
 const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
@@ -152,14 +152,15 @@ exports.getReport = (req, res) => {
     AXIOS.get('http://localhost:443/api/view/products/' + req.params.key).then(function (product) {
         //alamcenamos los datos de la API
         let obj = product.data
-        let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
+        const NEW_DATE = FECHA.create()
+        const DATE_FORMAT = NEW_DATE.format('Y-m-d H:M:S')
 
         //creamos un objeto con los datos para el reporte 
         const DATA = {
             category: req.params.key,
             user: req.session.user,
             obj: obj,
-            newDate: newDate,
+            newDate: DATE_FORMAT,
             product: req.params.key
         }
 
