@@ -1,5 +1,6 @@
 const COMMENTS = require('../models/comments')
 const AXIOS = require('axios')
+const ONE_COMMENT = require('../helpers/validations/comments')
 
 exports.createComment = async (req, res) => {
     //La función comienza con una validación de si los campos de comentario, revisión, producto y cliente están vacíos. Si alguno de estos campos está vacío, se devuelve un mensaje de error "empty" y se detiene la ejecución de la función.
@@ -28,6 +29,16 @@ exports.createComment = async (req, res) => {
         //Se valida que los campos de comentario, producto y cliente no estén vacíos después de eliminar los espacios en blanco. Si alguno de estos campos está vacío, se devuelve un mensaje de error "empty" y se detiene la ejecución de la función.
         if (!comment.trim() || !product.trim() || !client.trim()) {
             return res.send('empty')
+        }
+
+        //validacion para ue el cliente solo pueda crear un comentario por producto
+        const VALIDATION = await ONE_COMMENT.oneComment(client, product)
+
+        console.log('validation: ' + VALIDATION)
+
+        //obtenemos la respuesta de la funcion y enviamos una respuesta
+        if (VALIDATION == true) {
+            return res.send('comment')
         }
 
         //Se crea un objeto "COMMENT" que contiene los datos de la solicitud HTTP.

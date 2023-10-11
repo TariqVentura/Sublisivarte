@@ -241,11 +241,23 @@ exports.logIn = async (req, res) => {
             rol: ENCRYPTED_ROL
         }
 
-        //firmamos el token utilizando variables de entorno
-        JWT.sign({ INFO }, process.env.TOKEN, { expiresIn: '1h' }, async (err, token) => {
-            if (err) {
-                res.send(false)
-                return
+        try {
+            const TOKEN = await JWT.sign({ INFO }, process.env.TOKEN, { expiresIn: '1h' })
+            //firmamos el token utilizando variables de entorno
+            if (data[0].authentification == 'activado') {
+                const CODE_AUTHENTICATION = await VALIDATION.codeAuthentication(USER)
+
+                if (CODE_AUTHENTICATION == true) {
+                    const AUTHENTIFICATION_CODE = await MAIL.codeAuthentication(USER)
+
+                    if (AUTHENTIFICATION_CODE == true) {
+                        return res.send('authentification' + TOKEN)
+                    } else {
+                        return res.send(false) //enviamos la respuesta
+                    }
+                } else {
+                    return res.send('authentification' + TOKEN)
+                }
             } else {
                 req.session.token = token
                 //llenamos los datos de la sesion con los datos del usuario
@@ -255,26 +267,11 @@ exports.logIn = async (req, res) => {
                 req.session.status = data[0].status
                 req.session.email = data[0].email
                 req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
-
-                if (data[0].authentification == 'activado') {
-                    const CODE_AUTHENTICATION = await VALIDATION.codeAuthentication(USER)
-
-                    if (CODE_AUTHENTICATION == true) {
-                        const AUTHENTIFICATION_CODE = await MAIL.codeAuthentication(USER)
-
-                        if (AUTHENTIFICATION_CODE == true) {
-                            return res.send('authentification' + token)
-                        } else {
-                            return res.send(false) //enviamos la respuesta
-                        }
-                    } else {
-                        return res.send('authentification' + token)
-                    }
-                } else {
-                    return res.send(token) //enviamos la respuesta
-                }
+                return res.send(TOKEN) //enviamos la respuesta
             }
-        })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
@@ -298,9 +295,33 @@ exports.userCode = async (req, res) => {
     const COMPARE = await VALIDATION.codeValidation(USER, CODE)
 
     if (COMPARE == true) {
-        return res.send(true)
+        const USER_OBJECT = await USERS.findOne({ user: USER }).exec()
+
+        const ENCRYPTED_USER = await BCRYPT.hashSync(USER_OBJECT.user, 10)
+
+        const ENCRYPTED_ROL = await BCRYPT.hashSync(USER_OBJECT.role[0], 10)
+
+        const INFO = {
+            user: ENCRYPTED_USER,
+            rol: ENCRYPTED_ROL
+        }
+
+        try {
+            const TOKEN = await JWT.sign({ INFO }, process.env.TOKEN, { expiresIn: '1h' })
+            req.session.token = TOKEN
+            //llenamos los datos de la sesion con los datos del usuario
+            req.session.authenticated = true
+            req.session.user = USER
+            req.session.role = USER_OBJECT.role
+            req.session.status = USER_OBJECT.status
+            req.session.email = USER_OBJECT.email
+            req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+            return res.send(true)
+        } catch (error) {
+            console.log(error)
+            return res.send(error)
+        }
     } else {
-        req.session.destroy()
         return res.send(false)
     }
 }
@@ -789,7 +810,7 @@ exports.bulkInsert = async (req, res) => {
                 const USER_FORMAT = JSON.parse(USER_DATA)
 
                 const SAVE_USER = await USERS.insertMany(USER_FORMAT)
-                
+
                 return res.send(true)
             } catch (error) {
                 console.log(error)

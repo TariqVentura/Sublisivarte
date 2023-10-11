@@ -152,6 +152,13 @@ FORM_COMMENT.addEventListener('submit', (e) => {
                     text: 'El comentario excede el limite de 250 caracteres'
                 })
                 break
+            case 'comment':
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ooops...',
+                    text: 'Solo se puede comentar una vez por producto'
+                })
+                break
         }
     })
 })
