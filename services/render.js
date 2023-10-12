@@ -14,6 +14,7 @@ exports.error = async (req, res) => {
     }
     AXIOS.get('http://localhost:443/api/images')
         .then(function (images) {
+            
             res.render('include/error', { user: false, resources: images.data, mensaje: ". ", confirmation: false, icon: " .", count: count })
         }).catch(err => {
             res.send('pagina no encontrada')
@@ -26,6 +27,7 @@ exports.index = async (req, res) => {
     } else {
         session = false
     }
+    
 
 
     const COUNT = await USER.count().exec()
@@ -38,7 +40,14 @@ exports.index = async (req, res) => {
 
     AXIOS.get('http://localhost:443/api/images')
         .then(function (images) {
-            res.render('index', { user: session, resources: images.data, mensaje: ". ", confirmation: false, icon: " .", count: count })
+            AXIOS.get('http://localhost:443/api/products')
+        .then(function (response){
+            AXIOS.get('http://localhost:443/api/categories')
+                .then(function (categorie){
+                    res.render('index', {categories: categorie.data, products: response.data, user: session, resources: images.data, mensaje: ". ", confirmation: false, icon: " .", count: count })
+                })
+           
+        })
         }).catch(err => {
             res.send('pagina no encontrada')
         })

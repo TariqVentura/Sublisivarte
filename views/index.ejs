@@ -33,79 +33,49 @@
                         </div>
                     </div>
                 </div>
-            <% } %>
+                <% } %>
                     <div class="carousel-principal">
                         <div class="wrapper-carousel">
                             <i id="left" class="fa-solid fa-angle-left"></i>
                             <div class="carousel">
                                 <% resources.forEach((data)=> { %>
                                     <% if(user.role=='admin' ){ %>
-                                        <img src="/images/<%= data.image %>" onclick="deleteImage('<%= data._id %>')" alt="" draggable="false">
-                                    <% } else { %>
-                                        <img src="/images/<%= data.image %>" alt="" draggable="false">
-                                    <% } %>  
-                                <% }) %>
+                                        <img src="/images/<%= data.image %>" onclick="deleteImage('<%= data._id %>')"
+                                            alt="" draggable="false">
+                                        <% } else { %>
+                                            <img src="/images/<%= data.image %>" alt="" draggable="false">
+                                            <% } %>
+                                                <% }) %>
                             </div>
                             <i id="rigth" class="fa-solid fa-angle-right"></i>
                         </div>
                     </div>
                     <div class="container mt-3 py-3 productos">
-                        <p class="fs-3 pb-3 text-light fw-bold">Ofertas</p>
+                        <p class="fs-3 pb-3 text-darkk fw-bold">Ofertas</p>
                         <div class="row d-flex justify-content-between" id="Nuevos-productos">
-                            <div class="col-2">
-                                <div class="card border border-0 bg-dark text-light text-center" style="width: 13rem;">
-                                    <img src="/images/camisas.jpg" class="card-img-top rounded" alt="...">
-                                    <div class="card-body d-grid gap-2">
-                                        <h5 class="card-title">Camisas</h5>
-                                        <p class="card-text"></p>
-                                        <a href="../public/producto.html" class="btn btn-primary rounded">Ver mas...</a>
+                            
+                            <% products.forEach((data)=> { %>
+                                <div class="col-4">
+                                    <div class="card text-center bg-dark border border-0"
+                                        style="width: 13rem;">
+                                        <img src="/images/<%= data.image %>" class="card-img-top rounded" alt="...">
+                                        <div class="card-body d-grid gap-2">
+                                            <h5 class="card-title">
+                                                <%= data.product %>
+                                            </h5>
+                                            <p class="card-text">PRECIO:<%= data.price %></p>
+                                            <p class="card-text">CATEGORIA:<%= data.categorie %></p>
+                                            <p class="card-text">STOCK:<%= data.stock %></p>
+                                            
+                                            <a href="/producto<%= data.product %>" class="btn btn-primary rounded">Ver mas...</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="card text-center bg-dark text-light border border-0" style="width: 13rem;">
-                                    <img src="/images/tazas.jpg" class="card-img-top rounded" alt="...">
-                                    <div class="card-body d-grid gap-2">
-                                        <h5 class="card-title">Vaso</h5>
-                                        <p class="card-text"></p>
-                                        <a href="#" class="btn btn-primary rounded">Ver mas...</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="card text-center bg-dark border border-0" style="width: 13rem;">
-                                    <img src="/images/ropa.jpg" class="card-img-top rounded" alt="...">
-                                    <div class="card-body d-grid gap-2">
-                                        <h5 class="card-title">Bolsa</h5>
-                                        <p class="card-text"></p>
-                                        <a href="#" class="btn btn-primary rounded tex">Ver mas...</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2 d-md-none d-lg-block">
-                                <div class="card text-center bg-dark text-light border border-0" style="width: 13rem;">
-                                    <img src="/images/accesorios.jpg" class="card-img-top rounded" alt="...">
-                                    <div class="card-body d-grid gap-2">
-                                        <h5 class="card-title">Collar para perro</h5>
-                                        <p class="card-text"></p>
-                                        <a href="#" class="btn btn-primary rounded">Ver mas...</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2 d-md-none">
-                                <div class="card text-center bg-dark border border-0" style="width: 13rem;">
-                                    <img src="/images/frame.jpg" class="card-img-top rounded" alt="...">
-                                    <div class="card-body d-grid gap-2">
-                                        <h5 class="card-title">Frame</h5>
-                                        <p class="card-text"></p>
-                                        <a href="#" class="btn btn-primary rounded">Ver mas...</a>
-                                    </div>
-                                </div>
-                            </div>
+                                <% }) %>
                         </div>
                     </div>
         </main>
-    </div>      
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
