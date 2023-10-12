@@ -23,7 +23,9 @@ exports.createDetail = async (req, res) => {
         order = req.body.order
         const NEW_IMAGE = String(req.body.image).substring("C:/fakepath/".length)
 
-       
+        if (amount <= 0) {
+            return res.send('amount')
+        }
 
         // Verifica si alguno de los campos locales está vacío o contiene solo espacios en blanco.
         if (!product.trim() || !price.trim() || !amount.trim() || !order.trim() || !NEW_IMAGE.trim()) {

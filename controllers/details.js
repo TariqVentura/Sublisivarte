@@ -7,7 +7,7 @@ function addOrder(stock, id, price, product, order, category) {
                 '<label for="amount">Cantidad: </label>' +
                 `<input type="number" id="amount" min="1" name="amount" max="${stock}" required> </br>` +
                 '<label for="image">Imagenes: </label>' +
-                `<input class="form-control" type="file" id="image" multiple name="image" required>` 
+                `<input class="form-control" type="file" id="image" multiple name="image" required>`
             ,
             focusConfirm: false,
             preConfirm: () => {
@@ -266,6 +266,14 @@ SEND_ORDER.addEventListener('submit', (e) => {
                     icon: 'error',
                     title: 'Oops...',
                     text: 'No se permiten campos vacios'
+                })
+                break
+            case 'amount':
+                //campos vacios
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'La cantidad minima de producto es 1'
                 })
                 break
         }
