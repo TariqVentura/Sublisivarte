@@ -175,6 +175,13 @@ function bulkInsert() {
                             text: 'Archivo no encontrado o es inaccesible'
                         })
                         break
+                    case 'data':
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'El usuario, correo y documento deben de ser unicos'
+                        })
+                        break
                 }
             })
         }

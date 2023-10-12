@@ -146,8 +146,6 @@ exports.createUser = async (req, res) => {
             }
         }
 
-
-
         try {
             //utilizamos el metodo save de mongoose para guardar los datos en la base
             const DATA = await newDocument.save()
@@ -711,7 +709,7 @@ exports.getUserReport = (req, res) => {
                 banned.push(filter)
             }
         })
-        
+
         const NEW_DATE = FECHA.create()
         const DATE_FORMAT = NEW_DATE.format('Y-m-d H:M:S')
         //creamos otros objeto donde almacenamos los datos que enviaremos al reporte
@@ -813,7 +811,15 @@ exports.bulkInsert = async (req, res) => {
 
                 const USER_FORMAT = JSON.parse(USER_DATA)
 
-                const SAVE_USER = await USERS.insertMany(USER_FORMAT)
+                const VALIDATE_USER = await this.validateUser(USER_FORMAT)
+
+                if (VALIDATE_USER == false) {
+                    return res.send('data')
+                }
+
+                const ENCRYPTED_DATA = await this.encryptData(USER_FORMAT)
+
+                const SAVE_USER = await USERS.insertMany(ENCRYPTED_DATA)
 
                 return res.send(true)
             } catch (error) {
@@ -825,6 +831,45 @@ exports.bulkInsert = async (req, res) => {
 }
 
 
-validateUser = (format) => {
+exports.encryptData = async (format) => {
+    for (let index = 0; index < format.length; index++) {
+        try {
+            const ENCRYPTED_PASSWORD = await BCRYPT.hashSync(format[index].password, 10)
+            format[index].password = ENCRYPTED_PASSWORD
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+    console.log(format)
+    
+    return format
+}
 
+exports.validateUser = async (format) => {
+    let formatError = 0
+    for (let i = 0; i < format.length; i++) {
+        console.log(format[i].user)
+        try {
+            const FIND_USER = await USERS.findOne({
+                "$or": [
+                    { user: format[i].user },
+                    { email: format[i].email },
+                    { document: format[i].document }
+                ]
+            }).exec()
+            if (FIND_USER) {
+                formatError = formatError + 1
+            }
+        } catch (error) {
+            comsole.log(error)
+            return false
+        }
+    }
+
+    if (formatError == 0) {
+        return true
+    } else {
+        return false
+    }
 }

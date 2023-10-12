@@ -1,0 +1,35 @@
+[
+    {
+      "name": "Tariq Alberto",
+      "lastname": "Ventura Arteaga",
+      "email": "20190052@ricaldone.edu.sv",
+      "user": "TariqVentura",
+      "password": "1234567",
+      "role": [
+        "admin"
+      ],
+      "status": [
+        "activo"
+      ],
+      "document": "72828-3",
+      "authentification": [
+        "desactivado"
+      ]
+    },
+    {
+      "name": "Mitchell",
+      "lastname": "Flisher",
+      "email": "tariqventura@gmail.com",
+      "user": "mflisher2",
+      "password": "12345",
+      "role": [
+        "cliente"
+      ],
+      "status": [
+        "activo"
+      ],
+      "document": "219.146.155.193",
+      "authentification": [
+        "activado"
+      ]
+    }]
