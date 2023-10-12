@@ -182,6 +182,13 @@ function bulkInsert() {
                             text: 'El usuario, correo y documento deben de ser unicos'
                         })
                         break
+                    case 'password':
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Las contraseñas no cumplen con los parametros de seguridad'
+                        })
+                        break
                 }
             })
         }

@@ -819,6 +819,10 @@ exports.bulkInsert = async (req, res) => {
 
                 const ENCRYPTED_DATA = await this.encryptData(USER_FORMAT)
 
+                if (ENCRYPTED_DATA == 'password') {
+                    return res.send('password')
+                }
+
                 const SAVE_USER = await USERS.insertMany(ENCRYPTED_DATA)
 
                 return res.send(true)
@@ -834,6 +838,12 @@ exports.bulkInsert = async (req, res) => {
 exports.encryptData = async (format) => {
     for (let index = 0; index < format.length; index++) {
         try {
+            const PASSWORD_VALIDATION = await VALIDATION.newPasswordValidation(format[index].password, format[index].user, format[index].email)
+
+            if (PASSWORD_VALIDATION) {
+                return 'password'    
+            }
+
             const ENCRYPTED_PASSWORD = await BCRYPT.hashSync(format[index].password, 10)
             format[index].password = ENCRYPTED_PASSWORD
         } catch (error) {
