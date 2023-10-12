@@ -5,7 +5,7 @@ require('dotenv').config()
 const USERS = require('../models/users')
 const AXIOS = require('axios')
 const BCRYPT = require('bcrypt')
-const FECHA = new Date()
+const FECHA = require('node-datetime')
 const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
@@ -259,7 +259,9 @@ exports.logIn = async (req, res) => {
                     return res.send('authentification' + TOKEN)
                 }
             } else {
-                req.session.token = token
+                //Aqui estaba token y puse TOKEN no se si habria algun error
+                const TOKEN = await JWT.sign({ INFO }, process.env.TOKEN, { expiresIn: '1h' })
+                req.session.token = TOKEN
                 //llenamos los datos de la sesion con los datos del usuario
                 req.session.authenticated = true
                 req.session.user = USER
@@ -709,14 +711,16 @@ exports.getUserReport = (req, res) => {
                 banned.push(filter)
             }
         })
-
+        
+        const NEW_DATE = FECHA.create()
+        const DATE_FORMAT = NEW_DATE.format('Y-m-d H:M:S')
         //creamos otros objeto donde almacenamos los datos que enviaremos al reporte
         const DATA = {
             user: req.session.user,
             active: active,
             inactive: inactive,
             banned: banned,
-            date: FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
+            newDate: DATE_FORMAT,
         }
 
         //creamos la constante que enviaremos como parametro a la dependencia

@@ -3,7 +3,7 @@
  */
 const PRODUCTS = require('../models/products')
 const AXIOS = require('axios')
-const FECHA = new Date()
+const FECHA = require('node-datetime')
 const PDF = require('pdf-creator-node')
 const PATH = require('path')
 const FS = require('fs')
@@ -295,6 +295,8 @@ exports.getStockReport = (req, res) => {
     AXIOS.get('http://localhost:443/api/record/' + req.params.key, CONFIG).then(function (stock) {
         //Esta línea declara una variable llamada "obj" que se establece en el objeto de datos de stock.
         let obj = stock.data
+        const NEW_DATE = FECHA.create()
+        const DATE_FORMAT = NEW_DATE.format('Y-m-d H:M:S')
         //Esta línea declara una constante llamada "DATA" que se establece en un objeto que contiene la información necesaria para generar el informe de stock.
         const DATA = {
             //Esta línea establece el campo "user" del objeto "DATA" en el valor del usuario de sesión de la solicitud.
@@ -302,7 +304,7 @@ exports.getStockReport = (req, res) => {
             //Esta línea establece el campo "obj" del objeto "DATA" en el valor del objeto de datos de stock.
             obj: obj,
             //Esta línea establece el campo "date" del objeto "DATA" en el valor de la fecha y hora actuales.
-            date: FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds(),
+            newDate: DATE_FORMAT,
             //Esta línea establece el campo "product" del objeto "DATA" en el valor del parámetro de clave de la solicitud.
             product: req.params.key
         }
@@ -364,7 +366,8 @@ exports.reportProducts = (req, res) => {
         //Esta línea declara tres variables, "obj", "active", "inactive" y "NoStock", que se establecen en los datos de productos y tres matrices vacías.
         let obj = products.data, active = [], inactive = [], NoStock = []
         //Esta línea declara una variable llamada "newDate" que se establece en la fecha y hora actuales.
-        let newDate = FECHA.toISOString().substring(0, 10) + ' ' + FECHA.getHours() + ':' + FECHA.getMinutes() + ':' + FECHA.getSeconds()
+        const NEW_DATE = FECHA.create()
+        const DATE_FORMAT = NEW_DATE.format('Y-m-d H:M:S')
         //Esta línea utiliza el método "forEach" para iterar sobre los datos de productos y realizar una acción para cada elemento.
         obj.forEach(i => {
             //Esta línea declara una variable llamada "filter" que se establece en un objeto que contiene el nombre del producto, el precio y el stock.
@@ -389,7 +392,7 @@ exports.reportProducts = (req, res) => {
             active: active,
             inactive: inactive,
             NoStock: NoStock,
-            date: newDate
+            newDate: DATE_FORMAT,
         }
         //Esta línea declara una constante llamada "DOCUMENT1" que se establece en un objeto que contiene la información necesaria para generar el informe de productos en formato PDF.
         const DOCUMENT1 = {
