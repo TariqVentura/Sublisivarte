@@ -1,101 +1,102 @@
 [
-{
-  "name": "Tariq Alberto",
-  "lastname": "Ventura Arteaga",
-  "email": "20190052@ricaldone.edu.sv",
-  "user": "TariqVentura",
-  "password": "c4%#Nt5{57=N",
-  "role": [
-    "admin"
-  ],
-  "status": [
-    "activo"
-  ],
-  "document": "72828-3",
-  "authentification": [
-    "desactivado"
-  ]
-},
-{
-  "name": "Jared",
-  "lastname": "Diaz",
-  "email": "20210612@ricaldone.edu.sv",
-  "user": "Jared",
-  "password": "PjvOSUiR19$",
-  "role": [
-    "cliente"
-  ],
-  "status": [
-    "activo"
-  ],
-  "document": "219.146.155.193",
-  "authentification": [
-    "activado"
-  ]
-},
-{
-  "name": "ashley",
-  "lastname": "cardoza",
-  "email": "20210208@ricaldone.edu.sv",
-  "user": "ashley",
-  "password": "c4%#Nt5{57=N",
-  "role": [
-    "admin"
-  ],
-  "status": [
-    "activo"
-  ],
-  "document": "25356-8",
-  "authentification": []
-},
-{
-  "name": "Bourke",
-  "lastname": "Griffoen",
-  "email": "bgriffoen0@usgs.gov",
-  "user": "bgriffoen0",
-  "password": "c4%#Nt5{57=N",
-  "role": [
-    "cliente"
-  ],
-  "status": [
-    "activo"
-  ],
-  "document": "471551347-1",
-  "authentification": [
-    "desactivado"
-  ]
-},
-{
-  "name": "Melisandra",
-  "lastname": "Itscowics",
-  "email": "mitscowics1@multiply.com",
-  "user": "mitscowics1",
-  "password": "c4%#Nt5{57=N",
-  "role": [
-    "cliente"
-  ],
-  "status": [
-    "activo"
-  ],
-  "document": "356859525-7",
-  "authentification": [
-    "desactivado"
-  ]
-},
-{
-  "name": "Alleyn",
-  "lastname": "Elrick",
-  "email": "Elrick@ricaldone.edu.sv",
-  "user": "aelrick2",
-  "password": "c4%#Nt5{57=N",
-  "role": [
-    "cliente"
-  ],
-  "status": [
-    "activo"
-  ],
-  "document": "636780409-9",
-  "authentification": [
-    "desactivado"
-  ]
-}]
+  {
+    "name": "Tariq Alberto",
+    "lastname": "Ventura Arteaga",
+    "email": "20190052@ricaldone.edu.sv",
+    "user": "TariqVentura",
+    "password": "c4%#Nt5{57=N",
+    "role": [
+      "admin"
+    ],
+    "status": [
+      "activo"
+    ],
+    "document": "72828-3",
+    "authentification": [
+      "desactivado"
+    ]
+  },
+  {
+    "name": "Jared",
+    "lastname": "Diaz",
+    "email": "20210612@ricaldone.edu.sv",
+    "user": "Jared",
+    "password": "PjvOSUiR19$",
+    "role": [
+      "cliente"
+    ],
+    "status": [
+      "activo"
+    ],
+    "document": "219.146.155.193",
+    "authentification": [
+      "activado"
+    ]
+  },
+  {
+    "name": "ashley",
+    "lastname": "cardoza",
+    "email": "20210208@ricaldone.edu.sv",
+    "user": "ashley",
+    "password": "c4%#Nt5{57=N",
+    "role": [
+      "admin"
+    ],
+    "status": [
+      "activo"
+    ],
+    "document": "25356-8",
+    "authentification": []
+  },
+  {
+    "name": "Bourke",
+    "lastname": "Griffoen",
+    "email": "bgriffoen0@usgs.gov",
+    "user": "bgriffoen0",
+    "password": "c4%#Nt5{57=N",
+    "role": [
+      "cliente"
+    ],
+    "status": [
+      "activo"
+    ],
+    "document": "471551347-1",
+    "authentification": [
+      "desactivado"
+    ]
+  },
+  {
+    "name": "Melisandra",
+    "lastname": "Itscowics",
+    "email": "mitscowics1@multiply.com",
+    "user": "mitscowics1",
+    "password": "c4%#Nt5{57=N",
+    "role": [
+      "cliente"
+    ],
+    "status": [
+      "activo"
+    ],
+    "document": "356859525-7",
+    "authentification": [
+      "desactivado"
+    ]
+  },
+  {
+    "name": "Alleyn",
+    "lastname": "Elrick",
+    "email": "Elrick@ricaldone.edu.sv",
+    "user": "aelrick2",
+    "password": "c4%#Nt5{57=N",
+    "role": [
+      "cliente"
+    ],
+    "status": [
+      "activo"
+    ],
+    "document": "636780409-9",
+    "authentification": [
+      "desactivado"
+    ]
+  }
+]
