@@ -3,8 +3,8 @@
   "name": "Tariq Alberto",
   "lastname": "Ventura Arteaga",
   "email": "20190052@ricaldone.edu.sv",
-  "user": "TariqVentura2",
-  "password": "$2b$10$/9OQ0ANLej0ytDwPaoPXaediAQ.bmVnUb01OSvYv52DWTnbJP14Mi",
+  "user": "TariqVentura",
+  "password": "c4%#Nt5{57=N",
   "role": [
     "admin"
   ],
@@ -17,11 +17,11 @@
   ]
 },
 {
-  "name": "Mitchell",
-  "lastname": "Flisher",
-  "email": "tariqventura@gmail.com",
-  "user": "mflisher2",
-  "password": "$2b$10$wJ8ILlmuQL80XK2QfSdJgO02oaZ1ekAGEpRom6FvQ5H77q2U4mI4W",
+  "name": "Jared",
+  "lastname": "Diaz",
+  "email": "20210612@ricaldone.edu.sv",
+  "user": "Jared",
+  "password": "PjvOSUiR19$",
   "role": [
     "cliente"
   ],
@@ -38,7 +38,7 @@
   "lastname": "cardoza",
   "email": "20210208@ricaldone.edu.sv",
   "user": "ashley",
-  "password": "$2b$10$Kxt333HyzKGagwFqSR6CN.r5WCWcoQe0.3dV4Oi4BgvAeejyLMxcy",
+  "password": "c4%#Nt5{57=N",
   "role": [
     "admin"
   ],
@@ -53,7 +53,7 @@
   "lastname": "Griffoen",
   "email": "bgriffoen0@usgs.gov",
   "user": "bgriffoen0",
-  "password": "$2a$04$gyBk/9f15hN0ULLyPFjacOZONoqU6iFmVn6gLnVTUseq3WEqUUsFK",
+  "password": "c4%#Nt5{57=N",
   "role": [
     "cliente"
   ],
@@ -70,7 +70,7 @@
   "lastname": "Itscowics",
   "email": "mitscowics1@multiply.com",
   "user": "mitscowics1",
-  "password": "$2a$04$1/MedmCMQ4D9UM2zeZuKQeGyzRAj9SvsEsallmAxrC6TJ8hk96K0O",
+  "password": "c4%#Nt5{57=N",
   "role": [
     "cliente"
   ],
@@ -87,7 +87,7 @@
   "lastname": "Elrick",
   "email": "Elrick@ricaldone.edu.sv",
   "user": "aelrick2",
-  "password": "$2a$04$BLo.EGCtoKE55S5z4qCuUex9Ab14EgiThAAgEQPWIhSeClP7YJlkS",
+  "password": "c4%#Nt5{57=N",
   "role": [
     "cliente"
   ],
