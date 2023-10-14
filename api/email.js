@@ -100,44 +100,7 @@ exports.newPasswordEmail = async (req, res) => {
                             from: `Sublisivarte <${process.env.EMAIL}>`,
                             to: email,
                             subject: "Cambio de contraseña",
-                            html: `<!DOCTYPE html>
-                            <html lang="en">
-                            
-                            <head>
-                                <meta charset="UTF-8">
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                <link rel="stylesheet" href="../resources/css/dashbard.css">
-                            </head>
-                            
-                            <body style="background-color: #ffffff;">
-                                <div style="position: absolute; top: 20%; left: 40%;">
-                                    <div style="height: 284px; width: 350px; background-color: #000000; border-radius: 5%;">
-                                        <div>
-                                            <h2 style=" color: #4280EF; padding-left: 3%;">¿Has olvidado tu <br> contraseña?
-                                                </h2>
-                                        </div>
-                                        <div>
-                                            <h5 style=" color: #ffffff;padding-left: 3%;">Si usted no ha realizado ninguna
-                                                peticion de cambio de contraseña puede bloquear su cuenta
-                                            <br> Codigo de recuperación:</h5>
-                                        </div>
-                                        <div style="text-align: center;">
-                                            <input style="margin: auto; height: 30px; width: 250px;" type="text" value="${result}">
-                                        </div>
-                                        <div style="text-align: center; margin-top: 20px;">
-                                            <button type="button"
-                                                style=" color: #ffffff; background-color: #4280EF; border-radius: 5px; height: 30px; width: 250px; border: none;"><a href="http://localhost:443" style="text-decoration: none;">Cambiar contraseña</a></button>
-                                        </div>
-                                        <footer
-                                            style="position: fixed-bottom; height: 13%; width: 100%; background-color: #4280EF; text-align: center; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
-                                            <h5 style="color: #ffffff;">Copyright © 2023 Sublisivarte <br>Contacto: sublisivarte@email.com</h5>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </body>
-                            
-                            </html>
-                            `
+                            text: `codigo: ${result}`
                         })
                         //enviamos mensaje que se envio el correo
                         res.send(true)
@@ -191,44 +154,7 @@ exports.codeAuthentication = async (username) => {
                 from: `Sublisivarte <${process.env.EMAIL}>`,
                 to: USER_DATA.email,
                 subject: "Codigo de Seguridad",
-                html: `<!DOCTYPE html>
-                    <html lang="en">
-                    
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <link rel="stylesheet" href="../resources/css/dashbard.css">
-                    </head>
-                    
-                    <body style="background-color: #ffffff;">
-                        <div style="position: absolute; top: 20%; left: 40%;">
-                            <div style="height: 284px; width: 350px; background-color: #000000; border-radius: 5%;">
-                                <div>
-                                    <h2 style=" color: #4280EF; padding-left: 3%;">¿Has olvidado tu <br> contraseña?
-                                        </h2>
-                                </div>
-                                <div>
-                                    <h5 style=" color: #ffffff;padding-left: 3%;">Si usted no ha realizado ninguna
-                                        peticion de cambio de contraseña puede bloquear su cuenta
-                                    <br> Codigo de recuperación:</h5>
-                                </div>
-                                <div style="text-align: center;">
-                                    <input style="margin: auto; height: 30px; width: 250px;" type="text" value="${result}">
-                                </div>
-                                <div style="text-align: center; margin-top: 20px;">
-                                    <button type="button"
-                                        style=" color: #ffffff; background-color: #4280EF; border-radius: 5px; height: 30px; width: 250px; border: none;"><a href="http://localhost:443" style="text-decoration: none;">Cambiar contraseña</a></button>
-                                </div>
-                                <footer
-                                    style="position: fixed-bottom; height: 13%; width: 100%; background-color: #4280EF; text-align: center; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
-                                    <h5 style="color: #ffffff;">Copyright © 2023 Sublisivarte <br>Contacto: sublisivarte@email.com</h5>
-                                </footer>
-                            </div>
-                        </div>
-                    </body>
-                    
-                    </html>
-                    `
+                text: `codigo: ${result}`
             })
             //enviamos mensaje que se envio el correo
             return true

@@ -5,7 +5,7 @@ const FECHA = new Date()
 
 exports.newRecord = (req, res) => {
     //// Verifica si el usuario que realiza la solicitud tiene permisos de administrador
-    if (!req.session.user || req.session.role != 'admin' ) {
+    if (!req.session.user || req.session.role != 'admin') {
         res.redirect('/error404')
         return
     }
@@ -25,7 +25,7 @@ exports.newRecord = (req, res) => {
             .catch(err => {
                 res.send('No se puedieron cargar los productos')
             })
-            
+
     } else {
         // Crea un nuevo registro utilizando los datos proporcionados en la solicitud HTTP
         const NEW_RECORD = new RECORD({
@@ -41,7 +41,19 @@ exports.newRecord = (req, res) => {
                 let sum = Number(req.body.prevStock) + Number(req.body.stock)
                 if (sum < 0) {
                     //// Si el stock resultante es menor que cero, se muestra un mensaje de error al usuario
-                    res.send('Existencias insuficientes')
+                    AXIOS.get('http://localhost:443/api/products')
+                        .then(function (response) {
+                            AXIOS.get('http://localhost:443/api/categories')
+                                .then(function (categorie) {
+                                    res.render('productos', { products: response.data, categories: categorie.data, user: req.session, mensaje: "Stock inuficiente", confirmation: true, icon: "error", count: 1 })
+                                })
+                                .catch(err => {
+                                    res.send('hola')
+                                })
+                        })
+                        .catch(err => {
+                            res.send('No se puedieron cargar los productos')
+                        })
                 } else {
                     //// Si el stock resultante es mayor que cero, se actualiza el estado del producto en la base de datos y se muestra un mensaje de éxito al usuario
                     let value = { stock: sum }
@@ -101,7 +113,7 @@ exports.newRecord = (req, res) => {
 exports.getRecord = (req, res) => {
     // Busca un registro en la base de datos que tenga un campo "product" igual al valor proporcionado en el parámetro "key" de la solicitud HTTP
     RECORD.find({ product: req.params.key }).then(data => {
-        //// Si no se encuentra ningún registro, se envía un mensaje de "producto no encontrado" como respuesta
+        //Si no se encuentra ningún registro, se envía un mensaje de "producto no encontrado" como respuesta
         if (!data) {
             res.send('producto no encontrado')
         } else {

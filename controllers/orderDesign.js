@@ -10,7 +10,7 @@ imageURL.addEventListener('change', function () {
     let imageY = 0
 
     image.onload = function () {
-        ctx.drawImage(image, 50, 0, 28, 25)
+        ctx.drawImage(image, 50, 0, 50, 75)
 
         function handleMouseDown(e) {
             let mouseX = e.clientX - canvas.offsetLeft;
@@ -31,7 +31,7 @@ imageURL.addEventListener('change', function () {
             imageY = mouseY - image.height / 2
 
             ctx.clearRect(0, 0, canvas.width, canvas.height)
-            ctx.drawImage(image, imageX, imageY, 28, 25)
+            ctx.drawImage(image, imageX, imageY, 50, 75)
         }
 
         function handleMouseUp() {
@@ -41,7 +41,6 @@ imageURL.addEventListener('change', function () {
 
         canvas.addEventListener("mousedown", handleMouseDown)
     }
-
 })
 
 design.addEventListener('click', function () {
