@@ -1,5 +1,6 @@
 //modulos y dependencias
 const CATEGORIES = require('../models/categories')
+const PRODUCTS = require('../models/products')
 const AXIOS = require('axios')
 const FECHA = require('node-datetime')
 const PDF = require('pdf-creator-node')
@@ -98,7 +99,7 @@ exports.categorieStatus = (req, res) => {
     //obtenemos el estado y el id de la categoria
     const STATUS = req.params.status
     const ID = req.params.id
-
+    
     //creamos un objeto con los datos  
     const VALUE = { status: STATUS }
 
@@ -107,7 +108,7 @@ exports.categorieStatus = (req, res) => {
         .then(data => {
             if (!data) {
                 res.send(false)
-            } else {
+            } else {                
                 res.send(true)
             }
         })

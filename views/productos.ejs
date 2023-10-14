@@ -53,11 +53,11 @@
                                         </div>
                                         <div class="row my-3">
                                             <div class="col-8 d-flex flex-row align-items-center">
-                                                <label for="categorie" class="form-label me-2">Categoria: </label>
+                                                <label for="categorie" class="form-label me-2">Categorias: </label>
                                                 <select class="form-select" id="categorie" name="categorie"
                                                     required>
                                                     <% categories.forEach((data)=> { %>
-                                                        <% if(data.status=='active' ) { %>
+                                                        <% if(data.status=='activo' ) { %>
                                                             <option value="<%= data.categorie %>">
                                                                 <%= data.categorie %>
                                                             </option>
@@ -157,7 +157,16 @@
                                     <div class="">
                                         <form id="btn-buscap" class="col-10 d-flex flex-row align-items-center ms-4">
                                             <label for="" class="form-label me-2">Categoría: </label>
-                                            <input type="text" class="form-control" id="producto-categoria" required>
+                                            <select class="form-select" id="producto-categoria" name="categorie"
+                                                    required>
+                                                    <% categories.forEach((data)=> { %>
+                                                        <% if(data.status=='activo' ) { %>
+                                                            <option value="<%= data.categorie %>">
+                                                                <%= data.categorie %>
+                                                            </option>
+                                                            <% } %>
+                                                                <% }) %>
+                                                </select>
                                             <button type="submit" class="btn btn-primary ms-3">Buscar</button>
                                         </form>
                                     </div>
