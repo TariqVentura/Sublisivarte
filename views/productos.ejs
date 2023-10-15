@@ -197,7 +197,7 @@
                                 <th scope="col">Actualizar</th>
                                 <th scope="col">Eliminar</th>
                                 <!-- <th scope="col">Graficos</th> -->
-                                <th scope="col">Reportes</th>
+                                <th scope="col">Estado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -271,8 +271,7 @@
                                         <button class="btn btn-danger" onclick="deleteProducts('<%= data._id %>')">Eliminar</button>
                                     </td>
                                     <td>
-                                        <a class="btn btn-warning text-light"
-                                            href="/report/categories/<%= data.product %>" target="_blank">Reporte</a>
+                                        <%= data.status %>
                                     </td>
                                 </tr>
                         </tbody>

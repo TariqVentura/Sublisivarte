@@ -99,21 +99,34 @@ exports.categorieStatus = (req, res) => {
     //obtenemos el estado y el id de la categoria
     const STATUS = req.params.status
     const ID = req.params.id
-    
+
     //creamos un objeto con los datos  
     const VALUE = { status: STATUS }
 
     //actualizamos
     CATEGORIES.findByIdAndUpdate(ID, VALUE, { useFindAndModify: false })
-        .then(data => {
+        .then(async data => {
             if (!data) {
                 res.send(false)
-            } else {                
-                res.send(true)
+            } else {
+                if (STATUS == 'inactivo') {
+                    try {
+                        const CATEGORY = await CATEGORIES.findOne({ _id: ID }).exec()
+                        const UPDATE_PRODUCT = await PRODUCTS.updateMany({ categorie: CATEGORY.categorie }, { status: 'inactivo' }, { useFindAndModify: false }).exec()
+                        console.log(UPDATE_PRODUCT)
+                        return res.send(true)
+                    } catch (error) {
+                        console.log(error)
+                        return
+                    }
+                } else {
+                    console.log(STATUS)
+                }
+                return res.send(true)
             }
         })
         .catch(err => {
-            res.send(false)
+            return res.send(false)
         })
 }
 
@@ -175,7 +188,7 @@ exports.getReport = (req, res) => {
             path: "./docs/" + FILE_NAME,
             type: ""
         }
-        
+
         PDF.create(DOCUMENT, OPTIONS).then(p => {
             //redirecciona al documento creado
             res.redirect('/' + FILE_NAME)
